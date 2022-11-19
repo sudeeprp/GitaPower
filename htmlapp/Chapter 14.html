@@ -1,0 +1,3667 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna&quot;s Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.TopNoteBlock, .BottomNoteBlock {
+    display: flex;
+    flex-direction: row;
+    position: fixed
+}
+.TopNote, .BottomNote {
+	width: 100%;
+    height: auto;
+    background-color: rgba(216,191,216,0.95);    
+    border-color: #E5DFEC;
+    position: fixed
+}
+.TopNote, .TopNoteBlock {
+    top: 0;
+    left: 0;
+}
+.BottomNote, .BottomNoteBlock {
+    bottom: 0;
+    left: 0;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    padding: .5rem;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: navy;
+    -webkit-overflow-scrolling: touch;
+}
+/*Thin scrollbar*/
+.Middle::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Middle::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+/*  Right has a set size while the Middle is set to flex one so it occupies all remaining space.*/
+.Middle {
+    flex: 1;
+	width: auto;
+    height: 80%;
+    background: Beige;
+}
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;
+}
+h1 {
+    margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;
+}
+h2 {
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;
+}
+p.Shloka, li.Shloka, div.Shloka {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+span.snskrtphrase {
+    color: Maroon;
+    display:none;
+}
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx, p.ApplNotesOpener {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";
+}
+p.ApplNotesOpener {
+    font-weight:bold;
+}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight, p.ApplNotesROp, .TopNote, .BottomNote {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	font-size:9.0pt;
+    line-height:150%;
+	font-family:"Comic Sans MS";
+}
+.TopNote {
+    border-style:none none dotted none;
+}
+.BottomNote {
+    border-style:dotted none none none;
+}
+p.ApplNotesROp {
+    font-style:italic;
+}
+.ApplNotesImg, .ApplNotesROpImg {
+    height:16pt;
+}
+p.nextprev, li,nextprev, div.nextprev {
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";
+}
+.button {
+    background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;
+}
+</style>
+</head>
+
+<body onresize="containerResize()" onpageshow="pageshown()" lang=EN-IN>
+
+<!-- Was: nothing was there -->
+<div class="Container" id='GitaContainer'>
+
+<!-- Was: div class=WordSection1 id='GitaCommentary' -->
+<div class="Middle" id='GitaCommentary'>
+
+<!-- Here starts the chapter -->
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%2013.html">Chapter 13</a></span><span style="float:right;"><a href="Chapter%2015.html">Chapter 15</a>&nbsp;&#xbb;</span></p>
+<h1>Chapter 14</h1>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the 13th chapter, the characteristics of
+the Self and the environment were described, along with their association. Then,
+several <a href="Chapter%2013.html#virtues_amanitvam">virtues</a>
+ were listed, such as being
+without a sense of superiority. These virtues help in realizing the Self. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With these virtues, <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+
+and the Lord's compassion, a person is <a href="Back%20to%20Basics.html#Moksha">freed</a>
+ from
+material bonds. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The cause of the bond with the material
+world was also stated - the bond is due to our desires, such as our craving for
+happiness. The <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ soak the
+desires of the material world with their influence. This was told in
+<a href="Chapter%2013.html#21">Chapter 13-21</a>: 'The Self is bound to the environment due to its association with
+the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ in births that came from
+virtue and flaws'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, in this chapter, the Lord describes
+the way in which these <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ bind
+us, along with the method to gain freedom from these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-1</span>
+<a name="14-1" > </a>
+<a name="1" > </a>
+<button class="button" id="shlokabox422" onclick="toggleSnskrtPhrase('shlokabox422')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shrI bhagavAn uvAcha<br>
+
+param bhUya: pravakShyAmi jnAnAnAm
+jnAnam uttamam |<br>
+
+yat jnAtvA munaya: sarvE parAm
+siddhimitO gatA: || 1 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[shrI bhagavAn uvAcha]</span></span>
+<span lang=EN-US >
+ Lord Krishna said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUya:]</span></span>
+<span lang=EN-US >
+ Once again, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravakShyAmi]</span></span>
+<span lang=EN-US >
+ I will elaborate </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAnam]</span></span>
+<span lang=EN-US >
+ the knowledge </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAnAnAm uttamam]</span></span>
+<span lang=EN-US >
+ that stands supreme among all there is to know. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[param]</span></span>
+<span lang=EN-US >
+ This description is beyond what I
+have said before. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat jnAtvA]</span></span>
+<span lang=EN-US >
+
+Knowing this, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvE munaya:]</span></span>
+<span lang=EN-US >
+
+all insightful people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[gatA:]</span></span>
+<span lang=EN-US >
+ have
+reached </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parAm siddhim]</span></span>
+<span lang=EN-US >
+ the
+supreme goal </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ita:]</span></span>
+<span lang=EN-US >
+ from this
+material world.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says - 'What I am going to say now
+is beyond what I have said before'. Meaning, it is not a repetition. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+He says - 'I will elaborate the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ once again - qualities that are
+embedded in the environment, in which the Self is bound. This knowledge is the
+base for everything there is to know about the Self and its association with the
+environment. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All those who gained insight from this
+knowledge have reached the supreme goal, crossing over this material world. Here,
+the supreme goal is the realization of the Self in its true form'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the next Shloka, the Lord describes this
+knowledge and the benefit of knowing it.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-2</span>
+<a name="14-2" > </a>
+<a name="2" > </a>
+<button class="button" id="shlokabox423" onclick="toggleSnskrtPhrase('shlokabox423')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+idam jnAnam upAshritya mama
+sAdharmyam AgatA: |<br>
+
+sargE_pi na upajAyantE pralayE na
+vyathanti cha || 2 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[upAshritya]</span></span>
+<span lang=EN-US >
+
+Having gained </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[idam jnAnam]</span></span>
+<span lang=EN-US >
+
+this knowledge, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AgatA:]</span></span>
+<span lang=EN-US >
+ they
+achieve </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mama sAdharmyam]</span></span>
+<span lang=EN-US >
+ My characteristics.
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na upajAyantE]</span></span>
+<span lang=EN-US >
+ They are not
+born again </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sargE api]</span></span>
+<span lang=EN-US >
+ even at
+the time of creation, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ nor
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na vyathanti]</span></span>
+<span lang=EN-US >
+ do they perish </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pralayE]</span></span>
+<span lang=EN-US >
+ when the universe perishes.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+By knowing what I'm elaborating next,
+people achieve My characteristics - they gain equality to Me. They are not born
+at the time of creation. Meaning, they remain unaffected in the act of creation.
+Hence, they don't perish either, remaining unaffected when the universe comes
+to an end. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Each and every being that isn't free is
+bound to the environment. Every such being is a combination of the environment
+with a Self. This was stated already in <a href="Chapter%2013.html#26">Chapter 13-26</a>: 'Anything moving or
+stationary comes into being by an association of a Self with a body formed from
+the environment'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Beings like us are bound to the environment
+by the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. To explain how, the
+Lord starts by stating that all beings are created by His will alone.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-3</span>
+<a name="14-3" > </a>
+<a name="3" > </a>
+<button class="button" id="shlokabox424" onclick="toggleSnskrtPhrase('shlokabox424')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mama yOni: mahat brahma tasmin
+garbham dadhAmyaham |<br>
+
+sambhava: sarva bhUtAnAm tatO
+bhavati bhArata || 3 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahma]</span></span>
+<span lang=EN-US >
+ the universe </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mama yOni:]</span></span>
+<span lang=EN-US >
+ it is My womb. <span class="snskrtphrase">[mahat]</span> It </span>
+<span lang=EN-US >
+is a manifestation of the plasma
+that resulted from <a href="Chapter%2013.html#CosmicInflation_stages">cosmic inflation</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tasmin]</span></span>
+<span lang=EN-US >
+ In that, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham
+dadhAmi]</span></span>
+<span lang=EN-US >
+ I bring together </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[garbham]</span></span>
+<span lang=EN-US >
+ life that can reproduce. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tata:]</span></span>
+<span lang=EN-US >
+ Then, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sambhava:]</span></span>
+<span lang=EN-US >
+
+the creation </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva bhUtAnAm]</span></span>
+<span lang=EN-US >
+
+of all beings </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavati]</span></span>
+<span lang=EN-US >
+
+happens.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+My universe is the origin from which everything
+came into being. That is My womb. In that, I infuse consciousness and give
+birth. The Lord described this in <a href="Chapter%207.html#4">Chapter 7-4</a> by explaining His material
+attribute: 'This universe of mine is divided into eight categories: Solids,
+liquids, gasses, energy, space, mind, the gross collections and the notion of
+individuality.'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Before creation, the Lord's inanimate
+matter exists as the <a href="Chapter%2013.html#subtle_singularity">subtle singularity</a>
+. At
+the time of creation, it changes into plasma, then into the state in which
+subatomic particles were formed, then the atoms and then the five elements of
+Solids, liquids, gasses, energy and space<i >
+.</i>
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Since it expands into this huge universe,
+it's called as </span>
+<span lang=EN-US >
+[mahat brahma]</span>
+<span lang=EN-US >
+,
+the one which becomes huge.</span>
+</p>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+It is not common to use the word </span>
+</i>
+<i >
+<span lang=EN-US >
+[brahma]</span>
+<span lang=EN-US >
+ to refer to the universe. The word </span>
+</i>
+<i >
+<span lang=EN-US >
+[brahma]</span>
+<span lang=EN-US >
+ means something that's expansive.
+Though it is commonly used to describe the principal architect of the universe,
+it is also used in several places to mean the universe itself. This is illustrated
+next.</span>
+</i>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the scriptures, the universe has been
+referred to by the word </span>
+<span lang=EN-US >
+[brahma]</span>
+<span lang=EN-US >
+, as in </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:
+150%' >
+[muMDaka, 1-1-9]</span>
+<span lang=EN-US >
+: 'This material world gets
+created, becomes recognizable and gets ready to be experienced. This material
+world, known as 'brahma' comes from the One who is aware of everything, has
+full depth of understanding and whose endeavors are full of awareness'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The inanimate matter in the material world
+is one attribute of the Lord. The conscious Self is the other. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Self is described to be beyond the material
+environment in <a href="Chapter%207.html#5">Chapter 7-5</a>: 'My ultimate nature is distinct from the universe. It
+is in the form of a conscious being by whom this world is sustained'. This
+supreme attribute of the Lord has been described as the set of all that's
+conscious. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The conscious Self, when infused in the
+environment, acts as the seed to create all beings. This is how these beings
+are created in the womb. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord continues - 'In the huge universe,
+which is My inanimate womb, I give birth - I bring together this environment
+and the collection of consciousness.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The inanimate environment is experienced;
+The Self is the one who experiences - this attribute of Mine brings
+consciousness to the world. I bring the Self and its environment together. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Then, all beings, right from the principal
+engineer of the universe down to a germ, come into being from My two attributes
+- the environment and the Self. They are joined by My will'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord says that even after creating
+this universe, He continues to bring together His inanimate and conscious
+attributes in each being that is born.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-4</span>
+<a name="14-4" > </a>
+<a name="4" > </a>
+<button class="button" id="shlokabox425" onclick="toggleSnskrtPhrase('shlokabox425')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sarva yOniShu kauntEya mUrtaya:
+sambhavanti yA: |<br>
+
+tAsAm brahma mahat yOni: aham
+bIjaprada: pitA || 4 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kauntEya]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAsAm yOni:]</span></span>
+<span lang=EN-US >
+ the
+embryos of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mUrtaya:]</span></span>
+<span lang=EN-US >
+ different
+forms </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yA: sambhavanti]</span></span>
+<span lang=EN-US >
+ that are
+born </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva yOniShu]</span></span>
+<span lang=EN-US >
+ in all
+wombs </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahma]</span></span>
+<span lang=EN-US >
+ are the
+expanding universe, <span class="snskrtphrase">[mahat]</span> which originated in the cosmic inflation. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham bIjaprada: pitA]</span></span>
+<span lang=EN-US >
+ I am the father who
+infuses life in the embryo. </span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All beings in this universe have their
+origin in the material of the cosmic inflation.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+That includes all humans - powerful,
+ordinary, handsome, ugly, cruel, kind, along with all animals, birds, plants
+and so on. All of their various forms originated from the plasma that formed
+during creation.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this Shloka, The Lord says 'I have put
+together all conscious beings. Their bodies are made from the matter in the
+environment, which formed from the results of the cosmic inflation. I am the One
+who infuses life in the embryo, during their birth' - The Lord puts together
+the Self and the body of all conscious beings in accordance with their deeds.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, the Lord explained that
+conscious beings get associated with inanimate matter at the start of creation.
+This association happens due to the influence of various deeds they committed
+in the past.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, He explains the reason why they
+repeatedly take birth in various wombs in different forms. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-5</span>
+<a name="14-5" > </a>
+<a name="5" > </a>
+<button class="button" id="shlokabox426" onclick="toggleSnskrtPhrase('shlokabox426')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sattvam rajastama iti guNA: prakr'ti
+sambhavA: |<br>
+
+nibadhnanti mahAbAhO dEhE dEhinam
+avyayam || 5 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[guNA:]</span></span>
+<span lang=EN-US >
+ The <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam
+rajastama]</span></span>
+<span lang=EN-US >
+ sattva, rajas and tamas </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sambhavA:]</span></span>
+<span lang=EN-US >
+ come into existence </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'ti]</span></span>
+<span lang=EN-US >
+ in the environment. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mahAbAhO]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nibadhnanti]</span></span>
+<span lang=EN-US >
+ they bind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyayam dEhinam]</span></span>
+<span lang=EN-US >
+ the imperishable Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhE]</span></span>
+<span lang=EN-US >
+ in a body.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote188 >
+<span lang=EN-US style='color:black' >
+The three qualities
+bind the Self in a body.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Serenity (<a href="Chapter%2014.html#sattva">sattva</a>
+),
+drive (<a href="Chapter%2014.html#rajas">rajas</a>
+) and lethargy (<a href="Chapter%2014.html#tamas">tamas</a>
+)
+are the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ that go with the
+material environment. In fact, they define the nature of the material environment.
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They are not perceived directly. They are
+perceived only by the effects they bring - The quality of sattva brings
+learning, <a href="Chapter%2014.html#rajas">rajas</a>
+ brings desire and hatred, tamas brings
+reluctance to act. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They don't exist <a href="Chapter%202.html#beginningless_time">before creation</a>
+, when the environment is in its subtle
+state. They come into being during <a href="Chapter%2013.html#CosmicInflation_stages">cosmic
+inflation</a>
+, when the <a href="Chapter%2013.html#subtle_singularity">subtle singularity</a>
+
+changes into a state of plasma, becoming sub-atomic particles that evolve into
+the five elements. Unique combinations of those elements produce human bodies
+and other forms. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A Self that's bound to the environment is
+associated with one of these bodies. It is the owner of that body. While the
+body changes, the Self never changes or wears out. By its nature, the Self is
+not associated with the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. Yet it's
+tied down by them when it is in the body.  Its bondage is caused by being
+inside a body.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord describes the
+characteristics of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+ and
+<a href="Chapter%2014.html#tamas">tamas</a>
+. He also describes the way in which these qualities
+bind us.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-6</span>
+<a name="14-6" > </a>
+<a name="6" > </a>
+<button class="button" id="shlokabox427" onclick="toggleSnskrtPhrase('shlokabox427')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tatra sattvam nirmalatvAt
+prakAshakam anAmayam |<br>
+
+sukha sangEna badhnAti jnAna sangEna
+chAnagha || 6 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[anagha]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tatra]</span></span>
+<span lang=EN-US >
+ in the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam]</span></span>
+<span lang=EN-US >
+ the quality of serenity </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakAshakam]</span></span>
+<span lang=EN-US >
+ illuminates and lets us know everything, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nirmalatvAt]</span></span>
+<span lang=EN-US >
+ by being flawless. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anAmayam]</span></span>
+<span lang=EN-US >
+ It has no disease associated with it. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[badhnAti]</span></span>
+<span lang=EN-US >
+ It binds </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sukha sangEna]</span></span>
+<span lang=EN-US >
+ due to attachment towards such comfort </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAna
+sangEna cha]</span></span>
+<span lang=EN-US >
+ and due to attachment towards knowledge.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="sattva" >
+</a>
+<span lang=EN-US >
+Among the three
+qualities of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+, the nature of <a href="Chapter%2014.html#sattva">sattva</a>
+ is to
+illuminate by being flawless. Its flawlessness is in giving the joy of knowing
+without obscuring anything. Its nature is to generate the joy of knowledge
+alone - in this way, it is the source of joy. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The word 'illuminate' means the realization
+of anything in its true form.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote189 >
+<span lang=EN-US style='color:black' >
+Sattva is the joy of
+knowledge.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The quality of <a href="Chapter%2014.html#sattva">sattva</a>
+
+does not have any effect that can be called as a disease. It is the source of
+well-being.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This quality called <a href="Chapter%2014.html#sattva">sattva</a>
+
+binds the Self by attaching it to contentment and knowledge. It is the one that
+attaches a person to the comfort of being content and knowledgeable. As soon as
+such attachment is born, a person indulges in the material world to achieve it
+by his occupation or by rituals.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Then, this person is born in a womb, in a
+form suited to experience the fruits of his pursuit. In this way, the quality
+of <a href="Chapter%2014.html#sattva">sattva</a>
+ binds the person to experience the joy of
+knowledge. It rewards the joy of knowledge, again binding a person to this
+experience and craving for more. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This is called <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-7</span>
+<a name="14-7" > </a>
+<a name="7" > </a>
+<button class="button" id="shlokabox428" onclick="toggleSnskrtPhrase('shlokabox428')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+rajO rAgAtmakam viddhi tr'ShNA sanga
+samudbhavam |<br>
+
+tat nibadhnAti kauntEya karmasangEna
+dEhinam || 7 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[viddhi]</span></span>
+<span lang=EN-US >
+ Know </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[raja:]</span></span>
+<span lang=EN-US >
+ <a href="Chapter%2014.html#rajas">rajas</a>
+ to be a
+quality that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAgAtmakam]</span></span>
+<span lang=EN-US >
+ has
+passion at its core. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tr'ShNA sanga samudbhavam]</span></span>
+<span lang=EN-US >
+ It is the space where insatiable desires and bonds are born. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kauntEya]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat
+nibadhnAti]</span></span>
+<span lang=EN-US >
+ it binds </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhinam]</span></span>
+<span lang=EN-US >
+ the Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karma sangEna]</span></span>
+<span lang=EN-US >
+ by attaching it to actions.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="rajas" >
+</a>
+<span lang=EN-US >
+The quality called <a href="Chapter%2014.html#rajas">rajas</a>
+ gives rise to passion. Here, 'passion' is meant as a
+bond, like the intimacy between a male and a female.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is the space where insatiable desires
+and bonds are born. It brings the thirst to experience material desires, the
+'drive' to experience the various things that stimulate our senses. It makes the
+bond with family and friends.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote190 >
+<span lang=EN-US style='color:black' >
+Rajas is passion.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With this, the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+
+instigates desires and attachments, binding the Self with actions. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Self initiates some actions, being
+driven by these desires and attachments. These actions constitute virtue and
+vice. They cause rebirth in a form that can experience the results of those
+actions. The Self then takes birth in a womb that can bear this form. It's
+driven to action again - the cycle repeats. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+
+binds the Self by using our attachment to actions.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This <a href="Chapter%2014.html#rajas">rajas</a>
+ is said to
+be the source of passion, unquenchable desire and bonding. It is said to bind
+us to actions.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-8</span>
+<a name="14-8" > </a>
+<a name="8" > </a>
+<button class="button" id="shlokabox429" onclick="toggleSnskrtPhrase('shlokabox429')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tamastu ajnAnajam viddhi mOhanam
+sarva dEhinAm |<br>
+
+pramAda Alasya nidrAbhi: tat
+nibadhnAti bhArata || 8 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[viddhi]</span></span>
+<span lang=EN-US >
+ know </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tama: tu]</span></span>
+<span lang=EN-US >
+ <a href="Chapter%2014.html#tamas">tamas</a>
+ to be
+a quality that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ajnAnajam]</span></span>
+<span lang=EN-US >
+
+gives rise to ignorance </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOhanam]</span></span>
+<span lang=EN-US >
+ and delusion </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva dEhinAm]</span></span>
+<span lang=EN-US >
+ in every Self that owns a body. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat
+nibadhnAti]</span></span>
+<span lang=EN-US >
+ It binds the Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pramAda]</span></span>
+<span lang=EN-US >
+ with carelessness, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Alasya]</span></span>
+<span lang=EN-US >
+ lethargy </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nidrAbhi:]</span></span>
+<span lang=EN-US >
+ and drowsiness.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote191 >
+<a name="tamas" >
+</a>
+<span lang=EN-US style='color:black' >
+Tamas
+is ignorance and lethargy.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Ignorance is opposed to awareness. Being
+'aware' is to know all things as they are. Ignorance tells us otherwise. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The quality called <a href="Chapter%2014.html#tamas">tamas</a>
+
+is a misunderstanding of the true nature of things. It deludes every Self that
+owns a body. 'Delusion' is knowledge that is opposed to reality. The quality of
+<a href="Chapter%2014.html#tamas">tamas</a>
+ causes this flawed knowledge. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+By being the source of carelessness,
+lethargy and drowsiness, <a href="Chapter%2014.html#tamas">tamas</a>
+ ties down the owner of a
+body. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Carelessness' is lack of attention, which
+causes mistakes in our actions. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Lethargy' is the characteristic of not
+starting any activity. It's a state of being rigid and pretentious. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Drowsiness' happens when our limbs are
+tired of activity and start retiring to rest. In this state, our organs recede
+and we sleep. In addition to this, when the mind is also at rest, it is called
+deep sleep.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the prominent bonds that come from
+the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ of <a href="Chapter%2014.html#sattva">sattva</a>
+,
+<a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+ are summarized.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-9</span>
+<a name="14-9" > </a>
+<a name="9" > </a>
+<button class="button" id="shlokabox430" onclick="toggleSnskrtPhrase('shlokabox430')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sattvam sukhE sanjayati raja:
+karmaNi bhArata |<br>
+
+jnAnam Avr'tya tu tama: pramAdE sanjayatyuta
+|| 9 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam]</span></span>
+<span lang=EN-US >
+ the quality
+of <a href="Chapter%2014.html#sattva">sattva</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sanjayati]</span></span>
+<span lang=EN-US >
+ binds us </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sukhE]</span></span>
+<span lang=EN-US >
+ in
+comfort. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[raja:]</span></span>
+<span lang=EN-US >
+ The quality of
+<a href="Chapter%2014.html#rajas">rajas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karmaNi]</span></span>
+<span lang=EN-US >
+ binds us in actions. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tama:]</span></span>
+<span lang=EN-US >
+ The quality of <a href="Chapter%2014.html#tamas">tamas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAnam
+Avr'tya]</span></span>
+<span lang=EN-US >
+ conceals knowledge and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pramAdE sanjayati]</span></span>
+<span lang=EN-US >
+ binds us in mistakes.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The primary effect of <a href="Chapter%2014.html#sattva">sattva</a>
+
+is to bind us in comfort. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The quality of <a href="Chapter%2014.html#rajas">rajas</a>
+
+predominantly addicts us to activity. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+ conceals awareness of the true nature of things. This
+gives rise to misconceptions. In this way, its main effect is to cause
+indulgence in work that must not be done, binding us to mistakes and other
+faults.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+ are accumulated in the form of a body we own. By their very
+nature, they bind us to the material world. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All these <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+ exist all the time. They generate effects that are opposite to
+each other - such as awareness and ignorance. How do they generate
+contradictory effects on the body? This question is answered next.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-10</span>
+<a name="14-10" > </a>
+<a name="10" > </a>
+<button class="button" id="shlokabox431" onclick="toggleSnskrtPhrase('shlokabox431')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+rajas tamashcha abhibhUya sattvam
+bhavati bhArata |<br>
+
+raja: sattvam tamashchaiva tama:
+sattvam rajastathA || 10 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam]</span></span>
+<span lang=EN-US >
+ the quality
+of <a href="Chapter%2014.html#sattva">sattva</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavati]</span></span>
+<span lang=EN-US >
+ takes effect </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[abhibhUya]</span></span>
+<span lang=EN-US >
+ by overpowering </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rajas tama: cha]</span></span>
+<span lang=EN-US >
+ <a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[raja:]</span></span>
+<span lang=EN-US >
+ The quality of <a href="Chapter%2014.html#rajas">rajas</a>
+
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam tama: cha Eva]</span></span>
+<span lang=EN-US >
+ comes
+forth too, by suppressing <a href="Chapter%2014.html#sattva">sattva</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+.
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tama:]</span></span>
+<span lang=EN-US >
+ The quality of <a href="Chapter%2014.html#tamas">tamas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam raja: tathA]</span></span>
+<span lang=EN-US >
+ suppresses <a href="Chapter%2014.html#sattva">sattva</a>
+ and <a href="Chapter%2014.html#rajas">rajas</a>
+
+in the same way.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Even while the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+ of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+ bind every Self with the environment, they expand or
+contract due to past actions and due to various foods that are consumed to
+nurture the body. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Sometimes, the qualities of <a href="Chapter%2014.html#rajas">rajas</a>
+
+and <a href="Chapter%2014.html#tamas">tamas</a>
+ contract. This makes way for <a href="Chapter%2014.html#sattva">sattva</a>
+
+to take precedence. Sometimes, <a href="Chapter%2014.html#rajas">rajas</a>
+ predominates by
+suppressing <a href="Chapter%2014.html#sattva">sattva</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+.
+Likewise, sometimes <a href="Chapter%2014.html#tamas">tamas</a>
+ takes effect by suppressing <a href="Chapter%2014.html#sattva">sattva</a>
+ and <a href="Chapter%2014.html#rajas">rajas</a>
+.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote192 >
+<span lang=EN-US style='color:black' >
+At any point in time,
+one of these qualities dominates the other two.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord says that the predominant
+one among these qualities is known only by its effect.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-11</span>
+<a name="14-11" > </a>
+<a name="11" > </a>
+<button class="button" id="shlokabox432" onclick="toggleSnskrtPhrase('shlokabox432')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sarvadvArEShu dEhE_smin prakAsha
+upajAyatE |<br>
+
+jnAnam yadA tadA vidyAt vivr'ddham
+sattvamityuta || 11 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yadA]</span></span>
+<span lang=EN-US >
+ When </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvadvArEShu]</span></span>
+<span lang=EN-US >
+ all the sense organs and the
+mind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhE_smin]</span></span>
+<span lang=EN-US >
+ in this body </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakAsha]</span></span>
+<span lang=EN-US >
+ illuminate the true nature of
+things </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAnam]</span></span>
+<span lang=EN-US >
+ and awareness </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[upajAyatE]</span></span>
+<span lang=EN-US >
+ arises, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tadA]</span></span>
+<span lang=EN-US >
+ then, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vidyAt]</span></span>
+<span lang=EN-US >
+
+recognize </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam vivr'ddham ityuta]</span></span>
+<span lang=EN-US >
+ that the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+ is predominant.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Sense organs such as the eyes are the doors
+to knowledge. When these sense organs illuminate everything to show their true
+characteristics, awareness arises. Then, the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+
+is recognized as being predominant in the body.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-12</span>
+<a name="14-12" > </a>
+<a name="12" > </a>
+<button class="button" id="shlokabox433" onclick="toggleSnskrtPhrase('shlokabox433')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+lObha: pravr'tti: Arambha: karmaNAm
+ashama: spr'hA |<br>
+
+rajasyEtAni jAyantE vivr'ddhE
+bharatarShabha || 12 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bharatarShabha]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lObha:]</span></span>
+<span lang=EN-US >
+
+avarice, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravr'tti:]</span></span>
+<span lang=EN-US >
+ restlessness,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karmaNAm Arambha:]</span></span>
+<span lang=EN-US >
+ initiating
+action that is driven by desire, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashama:]</span></span>
+<span lang=EN-US >
+ uneasiness </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[spr'hA]</span></span>
+<span lang=EN-US >
+
+and unquenchable attachment - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[EtAni]</span></span>
+<span lang=EN-US >
+ all of them </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jAyantE]</span></span>
+<span lang=EN-US >
+ arise </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vivr'ddhE rajasi]</span></span>
+<span lang=EN-US >
+ in <a href="Chapter%2014.html#rajas">rajas</a>
+, when this quality dominates the
+others.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Avarice' is being unable to part with
+things that belong to us. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Restlessness' is the urge to keep doing,
+even without purpose. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Actions driven by desire' are those which
+are done with the purpose of satisfying our desire. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Uneasiness' is the state in which our
+organs fidget. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Unquenchable attachment' is the addiction
+to things that stimulate our organs.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All these behaviors arise in <a href="Chapter%2014.html#rajas">rajas</a>
+ when it is dominant. In other words, the predominance
+of <a href="Chapter%2014.html#rajas">rajas</a>
+ is recognized by behaviors such as avarice.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-13</span>
+<a name="14-13" > </a>
+<a name="13" > </a>
+<button class="button" id="shlokabox434" onclick="toggleSnskrtPhrase('shlokabox434')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+aprakAsha: apravr'tti: cha pramAdO
+mOha Eva cha |<br>
+
+tamasyEtAni jAyantE vivr'ddhE
+kurunandana || 13 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kurunandana]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aprakAsha:]</span></span>
+<span lang=EN-US >
+ being
+ignorant of the true nature of things, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[apravr'tti:]</span></span>
+<span lang=EN-US >
+ reluctance to do anything, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pramAda:]</span></span>
+<span lang=EN-US >
+ mistakes, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOha cha]</span></span>
+<span lang=EN-US >
+ and delusion - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Etani]</span></span>
+<span lang=EN-US >
+ these behaviors </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jAyantE]</span></span>
+<span lang=EN-US >
+ arise </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vivr'ddhE tamasi]</span></span>
+<span lang=EN-US >
+ in <a href="Chapter%2014.html#tamas">tamas</a>
+, when this quality predominates the
+others.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Being ignorant of the true nature of
+things' happens in the absence of awareness. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Reluctance to do anything' is being
+pretentious and stiff. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Mistakes' happen when we do work that must
+not be done, when we are unmindful of the consequences of such work. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Delusion' is false knowledge. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Such behavior comes from a dominant <a href="Chapter%2014.html#tamas">tamas</a>
+. Recognize the predominance of <a href="Chapter%2014.html#tamas">tamas</a>
+
+when they are observed.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-14</span>
+<a name="14-14" > </a>
+<a name="14" > </a>
+<button class="button" id="shlokabox435" onclick="toggleSnskrtPhrase('shlokabox435')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yadA sattvE pravr'ddhE tu pralayam
+yAti dEhabhr't |<br>
+
+tadA uttama vidAm lOkAn amalAn
+pratipadyatE || 14 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yadA]</span></span>
+<span lang=EN-US >
+ When </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhabhr't]</span></span>
+<span lang=EN-US >
+ an owner of a body </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pralayam yAti]</span></span>
+<span lang=EN-US >
+ is resorbed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvE pravr'ddhE]</span></span>
+<span lang=EN-US >
+ in a predominance of <a href="Chapter%2014.html#sattva">sattva</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tadA]</span></span>
+<span lang=EN-US >
+ then </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pratipadyatE]</span></span>
+<span lang=EN-US >
+
+he proceeds to </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[amalAn lokAn]</span></span>
+<span lang=EN-US >
+
+unspoilt communities </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uttama vidAm]</span></span>
+<span lang=EN-US >
+ with supreme knowledge.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When a person encounters death - when the
+body is resorbed with <a href="Chapter%2014.html#sattva">sattva</a>
+ being predominant, the Self proceeds
+to a world where awareness is experienced. Such a world has communities that
+know the true nature of the Self. They are unspoilt by ignorance. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Having died at a time when <a href="Chapter%2014.html#sattva">sattva</a>
+
+is predominant, this person is re-born in a community of people who realize the
+Self. He works in accordance with that birth. His actions lead to the
+realization of the Self.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-15 part 1</span>
+<a name="14-15%20part%201" > </a>
+<a name="15" > </a>
+<button class="button" id="shlokabox436" onclick="toggleSnskrtPhrase('shlokabox436')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+rajasi pralayam gatvA karmasangiShu
+jAyatE |<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[pralayam gatvA]</span></span>
+<span lang=EN-US >
+ When the body perishes </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rajasi]</span></span>
+<span lang=EN-US >
+ in <a href="Chapter%2014.html#rajas">rajas</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jAyatE]</span></span>
+<span lang=EN-US >
+ the person is re-born </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karmasangiShu]</span></span>
+<span lang=EN-US >
+ among people who are attached to activity.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+If a person dies at a time when <a href="Chapter%2014.html#rajas">rajas</a>
+ is predominant, he is born in a community that is
+driven to work by desire. Being born in this way, he spends his life aspiring
+to achieve goals such as wealth and power.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-15 part 2</span>
+<a name="14-15%20part%202" > </a>
+<a name="15" > </a>
+<button class="button" id="shlokabox437" onclick="toggleSnskrtPhrase('shlokabox437')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tathA pralIna: tamasi mUDha yOniShu
+jAyatE || 15 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA]</span></span>
+<span lang=EN-US >
+
+Similarly, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pralIna:]</span></span>
+<span lang=EN-US >
+ a person
+who dies </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tamasi]</span></span>
+<span lang=EN-US >
+ in <a href="Chapter%2014.html#tamas">tamas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jAyatE]</span></span>
+<span lang=EN-US >
+ is born </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mUdha yOnishu]</span></span>
+<span lang=EN-US >
+ in a womb that brings ignorance.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Similarly, a person who dies with <a href="Chapter%2014.html#tamas">tamas</a>
+ being predominant is born in ignorance - he is born in
+the womb of a dog or a pig for instance. In such a birth, he is unable to pursue
+any of the four goals - righteousness, wealth, desire or <a href="Back%20to%20Basics.html#Moksha">liberation</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-16</span>
+<a name="14-16" > </a>
+<a name="16" > </a>
+<button class="button" id="shlokabox438" onclick="toggleSnskrtPhrase('shlokabox438')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+karmaNa: sukr'tasyAhu: sAtvikam
+nirmalam phalam |<br>
+
+rajasastu phalam du:kham ajnAnam
+tamasa: phalam || 16 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam]</span></span>
+<span lang=EN-US >
+ The outcome
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sukr'tasya karmaNa:]</span></span>
+<span lang=EN-US >
+ of action
+that's done well </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Ahu:]</span></span>
+<span lang=EN-US >
+ is said
+to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nirmalam sAtvikam]</span></span>
+<span lang=EN-US >
+ <a href="Chapter%2014.html#sattva">sattva</a>
+, untainted by other qualities. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ On the other hand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam]</span></span>
+<span lang=EN-US >
+ the outcome </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rajasa:]</span></span>
+<span lang=EN-US >
+ of action driven by desire </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[du:kham]</span></span>
+<span lang=EN-US >
+ is sorrow. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam]</span></span>
+<span lang=EN-US >
+ The outcome </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tamasa:]</span></span>
+<span lang=EN-US >
+ of lethargy </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ajnAnam]</span></span>
+<span lang=EN-US >
+ is ignorance.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As described previously, a person who died with
+a predominance of <a href="Chapter%2014.html#sattva">sattva</a>
+ is born in a community that realizes
+the nature of the Self. In this birth, the person works well - without being
+driven by desire, purely to worship Me. The reward for this is another birth
+with enhanced knowledge and tranquility, untainted by any sorrow - those who
+know the effects of <a href="Chapter%2014.html#sattva">sattva</a>
+ vouch for this.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, if <a href="Chapter%2014.html#rajas">rajas</a>
+
+were to be predominant at the time of death, the person is born in a community
+that's driven by results and desires. Being driven by desire, the person acts
+accordingly and is born again to experience the results of such actions. Again,
+he starts actions that are driven by desire. This loop of accumulation leads to
+a greater experience of sorrow and disappointment in the material world. This
+is said by people who know the true characteristics of this quality.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The outcome of lethargy is ignorance. The
+predominance of <a href="Chapter%2014.html#tamas">tamas</a>
+ at the time of death results in a
+chain of births in ignorant forms.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord elaborates on the rewards
+generated by a predominance of each of the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+. For example, predominance of <a href="Chapter%2014.html#sattva">sattva</a>
+
+rewards one with flawlessness...</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-17</span>
+<a name="14-17" > </a>
+<a name="17" > </a>
+<button class="button" id="shlokabox439" onclick="toggleSnskrtPhrase('shlokabox439')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sattvat sanjAyatE jnAnam rajasO
+lObha Eva cha |<br>
+
+pramAda mOhau tamasa: bhavata:
+ajnAnam Eva cha || 17 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAnam sanjAyatE]</span></span>
+<span lang=EN-US >
+ Knowledge arises </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvat]</span></span>
+<span lang=EN-US >
+ from <a href="Chapter%2014.html#sattva">sattva</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rajasa:]</span></span>
+<span lang=EN-US >
+ From <a href="Chapter%2014.html#rajas">rajas</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lObha
+Eva]</span></span>
+<span lang=EN-US >
+ it's only avarice. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tamasa:]</span></span>
+<span lang=EN-US >
+ From <a href="Chapter%2014.html#tamas">tamas</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pramAda
+mOhau]</span></span>
+<span lang=EN-US >
+ mistakes and misconceptions </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavata:]</span></span>
+<span lang=EN-US >
+ arise, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ajnAnam
+Eva cha]</span></span>
+<span lang=EN-US >
+ certainly followed by ignorance.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Thus, when <a href="Chapter%2014.html#sattva">sattva</a>
+ gains
+more and more predominance over a sequence of births, the true nature of the
+Self is realized.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When <a href="Chapter%2014.html#rajas">rajas</a>
+ gains
+predominance in this way, avarice takes over and we are driven by a longing for
+'the good life'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When <a href="Chapter%2014.html#tamas">tamas</a>
+ gains
+predominance, people are careless and indulge in regrettable activities. From
+this comes misconception. From that, the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+
+gains more predominance, resulting in ignorance and lack of awareness.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-18</span>
+<a name="14-18" > </a>
+<a name="18" > </a>
+<button class="button" id="shlokabox440" onclick="toggleSnskrtPhrase('shlokabox440')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+Urdhvam gachChanti sattvasthA:
+madhyE tiShThanti rAjasA: |<br>
+
+jaghanya guNavr'ttisthA: adhO
+gachChanti tAmasA: || 18 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvasthA:]</span></span>
+<span lang=EN-US >
+
+People who are situated in <a href="Chapter%2014.html#sattva">sattva</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Urdhvam gachChanti]</span></span>
+<span lang=EN-US >
+ ascend to eminence. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasA:]</span></span>
+<span lang=EN-US >
+ Those with a high <a href="Chapter%2014.html#rajas">rajas</a>
+
+quotient </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[madhyE tiShThanti]</span></span>
+<span lang=EN-US >
+
+stay mediocre. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasA:]</span></span>
+<span lang=EN-US >
+ Those
+in <a href="Chapter%2014.html#tamas">tamas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jaghanya
+guNavr'ttisthA:]</span></span>
+<span lang=EN-US >
+ stay and behave in undesirable ways. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adhO gachChanti]</span></span>
+<span lang=EN-US >
+ They attain lower
+life-forms.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As described, people who are situated in <a href="Chapter%2014.html#sattva">sattva</a>
+ ascend to eminence. They are progressive and gain
+freedom from material bonds, achieving <a href="Back%20to%20Basics.html#Moksha">liberty</a>
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The quality of <a href="Chapter%2014.html#rajas">rajas</a>
+
+gives rise to avarice - people who are high on <a href="Chapter%2014.html#rajas">rajas</a>
+ covet
+the good life. They yearn for fame, wealth and comforts. They work to achieve
+those results. They are born again to experience the outcome of their work. Even
+in the next birth, they work similarly and get stuck in the cycle. That's why
+they stay mediocre. Due to its tendency to repeat, the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+ inevitably causes sorrow for the most part.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Those in <a href="Chapter%2014.html#tamas">tamas</a>
+ stay
+and work in undesirable ways. From one life to the next, they keep cultivating
+conduct that grows the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+. They progress to
+lower forms - being born into depression, animals, insects, worms, germs,
+immobile beings, plants and flowers, going on to become a blade of grass, a
+stone, a stick, a lump of clay and so on.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord describes the way in which
+people enrich <a href="Chapter%2014.html#sattva">sattva</a>
+ over several births. They overcome
+the influence of all <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+ and achieve the
+<a href="Back%20to%20Basics.html#Moksha">supreme goal</a>
+. They enrich <a href="Chapter%2014.html#sattva">sattva</a>
+ with
+the distinction of working without attachment, by the merit of being disciplined
+in consumption.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-19</span>
+<a name="14-19" > </a>
+<a name="19" > </a>
+<button class="button" id="shlokabox441" onclick="toggleSnskrtPhrase('shlokabox441')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+nAnyam guNEbhya: kartAram yadA
+dr'ShTA_nupaShyati |<br>
+
+guNEbhya: cha param vEtti madbhAvam
+sO_dhigachChati || 19 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[dr'ShTA]</span></span>
+<span lang=EN-US >
+ An
+intelligent person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na anupaShyati]</span></span>
+<span lang=EN-US >
+ doesn't see </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kartAram]</span></span>
+<span lang=EN-US >
+ any cause of outcomes, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNEbhya: anyam]</span></span>
+<span lang=EN-US >
+ Other than the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yadA cha]</span></span>
+<span lang=EN-US >
+ And when </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vetti]</span></span>
+<span lang=EN-US >
+ he knows </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNEbhya: param]</span></span>
+<span lang=EN-US >
+ beyond these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[madbhAvam adhigachChati]</span></span>
+<span lang=EN-US >
+ he gains My state of
+being.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="happenings" >
+</a>
+<i >
+<span lang=EN-US >
+In the Gita, it
+is said that the Self </span>
+</i>
+<span lang=EN-US >
+<a href="Chapter%2013.html#self_initiates_action"><i >
+takes initiative</i>
+</a>
+<i >
+ in every action
+(<a href="Chapter%2013.html#20">Chapter 13-20</a>). It also says that the Self does not make outcomes happen, as in
+<a href="Chapter%2013.html#29">Chapter 13-29</a>: 'definitely, actions are due to the environment' and in
+<a href="Chapter%203.html#27">Chapter 3-27</a>-28: 'An ignorant person thinks of his body as himself and does not
+realize that actions are a result of the qualities of nature'. </i>
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+Though the first one seems to contradict
+the other two, it doesn't. The Self takes initiative - it has an intent and
+initiates action. What follows is the '</span>
+</i>
+<span lang=EN-US >
+<a href="Back%20to%20Basics.html#actions_and_happenings"><i >
+happening</i>
+</a>
+<i >
+' - the action may happen
+or not; the outcome may be perceived as favorable or unfavorable; he may feel
+elated or disappointed - all of these are a result of the </i>
+<a href="Chapter%2014.html#satva_rajas_tamas_effects"><i >
+qualities of nature</i>
+</a>
+<i >
+. </i>
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+These qualities attach to the Self as a
+result of actions committed in the past. Actions are 'committed' when we
+believe that what 'happens' is under our control and get attached to it,
+instead of recognizing that outcomes happen as a result of the qualities of
+nature.</span>
+</i>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote193 >
+<span lang=EN-US style='color:black' >
+The Self initiates
+action. Outcomes <a href="Back%20to%20Basics.html#actions_and_happenings"><i >
+happen</i>
+</a>
+ as a
+result of the qualities that bind the person.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A person suppresses the qualities of <a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+ comprehensively and
+cultivates <a href="Chapter%2014.html#sattva">sattva</a>
+. He does this by consuming food and nourishing
+the body in-line with the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+. With work
+that's done without attachments, only for the Lord's worship, he cultivates <a href="Chapter%2014.html#sattva">sattva</a>
+. It then gains predominance in him. This person has
+seen and uncovered the true nature of things. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This Shloka says - ' Other than the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+, an intelligent person doesn't
+see a cause of outcomes in anything else'. When such a person doesn't see
+anything other than the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ in
+making things happen, he knows beyond these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Meaning, such a person sees that the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ make outcomes happen in
+accordance with their respective qualities. Having seen this, he realizes that
+the Self does not make things happen. He realizes that the Self is distinct
+from the <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+ that make things happen.
+Such a person shall attain My state of being; he becomes equivalent to Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In summary, what the Lord said is - The
+Self is pure and free by nature. It is limited by attachment to actions, due to
+various deeds committed in the past. This causes its 'doership' in various
+actions. By nature, the Self does not make things happen. It has the form of
+pure and limitless knowledge. When a person realizes this true nature of the
+Self, he attains equivalence to Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Having seen that the Self does not make
+anything happen, that it is different from the <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+,
+a person attains equivalence to the Lord - this has been said. What does it
+mean to attain equivalence to the Lord? That is explained next.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-20</span>
+<a name="14-20" > </a>
+<a name="20" > </a>
+<button class="button" id="shlokabox442" onclick="toggleSnskrtPhrase('shlokabox442')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+guNAn EtAnatItya trIn dEhI dEhasamudbhavAn
+|<br>
+
+janma mr'tyu jarA du:khai:
+vimuktO_mr'tam ashnutE || 20 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[atItya]</span></span>
+<span lang=EN-US >
+ Having
+crossed over </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[EtAni trIn guNAn]</span></span>
+<span lang=EN-US >
+
+<a href="Chapter%202.html#satva_rajas_tamas">these three qualities</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhasamudbhavAn]</span></span>
+<span lang=EN-US >
+ that come from the body, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhI]</span></span>
+<span lang=EN-US >
+ the owner of the body </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashnutE]</span></span>
+<span lang=EN-US >
+ enjoys </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[amr'tam]</span></span>
+<span lang=EN-US >
+ the
+ever-lasting. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vimukta:]</span></span>
+<span lang=EN-US >
+ He is
+free from </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[du:khai:]</span></span>
+<span lang=EN-US >
+ the sorrow
+of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[janma]</span></span>
+<span lang=EN-US >
+ birth, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mr'tyu]</span></span>
+<span lang=EN-US >
+ death </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jarA]</span></span>
+<span lang=EN-US >
+ and old age.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="equivalence_to_the_Lord" >
+</a>
+<span lang=EN-US >
+The
+three qualities of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+ and
+<a href="Chapter%2014.html#tamas">tamas</a>
+ come from the environment. They have accumulated in
+the form of a body. When the owner of the body crosses over these<u >
+ </u>
+<a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+ and sees the Self, he is free from the
+sorrow of birth, death and old age. The Self is in the form of pure knowledge,
+entirely distinct from the <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+ of
+nature. He experiences the ever-lasting expanse of the Self - this is
+equivalence to the Lord.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Now, Arjuna asks about the behaviors that distinguish
+a person who has crossed over the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+.
+He also enquires about the way to cross over these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-21</span>
+<a name="14-21" > </a>
+<a name="21" > </a>
+<button class="button" id="shlokabox443" onclick="toggleSnskrtPhrase('shlokabox443')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+arjuna uvAcha<br>
+
+kairlingai: trIn guNAn EtAn atItO
+bhavati prabhO |<br>
+
+kim AchAra: katham chaitAn trIn
+guNAn ativartatE || 21 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[arjuna uvAcha]</span></span>
+<span lang=EN-US >
+ Arjuna said: </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[atItO]</span></span>
+<span lang=EN-US >
+ A person who has crossed over </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[trIn guNAn
+EtAn]</span></span>
+<span lang=EN-US >
+ these <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+</span>
+<span lang=EN-US >
+ - <span class="snskrtphrase">[kai: lingai:]</span></span>
+<span lang=EN-US >
+
+with what characteristics </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavati]</span></span>
+<span lang=EN-US >
+ is he present? </span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[prabhO]</span></span>
+<span lang=EN-US >
+ Lord, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kim AchAra:]</span></span>
+<span lang=EN-US >
+
+what is his behavior </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha katham]</span></span>
+<span lang=EN-US >
+ and how does he </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ativartatE]</span></span>
+<span lang=EN-US >
+ cross over </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[EtAn trIn guNAn]</span></span>
+<span lang=EN-US >
+ these <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+?</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When a person crosses over these three
+qualities of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+, what are the characteristics that distinguish him?
+What are his behaviors? What actions give him this characteristic to realize
+his Self? What is the method to cross over these<u >
+ </u>
+<a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+?</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-22</span>
+<a name="14-22" > </a>
+<a name="22" > </a>
+<button class="button" id="shlokabox444" onclick="toggleSnskrtPhrase('shlokabox444')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shrI bhagavAn uvAcha<br>
+
+prakAsham cha pravr'ttim cha mOham
+Eva cha pAnDava |<br>
+
+na dvEShTI sampravr'ttAni na
+nivr'ttAni kAMkShati || 22 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[shrI bhagavAn uvAcha]</span></span>
+<span lang=EN-US >
+ The Lord said - </span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[pAnDava]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakAsham]</span></span>
+<span lang=EN-US >
+
+in knowledge, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravr'tti]</span></span>
+<span lang=EN-US >
+ activity
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOham cha]</span></span>
+<span lang=EN-US >
+ and misconception,</span>
+<span lang=EN-US >
+ <span class="snskrtphrase">[na dvEShTI]</span></span>
+<span lang=EN-US >
+ this person doesn't loathe </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sampravr'ttAni]</span></span>
+<span lang=EN-US >
+ their presence. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nivr'ttAni]</span></span>
+<span lang=EN-US >
+ In their absence, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na kAMkShati]</span></span>
+<span lang=EN-US >
+ he does not yearn for them
+either.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="satva_rajas_tamas_effects" >
+</a>
+<span lang=EN-US >
+The
+three qualities have their effects - the effect of <a href="Chapter%2014.html#sattva">sattva</a>
+
+is to illuminate and discover; <a href="Chapter%2014.html#rajas">rajas</a>
+ drives us to run
+behind our desires; the effect of <a href="Chapter%2014.html#tamas">tamas</a>
+ is
+misunderstanding and mistakes. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A person who has crossed over the three
+qualities isn't agitated when undesirable effects happen (<i >
+for instance, when
+he experiences a mistake due to the effect of </i>
+<a href="Chapter%2014.html#tamas"><i >
+tamas</i>
+</a>
+)
+- these effects are not his Self. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This person doesn't yearn for their effects
+either, when they are denied to him (<i >
+for instance, when he is unsuccessful
+in learning something- the yearning for which comes from </i>
+<a href="Chapter%2014.html#sattva"><i >
+sattva</i>
+</a>
+)
+- those desires are not the Self either.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote194 >
+<span lang=EN-US style='color:black' >
+Step-over with
+Awareness and Devotion</span>
+</p>
+</td></tr></table>
+
+<h2 >
+<span lang=EN-US >
+14-23</span>
+<a name="14-23" > </a>
+<a name="23" > </a>
+<button class="button" id="shlokabox445" onclick="toggleSnskrtPhrase('shlokabox445')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+udAsInavat AsInO guNairyO na
+vichAlyatE |<br>
+
+guNA vartanta ityEva yO_vatiShThati
+nEMgatE || 23 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[ya: na vichAlyatE]</span></span>
+<span lang=EN-US >
+ The person who is not thrown around </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNai:]</span></span>
+<span lang=EN-US >
+ by the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yO avatiShThati]</span></span>
+<span lang=EN-US >
+ who stays his course </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nEMgatE]</span></span>
+<span lang=EN-US >
+ isn't shaken.</span>
+<span lang=EN-US >
+ <span class="snskrtphrase">[AsIna:]</span></span>
+<span lang=EN-US >
+ He remains </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[udAsInavat]</span></span>
+<span lang=EN-US >
+ as if inert, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti]</span></span>
+<span lang=EN-US >
+ considering that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNA: vartanta Eva]</span></span>
+<span lang=EN-US >
+ these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+ would keep manifesting as their
+effects.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote195 >
+<span lang=EN-US style='color:black' >
+Self-awareness is an
+enabler to step over the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This person is content, being aware of his
+Self - the Self is distinct from the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+. That's how he remains as inert, unmoved by those qualities. Such
+a person isn't thrown around by feelings of agitation or longing towards their
+effects. Considering that these qualities keep making their <a href="Chapter%2014.html#satva_rajas_tamas_effects">effects</a>
+ happen, he remains quiet. This
+person is not shaken - he does not dance to their effects.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-24 to 14-25</span>
+<a name="14-24%20to%2014-25" > </a>
+<a name="24" > </a>
+<a name="25" > </a>
+<button class="button" id="shlokabox446" onclick="toggleSnskrtPhrase('shlokabox446')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sama du:kha sukha: svastha: sama
+lOShTAshma kAnchana: |<br>
+
+tulya priyApriyO dhIra: tulya
+nindAtma samstuti: || 24 ||<br>
+
+mAnApamAnayO: tulya: tulya mitrAri
+pakShayO: |<br>
+
+sarvArambha parityAgI guNAtIta: sa
+uchyatE || 25 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[svastha:]</span></span>
+<span lang=EN-US >
+ Being himself -</span>
+<span lang=EN-US >
+ <span class="snskrtphrase">[sama du:kha sukha:]</span></span>
+<span lang=EN-US >
+ same in comfort and sorrow, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sama lOShTa
+ashma kAnchana:]</span></span>
+<span lang=EN-US >
+ having the same outlook towards a lump
+of clay, a stone and gold, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tulya priya apriya:]</span></span>
+<span lang=EN-US >
+ weighing the favorable and the unfavorable equally, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tulya ninda Atma samstuti:]</span></span>
+<span lang=EN-US >
+ same with
+insults and praises - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhIra:]</span></span>
+<span lang=EN-US >
+ he
+knows the Self from the body.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[mAna apamAnayO: tulya:]</span></span>
+<span lang=EN-US >
+ Weighing honor and shame equally, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tulya
+mitra ari pakShayO:]</span></span>
+<span lang=EN-US >
+ considering friendly and
+unfriendly people equally, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa:]</span></span>
+<span lang=EN-US >
+ this person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva Arambha parityAgI]</span></span>
+<span lang=EN-US >
+ leaves attachment to material pursuits </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchyatE]</span></span>
+<span lang=EN-US >
+ and is said </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNAtIta:]</span></span>
+<span lang=EN-US >
+ to have crossed over the <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+Arjuna asked three questions about the
+one who has crossed over the qualities - his characteristics, behavior and
+method of crossing over the </span>
+</i>
+<span lang=EN-US >
+<a href="Chapter%202.html#satva_rajas_tamas"><i >
+qualities</i>
+</a>
+<i >
+. The characteristics were
+covered in the previous Shlokas. This Shloka is about behavior and the next two
+are about the method.</i>
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This person considers comfort and sorrow
+equally by standing in his Self. Being content with his Self, he considers
+everything else - joys and sorrows, births and deaths - with equanimity. In the
+same way, he has the same outlook towards a lump of clay, a stone or gold,
+weighing the favorable and the unfavorable equally. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This person knows the Self from the body,
+hence he weighs praise and insults equally - praise and insults relate to some advantages
+and shortcomings, which are limitations of the body. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They aren't related to the Self. If we care
+for them, it is due to the misconception that the human form is the Self. This
+misconception gives rise to fame, infamy, friendly and unfriendly perceptions.
+Actually, none of them relate to the Self. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, the person relates equally to
+all of them, being able to leave attachment to any pursuit that comes from
+owning a body. This person is said to have crossed over the <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord states the greatest enabler
+in crossing over these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-26</span>
+<a name="14-26" > </a>
+<a name="26" > </a>
+<button class="button" id="shlokabox447" onclick="toggleSnskrtPhrase('shlokabox447')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mAm cha yO_vyabhichArENa
+bhaktiyOgEna sEvatE |<br>
+
+sa guNAn samatItyEtAn brahmabhUyAya
+kalpatE || 26 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[ya: cha]</span></span>
+<span lang=EN-US >
+ And
+the person who </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm sEvatE]</span></span>
+<span lang=EN-US >
+
+serves and experiences Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyabhichArENa]</span></span>
+<span lang=EN-US >
+ with constant </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhaktiyOgEna]</span></span>
+<span lang=EN-US >
+ <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa:
+samatItya EtAni]</span></span>
+<span lang=EN-US >
+ will completely overcome these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kalpatE]</span></span>
+<span lang=EN-US >
+ He is cut out </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahmabhUyAya]</span></span>
+<span lang=EN-US >
+ to experience the Self in its true form.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The method of distinguishing the body from
+the Self was described starting with <a href="Chapter%2014.html#19">Chapter 14-19</a>, 'When the person realizes that
+the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ make things happen, not
+the Self, nothing else...'. </span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote196 >
+<span lang=EN-US style='color:black' >
+The <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+ can only be overcome by surrendering
+to the Lord with <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Just by knowing the distinction and
+thinking about the Self and the body, a person doesn't earn the right to cross
+over the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. He is still checked
+by the undesirable influence of past deeds - an influence that has lingered
+from beginning-less time.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this Shloka, the Lord says - 'I am the
+One whose every intent is realized. I am the One with unsurpassed compassion,
+an ocean of affection to those who <a href="Chapter%207.html#Sharanagati">surrender</a>
+ to Me. The
+<a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+ are difficult to overcome. A person
+crosses over them when he serves and experiences Me with <a href="Chapter%207.html#bhakti_a_defn">constant devotion</a>
+ - a devotion that's distinguished by
+its unwavering focus on one goal. This person is cut out to experience the Self
+- he becomes fit to realize the Self. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Meaning, he achieves the Self in its true
+form, indestructible and inexhaustible.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+14-27</span>
+<a name="14-27" > </a>
+<a name="27" > </a>
+<button class="button" id="shlokabox448" onclick="toggleSnskrtPhrase('shlokabox448')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+brahmaNO hi pratiShThA_ham amr'tasya
+avyayasya cha |<br>
+
+shAshvatasya cha dharmasya sukhasya
+EkAntikasya cha || 27 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham pratiShThA hi]</span></span>
+<span lang=EN-US >
+ I am the basis </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahmaNa:]</span></span>
+<span lang=EN-US >
+ of the Self, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[amr'tasya]</span></span>
+<span lang=EN-US >
+ which is without death </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyayasya cha]</span></span>
+<span lang=EN-US >
+ and decay. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shAshvatasya dharmasya]</span></span>
+<span lang=EN-US >
+ I am the basis of the ever-lasting practice of <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[EkAntikasya
+sukhasya cha]</span></span>
+<span lang=EN-US >
+ and of complete joy.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The phrase 'I am the basis' is used here to
+mean that the Lord is 'the cause of existence'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says 'I am the One served and
+experienced with unwavering <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+. I am the
+basis of the Self that has neither death nor decay. In the same way, I am the
+cause of unending <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+, as well as the
+constant, infinite, absolute joy of <a href="Back%20to%20Basics.html#Moksha">being free</a>
+'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This was described in <a href="Chapter%207.html#19">Chapter 7-19</a>: 'Lord
+Krishna is everything' - The Lord is the cause of joy achieved by the <a href="Chapter%207.html#jnAnI">one who knows</a>
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Though the ever-lasting practice of <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ is a 'method' to achieve the Lord, it is
+described before and after this Shloka as an achievement in itself. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is both a 'method' and the
+'achievement', due to the fact that <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ and the
+Lord always go together. This has been said before, starting in <a href="Chapter%207.html#14">Chapter 7-14</a> -
+'These divine creations of Mine are pervaded by the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+. They are indeed impossible to cross over. The people who <a href="Chapter%207.html#Sharanagati">surrender</a>
+ exclusively to Me will cross over this
+material world'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord said that surrendering to Him is
+the only way to cross over <a href="Chapter%202.html#satva_rajas_tamas">material qualities</a>
+.
+Before crossing over, we pursue goals of self-realization, wealth and the Lord
+Himself. Surrendering to Him is the way to achieve them as well. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Only by surrendering exclusively to the
+Lord can we cross-over <a href="Chapter%202.html#satva_rajas_tamas">material qualities</a>
+ and
+gain equivalence to Him.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%2013.html">Chapter 13</a></span><span style="float:right;"><a href="Chapter%2015.html">Chapter 15</a>&nbsp;&#xbb;</span></p>
+
+<!-- Here ends the chapter -->
+<div class="TopNoteBlock">
+<div class="TopNote" id='TopNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='TopNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_up.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px;margin-right:24pt" id='TopApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+<div style="position:fixed;top:0;right:0;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+</div>
+<div class="BottomNoteBlock">
+<div class="BottomNote" id='BottomNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='BottomNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_down.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px" id='BottomApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Middle (Gita commentary) div ends here -->
+</div>
+
+<!-- Container ends here -->
+</div>
+
+<!--scripts are at the end because they refer to the divs on top -->
+<script type="text/javascript">
+<!-- console.log('gita scroller 4'); -->
+var commentaryElm = document.getElementById('GitaCommentary');
+var chapapplnotestart = 188;
+document.addEventListener("DOMContentLoaded", domloaded());
+commentaryElm.onscroll = onCommentaryScroll;
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleSnskrtPhrase(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var rule = cssRule('span.snskrtphrase');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    commentaryElm.scrollTop = commentaryElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function containerResize(){
+<!--set top and bottom note to 'left' or 'centered' -->
+}
+function domloaded(){
+    containerResize();
+    <!--trigger the default top-bottom on loading the chapter -->
+    syncnote();
+}
+function onCommentaryScroll() {
+    syncnote();
+}
+function recordState() {
+    var currentScTop = commentaryElm.scrollTop;
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ 'c' + "=" + currentScTop);
+}
+function overlapFeedback(elm, overlap) {
+    var rgbastr = 'rgba(216,191,216,' + toString(1-overlap) + ')';
+    elm.style.backgroundColor = rgbastr;
+}
+function syncnote() {
+    var commentaryViewPort = commentaryElm.getBoundingClientRect(); 
+
+    <!--Find the inline application note right above current viewport and the one right below-->
+    var inlinenoteAbove = "";
+    var inlinerefAbove = "";
+    var inlinenoteBelow = "";
+    var inlinerefBelow = "";
+
+    var i = chapapplnotestart;
+    <!--The 'inline' word here is very important!! The code assumes this everywhere! -->
+    var inlinenote = 'inlineapplnote' + i;
+    var inlineElm = document.getElementById(inlinenote);
+    var topOverlap = 0;
+    var bottomOverlap = 0;
+    var topNoteRect = document.getElementById("TopNoteID").getBoundingClientRect();
+    var bottomNoteRect = document.getElementById("BottomNoteID").getBoundingClientRect();
+
+    while(inlineElm != null) {
+        inlineRect = inlineElm.getBoundingClientRect();
+        if(inlineRect.top <= topNoteRect.top) {
+            inlinenoteAbove = inlineElm.innerHTML;
+            inlinerefAbove = inlinenote;
+            topOverlap = Math.min(Math.max((inlineRect.bottom - topNoteRect.top) / 
+                                           (topNoteRect.bottom - topNoteRect.top), 0), 1);
+        }
+        else if(inlineRect.top < topNoteRect.bottom) {
+            topOverlap = (topNoteRect.bottom - inlineRect.top) / (topNoteRect.bottom - topNoteRect.top);
+        }
+		else if(topNoteRect.bottom == 0) {
+			topOverlap = 1;
+		}
+        if(inlineRect.bottom > bottomNoteRect.top && inlineRect.bottom < bottomNoteRect.bottom) {
+            bottomOverlap = (inlineRect.bottom - bottomNoteRect.top) / 
+                            (bottomNoteRect.bottom - bottomNoteRect.top);
+        }
+        else if (inlineRect.top > bottomNoteRect.top && inlineRect.top < bottomNoteRect.bottom) {
+            bottomOverlap = (bottomNoteRect.bottom - inlineRect.top) /
+                            (bottomNoteRect.bottom - bottomNoteRect.top)
+        }
+        <!--Latch the first one that breaches the bottom-->
+        if(inlinenoteBelow == "" && inlineRect.bottom > commentaryViewPort.bottom) {
+            inlinenoteBelow = inlineElm.innerHTML;
+            inlinerefBelow = inlinenote;
+        }
+        i++;
+        inlinenote = 'inlineapplnote' + i;
+        inlineElm = document.getElementById(inlinenote);
+    }
+    <!--Show the note above at the top and below at the bottom only if they have something -->
+    document.getElementById("TopApplicationNote").innerHTML = inlinenoteAbove;
+    if(inlinenoteAbove != "") {
+        document.getElementById("TopNoteTableID").onclick = function(){window.location.href = "#"+inlinerefAbove};
+        document.getElementById("TopNoteID").style.display = 'inherit';
+    } else {
+        document.getElementById("TopNoteID").style.display = 'none';
+    }
+    document.getElementById("BottomApplicationNote").innerHTML = inlinenoteBelow;
+    if(inlinenoteBelow != "") {
+        document.getElementById("BottomNoteTableID").onclick = function(){window.location.href = "#"+inlinerefBelow};
+        document.getElementById("BottomNoteID").style.display = 'inherit';    
+    } else {
+        document.getElementById("BottomNoteID").style.display = 'none';    
+    }
+    document.getElementById("TopNoteID").style.opacity = 1 - topOverlap;
+    document.getElementById("BottomNoteID").style.opacity = 1 - bottomOverlap;
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var rule = cssRule('span.snskrtphrase');
+        if(eorc == 'e') {
+            rule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            rule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        commentaryElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+function gotohash() {
+	if(window.location.hash == "") {
+		commentaryElm.scrollTop = 0;
+	} else {
+		var elmTogo = document.getElementById(window.location.hash.substr(1));
+		commentaryElm.scrollTop += elmTogo.getBoundingClientRect().top-1;
+	}
+}
+</script>
+
+</body>
+
+</html>

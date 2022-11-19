@@ -1,0 +1,3079 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna&quot;s Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.TopNoteBlock, .BottomNoteBlock {
+    display: flex;
+    flex-direction: row;
+    position: fixed
+}
+.TopNote, .BottomNote {
+	width: 100%;
+    height: auto;
+    background-color: rgba(216,191,216,0.95);    
+    border-color: #E5DFEC;
+    position: fixed
+}
+.TopNote, .TopNoteBlock {
+    top: 0;
+    left: 0;
+}
+.BottomNote, .BottomNoteBlock {
+    bottom: 0;
+    left: 0;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    padding: .5rem;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: navy;
+    -webkit-overflow-scrolling: touch;
+}
+/*Thin scrollbar*/
+.Middle::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Middle::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+/*  Right has a set size while the Middle is set to flex one so it occupies all remaining space.*/
+.Middle {
+    flex: 1;
+	width: auto;
+    height: 80%;
+    background: Beige;
+}
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;
+}
+h1 {
+    margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;
+}
+h2 {
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;
+}
+p.Shloka, li.Shloka, div.Shloka {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+span.snskrtphrase {
+    color: Maroon;
+    display:none;
+}
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx, p.ApplNotesOpener {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";
+}
+p.ApplNotesOpener {
+    font-weight:bold;
+}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight, p.ApplNotesROp, .TopNote, .BottomNote {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	font-size:9.0pt;
+    line-height:150%;
+	font-family:"Comic Sans MS";
+}
+.TopNote {
+    border-style:none none dotted none;
+}
+.BottomNote {
+    border-style:dotted none none none;
+}
+p.ApplNotesROp {
+    font-style:italic;
+}
+.ApplNotesImg, .ApplNotesROpImg {
+    height:16pt;
+}
+p.nextprev, li,nextprev, div.nextprev {
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";
+}
+.button {
+    background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;
+}
+</style>
+</head>
+
+<body onresize="containerResize()" onpageshow="pageshown()" lang=EN-IN>
+
+<!-- Was: nothing was there -->
+<div class="Container" id='GitaContainer'>
+
+<!-- Was: div class=WordSection1 id='GitaCommentary' -->
+<div class="Middle" id='GitaCommentary'>
+
+<!-- Here starts the chapter -->
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%2014.html">Chapter 14</a></span><span style="float:right;"><a href="Chapter%2016.html">Chapter 16</a>&nbsp;&#xbb;</span></p>
+<h1>Chapter 15</h1>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The 13th chapter clarified the environment
+as the <a href="Chapter%2013.html#field_and_knower_of_field">field of action</a>
+ and the Self as
+<a href="Chapter%2013.html#field_and_knower_of_field">one who knows the field</a>
+. Then, it
+explained that the bond between the Self and the environment has no beginning.
+Though the natural form of the Self is pure and unbounded knowledge, it is
+bound in a body made from the environment. The Self is limited in this way, due
+to the continuous flow of attachment to the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+ in the environment. This attachment has no beginning, it has
+always been there.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The 14th chapter explained the state of the
+Self, bound in the environment, both before creation and after. It stated that
+the bond with the environment originates in the attachment to the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+. It also stated that the
+bond is made by the Lord himself. It laid out the nature of our attachment to
+the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+ in detail.
+Finally, it asserted that we cast away the attachment to <a href="Chapter%202.html#satva_rajas_tamas">material qualities</a>
+ by <a href="Chapter%207.html#bhakti_a_defn">devotion
+to the Lord</a>
+. This <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ achieves the true
+nature of the Self.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this chapter, the Lord begins to explain
+that He, as the object of worship, is the Supreme Person. He is the owner of
+all that's perishable and imperishable, along with all beings that are made
+from them. He is also the owner of all <a href="Back%20to%20Basics.html#Moksha">free</a>
+ beings. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+By being the owner, by repelling all that's
+undesirable, by being pure prosperity, He is totally supreme and distinct from
+anything else. The Self is The Lord's possession, known as The Eternal. It is <a href="Back%20to%20Basics.html#Moksha">free from all bondage</a>
+ after its bonds with the material
+environment are cut off. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Attachment to things that <a href="Chapter%2014.html#happenings">happen</a>
+ in the material environment become the bonds that
+bind the Self. The sword of detachment is used to cut these bonds. To describe
+this magnificent possession of the Lord, He illustrates this attachment as a
+pepal tree with its roots at the top - the attachment must be cut.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-1</span>
+<a name="15-1" > </a>
+<a name="1" > </a>
+<button class="button" id="shlokabox449" onclick="toggleSnskrtPhrase('shlokabox449')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shrI bhagavAn uvAcha<br>
+
+Urdhva mUlam adha: shAkham ashvattham
+prAhuravyayam |<br>
+
+ChandAmsi yasya parNAni yastam vEda
+sa vEdavit || 1 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[shrI bhagavAn uvAcha]</span></span>
+<span lang=EN-US >
+ The Lord says:</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[prAhu:]</span></span>
+<span lang=EN-US >
+ It is said that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashvattham]</span></span>
+<span lang=EN-US >
+ the material world is like a pepal tree </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyayam]</span></span>
+<span lang=EN-US >
+ that does not wear out, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Urdhva mUlam]</span></span>
+<span lang=EN-US >
+ with its roots at the top </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adha: shAkham]</span></span>
+<span lang=EN-US >
+ and branches at the bottom. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ChandAmsi
+yasya parNAni]</span></span>
+<span lang=EN-US >
+ Its leaves are the Vedas. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ya: tam vEda]</span></span>
+<span lang=EN-US >
+ The person who knows this
+tree </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa: vEdavit]</span></span>
+<span lang=EN-US >
+ is the one
+who knows the Vedas.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+The word </span>
+</i>
+<i >
+<span lang=EN-US >
+[ashvattha]</span>
+<span lang=EN-US >
+ has been translated as 'pepal tree'. This word can also be broken
+up as </span>
+</i>
+<i >
+<span lang=EN-US >
+[shva:]</span>
+<span lang=EN-US >
+, which
+means tomorrow, </span>
+</i>
+<i >
+<span lang=EN-US >
+[ashva:]</span>
+<span lang=EN-US >
+
+meaning 'not tomorrow'. So </span>
+</i>
+<i >
+<span lang=EN-US >
+[ashvattha:]</span>
+<span lang=EN-US >
+ means 'that which is not present tomorrow'. When this is used to
+describe the material world, it illustrates the temporary nature of this world.
+Yet, this Shloka says it does not wear out. How come? Read on...</span>
+</i>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Several scriptures refer to the material
+environment as a pepal tree that doesn't wear out, with its roots on top and
+branches below. The </span>
+<span lang=EN-US style='line-height:150%' >
+[kaThA
+upanishat]</span>
+<span lang=EN-US style='line-height:150%' >
+, 6-1</span>
+<span lang=EN-US >
+ says 'With its roots at the top and branches below, this pepal tree
+is ancient'. </span>
+<span lang=EN-US >
+[yajur vEda]</span>
+<span lang=EN-US >
+,
+1-11-5 says 'The person who knows the pepal tree well - with the roots above
+and branches below - is the one who knows'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Its roots are said to be at the top, since
+the universe started with Brahma at the top. Brahma is the principal architect
+who made the universe happen. The various beings of the universe - plants,
+microbes, birds, animals and so on - are of different types, classified as
+branches in the tree down below. We can't cut away the flow of material
+experiences as long as we ignore reality and remain attached. In this way, the
+tree, representing the material world, does not wear out. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The leaves of this pepal tree are said to
+represent the Vedas. The Vedas specify the methods to achieve material goals
+like wealth and family. The world grows with these activities - hence the Vedas
+are like the leaves of this tree. The growth of a tree is due to the
+nourishment supplied by the leaves. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Vedas themselves specify the method to
+cut ourselves free from the tree that's the material world. The person who
+knows such a pepal tree is the one who knows the Vedas. This person knows the
+nature of this tree, which must be cut. He also knows the method to cut his
+attachment to it. Hence, he is called 'the one who knows the Vedas'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-2</span>
+<a name="15-2" > </a>
+<a name="2" > </a>
+<button class="button" id="shlokabox450" onclick="toggleSnskrtPhrase('shlokabox450')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+adha: cha Urdhvam prasr'tA: tasya
+shAkhA:<br>
+
+guNa pravr'ddhA vishaya pravAlA: |<br>
+
+adha: cha mUlani anusantatAni<br>
+
+karmAnubandhIni manuShya lOkE || 2
+||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[tasya shAkhA:]</span></span>
+<span lang=EN-US >
+ Its branches </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravr'ddhA:]</span></span>
+<span lang=EN-US >
+ have expanded </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNa]</span></span>
+<span lang=EN-US >
+ with the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravAlA:]</span></span>
+<span lang=EN-US >
+ Its shoots and sprouts </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vishaya]</span></span>
+<span lang=EN-US >
+ are the stimuli in the
+environment. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prasr'tA:]</span></span>
+<span lang=EN-US >
+ They
+have spread wide, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adha: cha Urdhvam]</span></span>
+<span lang=EN-US >
+ both above and below.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[adha: cha]</span></span>
+<span lang=EN-US >
+ The branches below </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[manuShya lOkE]</span></span>
+<span lang=EN-US >
+ in the world of humans </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karmabandhIni]</span></span>
+<span lang=EN-US >
+ bind them with actions. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mUlAni anusantatAni]</span></span>
+<span lang=EN-US >
+ The
+root has progressively become dense.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="pepal_tree" >
+</a>
+<span lang=EN-US >
+Humans and others
+are the branches of the tree. This tree spreads its branches with the deeds of
+humans. It sprouts more branches below, in the form of more humans and other
+beings. It spreads branches above, in the form of more powerful beings. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+These branches expand with the three
+qualities of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+ and <a href="Chapter%2014.html#tamas">tamas</a>
+. Those shoots and sprouts are the stimuli present in
+the environment - sounds, touch, form, taste and smell. How do the shoots and
+sprouts figure over here? That is explained next -</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This tree has Brahma, the principal
+engineer of the universe, at its root at the top. It has humans down below in
+its branches. These branches form the 'source' or the basis for activities
+driven by desire. This is the base for us to get entangled in our actions.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way the branches sprout and get
+progressively denser in the world of humans, with little influence from the
+Brahma at the root. Human beings progress to higher and more powerful lives, or
+get degraded to lower life forms, depending on their actions.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-3, first part</span>
+<a name="15-3,%20first%20part" > </a>
+<a name="3" > </a>
+<button class="button" id="shlokabox451" onclick="toggleSnskrtPhrase('shlokabox451')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+na rUpam asyEha tathOpalabhyatE <br>
+
+nAntO na chA_di: na cha
+sampratiShThA |<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[iha]</span></span>
+<span lang=EN-US >
+ Over
+here, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asya rUpam]</span></span>
+<span lang=EN-US >
+ the form of
+this tree </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na upalabhyatE]</span></span>
+<span lang=EN-US >
+ is
+not apparent </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA]</span></span>
+<span lang=EN-US >
+ in the
+manner described before. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na anta:]</span></span>
+<span lang=EN-US >
+ We cannot see its end, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na cha Adi:]</span></span>
+<span lang=EN-US >
+ its beginning, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na cha sampratiShThA]</span></span>
+<span lang=EN-US >
+ or the basis for its continued existence.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the previous Shloka, the material world
+was described as a tree. Its roots represent Brahma, the principal engineer, at
+the top. Its branches below represent various generations of the human world. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Its branches have further spread upwards
+and downwards based on the activities of humans. This form of the material
+world is not apparent to people who are bound in it. Mere facts are apparent to
+us, such as 'I am a human', 'I am born to my parents', 'I am the parent of my children'
+and 'I transact and experience the world accordingly'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+We cannot see its end either - it's not
+apparent that this tree is cut off by the absence of attachment towards
+material experiences. Attachments are full of the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+. It is not apparent that
+ignorance is the basis of its continued existence. Ignorance is the
+consideration that our body is the Self.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-3, second part and 15-4 first part</span>
+<a name="15-3,%20second%20part%20and%2015-4%20first%20part" > </a>
+<a name="3" > </a>
+<a name="4" > </a>
+<button class="button" id="shlokabox452" onclick="toggleSnskrtPhrase('shlokabox452')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+ashvattham Enam savirUDhamUlam<br>
+
+asanga shastrENa dr'DhEna ChitvA ||
+3 ||<br>
+
+tata: padam tat parimArgitavyam<br>
+
+yasmin gatA na nivartanti bhUya: |<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[ChitvA]</span></span>
+<span lang=EN-US >
+ Having
+cut off </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Enam ashvattham]</span></span>
+<span lang=EN-US >
+ this pepal
+tree </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[savirUDhamUlam]</span></span>
+<span lang=EN-US >
+ with its
+overgrown roots </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asanga shastrENa]</span></span>
+<span lang=EN-US >
+ using the weapon of decoupling </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dr'DhEna]</span></span>
+<span lang=EN-US >
+ and strength, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tata: tat padam]</span></span>
+<span lang=EN-US >
+ that goal </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parimArgitavyam]</span></span>
+<span lang=EN-US >
+ is to be sought - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yasmin gatA:]</span></span>
+<span lang=EN-US >
+ the state from which </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na nivartanti bhUya:]</span></span>
+<span lang=EN-US >
+ people do not return anymore.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This <a href="Chapter%2015.html#pepal_tree">pepal tree</a>
+,
+which was described before, is famous for its numerous well-grown roots and
+shoots. By knowing it, a person uses the 'weapon of decoupling' to cut free of
+their grip. 'Decoupling' is to leave attachment to experiences that are loaded
+with material <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+He well and truly cuts free with firm
+perseverance.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Then, with the Self being free from the
+stimuli of the environment, he must seek that permanent goal, entering which
+people don't return anymore.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+How can we get away from our in-built attachment
+to experience materials and their <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+? These
+attachments have been with us since <a href="Chapter%202.html#beginningless_time">beginning-less
+time</a>
+. The misconception that the body is the Self gives rise to such
+attachments. How do we rid ourselves of this misconception? The Lord explains
+next -</span>
+</p>
+
+
+<h2 >
+<a name="_15-4_second_part" >
+</a>
+<span lang=EN-US >
+15-4 second part</span>
+<a name="15-4%20second%20part" > </a>
+<a name="4" > </a>
+<button class="button" id="shlokabox453" onclick="toggleSnskrtPhrase('shlokabox453')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tam Eva chAdyam puruSham prapadyEt<br>
+
+yata: pravr'tti: prasr'tA purANI ||
+4 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[prapadyEt]</span></span>
+<span lang=EN-US >
+ You
+must <a href="Chapter%207.html#Sharanagati">surrender</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tam Eva]</span></span>
+<span lang=EN-US >
+ to that very </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puruSham]</span></span>
+<span lang=EN-US >
+ Person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yata:]</span></span>
+<span lang=EN-US >
+ from
+whom </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravr'tti:]</span></span>
+<span lang=EN-US >
+ all existence
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prasr'tA]</span></span>
+<span lang=EN-US >
+ came forth </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[purANI]</span></span>
+<span lang=EN-US >
+ long ago.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote197 >
+<span lang=EN-US style='color:black' >
+The extent of your
+entanglement doesn't matter. Surrender to the source and get free.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+To get rid of ignorance, we must <a href="Chapter%207.html#Sharanagati">surrender</a>
+ to that very Person who is the origin of
+everything - 'that very Person' is the Lord - He described Himself in
+<a href="Chapter%209.html#10">Chapter 9-10</a>: 'The material environment guides this world according to My will, I
+being the supreme controller', in <a href="Chapter%2010.html#8">Chapter 10-8</a>: 'I am the origin of everything; Each
+and every entity gets stimulated with the initiative given by Me' and in
+<a href="Chapter%207.html#7">Chapter 7-7</a>: 'There is absolutely nothing else that is superior to Me'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the entire created universe, 'binding
+activities' spring forth from the Lord. These binding activities are full of
+the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+ and attachment to
+experiences. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The fact that the Lord is the origin and
+that we must surrender to Him was described by the Lord Himself previously, in
+<a href="Chapter%207.html#14">Chapter 7-14</a>: ''These divine creations of Mine are pervaded by the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. They are indeed impossible to
+cross over. The people who <a href="Chapter%207.html#Sharanagati">surrender</a>
+ to Me alone -
+they will cross over this material world'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+There is an alternate way to read this
+Shloka - the syllables in </span>
+<span lang=EN-US >
+[prapadyEt yata: pravr'tti:]</span>
+<span lang=EN-US >
+ can also be read as </span>
+<span lang=EN-US >
+[prapadya iyata:
+pravr'tti:]</span>
+<span lang=EN-US >
+, which means 'By <a href="Chapter%207.html#Sharanagati">surrender</a>
+,
+the full extent of achievements are possible'. With this reading, the meaning
+of the Shloka is:</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+By surrendering to that very Person who is
+the origin of everything, all achievements - including the freedom from
+ignorance - come forth in their full extent. This way of <a href="Chapter%207.html#Sharanagati">surrender</a>
+
+is ancient and has been practiced by people who desire <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+.
+It is in practice since <a href="Chapter%202.html#beginningless_time">beginning-less time</a>
+.
+The Lord says here - 'Since ancient times, those who desire <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+
+have surrendered to Me and are free from all bonds'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-5</span>
+<a name="15-5" > </a>
+<a name="5" > </a>
+<button class="button" id="shlokabox454" onclick="toggleSnskrtPhrase('shlokabox454')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+nirmAnamOhA jita saMgadOShA:<br>
+
+adhyAtmanityA vinivr'tta kAmA: |<br>
+
+dvandvai: vimuktA: sukha du:kha
+saMjnai:<br>
+
+gachChanti amUDhA: padam avyayam tat
+|| 5 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[amUDhA:]</span></span>
+<span lang=EN-US >
+ Those
+who are free of ignorance, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nirmAnamOhA:]</span></span>
+<span lang=EN-US >
+ those who are free of the illusion that the body is the Self, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jita saMgadOShA:]</span></span>
+<span lang=EN-US >
+ those who have won over
+the flaw of attachments, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adhyAtmanityA:]</span></span>
+<span lang=EN-US >
+ those who are constantly situated in the knowledge of the Self, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vinivr'tta kAmA:]</span></span>
+<span lang=EN-US >
+ those who have rid
+themselves of desire, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dvandvai: vimuktA:]</span></span>
+<span lang=EN-US >
+ those who are free from dualities </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sukha du:kha
+saMjnai:]</span></span>
+<span lang=EN-US >
+ that people call comfort and sorrow - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat avyayam padam gachChanti]</span></span>
+<span lang=EN-US >
+ they go to
+the place that never withers.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, those who surrender to Me are
+free of the illusion that the body is the Self. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They overcome the flaw of attachment to
+material experiences, which are full of the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three
+qualities</a>
+. They are situated in the knowledge of the Self constantly. They
+are free of all desires, other than the desire to achieve the Lord. They are
+free from the pulls of opposing-pairs, which people call comfort and sorrow. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They distinguish the Self and the
+environment in their individual forms. They reach the place that never withers
+- they attain the Self in its true form, as the limitless expanse of knowledge.
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All these behaviors are easily achieved by
+My grace alone. Those who <a href="Chapter%207.html#Sharanagati">surrender</a>
+ to Me achieve
+this in their journey to reach the <a href="Back%20to%20Basics.html#Moksha">supreme goal</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-6</span>
+<a name="15-6" > </a>
+<a name="6" > </a>
+<button class="button" id="shlokabox455" onclick="toggleSnskrtPhrase('shlokabox455')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+na tat bhAsayatE sUryO na shashAMkO
+na pAvaka: |<br>
+
+yat gatvA na nivartantE tat dhAma
+paramam mama || 6 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sUrya:]</span></span>
+<span lang=EN-US >
+ The
+sun </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na bhAsayatE]</span></span>
+<span lang=EN-US >
+ cannot throw
+light </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat]</span></span>
+<span lang=EN-US >
+ to reveal it, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na shashAMkO]</span></span>
+<span lang=EN-US >
+ nor can the moon, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na pAvaka:]</span></span>
+<span lang=EN-US >
+ nor can any source of light
+such as fire. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat gatvA]</span></span>
+<span lang=EN-US >
+ After
+reaching this, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na nivartantE]</span></span>
+<span lang=EN-US >
+
+they do not return. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat dhAma]</span></span>
+<span lang=EN-US >
+
+That abode </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paramam mama]</span></span>
+<span lang=EN-US >
+ is My
+supreme attribute.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote198 >
+<span lang=EN-US style='color:black' >
+The Self is a part of
+the Lord, the source of awareness.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The sun and moon cannot illuminate and
+reveal the Self, nor can fire or any other source of light. Knowledge itself is
+the one that illuminates everything! </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Light merely helps us by removing darkness.
+Darkness blocks contact between our sense organs and the environment. When it
+is removed, we perceive the illuminated environment.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Self, on the other hand, is illuminated
+by <a href="Chapter%206.html#yoga_state_of_being">yoga</a>
+. All deeds we committed stand opposed
+to that illumination. <a href="Back%20to%20Basics.html#Moksha">Freedom</a>
+ from attachment, which
+comes from <a href="Chapter%207.html#Sharanagati">surrendering</a>
+ to the Lord, removes the
+effects of past deeds. This was described <a href="Chapter%2015.html#_15-4_second_part">before</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this Shloka, the Lord has said: 'After
+reaching this goal, they do not return. That abode is My supreme attribute'.
+That abode is supreme knowledge - the Self. It belongs to the Lord and is a
+part of Him. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This Self is 'supreme' by virtue of
+illuminating the Sun itself. The sun and other sources of light do not illuminate
+knowledge. Indeed, it is knowledge that lets us recognize the sun and
+everything else!</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-7</span>
+<a name="15-7" > </a>
+<a name="7" > </a>
+<button class="button" id="shlokabox456" onclick="toggleSnskrtPhrase('shlokabox456')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mamaivAmshO jIvalOkE jIvabhUta:
+sanAtana: |<br>
+
+mana: ShaShThAni indriyANi
+prakr'tisthAni karShati || 7 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[jIvalOkE]</span></span>
+<span lang=EN-US >
+ In
+this material world, where every Self is bound in the environment, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sanAtana:]</span></span>
+<span lang=EN-US >
+ the ever-existing </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jIvabhUta:]</span></span>
+<span lang=EN-US >
+ Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mama
+amsha: Eva]</span></span>
+<span lang=EN-US >
+ is definitely a part of Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karShati]</span></span>
+<span lang=EN-US >
+ It pulls together </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ShaShThAni indriyANi]</span></span>
+<span lang=EN-US >
+ the six sense-organs </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mana:]</span></span>
+<span lang=EN-US >
+ along with the mind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'tisthAni]</span></span>
+<span lang=EN-US >
+ - all of them come from the
+environment.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this manner, even though each
+ever-present Self is always a part of Me, it is enveloped by ignorance. This
+ignorance is in the form of all the deeds it has <a href="Chapter%2014.html#happenings">committed</a>
+
+in the past. It is bound to the environment in various forms: being present in
+an ordinary human, a powerful one, or any suitable form that's made from the
+environment. Inside such a body, it pulls the six sense-organs together - the
+organs of sight, sound, smell, touch, taste and the mind.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Occasionally, one Self <a href="Back%20to%20Basics.html#Moksha">frees</a>
+
+itself of ignorance in the manner described before. It then manifests in its
+true form.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Before this, the Self is bound in a body
+and has access to an extremely limited amount of knowledge. In this state, it
+is the owner of the five organs of sense and the mind - inside a body made from
+the environment, obtained according to past deeds. It attracts various experiences
+in-line with those deeds.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-8</span>
+<a name="15-8" > </a>
+<a name="8" > </a>
+<button class="button" id="shlokabox457" onclick="toggleSnskrtPhrase('shlokabox457')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sharIram yadavApnOti yachchApi
+utkrAmatIshvara: |<br>
+
+gr'hItva EtAni samyAti vAyurgandhAn
+ivAshayAt || 8 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[Ishvara:]</span> The owner <span class="snskrtphrase">[gr'hItva EtAni]</span></span>
+<span lang=EN-US >
+ carries the essence </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat sharIram]</span></span>
+<span lang=EN-US >
+ of the body </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avApnOti]</span></span>
+<span lang=EN-US >
+ it gets to own, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat cha]</span></span>
+<span lang=EN-US >
+ and the one that it </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[utkrAmati]</span></span>
+<span lang=EN-US >
+ leaves. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[samyAti]</span></span>
+<span lang=EN-US >
+ It
+departs </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iva]</span></span>
+<span lang=EN-US >
+ like </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vAyu:]</span></span>
+<span lang=EN-US >
+ the wind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[gandhAn]</span></span>
+<span lang=EN-US >
+ that takes the fragrance </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AshayAt]</span></span>
+<span lang=EN-US >
+ from its source.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+In this Shloka, a difference is made in
+the body we enter at birth and the one that we leave at death, since those are
+not the same. Consider this - We are a single cell at conception. This is
+followed by many cycles of new cells till we die.</span>
+</i>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Self is the owner of its organs, made
+from solids, liquids, gasses, energy and space. It gets to own them in a body
+at the time of birth and leaves a body when it dies. It carries the essence of
+its organs and departs. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This is compared to the wind, which takes
+the fragrance from its source. Fragrant things such as a garland, sandal and
+musk contain fragrance. The wind carries that subtle smell from the source to
+another place. The Self carries the essence of the organs in the same way.</span>
+</p>
+
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+The 'essence of the organ' is the sense
+of experience that it gives. For example, an organ such as the ear gives
+experiences like pleasure and irritation that come from listening to sound.</span>
+</i>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The organs involved are listed again by the
+Lord in the next Shloka -</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-9</span>
+<a name="15-9" > </a>
+<a name="9" > </a>
+<button class="button" id="shlokabox458" onclick="toggleSnskrtPhrase('shlokabox458')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shrOtram chakShu: sparshanam cha
+rasanam ghrANam Eva cha |<br>
+
+adhiShThAya mana: chAyam viShayAn
+upasEvatE || 9 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[ayam]</span></span>
+<span lang=EN-US >
+ This
+Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adhiShThAya]</span></span>
+<span lang=EN-US >
+ employs </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shrOtram]</span></span>
+<span lang=EN-US >
+ the ears, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chakShu:]</span></span>
+<span lang=EN-US >
+ eyes, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sparshanam]</span></span>
+<span lang=EN-US >
+ skin, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rasanam]</span></span>
+<span lang=EN-US >
+
+tongue, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ghrANam]</span></span>
+<span lang=EN-US >
+ nose </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mana: cha]</span></span>
+<span lang=EN-US >
+ and the mind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[upasEvatE]</span></span>
+<span lang=EN-US >
+ to experience </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[viShayAn]</span></span>
+<span lang=EN-US >
+ the stimuli in the material
+world.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Self employs the six sense organs
+including the mind. Each organ is suited to sense a stimulus in the
+environment, like the ear senses sound. The Self works each organ to experience
+the appropriate stimulus. In this way it experiences sound and other stimuli in
+the environment.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-10</span>
+<a name="15-10" > </a>
+<a name="10" > </a>
+<button class="button" id="shlokabox459" onclick="toggleSnskrtPhrase('shlokabox459')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+utkrAmantam sthitam vA_pi bhunjAnam
+vA guNAnvitam |<br>
+
+vimUDhA nAnupashyanti pashyanti jnAna
+chakShuShA: || 10 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[vimUDhA]</span></span>
+<span lang=EN-US >
+ The
+ignorant </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na anupashyanti]</span></span>
+<span lang=EN-US >
+ do
+not recognize </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[utkrAmantam]</span></span>
+<span lang=EN-US >
+ the
+Self when it departs from the body, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sthitam vA]</span></span>
+<span lang=EN-US >
+ or when it is situated in their own body, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhunjAnam
+cha]</span></span>
+<span lang=EN-US >
+ or even when it's experiencing the material world,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guNAnvitam vA]</span></span>
+<span lang=EN-US >
+ when it is
+bound in the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAna chakShuShA:]</span></span>
+<span lang=EN-US >
+ Those endowed with the eyes
+of knowledge </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pashyanti]</span></span>
+<span lang=EN-US >
+ do see
+it.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People who are ignorant do not recognize
+the Self in the form of pure knowledge, distinct from the flesh that
+constitutes a human form. They do not notice it in any circumstance - They don't
+recognize the Self when it is born in flesh - in human form or any another form.
+These forms are made out of the material world, full of the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They do not notice it when it has departed
+from a specific body or even when it is situated inside a body. They don't even
+recognize it when it's experiencing the stimuli in the environment, which are
+again full of the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+.
+Ignorant people are conceit in the opinion that the flesh, in the form of their
+body, is their 'Self'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People with the eyes of knowledge
+definitely discern the flesh from the Self. They recognize the Self as being
+distinct from the body, in every state. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-11</span>
+<a name="15-11" > </a>
+<a name="11" > </a>
+<button class="button" id="shlokabox460" onclick="toggleSnskrtPhrase('shlokabox460')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yatantO yOgina: chainam pashyanti
+Atmani avasthitam |<br>
+
+yatantO_pi akr'tAtmAnO nainam
+pashyanti achEtasa: || 11 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yOgina:]</span></span>
+<span lang=EN-US >
+ Those
+who realize their relationship with the Lord </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yatanta:]</span></span>
+<span lang=EN-US >
+ and persevere in its practice </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Enam pashyanti]</span></span>
+<span lang=EN-US >
+ shall see the Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Atmani avasthitam]</span></span>
+<span lang=EN-US >
+ present in themselves. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ On the other hand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[akr'tAtmAna:]</span></span>
+<span lang=EN-US >
+ those who haven't <a href="Chapter%207.html#Sharanagati">surrendered</a>
+ to the Lord
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na Enam pashyanti]</span></span>
+<span lang=EN-US >
+ do not see
+the Self </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yatanta: api]</span></span>
+<span lang=EN-US >
+ even
+with perseverance - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[achEtasa:]</span></span>
+<span lang=EN-US >
+
+They remain without recognizing the Self.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Having <a href="Chapter%207.html#Sharanagati">surrendered</a>
+
+to Me, those who pursue techniques such as <a href="karmayoga.html#karmayoga">karmayoga</a>
+
+purify themselves from the inside. Then, through the eyes of <a href="Chapter%206.html#yoga_state_of_being">yoga</a>
+, they see the Self in themselves - even
+while being situated inside the body, they see the Self in its true form, being
+separate from the body.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Others who haven't <a href="Chapter%207.html#Sharanagati">surrendered</a>
+
+their Self to the Lord do not see the Self. Since they do not follow the path
+of <a href="Chapter%207.html#Sharanagati">surrender</a>
+, their mind is unprepared and so their
+consciousness doesn't have the ability to recognize their Self.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Up until now, it was explained that light
+removes darkness. Darkness prevents material stimuli from coming into contact
+with our sense organs. The sun, the moon and sources of light such as fire get
+rid of darkness, enabling us to perceive the material world. In this way, light
+enables the eye to sense the material world. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, the Self illuminates
+everything, even the sources of light. Being the light of awareness, it knows
+and experiences everything. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Previously, it was said that the Self is an
+attribute of the Lord, both in its free form as well as in its bound form: <a href="Chapter%2015.html#6">Chapter 15-6</a>
+said 'After reaching this free state of being, they do not return. That abode
+is My supreme attribute'. <a href="Chapter%205.html#7">Chapter 5-7</a> said 'In this material world, where every
+Self is bound in the environment, the ever-existing Self is definitely a part
+of Me'.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote199 >
+<span lang=EN-US style='color:black' >
+Whatever the Self is
+aware of, that is also the Lord.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord states that the light given
+by luminous sources such as the sun, which is a special outcome of material
+creation, is also His attribute.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-12</span>
+<a name="15-12" > </a>
+<a name="12" > </a>
+<button class="button" id="shlokabox461" onclick="toggleSnskrtPhrase('shlokabox461')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yat Adityagatam tEjO jagat
+bhAsayatE_khilam |<br>
+
+yat chandramasi yat chAgnau tat tEjO
+viddhi mAmakam || 12 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[viddhi]</span></span>
+<span lang=EN-US >
+ Know
+that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEja:]</span></span>
+<span lang=EN-US >
+ the brilliance </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Aditya gatam]</span></span>
+<span lang=EN-US >
+ that comes from the Sun, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat bhAsayatE]</span></span>
+<span lang=EN-US >
+ which illuminates </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[akhilam jagat]</span></span>
+<span lang=EN-US >
+ the entire universe, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat]</span></span>
+<span lang=EN-US >
+ the luster </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chandramasi]</span></span>
+<span lang=EN-US >
+ that comes from the moon, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat cha]</span></span>
+<span lang=EN-US >
+ even the light </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[agnau]</span></span>
+<span lang=EN-US >
+ that comes from fire - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat tEja:]</span></span>
+<span lang=EN-US >
+ that light </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAmakam]</span></span>
+<span lang=EN-US >
+ is mine.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord states: 'The brilliance of the
+stars, which illuminate the entire universe, as also the brilliance of other
+sources of light is My brilliance. I gave them their brilliance based on their
+worship and intent'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord talks about the earth, which
+supports the existence of all its beings. He states 'This ability of the earth
+to sustain is My ability'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-13</span>
+<a name="15-13" > </a>
+<a name="13" > </a>
+<button class="button" id="shlokabox462" onclick="toggleSnskrtPhrase('shlokabox462')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+gAmAvishya cha bhUtAni dhArayAmi
+aham OjasA |<br>
+
+puShNAmi chauShadhI: sarvA: sOmO bhUtvA
+rasAtmaka: || 13 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[Avishya]</span></span>
+<span lang=EN-US >
+
+Pervading </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[gAm]</span></span>
+<span lang=EN-US >
+ the earth, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhArayAmi]</span></span>
+<span lang=EN-US >
+ sustain </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtAni]</span></span>
+<span lang=EN-US >
+
+all the beings here </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[OjasA]</span></span>
+<span lang=EN-US >
+ by
+My strength. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puShNAmi]</span></span>
+<span lang=EN-US >
+ I
+nurture </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvA: auShadhI:]</span></span>
+<span lang=EN-US >
+ all
+plants. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rasAtmaka:]</span></span>
+<span lang=EN-US >
+ I am the
+essence of taste, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sOmO bhUtvA]</span></span>
+<span lang=EN-US >
+
+I am the nectar.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Pervading the earth, I sustain all beings
+by My strength - My power has no bounds. I am also the nectar and the essence
+of taste. I nurture all plants.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-14</span>
+<a name="15-14" > </a>
+<a name="14" > </a>
+<button class="button" id="shlokabox463" onclick="toggleSnskrtPhrase('shlokabox463')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+aham vaishvAnarO bhUtvA prANinAm
+dEham Ashrita: |<br>
+
+prANApAna samAyukta: pachAmyannam
+chaturvidham || 14 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham Ashrita:]</span></span>
+<span lang=EN-US >
+
+I embed Myself in </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prANinAm dEham]</span></span>
+<span lang=EN-US >
+ the bodies of animals </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtvA]</span></span>
+<span lang=EN-US >
+ in the form of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vaishvAnara:]</span></span>
+<span lang=EN-US >
+ the chemistry of digestion. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[samAyukta:]</span></span>
+<span lang=EN-US >
+ Together with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prANa]</span></span>
+<span lang=EN-US >
+ inhalation </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[apAna]</span></span>
+<span lang=EN-US >
+
+and exhalation, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pachAmi]</span></span>
+<span lang=EN-US >
+ I
+digest </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chaturvidham annam]</span></span>
+<span lang=EN-US >
+ the
+four types of food.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the chemistry of digestion - the
+mechanism of digestion in the stomach. I embed Myself in all animals in this
+form too. Animals eat four types of food - solid food that's chewed, food
+that's swallowed, food that's licked and liquids that they drink. I digest the
+four types of foods by combining with the different functions of inhalation and
+exhalation. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The essence of taste and the chemistry of
+digestion, which are under the control of the Lord, were mentioned by Him as 'I
+am the essence of taste' and 'I am the chemistry of digestion' in the previous
+two Shlokas. They were described as being the Lord Himself, even though the
+Lord controls them. In fact, they describe the <a href="Chapter%2014.html#equivalence_to_the_Lord">equivalence</a>
+ of everything in the universe
+to the Lord. The basis of this equivalence is stated next.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-15</span>
+<a name="15-15" > </a>
+<a name="15" > </a>
+<button class="button" id="shlokabox464" onclick="toggleSnskrtPhrase('shlokabox464')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sarvasya chAham hr'di sanniviShTO<br>
+
+matta: smr'tirjnAnam apOhanam cha |<br>
+
+vEdaishcha sarvairahamEva vEdyO<br>
+
+vEdAntakr't vEda vidEva chAham || 15
+||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham sanniviShTa:]</span></span>
+<span lang=EN-US >
+ I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvasya hr'di]</span></span>
+<span lang=EN-US >
+ at the heart of everything. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAnam]</span></span>
+<span lang=EN-US >
+ Awareness, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[smr'ti]</span></span>
+<span lang=EN-US >
+
+memory </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[apOhanam cha]</span></span>
+<span lang=EN-US >
+ and the
+ability to reason </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[matta:]</span></span>
+<span lang=EN-US >
+ come
+from Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham Eva]</span></span>
+<span lang=EN-US >
+ I alone </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vEdya:]</span></span>
+<span lang=EN-US >
+ am to be known </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvai: vEdai:]</span></span>
+<span lang=EN-US >
+ from all the Vedas. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vEdAntakr't]</span></span>
+<span lang=EN-US >
+ I make the end of the Vedas </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham Eva]</span></span>
+<span lang=EN-US >
+ I am the One </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vEdavit]</span></span>
+<span lang=EN-US >
+ who knows the Vedas.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says- I am present at the heart of
+all beings, the place where the awareness called 'consciousness' comes from.
+This 'consciousness' is the awareness that brings the experience of
+pleasantness, initiates the process of digestion and governs all activities
+that are performed or stopped in all beings. In this way, I am at the core of
+all beings, regulating everything by My will. The scriptures say the same:</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[ya.aa]</span>
+<span lang=EN-US >
+, 3-11-2
+says - 'He is the core of the Self in everyone, ruling them and pervading them
+from the inside'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[br'hadArAnyaka]</span>
+<span lang=EN-US >
+,
+3-7-3 says - 'He who is situated in the earth...'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[br'hadArAnyaka]</span>
+<span lang=EN-US >
+,
+3-7-22 says - 'He is present in the Self while being distinct from the Self. He
+rules the Self from the inside'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[mahA nArAyaNa]</span>
+<span lang=EN-US >
+
+says - 'The heart is like a lotus flower facing downwards. Everything is
+present within, in a subtle form'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[ChAndOgya]</span>
+<span lang=EN-US >
+, 8-1-1
+says - 'In this body, which is the Lord's place of residence, there is a small
+lotus, with a small space. That space is the Lord in subtle form', after which
+it goes on to describe the qualities of that space - its intent is always
+fulfilled, it has infinite joy, it has no thirst and so on - these are the
+qualities of the Lord.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the </span>
+<span lang=EN-US >
+[viShNu
+purANa]</span>
+<span lang=EN-US >
+, 1-17-20 Prahlada tells his father - 'Vishnu is
+the ruler of everything in the world, without exception, He pervades
+everything'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[manu smr'ti]</span>
+<span lang=EN-US >
+,
+12-122 says - 'He controls everything, being smaller and subtle beyond anything
+else'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+[manu smr'ti]</span>
+<span lang=EN-US >
+, 8-92
+says - 'The Lord, who is the controller and the regulator, is present at your
+heart'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Hence, everyone's memory comes from Me.
+This 'memory' is the awareness that comes from merely re-living a past
+experience. Awareness is to infer and recognize things based on experiences
+from various organs. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Forgetfulness and the inability to reason
+is from Me. The power to reason comes from Me, as well as the ability to anticipate,
+says the Lord. This comes to us in the form of 'I have learnt this fact (a fact
+like gravity); I see the situation (like a stone being tossed); I can reason
+what's next (the stone will fall)'. The chain of events that happens after this
+(the stone hurting someone) adds to our learning. In this Shloka, The Lord said
+'All this comes from Me'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'I alone am to be known from all the Vedas'
+- The Vedas describe natural phenomena like fire, wind, the Sun, the Moon, acts
+of nature and so on. I am inside all of them, at the core of their Self. Hence,
+I am the One to be known from all the Vedas. The words 'human', 'god' and all
+others refer to the Self in them. The Vedas describe the methods of worshipping
+the gods, along with the results of such worship. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is the Lord who is being worshipped by
+all methods, being at the core of every Self.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'I make the end of the Vedas' - the Vedas
+end in the fruits of the actions they prescribed. 'Making the end' here means
+that the Lord makes the fruits - He is the One who gives the result stated in
+the Vedas.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This was stated previously, starting with
+<a href="Chapter%207.html#21">Chapter 7-21</a> and <a href="Chapter%207.html#22">Chapter 7-22</a>: 'Which ever devotee likes to please what ever form
+with dedication, I give stability to the same faith in each of them. With that
+dedication, the person wishes to worship accordingly. By this he attains his
+desires. These desires are given by Me alone' and in <a href="Chapter%209.html#24">Chapter 9-24</a>: 'I am indeed
+the enjoyer and the single Master of all services rendered to anyone or
+anything. Those who crave for material wealth do not know Me as I am. Hence,
+they fall back'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'I am the One who knows the Vedas': All the
+Vedas describe and address the Lord. The Lord says 'I know this fact'. Those
+who speak other meanings of the Vedas do not know the Vedas - that is the
+opinion expressed here.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Hence, listen to the one summary of all
+the Vedas from Me' - continues the Lord.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-16</span>
+<a name="15-16" > </a>
+<a name="16" > </a>
+<button class="button" id="shlokabox465" onclick="toggleSnskrtPhrase('shlokabox465')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+dvAvimau puruShau lOkE kShara:
+akShara Eva cha |<br>
+
+kShara: sarvANi bhUtAni kUTastha:
+akShara uchyatE || 16 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[imau puruShau]</span></span>
+<span lang=EN-US >
+
+The people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lOkE]</span></span>
+<span lang=EN-US >
+ in My
+Universe </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dvau]</span></span>
+<span lang=EN-US >
+ are of two
+types - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kShara:]</span></span>
+<span lang=EN-US >
+ perishable </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[akShara]</span></span>
+<span lang=EN-US >
+ imperishable. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvANi bhUtAni]</span></span>
+<span lang=EN-US >
+ All beings you see here </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kShara:]</span></span>
+<span lang=EN-US >
+ are perishable. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kUTastha:]</span></span>
+<span lang=EN-US >
+ The ones who stay without deforming </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchyatE]</span></span>
+<span lang=EN-US >
+ are said to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[akShara]</span></span>
+<span lang=EN-US >
+ the imperishable.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In My Universe, the perishable and imperishable
+beings are well-known. The person termed 'perishable' here is what we call
+'living beings', starting with Brahma, the principal engineer of the material
+world, right up to even single-celled organisms. It's in their nature to wither
+and perish, being created in combination with materials. In this Shloka, they
+are all bundled together as one person, since they all have a common
+characteristic - they are bound in the material world.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The one who does not change, called as the
+'imperishable' is free from the attachment to the inanimate material world. He
+is <a href="Back%20to%20Basics.html#Moksha">free</a>
+ by nature and stays in his natural form. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Without attachments to anything inanimate,
+he does not have any characteristics to differentiate him. The rest of us are differentiated
+by the body we are bound to. That includes Brahma too. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Since the <a href="Back%20to%20Basics.html#Moksha">free</a>
+ Self
+does not vary, he is also called as 'invariant'. Just as an anvil stays
+invariant while forging, every Self remains without changing. Since all of them
+are common in their characteristic of being <a href="Back%20to%20Basics.html#Moksha">free</a>
+ from the
+material world, this Shloka groups them together as 'the imperishable'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This group is not restricted to those who
+have been <a href="Back%20to%20Basics.html#Moksha">free</a>
+ forever - it also includes those who are <a href="Back%20to%20Basics.html#Moksha">free</a>
+ now, who were bound previously - as said in <a href="Chapter%204.html#10">Chapter 4-10</a>:
+'Many people have taken refuge in Me, discarding desire, fear and anger. They
+fill Me in their minds. They have been purified by pursuing My knowledge in a
+single-minded way and have attained My qualities' and in <a href="Chapter%2014.html#2">Chapter 14-2</a>: 'Having
+gained this knowledge, they achieve My characteristics. They are not born again
+even at the time of creation, nor do they perish when the universe perishes'</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-17</span>
+<a name="15-17" > </a>
+<a name="17" > </a>
+<button class="button" id="shlokabox466" onclick="toggleSnskrtPhrase('shlokabox466')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+uttama: puruShastu anya: paramAtmEti
+udAhr'ta: |<br>
+
+yO lOkatrayam Avishya bibharti
+avyaya: Ishvara: || 17 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ However, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uttama: puruSha:]</span></span>
+<span lang=EN-US >
+ the Supreme Person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anya:]</span></span>
+<span lang=EN-US >
+ is another one. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[udAhr'ta:]</span></span>
+<span lang=EN-US >
+ He is known </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paramAtmA iti]</span></span>
+<span lang=EN-US >
+ as the Ultimate Self. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yO]</span></span>
+<span lang=EN-US >
+ He </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Avishya]</span></span>
+<span lang=EN-US >
+ pervades </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lOkatrayam]</span></span>
+<span lang=EN-US >
+ the three domains </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bibharti]</span></span>
+<span lang=EN-US >
+ and supports them. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyaya:]</span></span>
+<span lang=EN-US >
+ He never wears out. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Ishvara:]</span></span>
+<span lang=EN-US >
+ He is the Supreme Lord.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote200 >
+<span lang=EN-US style='color:black' >
+The Lord is superior to
+all of this.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the previous Shlokas, it was mentioned
+that those who are bound in the material world are perishable, while those who
+are <a href="Back%20to%20Basics.html#Moksha">free</a>
+ from the material world are imperishable. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+However, the supreme person is neither of
+them. He has distinct characteristics and is called the Ultimate Self in all
+the scriptures. The reference [paramAtmA] - 'The Ultimate Self' implies that
+the Supreme Person is distinct from both the bound and <a href="Back%20to%20Basics.html#Moksha">free</a>
+
+beings. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+How is He distinct? This Shloka states: 'He
+pervades the three domains and supports them'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord looks over them, hence they are
+called as domains (the Sanskrit word </span>
+<span lang=EN-US >
+[lOka]</span>
+<span lang=EN-US >
+, also used to mean the world and its people, comes from </span>
+<span lang=EN-US >
+[lOkyatE]</span>
+<span lang=EN-US >
+, which means 'they are looked
+over'. The English word 'domain' also comes from the Latin word <i >
+dominus</i>
+,
+meaning 'the lord who looks over').</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The three domains are known from the
+scriptures. They are: Inanimate matter, Conscious beings who are bound with it,
+Conscious beings who are <a href="Back%20to%20Basics.html#Moksha">free</a>
+ from it.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord pervades all three of them as the
+core of their Self and supports them. In this way, He is distinct from those
+who are pervaded and supported by Him. This person, who has been described as
+being distinct, is the Lord. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+He does not wear out. In this way, He is
+unlike the material world, which does wear out. Since He is not bound by
+matter, He is distinct from all beings that are attached to matter. By being
+the Lord and controller of everything, He is unlike the other beings that are
+free of the material world as well.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-18</span>
+<a name="15-18" > </a>
+<a name="18" > </a>
+<button class="button" id="shlokabox467" onclick="toggleSnskrtPhrase('shlokabox467')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yasmAt kSharam atItO_ham akSharAt
+api chOttama: |<br>
+
+atO_smi lOkE vEdE cha prathita:
+puruShOttama: || 18 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yasmAt aham]</span></span>
+<span lang=EN-US >
+
+As I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kSharam atIta:]</span></span>
+<span lang=EN-US >
+ beyond
+the perishable </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[api cha]</span></span>
+<span lang=EN-US >
+ and
+also </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[akSharAt uttama:]</span></span>
+<span lang=EN-US >
+
+superior to the imperishable, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prathita: asmi]</span></span>
+<span lang=EN-US >
+ I am well-known </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lOkE]</span></span>
+<span lang=EN-US >
+ in the world </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vEdE cha]</span></span>
+<span lang=EN-US >
+ and in the Vedas </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puruShOttama:]</span></span>
+<span lang=EN-US >
+ as the Supreme Person.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am beyond the perishable, whose nature
+was described previously. I am superior to the imperishable in its bound and in
+its <a href="Back%20to%20Basics.html#Moksha">free</a>
+ state. The basis of this superiority was
+explained in the previous Shloka. By this, I am well-known as the Supreme
+Person in the world and in the scriptures. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The 'world' beholds traditions and the
+knowledge in them. Here, this word is used to mean the [smr'ti] - epics,
+traditions and knowledge that are handed down from generation to generation. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord is famous as the Supreme Person
+both in scriptures that are written down, as well as in the tradition and
+knowledge handed down over generations.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The [shruti] scripture </span>
+<span lang=EN-US >
+[ChAndOgya]</span>
+<span lang=EN-US >
+, 8-12-3 says - 'This Self
+vacates the body and gains the supreme light of the Lord. The Self shines on
+his own, in his own form. The goal he reaches is the Supreme Person'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A [smr'ti] story in </span>
+<span lang=EN-US >
+[viShNu purANa]</span>
+<span lang=EN-US >
+, 5-17-33 says - 'Akrura
+tells Kamsa that Krishna is definitely a portion of Vishnu, having come to the
+Earth as an incarnation. He is without a beginning, middle or end'. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-19</span>
+<a name="15-19" > </a>
+<a name="19" > </a>
+<button class="button" id="shlokabox468" onclick="toggleSnskrtPhrase('shlokabox468')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yO mAm Evam asammUDha: jAnAti
+puruShOttamam |<br>
+
+sa sarvavit bhajati mAm sarvabhAvEna
+bhArata || 19 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yO]</span></span>
+<span lang=EN-US >
+ the person who </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jAnAti]</span></span>
+<span lang=EN-US >
+ knows </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm]</span></span>
+<span lang=EN-US >
+ Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puruShOttamam]</span></span>
+<span lang=EN-US >
+
+as the Supreme Person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Evam]</span></span>
+<span lang=EN-US >
+ in
+this way </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asammUDha:]</span></span>
+<span lang=EN-US >
+ without
+any doubts in mind - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa:]</span></span>
+<span lang=EN-US >
+ such
+a person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvavit]</span></span>
+<span lang=EN-US >
+ knows
+everything </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm bhajati]</span></span>
+<span lang=EN-US >
+ and
+worships Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvabhAvEna]</span></span>
+<span lang=EN-US >
+ with
+all emotions.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says in this Shloka - 'The person
+who knows Me as the <i >
+Supreme Person</i>
+, without any doubts or suspicion'.
+What's the Supreme Person like? </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Supreme Person was described as being
+distinct from all that's perishable and imperishable. This distinction comes
+from the characteristics of never wearing out, pervading everything, supporting
+everything and controlling everything. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+So, the Lord says - 'The Person who knows
+Me as the Supreme Person knows everything - he knows all about the means to achieve
+Me'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this Shloka, The Lord also says - 'This person
+worships Me with all emotions'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+To achieve me, this person worships Me by
+all known means of worship. The affection I get by knowing everything about Me
+and the affection I get by chanting everything about Me - both these affections
+are born to Me, by worshipping Me as the Supreme Person.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord praises His realization as the
+Supreme Person.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+15-20</span>
+<a name="15-20" > </a>
+<a name="20" > </a>
+<button class="button" id="shlokabox469" onclick="toggleSnskrtPhrase('shlokabox469')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+iti guhyatamam shAstram idam uktam
+mayA anagha |<br>
+
+Etat buddhvA buddhimAn syAt kr'ta
+kr'tya: cha bhArata || 20 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[anagha bhArata]</span></span>
+<span lang=EN-US >
+ Flawless Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti]</span></span>
+<span lang=EN-US >
+ in this way, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[idam shAstram]</span></span>
+<span lang=EN-US >
+ this knowledge, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guhyatamam]</span></span>
+<span lang=EN-US >
+ which is supremely concealed, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uktam]</span></span>
+<span lang=EN-US >
+ has been spelt out </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mayA]</span></span>
+<span lang=EN-US >
+ by Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Etat buddhvA]</span></span>
+<span lang=EN-US >
+ Knowing this, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[buddhimAn]</span></span>
+<span lang=EN-US >
+ you are endowed with intellect </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha kr'ta
+kr'tya: syAt]</span></span>
+<span lang=EN-US >
+ and shall have done everything there is
+to do.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This knowledge, which brings forth My
+superiority, is concealed even among everything that's concealed. I consider
+you to be flawless and most deserving; hence I revealed it to you. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord goes on to state - 'Knowing this,
+you are endowed with intellect and shall have done everything there is to do'.
+Meaning - By knowing My superiority, you have acquired all the intellect that's
+required by anyone to achieve Me. You have already done everything that must be
+done for this purpose.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The knowledge of the Supreme Person told in
+this Shloka is present in the scriptures and brings everything that was told - though
+it's not a realization of the Lord.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%2014.html">Chapter 14</a></span><span style="float:right;"><a href="Chapter%2016.html">Chapter 16</a>&nbsp;&#xbb;</span></p>
+
+<!-- Here ends the chapter -->
+<div class="TopNoteBlock">
+<div class="TopNote" id='TopNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='TopNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_up.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px;margin-right:24pt" id='TopApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+<div style="position:fixed;top:0;right:0;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+</div>
+<div class="BottomNoteBlock">
+<div class="BottomNote" id='BottomNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='BottomNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_down.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px" id='BottomApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Middle (Gita commentary) div ends here -->
+</div>
+
+<!-- Container ends here -->
+</div>
+
+<!--scripts are at the end because they refer to the divs on top -->
+<script type="text/javascript">
+<!-- console.log('gita scroller 4'); -->
+var commentaryElm = document.getElementById('GitaCommentary');
+var chapapplnotestart = 197;
+document.addEventListener("DOMContentLoaded", domloaded());
+commentaryElm.onscroll = onCommentaryScroll;
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleSnskrtPhrase(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var rule = cssRule('span.snskrtphrase');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    commentaryElm.scrollTop = commentaryElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function containerResize(){
+<!--set top and bottom note to 'left' or 'centered' -->
+}
+function domloaded(){
+    containerResize();
+    <!--trigger the default top-bottom on loading the chapter -->
+    syncnote();
+}
+function onCommentaryScroll() {
+    syncnote();
+}
+function recordState() {
+    var currentScTop = commentaryElm.scrollTop;
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ 'c' + "=" + currentScTop);
+}
+function overlapFeedback(elm, overlap) {
+    var rgbastr = 'rgba(216,191,216,' + toString(1-overlap) + ')';
+    elm.style.backgroundColor = rgbastr;
+}
+function syncnote() {
+    var commentaryViewPort = commentaryElm.getBoundingClientRect(); 
+
+    <!--Find the inline application note right above current viewport and the one right below-->
+    var inlinenoteAbove = "";
+    var inlinerefAbove = "";
+    var inlinenoteBelow = "";
+    var inlinerefBelow = "";
+
+    var i = chapapplnotestart;
+    <!--The 'inline' word here is very important!! The code assumes this everywhere! -->
+    var inlinenote = 'inlineapplnote' + i;
+    var inlineElm = document.getElementById(inlinenote);
+    var topOverlap = 0;
+    var bottomOverlap = 0;
+    var topNoteRect = document.getElementById("TopNoteID").getBoundingClientRect();
+    var bottomNoteRect = document.getElementById("BottomNoteID").getBoundingClientRect();
+
+    while(inlineElm != null) {
+        inlineRect = inlineElm.getBoundingClientRect();
+        if(inlineRect.top <= topNoteRect.top) {
+            inlinenoteAbove = inlineElm.innerHTML;
+            inlinerefAbove = inlinenote;
+            topOverlap = Math.min(Math.max((inlineRect.bottom - topNoteRect.top) / 
+                                           (topNoteRect.bottom - topNoteRect.top), 0), 1);
+        }
+        else if(inlineRect.top < topNoteRect.bottom) {
+            topOverlap = (topNoteRect.bottom - inlineRect.top) / (topNoteRect.bottom - topNoteRect.top);
+        }
+		else if(topNoteRect.bottom == 0) {
+			topOverlap = 1;
+		}
+        if(inlineRect.bottom > bottomNoteRect.top && inlineRect.bottom < bottomNoteRect.bottom) {
+            bottomOverlap = (inlineRect.bottom - bottomNoteRect.top) / 
+                            (bottomNoteRect.bottom - bottomNoteRect.top);
+        }
+        else if (inlineRect.top > bottomNoteRect.top && inlineRect.top < bottomNoteRect.bottom) {
+            bottomOverlap = (bottomNoteRect.bottom - inlineRect.top) /
+                            (bottomNoteRect.bottom - bottomNoteRect.top)
+        }
+        <!--Latch the first one that breaches the bottom-->
+        if(inlinenoteBelow == "" && inlineRect.bottom > commentaryViewPort.bottom) {
+            inlinenoteBelow = inlineElm.innerHTML;
+            inlinerefBelow = inlinenote;
+        }
+        i++;
+        inlinenote = 'inlineapplnote' + i;
+        inlineElm = document.getElementById(inlinenote);
+    }
+    <!--Show the note above at the top and below at the bottom only if they have something -->
+    document.getElementById("TopApplicationNote").innerHTML = inlinenoteAbove;
+    if(inlinenoteAbove != "") {
+        document.getElementById("TopNoteTableID").onclick = function(){window.location.href = "#"+inlinerefAbove};
+        document.getElementById("TopNoteID").style.display = 'inherit';
+    } else {
+        document.getElementById("TopNoteID").style.display = 'none';
+    }
+    document.getElementById("BottomApplicationNote").innerHTML = inlinenoteBelow;
+    if(inlinenoteBelow != "") {
+        document.getElementById("BottomNoteTableID").onclick = function(){window.location.href = "#"+inlinerefBelow};
+        document.getElementById("BottomNoteID").style.display = 'inherit';    
+    } else {
+        document.getElementById("BottomNoteID").style.display = 'none';    
+    }
+    document.getElementById("TopNoteID").style.opacity = 1 - topOverlap;
+    document.getElementById("BottomNoteID").style.opacity = 1 - bottomOverlap;
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var rule = cssRule('span.snskrtphrase');
+        if(eorc == 'e') {
+            rule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            rule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        commentaryElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+function gotohash() {
+	if(window.location.hash == "") {
+		commentaryElm.scrollTop = 0;
+	} else {
+		var elmTogo = document.getElementById(window.location.hash.substr(1));
+		commentaryElm.scrollTop += elmTogo.getBoundingClientRect().top-1;
+	}
+}
+</script>
+
+</body>
+
+</html>

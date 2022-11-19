@@ -1,0 +1,3275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna&quot;s Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.TopNoteBlock, .BottomNoteBlock {
+    display: flex;
+    flex-direction: row;
+    position: fixed
+}
+.TopNote, .BottomNote {
+	width: 100%;
+    height: auto;
+    background-color: rgba(216,191,216,0.95);    
+    border-color: #E5DFEC;
+    position: fixed
+}
+.TopNote, .TopNoteBlock {
+    top: 0;
+    left: 0;
+}
+.BottomNote, .BottomNoteBlock {
+    bottom: 0;
+    left: 0;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    padding: .5rem;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: navy;
+    -webkit-overflow-scrolling: touch;
+}
+/*Thin scrollbar*/
+.Middle::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Middle::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+/*  Right has a set size while the Middle is set to flex one so it occupies all remaining space.*/
+.Middle {
+    flex: 1;
+	width: auto;
+    height: 80%;
+    background: Beige;
+}
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;
+}
+h1 {
+    margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;
+}
+h2 {
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;
+}
+p.Shloka, li.Shloka, div.Shloka {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+span.snskrtphrase {
+    color: Maroon;
+    display:none;
+}
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx, p.ApplNotesOpener {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";
+}
+p.ApplNotesOpener {
+    font-weight:bold;
+}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight, p.ApplNotesROp, .TopNote, .BottomNote {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	font-size:9.0pt;
+    line-height:150%;
+	font-family:"Comic Sans MS";
+}
+.TopNote {
+    border-style:none none dotted none;
+}
+.BottomNote {
+    border-style:dotted none none none;
+}
+p.ApplNotesROp {
+    font-style:italic;
+}
+.ApplNotesImg, .ApplNotesROpImg {
+    height:16pt;
+}
+p.nextprev, li,nextprev, div.nextprev {
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";
+}
+.button {
+    background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;
+}
+</style>
+</head>
+
+<body onresize="containerResize()" onpageshow="pageshown()" lang=EN-IN>
+
+<!-- Was: nothing was there -->
+<div class="Container" id='GitaContainer'>
+
+<!-- Was: div class=WordSection1 id='GitaCommentary' -->
+<div class="Middle" id='GitaCommentary'>
+
+<!-- Here starts the chapter -->
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%2016.html">Chapter 16</a></span><span style="float:right;"><a href="Chapter%2018.html">Chapter 18</a>&nbsp;&#xbb;</span></p>
+<h1>Chapter 17</h1>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The previous chapter made the distinction
+between people who comply with the Lord's instructions and those who don't. It
+said that the Lord's instructions in the Vedas alone are the basis of what is
+to be achieved and how to achieve it.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This chapter elaborates that work done without
+regard to the Lord's instructions is work done in vain. It explains that the
+imperatives in the scriptures are of three types, as appropriate to the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. This chapter also illustrates
+the characteristics of the Lord's instructions and what they state.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Arjuna doesn't know this fact - that work
+that's not recommended by the Lord's instructions is in vain. He wants to know
+the effect of work done with focus and belief in its benefits.  He wants to
+know the result of association with qualities such as <a href="Chapter%2014.html#sattva">sattva</a>
+
+- even though the corresponding work may not be specified in the Lord's instructions.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-1</span>
+<a name="17-1" > </a>
+<a name="1" > </a>
+<button class="button" id="shlokabox494" onclick="toggleSnskrtPhrase('shlokabox494')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+arjuna uvAcha<br>
+
+yE shAstra vidhim utsr'jya yajantE
+shraddhayA_nvitA: |<br>
+
+tEShAm niShThA tu kA kr'ShNa
+sattvamAhO rajas tama: || 1 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[arjuna uvAcha]</span></span>
+<span lang=EN-US >
+
+Arjuna said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kA]</span></span>
+<span lang=EN-US >
+ 'What is </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[niShThA]</span></span>
+<span lang=EN-US >
+ the final state of achievement </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEShAm]</span></span>
+<span lang=EN-US >
+ of people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yE
+yajantE]</span></span>
+<span lang=EN-US >
+ who persevere with faith </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shraddhayA_nvitA:]</span></span>
+<span lang=EN-US >
+ and focus, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[utsr'jya]</span></span>
+<span lang=EN-US >
+ disregarding </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shAstra vidhim]</span></span>
+<span lang=EN-US >
+ the imperatives laid down
+in the scriptures? </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sattvam]</span></span>
+<span lang=EN-US >
+ Is
+it in <a href="Chapter%2014.html#satva_rajas_tamas_effects">sattva</a>
+, the state of serenity? </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AhO]</span></span>
+<span lang=EN-US >
+ or </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rajas]</span></span>
+<span lang=EN-US >
+ Or in <a href="Chapter%2014.html#satva_rajas_tamas_effects">rajas</a>
+, being
+resourceful? </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tama:]</span></span>
+<span lang=EN-US >
+ Or in <a href="Chapter%2014.html#satva_rajas_tamas_effects">tamas</a>
+, the state of laziness?'</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+What is the achievement of someone who
+discards the methods in the scriptures and yet perseveres with faith and focus?
+Is it the <a href="Chapter%2014.html#satva_rajas_tamas_effects">sattva</a>
+ state-of-being, in
+which a person is serene? Is it, <a href="Chapter%2014.html#satva_rajas_tamas_effects">rajas</a>
+,
+being resourceful? Or is its <a href="Chapter%2014.html#satva_rajas_tamas_effects">tamas</a>
+,
+the state of laziness? </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This Shloka uses the word </span>
+<span lang=EN-US >
+[niShThA]</span>
+<span lang=EN-US >
+ in the sense of 'achievement',
+which refers to a stable state-of-being achieved by a person. 'Achievement'
+here is to settle in one of the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+.
+Arjuna asks if this person achieves the state of <a href="Chapter%2014.html#satva_rajas_tamas_effects">sattva</a>
+, <a href="Chapter%2014.html#satva_rajas_tamas_effects">rajas</a>
+ or <a href="Chapter%2014.html#satva_rajas_tamas_effects">tamas</a>
+?</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In response to this question, the Lord
+describes that the methods and forms of worship described in the scriptures are
+according to the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. To describe
+this, the Lord shows that there are three areas of focus in the scriptures. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-2</span>
+<a name="17-2" > </a>
+<a name="2" > </a>
+<button class="button" id="shlokabox495" onclick="toggleSnskrtPhrase('shlokabox495')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shrI bhagavAn uvAcha<br>
+
+trividhA bhavati shraddhA dEhinAm sA
+svabhAvajA |<br>
+
+sAttvikI rAjasI chaiva tAmasI chEti
+tAm shr'Nu || 2 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[shrI bhagavAn uvAcha]</span></span>
+<span lang=EN-US >
+ The Lord said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEhinAm shraddhA]</span></span>
+<span lang=EN-US >
+ Those who own a body have focus </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[trividhA
+bhavati]</span></span>
+<span lang=EN-US >
+ of three types: </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAttvikI]</span></span>
+<span lang=EN-US >
+ serene, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasI]</span></span>
+<span lang=EN-US >
+
+resourceful </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasI]</span></span>
+<span lang=EN-US >
+ lazy. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sA
+svabhAvajA]</span></span>
+<span lang=EN-US >
+ It comes from their own state of being. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti tAm shr'Nu]</span></span>
+<span lang=EN-US >
+ Listen to them.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote205 >
+<span lang=EN-US style='color:black' >
+Where does difficulty
+come from?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Everyone who owns a body has three types of
+focus. It comes from their own state of being. This 'state of being' is unique
+to them. It is shaped by the influence of actions committed since ancient
+times. It is specialized by their likes and dislikes, so their focus is
+directed by their tastes in life. <a name="shraddha_focus" >
+</a>
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This 'focus' - </span>
+<span lang=EN-US >
+[shraddhA]</span>
+<span lang=EN-US >
+ - is the eagerness in their endeavor, filled with the conviction
+that it will achieve their belief. The influence of past deeds, the consequent
+tastes and this focus make up the 'conduct' of the Self. This conduct comes
+from contact with the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+.
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It's possible to describe the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+ only by their effects.
+The three qualities come from experiencing things around us - things like our
+body - which is composed out of these <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+.
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+We perceive the world by using our body,
+our sense organs and our mind. This perception is a product of the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+ and gives rise to the
+conduct of the Self - in the form of motivation, tastes and focus.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Hence, this focus - </span>
+<span lang=EN-US >
+[shraddhA]</span>
+<span lang=EN-US >
+ - is of three types - serene,
+resourceful and lazy, going by the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three
+qualities of sattva, rajas and tamas</a>
+. Listen to this focus and its
+characteristics.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-3</span>
+<a name="17-3" > </a>
+<a name="3" > </a>
+<button class="button" id="shlokabox496" onclick="toggleSnskrtPhrase('shlokabox496')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+satvAnurUpA sarvasya shraddhA
+bhavati bhArata |<br>
+
+shraddhAmayO ayam puruShO yO yat
+shraddha: sa Eva sa: || 3 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvasya]</span></span>
+<span lang=EN-US >
+ each
+person's </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shraddhA]</span></span>
+<span lang=EN-US >
+ focus </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[satvAnurUpA bhavati]</span></span>
+<span lang=EN-US >
+ is according to the
+essence of his character. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ayam puruSha:]</span></span>
+<span lang=EN-US >
+ This person is </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shraddhAmaya:]</span></span>
+<span lang=EN-US >
+ defined by his focus. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ya:]</span></span>
+<span lang=EN-US >
+ Whoever </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat shraddha:]</span></span>
+<span lang=EN-US >
+ has a focus, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa Eva sa:]</span></span>
+<span lang=EN-US >
+ he is that itself.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The 'essence of character' is the core of
+the body - the reason for the body's existence. This core of our body shapes
+our focus. The core of our body is made from the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+. In this way, focus is born on a subject based on the qualities
+that make up the core of our body.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Here, the phrase 'essence of character' is
+used to represent our body along with its organs and the mind, as told <a href="Chapter%2013.html#_13-29">before</a>
+. We are 'defined by our focus' - our personality is a
+product of our focus. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+We end up as a product of whatever our
+focus is. When we get focused on actions of virtue, their outcomes latch on to
+us. In this way, the 'outcome of action' - our experience after committing an
+action - comes primarily from our <a href="Chapter%2017.html#shraddha_focus">focus</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord elaborates this very fact next:</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-4</span>
+<a name="17-4" > </a>
+<a name="4" > </a>
+<button class="button" id="shlokabox497" onclick="toggleSnskrtPhrase('shlokabox497')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yajaMtE sAttvikA dEvAn yakSha
+rakShAMsi rAjasA: |<br>
+
+prEtAn bhUtagaNAn chAnyE yajantE
+tAmasA: janA: || 4 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sAttvikA:]</span></span>
+<span lang=EN-US >
+
+People in whom <a href="Chapter%2014.html#sattva">sattva</a>
+ is predominant </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajaMtE]</span></span>
+<span lang=EN-US >
+ devote themselves to </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEvAn]</span></span>
+<span lang=EN-US >
+ those who follow the Lord's
+instructions. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasA:]</span></span>
+<span lang=EN-US >
+ People
+who have a predominance of <a href="Chapter%202.html#satva_rajas_tamas">rajas</a>
+ go behind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yakSha rakShAMsi]</span></span>
+<span lang=EN-US >
+ illusive powers, which
+they believe will guard and protect them. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anyE janA:]</span></span>
+<span lang=EN-US >
+ Other people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasA:]</span></span>
+<span lang=EN-US >
+ with <a href="Chapter%202.html#satva_rajas_tamas">tamas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajantE]</span></span>
+<span lang=EN-US >
+ get devoted to </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prEtAn]</span></span>
+<span lang=EN-US >
+ the deceased </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtagaNAn cha]</span></span>
+<span lang=EN-US >
+ spirits and other
+superstitions.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote206 >
+<span lang=EN-US style='color:black' >
+Our past gives the
+qualities of our body and our outlook to life.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People with a predominance of <a href="Chapter%2014.html#satva_rajas_tamas_effects">sattva</a>
+ have the serene type of <a href="Chapter%2017.html#shraddha_focus">focus</a>
+. With this, they devote themselves to those
+who follow the Lord's instructions. This focus is free from sorrow. It provides
+superior joy. This type of focus is 'serene' focus and it goes with sattva.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People with a predominance of <a href="Chapter%2014.html#satva_rajas_tamas_effects">rajas</a>
+ go behind power that appears to
+guard and protect them from the undesirable. This is the resourceful type of <a href="Chapter%2017.html#shraddha_focus">focus</a>
+, which has some joy mixed with difficulties.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Those with a predominance of <a href="Chapter%2014.html#satva_rajas_tamas_effects">tamas</a>
+ get devoted to spirits and other
+forms of superstitions. This lazy type of <a href="Chapter%2017.html#shraddha_focus">focus</a>
+
+is high on sorrow with very little joy.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The scriptures specify rules and activities
+for people having a predominance of any of the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+. Performing accordingly with <a href="Chapter%2017.html#shraddha_focus">focus</a>
+ brings
+outcomes, which are according to their <a href="Chapter%202.html#satva_rajas_tamas">qualities</a>
+
+as described above - when the activities don't go against the scriptures.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, even activities such as
+charity, penance and rituals do not yield any well-being when they are
+performed in disregard of the scriptures - they go against The Lord's
+instructions. Next, the Lord clarifies His opinion, firm at heart - that such
+activities are disastrous.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote207 >
+<span lang=EN-US style='color:black' >
+Given an outlook, we
+can choose to live in reality or live in vain.</span>
+</p>
+</td></tr></table>
+
+<h2 >
+<span lang=EN-US >
+17-5 to 17-6</span>
+<a name="17-5%20to%2017-6" > </a>
+<a name="5" > </a>
+<a name="6" > </a>
+<button class="button" id="shlokabox498" onclick="toggleSnskrtPhrase('shlokabox498')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+ashAstravihitam ghOram tapyantE yE
+tapO janA: |<br>
+
+dambhAhaMkAra samyuktA: kAma rAga
+balAnvitA: || 5 ||<br>
+
+&nbsp;<br>
+
+karshayanta: sharIrastham
+bhUtagrAmam achEtasa: |<br>
+
+mAm chaivAnta: sharIrastham tAn
+vidyAsura nishchayAn || 6 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[yE janA:]</span></span>
+<span lang=EN-US >
+ People who </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[samyuktA:]</span></span>
+<span lang=EN-US >
+ are associated with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dambha]</span></span>
+<span lang=EN-US >
+ hypocrisy </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ahaMkAra]</span></span>
+<span lang=EN-US >
+ and arrogance </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[balAnvitA:]</span></span>
+<span lang=EN-US >
+ find their strength </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAga]</span></span>
+<span lang=EN-US >
+ in desire </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kAma]</span></span>
+<span lang=EN-US >
+
+and pleasure. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tapyantE]</span></span>
+<span lang=EN-US >
+ They
+torment themselves </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ghOram tapa:]</span></span>
+<span lang=EN-US >
+ with awful struggle, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashAstravihitam]</span></span>
+<span lang=EN-US >
+ going against My instructions in the scriptures.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[karshayanta:]</span></span>
+<span lang=EN-US >
+ They attenuate </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtagrAmam]</span></span>
+<span lang=EN-US >
+ the <a href="Chapter%2013.html#five_elements">colony of elements</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sharIrastham]</span></span>
+<span lang=EN-US >
+ present as the body </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chaiva]</span></span>
+<span lang=EN-US >
+ along with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm]</span></span>
+<span lang=EN-US >
+ Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anta: sharIrastham]</span></span>
+<span lang=EN-US >
+ present as the core of the body. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[achEtasa:]</span></span>
+<span lang=EN-US >
+ They are lifeless. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAn viddhi]</span></span>
+<span lang=EN-US >
+ Know them </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Asura nishchayAn]</span></span>
+<span lang=EN-US >
+ as people who have resolved to disregard My instructions.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The statement 'People torment themselves
+with awful struggle, going against my instructions in the scriptures' is
+illustrative - any struggle that goes against My instruction is awful, even
+when it involves impressive rituals such as charity and sacrifice. Such an
+activity has hypocrisy and arrogance built-in, finding strength in desire and
+pleasure.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+These activities attenuate the specialty of
+the body - they diminish the body, not recognizing that it's a wonderful <a href="Chapter%2013.html#five_elements">colony of the five elements</a>
+ - solids, liquids,
+energy, gasses and space. They also diminish the Self, a part of Me present as
+the core of the body. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Know that people who struggle this way have
+resolved to disregard My instructions. They are the very people who go against
+My instructions. By doing so, they don't get to touch even a little joy.
+Instead, they fall into the company of the vain and wasted, as said before in
+<a href="Chapter%2016.html#16">Chapter 16-16</a>: 'Indulging in their desires and experiences, they fall into foul
+torment'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In addition to activities to achieve The
+Lord, the scriptures describe activities related to our environment. Next, The
+Lord goes on to distinguish activities that relate to our environment. These
+activities are characterized by the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Food is the source of these activities -
+hence, He first describes the three types of food that nourish the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+. As said in </span>
+<span lang=EN-US >
+[ChAMdOgya, 6-5, 4]</span>
+<span lang=EN-US >
+ - 'Son, the mind is
+defined by the food we eat' and in </span>
+<span lang=EN-US >
+[ChAMdOgya, 7-26-2]</span>
+<span lang=EN-US >
+ - 'The quality of <a href="Chapter%2014.html#sattva">sattva</a>
+ gets pure when our
+food is free of impurities'. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-7</span>
+<a name="17-7" > </a>
+<a name="7" > </a>
+<button class="button" id="shlokabox499" onclick="toggleSnskrtPhrase('shlokabox499')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+AhArastvapi sarvasya trividhO
+bhavati priya: |<br>
+
+yajna: tapa: tathA dAnam tEShAm
+bhEdam imam shr'Nu || 7 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvasya priya:]</span></span>
+<span lang=EN-US >
+ Everyone's favorite </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AhAra:]</span></span>
+<span lang=EN-US >
+ food </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tu api]</span></span>
+<span lang=EN-US >
+ also </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[trividha: bhavati]</span></span>
+<span lang=EN-US >
+ falls into three categories.
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA]</span></span>
+<span lang=EN-US >
+ Same is the case with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajna]</span></span>
+<span lang=EN-US >
+ worship, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tapa:]</span></span>
+<span lang=EN-US >
+ discipline </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA]</span></span>
+<span lang=EN-US >
+
+and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dAnam]</span></span>
+<span lang=EN-US >
+ charity. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shr'Nu]</span></span>
+<span lang=EN-US >
+ Listen </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[imam
+bhEdam]</span></span>
+<span lang=EN-US >
+ to the distinctions </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEShAm]</span></span>
+<span lang=EN-US >
+ between them.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The favorite food of every type of being
+goes according to its association with the <a href="Chapter%202.html#satva_rajas_tamas">three
+qualities</a>
+. In this way, eating habits are of three types too. In the same
+way, worship is of three types, so also discipline and charity. Listen to the
+distinctions between them. Listen to the distinct qualities of food, thought
+and charity - in terms of <a href="Chapter%2014.html#sattva">sattva</a>
+, <a href="Chapter%2014.html#rajas">rajas</a>
+
+and <a href="Chapter%2014.html#tamas">tamas</a>
+, the qualities that cause these distinctions.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-8</span>
+<a name="17-8" > </a>
+<a name="8" > </a>
+<button class="button" id="shlokabox500" onclick="toggleSnskrtPhrase('shlokabox500')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+Ayu: satva balArOgya sukha prIti vivardhana:
+|<br>
+
+rasyA: snigdhA: sthirA hr'dyA AhArA:
+sAttvika priyA: || 8 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[priyA: AhArA:]</span></span>
+<span lang=EN-US >
+
+The favorite food </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAttvika]</span></span>
+<span lang=EN-US >
+ of
+people in the <a href="Chapter%2014.html#sattva">sattva</a>
+ quality </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vivardhana:]</span></span>
+<span lang=EN-US >
+ enhances </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Ayu:]</span></span>
+<span lang=EN-US >
+
+longevity; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[satva]</span></span>
+<span lang=EN-US >
+ it enhances
+the mind, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bala]</span></span>
+<span lang=EN-US >
+ its strength, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ArOgya]</span></span>
+<span lang=EN-US >
+ health, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sukha]</span></span>
+<span lang=EN-US >
+ well-being </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prIti]</span></span>
+<span lang=EN-US >
+
+and love. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rasyA:]</span></span>
+<span lang=EN-US >
+ They are
+tasty, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[snigdhA:]</span></span>
+<span lang=EN-US >
+ being mild
+and smooth, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sthirA:]</span></span>
+<span lang=EN-US >
+
+preserving </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hr'dyA:]</span></span>
+<span lang=EN-US >
+ and
+provide comfort to the mind.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote208 >
+<span lang=EN-US style='color:black' >
+Food builds our body
+and the qualities in it.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Those who have chosen to be in <a href="Chapter%2014.html#sattva">sattva</a>
+ prefer food that is made in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+. Any food made in <a href="Chapter%2014.html#sattva">sattva</a>
+
+contributes to longevity, further enhancing the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+<a href="Chapter%2014.html#sattva">Sattva</a>
+ is the seat of
+thought and experience. The knowledge that contributes to the realization of
+our Self is called <a href="Chapter%2014.html#sattva">sattva</a>
+ here. It was said in
+<a href="Chapter%2014.html#17">Chapter 14-17</a>: 'From <a href="Chapter%2014.html#sattva">sattva</a>
+, knowledge arises'. Since <a href="Chapter%2014.html#sattva">sattva</a>
+ causes knowledge to be enriched, food that is made in
+<a href="Chapter%2014.html#sattva">sattva</a>
+ also contributes to enriching our knowledge. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Further, it enhances strength and keeps us
+healthy. It brings love and well-being as well - When it is digested in the
+body, it automatically contributes to our well-being. Then, by initiating work
+that brings love, it enhances love too. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Such food is tasty - having fluids that are
+pleasant to taste. They are mild and smooth - buttery for example. They are preserving
+- their effect on us is stable. They provide comfort to the mind - they are
+pleasing to the eyes. A person in <a href="Chapter%2014.html#sattva">sattva</a>
+ prefers these
+foods, which are made in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-9</span>
+<a name="17-9" > </a>
+<a name="9" > </a>
+<button class="button" id="shlokabox501" onclick="toggleSnskrtPhrase('shlokabox501')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+kaTvamla lavaNa atyuShNa tIkShNa
+rUkSha vidAhina: |<br>
+
+AhArA rAjasasya iShTA du:kha
+shOkAmaya pradA: || 9 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[iShTA AhArA:]</span></span>
+<span lang=EN-US >
+
+The favorite foods </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasasya]</span></span>
+<span lang=EN-US >
+
+of a person in <a href="Chapter%2014.html#rajas">rajas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[du:kha]</span></span>
+<span lang=EN-US >
+ are those that are difficult, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shOka
+pradA:]</span></span>
+<span lang=EN-US >
+ giving distress </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Amaya]</span></span>
+<span lang=EN-US >
+ and indigestion. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kaTu]</span></span>
+<span lang=EN-US >
+ They are pungent, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[amla]</span></span>
+<span lang=EN-US >
+ sour, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lavaNa]</span></span>
+<span lang=EN-US >
+
+salty, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ati uShNa]</span></span>
+<span lang=EN-US >
+ full of
+heat, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tIkShNa]</span></span>
+<span lang=EN-US >
+ sharp </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rUkSha]</span></span>
+<span lang=EN-US >
+ and rough to the taste, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vidAhina:]</span></span>
+<span lang=EN-US >
+ having scorching effects.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Pungent and sour juices mixed with a lot of
+salt, made very hot, sharp and rough to the taste, have a scorching effect. The
+sharpness comes from excessive cold or excess of heat, making the food
+difficult to consume. They parch and hence are rough to the taste. Their heat
+has scorching effects. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People in <a href="Chapter%2014.html#rajas">rajas</a>
+ like these
+foods. Since they are made in the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+, they
+are difficult to consume and cause distress. They cause the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+ to grow.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-10</span>
+<a name="17-10" > </a>
+<a name="10" > </a>
+<button class="button" id="shlokabox502" onclick="toggleSnskrtPhrase('shlokabox502')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yAtayAmam gatarasam pUti paryuShitam
+cha yat |<br>
+
+uchChiShTam api chAmEdhyam bhOjanam
+tAmasa priyam || 10 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasa priyam]</span></span>
+<span lang=EN-US >
+
+Creatures that are in <a href="Chapter%2014.html#tamas">tamas</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat
+bhOjanam]</span></span>
+<span lang=EN-US >
+ like to eat food that is </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yAtayAmam]</span></span>
+<span lang=EN-US >
+ aged, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[gatarasam]</span></span>
+<span lang=EN-US >
+ having lost its natural flavor, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pUti]</span></span>
+<span lang=EN-US >
+ foul-smelling, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paryuShitam]</span></span>
+<span lang=EN-US >
+ stale, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchChiShTam api]</span></span>
+<span lang=EN-US >
+ even left-over fragments </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[amEdhyam cha]</span></span>
+<span lang=EN-US >
+ and other dirty things.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Food gets aged when it is left for a long time.
+It loses its natural flavor and becomes foul-smelling. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is said to be 'stale' when it acquires a
+different taste due to the passage of time. Left-over fragments are the remains
+after other creatures have consumed their food. Other 'dirty things' are foods
+we consider so dirty that we can't consider them for worship. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This food is full with <a href="Chapter%2014.html#tamas">tamas</a>
+.
+It is liked and consumed by creatures who are in <a href="Chapter%2014.html#tamas">tamas</a>
+.
+Their <a href="Chapter%2014.html#tamas">tamas</a>
+ is further enhanced.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Hence, those who wish for well-being must
+consume food made in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+ alone to
+enhance the <a href="Chapter%2014.html#sattva">sattva</a>
+ in their body.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-11</span>
+<a name="17-11" > </a>
+<a name="11" > </a>
+<button class="button" id="shlokabox503" onclick="toggleSnskrtPhrase('shlokabox503')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+aphalAkAMkShibhi: yajnO vidhi
+dr'ShTO ya ijyatE |<br>
+
+yaShTavyam EvEti mana: samAdhAya sa
+sAtvika: || 11 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[ya: yajna:]</span></span>
+<span lang=EN-US >
+
+The worship </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ijyatE]</span></span>
+<span lang=EN-US >
+ that is offered
+in devotion </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aphalAkAMkShibhi:]</span></span>
+<span lang=EN-US >
+
+devoid of expectations, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vidhi dr'ShTa:]</span></span>
+<span lang=EN-US >
+ done with consideration to the methods in the scriptures, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mana: samAdhAya]</span></span>
+<span lang=EN-US >
+ with the mind being
+content </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yaShTavyam Eva iti]</span></span>
+<span lang=EN-US >
+
+that 'I just need to worship' - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa: sAtvika:]</span></span>
+<span lang=EN-US >
+ This worship is in <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote209 >
+<span lang=EN-US style='color:black' >
+A purpose of devotion
+brings knowledge and well-being.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+,
+worship is done without binding it to expectations. It is done with the hymns,
+material and activities shown in the scriptures. The purpose of this worship is
+worship itself. The worship that is offered in devotion to the Lord, with the
+mind content with the thought 'I just need to worship' - this is worship done
+in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-12</span>
+<a name="17-12" > </a>
+<a name="12" > </a>
+<button class="button" id="shlokabox504" onclick="toggleSnskrtPhrase('shlokabox504')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+abhisaMdhAya tu phalam dambhArtham
+api chaiva yat |<br>
+
+ijyatE bharata shrEShTha tam yajnam
+viddhi rAjasam || 12 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bharata shrEShTha]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat yajnam]</span></span>
+<span lang=EN-US >
+ worship that is </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ijyatE]</span></span>
+<span lang=EN-US >
+ performed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[abhisaMdhAya]</span></span>
+<span lang=EN-US >
+ with attachment towards </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam]</span></span>
+<span lang=EN-US >
+ expectations </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[api cha]</span></span>
+<span lang=EN-US >
+ or even just </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dambhArtham]</span></span>
+<span lang=EN-US >
+ to show-off - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tam viddhi]</span></span>
+<span lang=EN-US >
+ know that to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasam]</span></span>
+<span lang=EN-US >
+ in the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote210 >
+<span lang=EN-US style='color:black' >
+Any other purpose
+brings restlessness.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Know that worship performed by people with
+expectations and attachments, to show-off, with the sole purpose of gaining
+fame is done in the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-13</span>
+<a name="17-13" > </a>
+<a name="13" > </a>
+<button class="button" id="shlokabox505" onclick="toggleSnskrtPhrase('shlokabox505')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+vidhihInam asr'ShTAnnam mantrahInam
+adakShiNam |<br>
+
+shraddhA virahitam yajnam tAmasam
+parichakShatE || 13 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yajnam]</span></span>
+<span lang=EN-US >
+ A
+ritual </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vidhi hInam]</span></span>
+<span lang=EN-US >
+ that
+disregards all methods </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asr'ShTAnnam]</span></span>
+<span lang=EN-US >
+ with inappropriate materials, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mantrahIna]</span></span>
+<span lang=EN-US >
+ devoid of prayer </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adakShiNam]</span></span>
+<span lang=EN-US >
+ and offering </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shraddhA virahitam]</span></span>
+<span lang=EN-US >
+ done without focus </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parichakShatE]</span></span>
+<span lang=EN-US >
+ is condemned </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasam]</span></span>
+<span lang=EN-US >
+ to be in the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote211 >
+<span lang=EN-US style='color:black' >
+Purposelessness brings
+ignorance.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A ritual that disregards all method is done
+without the instruction of Brahmins. A Brahmin is one who leads a virtuous
+life, having learnt the methods of worship. This worship is done with
+inappropriate materials, which are not recommended in the scriptures. It is not
+done with the Protector in mind. It has no offerings and is devoid of focus.
+This kind of worship is condemned to be in the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, to describe the three forms of
+discipline that go by the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+,
+The Lord explains the characteristics of our body, our speech and our mind -
+they are the ones that make up our discipline.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote212 >
+<span lang=EN-US style='color:black' >
+The <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+ give behavior. Our
+behavior enhances them further.</span>
+</p>
+</td></tr></table>
+
+<h2 >
+<span lang=EN-US >
+17-14</span>
+<a name="17-14" > </a>
+<a name="14" > </a>
+<button class="button" id="shlokabox506" onclick="toggleSnskrtPhrase('shlokabox506')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+dEva dvija guru prAjna pUjanam
+shaucham Arjavam |<br>
+
+brahmacharyam ahiMsA cha shArIram
+tapa uchyatE || 14 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[pUjanam]</span></span>
+<span lang=EN-US >
+
+Respecting </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEva]</span></span>
+<span lang=EN-US >
+ the divine, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dvija]</span></span>
+<span lang=EN-US >
+ the student, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guru]</span></span>
+<span lang=EN-US >
+ the teacher </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prajna]</span></span>
+<span lang=EN-US >
+ and those who know; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shaucham]</span></span>
+<span lang=EN-US >
+ being clean; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Arjavam]</span></span>
+<span lang=EN-US >
+ being true to yourself; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahmacharyam]</span></span>
+<span lang=EN-US >
+ being immaculate; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ahiMsA]</span></span>
+<span lang=EN-US >
+ without the intention of causing harm </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchyatE]</span></span>
+<span lang=EN-US >
+ - these are called </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sharIram tapa:]</span></span>
+<span lang=EN-US >
+ the discipline of the body.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The discipline of the body is about
+respecting the divine, the student, the teacher and those who know. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is about being physically clean -
+washing with water, for example. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is about being true to yourself - when
+the actions of our body match our thoughts and belief. Being 'immaculate' is
+about being without the intention to cause harm. For example, an immaculate man
+would stay away from thoughts of enjoying women.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-15</span>
+<a name="17-15" > </a>
+<a name="15" > </a>
+<button class="button" id="shlokabox507" onclick="toggleSnskrtPhrase('shlokabox507')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+anudvEgakaram vAkyam satyam priya
+hitam cha yat |<br>
+
+svAdhyAyAbhyasanam chaiva vAk mayam
+tapa uchyate || 15 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yat vAkyam]</span></span>
+<span lang=EN-US >
+ A
+sentence that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anudvEgakaram]</span></span>
+<span lang=EN-US >
+
+doesn't cause agitation, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[satyam]</span></span>
+<span lang=EN-US >
+ is authentic, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[priya]</span></span>
+<span lang=EN-US >
+ liked </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hitam]</span></span>
+<span lang=EN-US >
+ comforting, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[svAdhyAyAbhyasanam
+chaiva]</span></span>
+<span lang=EN-US >
+ with a study of the Self built into it </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchyatE]</span></span>
+<span lang=EN-US >
+ - this is known as </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tapa]</span></span>
+<span lang=EN-US >
+ discipline </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vAk
+mayam]</span></span>
+<span lang=EN-US >
+ of speech.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A sentence that doesn't cause agitation to
+another, which is authentic, liked and comforting, constructed in pursuit of
+the Self - this is the discipline of speech.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-16</span>
+<a name="17-16" > </a>
+<a name="16" > </a>
+<button class="button" id="shlokabox508" onclick="toggleSnskrtPhrase('shlokabox508')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mana: prasAda: saumyatvam maunam
+Atma vinigraha: |<br>
+
+bhAva saMshuddhi: iti Etat tapO
+mAnasam uchyatE || 16 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[mana: prasAda:]</span></span>
+<span lang=EN-US >
+ A pleasant mind, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[saumyatvam]</span></span>
+<span lang=EN-US >
+ pleased with the good fortune of others, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[maunam]</span></span>
+<span lang=EN-US >
+ keeping the organ of speech under control, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Atma
+vinigraha:]</span></span>
+<span lang=EN-US >
+ stationing the mind in the object of
+concentration, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhAva saMshuddhi:]</span></span>
+<span lang=EN-US >
+ a clean state of being </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti Etat]</span></span>
+<span lang=EN-US >
+ - this </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchyatE]</span></span>
+<span lang=EN-US >
+ is
+called as </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAnasam tapa:]</span></span>
+<span lang=EN-US >
+ the
+discipline of the mind.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A pleasant mind is free of anger. It is
+pleased with the good fortune of others. It controls the activity of speech. Such
+a mind concentrates on the subject that must be focused upon. A clean state of
+being is about letting go of thoughts that don't concern the Self. This is the
+discipline of the mind. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-17</span>
+<a name="17-17" > </a>
+<a name="17" > </a>
+<button class="button" id="shlokabox509" onclick="toggleSnskrtPhrase('shlokabox509')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shraddhayA parayA taptam tapa: tat
+trividham narai: |<br>
+
+aphalAkAMkShibhi: yuktai: sAtvikam
+parichakShatE || 17 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tat trividham tapa:]</span></span>
+<span lang=EN-US >
+ When these three disciplines </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[taptam]</span></span>
+<span lang=EN-US >
+ are implemented </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yuktai:]</span></span>
+<span lang=EN-US >
+ as The Lord's worship, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[narai:]</span></span>
+<span lang=EN-US >
+ by people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parayA shraddhayA]</span></span>
+<span lang=EN-US >
+ with supreme focus, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aphlalAkAMkAhibhi:]</span></span>
+<span lang=EN-US >
+ without being bogged down by expectations, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parichakShatE]</span></span>
+<span lang=EN-US >
+ - this is seen as </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAtvikam]</span></span>
+<span lang=EN-US >
+ being in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People who aren't bogged down by
+expectations are always with the thought that everything is for the Lord's worship.
+They practice the three disciplines of the mind, body and speech with supreme
+focus. Such discipline is said to be in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-18</span>
+<a name="17-18" > </a>
+<a name="18" > </a>
+<button class="button" id="shlokabox510" onclick="toggleSnskrtPhrase('shlokabox510')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+satkAra mAna pUjArtham tapO dambhEna
+chaiva yat |<br>
+
+kriyatE tat iha prOktam rAjasam
+chalam adhruvam || 18 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yat tapa:]</span></span>
+<span lang=EN-US >
+
+Discipline that's </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kriyatE]</span></span>
+<span lang=EN-US >
+
+practiced </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pUjArtham]</span></span>
+<span lang=EN-US >
+ to be
+revered, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dambhEna]</span></span>
+<span lang=EN-US >
+ to gain
+fame, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[satkAra]</span></span>
+<span lang=EN-US >
+ respect, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAna]</span></span>
+<span lang=EN-US >
+ pride </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dambhEna
+Eva cha]</span></span>
+<span lang=EN-US >
+ and with the only aim of showing-off </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat]</span></span>
+<span lang=EN-US >
+ - such discipline </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iha prOktam]</span></span>
+<span lang=EN-US >
+ here is said to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasam]</span></span>
+<span lang=EN-US >
+ in the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+.
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chalam]</span></span>
+<span lang=EN-US >
+ It is perishable </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adhruvam]</span></span>
+<span lang=EN-US >
+ and unstable.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Respect' is the regard in people's minds.
+'Pride' comes from spoken praise. 'Being revered' is when people show respect,
+by bowing down for instance. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When discipline is practiced to show-off,
+expecting enhanced respect, praise and reverence, it is said to be in the
+quality of <a href="Chapter%2014.html#rajas">rajas</a>
+. Such discipline is practiced to
+accomplish goals like prosperity and comfort, so it's perishable - The fact
+that it's associated with the fear of losing whatever is gained makes it
+perishable. It is unstable, since it wears out over time.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-19</span>
+<a name="17-19" > </a>
+<a name="19" > </a>
+<button class="button" id="shlokabox511" onclick="toggleSnskrtPhrase('shlokabox511')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mUDha grAhENa AtmanO yat pIDayA
+kriyatE tapa: |<br>
+
+parasyOtsAdanArtham vA tat tAmasam
+udAhr'tam || 19 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yat tapa: kriyatE]</span></span>
+<span lang=EN-US >
+ Discipline that's practiced </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mUDha grAhENa]</span></span>
+<span lang=EN-US >
+ with confused perceptions </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Atmana: pIDayA]</span></span>
+<span lang=EN-US >
+ to torment oneself, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vA]</span></span>
+<span lang=EN-US >
+ or </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parasya utsAdanArtham]</span></span>
+<span lang=EN-US >
+ practiced in order to put aside others </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat
+udAhr'tam]</span></span>
+<span lang=EN-US >
+ - such discipline is said to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasam]</span></span>
+<span lang=EN-US >
+ in the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People with confused perceptions do not
+make the right judgement. In this confusion, they apply themselves without
+considering the limits of their abilities. Such discipline is done for
+self-torment. This, along with any discipline that's meant to put aside others
+is said to be in the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord goes ahead to describe the
+three ways in which things can be given - the three forms of charity.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-20</span>
+<a name="17-20" > </a>
+<a name="20" > </a>
+<button class="button" id="shlokabox512" onclick="toggleSnskrtPhrase('shlokabox512')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+dAtavyam iti yat dAnam dIyatE
+anupakAriNE |<br>
+
+dEshE kAlE cha pAtrE cha tat dAnam
+sAtvikam smr'tam || 20 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yat dAnam dIyatE]</span></span>
+<span lang=EN-US >
+ Possessions that are given </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAtrE]</span></span>
+<span lang=EN-US >
+ to the deserving </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anupakAriNE]</span></span>
+<span lang=EN-US >
+ who have not been of favor or assistance, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEshE
+kAlE cha]</span></span>
+<span lang=EN-US >
+ at the appropriate place and time, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dAtavyam iti]</span></span>
+<span lang=EN-US >
+ with the belief that they are
+to be given </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat dAnam]</span></span>
+<span lang=EN-US >
+ - This
+charity </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[smr'tam]</span></span>
+<span lang=EN-US >
+ is known </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAtvikam]</span></span>
+<span lang=EN-US >
+ to be in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When we give to those who deserve, even
+though they have not been of favor or assistance, we aren't bogged down by
+expectations. When we give at the appropriate time and place with the belief
+that the charity is suitable, it is known to be in the quality of <a href="Chapter%2014.html#sattva">sattva</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-21</span>
+<a name="17-21" > </a>
+<a name="21" > </a>
+<button class="button" id="shlokabox513" onclick="toggleSnskrtPhrase('shlokabox513')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yattu pratyupakArArtham phalam
+uddishya vA puna: |<br>
+
+dIyatE cha parikliShTam tat dAnam
+rAjasam smr'tam || 21 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ On the
+other hand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat dIyatE]</span></span>
+<span lang=EN-US >
+ when
+it is given </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prati upakArArtham]</span></span>
+<span lang=EN-US >
+ as return for past favors or in anticipation of future favors, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vA puna:]</span></span>
+<span lang=EN-US >
+ or again, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam uddishya]</span></span>
+<span lang=EN-US >
+ targeting expectations, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parikliShTam]</span></span>
+<span lang=EN-US >
+ it is done unwillingly, with
+trouble and exhaustion. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat dAnam]</span></span>
+<span lang=EN-US >
+ This act of giving </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[smr'tam]</span></span>
+<span lang=EN-US >
+ is known to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjasam]</span></span>
+<span lang=EN-US >
+ in the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When an act of giving comes with an eye on
+returning a favor and targeting expectations, it comes with trouble and
+exhaustion. It isn't auspicious as it doesn't contribute to our well-being.
+This type of charity is said to be in the quality of <a href="Chapter%2014.html#rajas">rajas</a>
+.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-22</span>
+<a name="17-22" > </a>
+<a name="22" > </a>
+<button class="button" id="shlokabox514" onclick="toggleSnskrtPhrase('shlokabox514')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+adEshakAlE yat dAnam apAtrEbhya: cha
+dIyatE |<br>
+
+asatkr'tam avajnAtam tat tAmasam
+udAhr'tam || 22 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yat dAnam dIyatE]</span></span>
+<span lang=EN-US >
+ That which is given </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[apAtrEbhya:]</span></span>
+<span lang=EN-US >
+ to the undeserving, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adEshakAlE]</span></span>
+<span lang=EN-US >
+ without an appropriate place and time </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asatkr'tam]</span></span>
+<span lang=EN-US >
+ without respect, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avajnAtam]</span></span>
+<span lang=EN-US >
+ with contempt, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat udAhr'tam]</span></span>
+<span lang=EN-US >
+ it is said to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAmasam]</span></span>
+<span lang=EN-US >
+ in the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When things are given in contempt to the
+undeserving at an inappropriate place and time, when there is no respectful
+action (like washing the others feet), when there is no touch of reverence, the
+act of giving is said to be in the quality of <a href="Chapter%2014.html#tamas">tamas</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, the different forms of
+worship, discipline and charity were told. The different forms in them come
+from the <a href="Chapter%2014.html#satva_rajas_tamas_effects">three qualities</a>
+. The Lord's
+directives for those activities are in the scriptures. </span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote213 >
+<span lang=EN-US style='color:black' >
+What are the
+Lord's instructions?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord describes their
+characteristics, when they are aligned with the sound of 'Om' and qualified by
+the sounds of 'tat' and 'sat'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-23</span>
+<a name="17-23" > </a>
+<a name="23" > </a>
+<button class="button" id="shlokabox515" onclick="toggleSnskrtPhrase('shlokabox515')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+Om tat sat iti nirdEshO brahmaNa:
+trividha: smr'ta: |<br>
+
+brAhmaNA: tEna vEdAshcha yajnA: cha
+vihitA: purA || 23 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[Om tat sat iti]</span></span>
+<span lang=EN-US >
+ 'Om', 'tat', 'sat' are </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[trividha:
+nirdEsha:]</span></span>
+<span lang=EN-US >
+ three specific directives, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahmaNa: smr'ta:]</span></span>
+<span lang=EN-US >
+ prescribed for all
+activities in the Lord's scriptures. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vEdA:]</span></span>
+<span lang=EN-US >
+ The Vedas, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brAhmaNA:]</span></span>
+<span lang=EN-US >
+ people in the quest for the Lord </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajnA:
+cha]</span></span>
+<span lang=EN-US >
+ and the way of worship </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vihitA:]</span></span>
+<span lang=EN-US >
+ were specified </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[purA]</span></span>
+<span lang=EN-US >
+ long ago </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEna]</span></span>
+<span lang=EN-US >
+
+with these sounds.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The word </span>
+<span lang=EN-US >
+[brahma]</span>
+<span lang=EN-US >
+ here refers to the activities specified by the Lord. 'Om', 'tat'
+and 'sat' are three sounds that give direction when they are applied to worship,
+discipline and charity in the scriptures. </span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote214 >
+<span lang=EN-US style='color:black' >
+The sound of 'Om' points
+to a higher purpose</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The sound 'Om' is a component of every work
+prescribed by the Lord in the Vedas. It is chanted at the start of an endeavor.
+The other two words 'tat' and 'sat' come from an expression of admiration. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this shloka, the Lord stated that the
+Vedas, the people who practice them and the forms of worship were established
+long ago by Him - along with the application of 'Om', 'tat' and 'sat'
+directives. Next, The Lord illustrates the way in which the sounds of 'Om',
+'tat' and 'sat' associate. First, He states the way in which the sound of 'Om'
+applies.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-24</span>
+<a name="17-24" > </a>
+<a name="24" > </a>
+<button class="button" id="shlokabox516" onclick="toggleSnskrtPhrase('shlokabox516')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tasmAt Om iti udAhr'tya yajna dAna
+tapa: kriyA: |<br>
+
+pravartantE vidhAnOktA: satatam
+brahmavAdinAm || 24 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tasmAt]</span></span>
+<span lang=EN-US >
+ That's
+why </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kriyA:]</span></span>
+<span lang=EN-US >
+ the activities of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajna dAna tapa:]</span></span>
+<span lang=EN-US >
+ worship, charity and
+discipline </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[satatam pravartantE]</span></span>
+<span lang=EN-US >
+ are always started </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[udAhr'tya]</span></span>
+<span lang=EN-US >
+ by saying </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Om iti]</span></span>
+<span lang=EN-US >
+
+the sound of Om, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vidhAnOkta:]</span></span>
+<span lang=EN-US >
+
+as specified </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brahmavAdinAm]</span></span>
+<span lang=EN-US >
+
+for people who follow the Vedas.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Those who go by the Lord's instructions
+begin their work with the sound of 'Om'. That's the method specified for people
+who follow the Vedas. The Vedas themselves begin with the sound of 'Om'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this Shloka, The Lord illustrates the application
+of 'Om' in the Vedas and its application to worship, charity and discipline. Everyone
+in the quest for the Lord is associated with this sound. They carry the Lord's
+instruction with the sound of Om. <i >
+The Lord is the highest purpose.</i>
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next in the sequence of 'Om tat sat', the Lord
+illustrates the application of the word 'tat' with these activities.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-25</span>
+<a name="17-25" > </a>
+<a name="25" > </a>
+<button class="button" id="shlokabox517" onclick="toggleSnskrtPhrase('shlokabox517')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+taditi anabhisandhAya phalam yajna
+tapa: kriyA: |<br>
+
+dAnakriyA: cha vividhA: kriyantE
+mOkSha kAMkShibhi: || 25 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kriyA:]</span></span>
+<span lang=EN-US >
+
+Activities in the form of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajna]</span></span>
+<span lang=EN-US >
+ worship, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tapa:]</span></span>
+<span lang=EN-US >
+
+discipline </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vividhA:]</span></span>
+<span lang=EN-US >
+ various kinds of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dAnakriyA:]</span></span>
+<span lang=EN-US >
+ charitable deeds </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kriyantE]</span></span>
+<span lang=EN-US >
+ are done </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam
+anabhisandhAya]</span></span>
+<span lang=EN-US >
+ without being bogged down by
+expectations </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOkSha kAMkShibhi:]</span></span>
+<span lang=EN-US >
+ by those who desire <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat iti]</span></span>
+<span lang=EN-US >
+ saying the word 'tat'.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Worship, discipline, charity and the study of
+the Vedas are activities to achieve the Lord. People who desire <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+ follow them. They aren't bogged down by expectations.
+</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+These activities are distinguished by the
+sound of 'tat', which points to Brahma. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Brahma' indicates an expanse. The expanse
+of the universe, the expanse of knowledge - they are all part of the Lord.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote215 >
+<span lang=EN-US style='color:black' >
+The Lord, as the
+highest purpose, has great expanse.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The word 'tat' is famously used in the
+Vishnu Sahasranama to name the Lord - it mentions the names of the Lord as - </span>
+<span lang=EN-US >
+[sa: va: ka: kim yat tat padam anuttamam]</span>
+<span lang=EN-US >
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The word 'tat' is present in the Gayatri
+Mantra as well - [tat savitu: varENyam]. It signifies the expanse of knowledge.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, the sound of 'tat' points to
+the study of Vedas, as well as activities such as worship, which accomplish the
+goal of <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+. The word 'tat' is applied to all those activities.
+Those who are in the quest for the Lord will do these activities to achieve <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+. Those people are also associated with the sound of
+'tat'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord describes the origin of the
+word 'sat', before explaining the way in which the sound of 'sat' applies to
+these activities.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-26</span>
+<a name="17-26" > </a>
+<a name="26" > </a>
+<button class="button" id="shlokabox518" onclick="toggleSnskrtPhrase('shlokabox518')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sadbhAvE sAdhu bhAvE cha saditi Etat
+prayujyatE |<br>
+
+prashastE karmaNi tathA sat shabda:
+pArtha yujyatE || 26 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[pArtha]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Etat]</span></span>
+<span lang=EN-US >
+ this </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sat iti]</span></span>
+<span lang=EN-US >
+ sound of 'sat' </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prayujyatE]</span></span>
+<span lang=EN-US >
+ fits </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sadbhAvE]</span></span>
+<span lang=EN-US >
+ in the belief of existence </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAdhubhAvE]</span></span>
+<span lang=EN-US >
+ in
+the opinion that something is favorable. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA]</span></span>
+<span lang=EN-US >
+ Further, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sat shabda:]</span></span>
+<span lang=EN-US >
+ the 'sat' sound </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yujyatE]</span></span>
+<span lang=EN-US >
+ is linked </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prashastE karmaNi]</span></span>
+<span lang=EN-US >
+ in praiseworthy actions.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote216 >
+<span lang=EN-US style='color:black' >
+That purpose exists and
+it always brings excellence.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The 'belief of existence' happens when we
+sense or foresee the existence of something. The 'opinion that something is favorable'
+comes from the belief that it would bring benefit. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This usage of the word 'sat' fits all situations
+of this world. The Vedas use it in this way as well. It is used to express
+excellence in the favorable actions prescribed by the Lord.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-27</span>
+<a name="17-27" > </a>
+<a name="27" > </a>
+<button class="button" id="shlokabox519" onclick="toggleSnskrtPhrase('shlokabox519')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yajnE tapasi dAnE cha sthiti: sat
+iti chOchyatE |<br>
+
+karma chaiva tadarthIyam sat ityEvAbhidhIyatE
+|| 27 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sthiti:]</span></span>
+<span lang=EN-US >
+
+Standing </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajnE tapasi dAnE cha]</span></span>
+<span lang=EN-US >
+ in worship, discipline and charity </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ is also </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchyatE]</span></span>
+<span lang=EN-US >
+
+called </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sat iti]</span></span>
+<span lang=EN-US >
+ as 'sat'. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karma]</span></span>
+<span lang=EN-US >
+ The actions </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tadarthIyam
+cha]</span></span>
+<span lang=EN-US >
+ and people who perform them </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[abhidhIyatE cha]</span></span>
+<span lang=EN-US >
+ are also referred to </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sat Eva]</span></span>
+<span lang=EN-US >
+ by the word 'sat' itself.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Hence, the actions of worship, discipline
+and charity are called 'sat', by virtue of having excellence in them. These
+actions are specified by the Lord and done by people who follow the Vedas. These
+people are also called 'sat'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Vedas and their activities are denoted
+by the word </span>
+<span lang=EN-US >
+[brAhmaNa]</span>
+<span lang=EN-US >
+ -
+meaning they are related to the Lord. Those who follow the Vedas are
+characterized by their association with the sounds of 'Om', 'tat' and 'sat'.
+That's how they are distinct from things that aren't specified in the Vedas and
+from those who disregard the Vedas.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+17-28</span>
+<a name="17-28" > </a>
+<a name="28" > </a>
+<button class="button" id="shlokabox520" onclick="toggleSnskrtPhrase('shlokabox520')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+ashraddhayA hutam dattam tapa:
+taptam kr'tam cha yat |<br>
+
+asat ityuchyatE pArtha na cha tat
+prEtya nO iha || 28 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[pArtha]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat hutam kr'tam]</span></span>
+<span lang=EN-US >
+ the
+offering that's done in worship, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dattam]</span></span>
+<span lang=EN-US >
+ given in charity </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tapa: taptam cha]</span></span>
+<span lang=EN-US >
+ and discipline that's practiced </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashraddhayA]</span></span>
+<span lang=EN-US >
+ without <a href="Chapter%2017.html#shraddha_focus">focus</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti uchyatE]</span></span>
+<span lang=EN-US >
+ are said to be </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asat]</span></span>
+<span lang=EN-US >
+ useless. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na
+iha]</span></span>
+<span lang=EN-US >
+ Neither do they have benefit here, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na prEtya]</span></span>
+<span lang=EN-US >
+ nor are they useful after we
+have passed away.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Actions done without belief in purpose have
+no <a href="Chapter%2017.html#shraddha_focus">focus</a>
+. They are said to be useless - even when
+they are activities like worship, prescribed in the scriptures. Why is that?
+They do not lead to <a href="Back%20to%20Basics.html#Moksha">moksha</a>
+, nor do they yield any material
+benefit in this world.</span>
+</p>
+
+
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%2016.html">Chapter 16</a></span><span style="float:right;"><a href="Chapter%2018.html">Chapter 18</a>&nbsp;&#xbb;</span></p>
+
+<!-- Here ends the chapter -->
+<div class="TopNoteBlock">
+<div class="TopNote" id='TopNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='TopNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_up.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px;margin-right:24pt" id='TopApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+<div style="position:fixed;top:0;right:0;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+</div>
+<div class="BottomNoteBlock">
+<div class="BottomNote" id='BottomNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='BottomNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_down.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px" id='BottomApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Middle (Gita commentary) div ends here -->
+</div>
+
+<!-- Container ends here -->
+</div>
+
+<!--scripts are at the end because they refer to the divs on top -->
+<script type="text/javascript">
+<!-- console.log('gita scroller 4'); -->
+var commentaryElm = document.getElementById('GitaCommentary');
+var chapapplnotestart = 205;
+document.addEventListener("DOMContentLoaded", domloaded());
+commentaryElm.onscroll = onCommentaryScroll;
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleSnskrtPhrase(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var rule = cssRule('span.snskrtphrase');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    commentaryElm.scrollTop = commentaryElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function containerResize(){
+<!--set top and bottom note to 'left' or 'centered' -->
+}
+function domloaded(){
+    containerResize();
+    <!--trigger the default top-bottom on loading the chapter -->
+    syncnote();
+}
+function onCommentaryScroll() {
+    syncnote();
+}
+function recordState() {
+    var currentScTop = commentaryElm.scrollTop;
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ 'c' + "=" + currentScTop);
+}
+function overlapFeedback(elm, overlap) {
+    var rgbastr = 'rgba(216,191,216,' + toString(1-overlap) + ')';
+    elm.style.backgroundColor = rgbastr;
+}
+function syncnote() {
+    var commentaryViewPort = commentaryElm.getBoundingClientRect(); 
+
+    <!--Find the inline application note right above current viewport and the one right below-->
+    var inlinenoteAbove = "";
+    var inlinerefAbove = "";
+    var inlinenoteBelow = "";
+    var inlinerefBelow = "";
+
+    var i = chapapplnotestart;
+    <!--The 'inline' word here is very important!! The code assumes this everywhere! -->
+    var inlinenote = 'inlineapplnote' + i;
+    var inlineElm = document.getElementById(inlinenote);
+    var topOverlap = 0;
+    var bottomOverlap = 0;
+    var topNoteRect = document.getElementById("TopNoteID").getBoundingClientRect();
+    var bottomNoteRect = document.getElementById("BottomNoteID").getBoundingClientRect();
+
+    while(inlineElm != null) {
+        inlineRect = inlineElm.getBoundingClientRect();
+        if(inlineRect.top <= topNoteRect.top) {
+            inlinenoteAbove = inlineElm.innerHTML;
+            inlinerefAbove = inlinenote;
+            topOverlap = Math.min(Math.max((inlineRect.bottom - topNoteRect.top) / 
+                                           (topNoteRect.bottom - topNoteRect.top), 0), 1);
+        }
+        else if(inlineRect.top < topNoteRect.bottom) {
+            topOverlap = (topNoteRect.bottom - inlineRect.top) / (topNoteRect.bottom - topNoteRect.top);
+        }
+		else if(topNoteRect.bottom == 0) {
+			topOverlap = 1;
+		}
+        if(inlineRect.bottom > bottomNoteRect.top && inlineRect.bottom < bottomNoteRect.bottom) {
+            bottomOverlap = (inlineRect.bottom - bottomNoteRect.top) / 
+                            (bottomNoteRect.bottom - bottomNoteRect.top);
+        }
+        else if (inlineRect.top > bottomNoteRect.top && inlineRect.top < bottomNoteRect.bottom) {
+            bottomOverlap = (bottomNoteRect.bottom - inlineRect.top) /
+                            (bottomNoteRect.bottom - bottomNoteRect.top)
+        }
+        <!--Latch the first one that breaches the bottom-->
+        if(inlinenoteBelow == "" && inlineRect.bottom > commentaryViewPort.bottom) {
+            inlinenoteBelow = inlineElm.innerHTML;
+            inlinerefBelow = inlinenote;
+        }
+        i++;
+        inlinenote = 'inlineapplnote' + i;
+        inlineElm = document.getElementById(inlinenote);
+    }
+    <!--Show the note above at the top and below at the bottom only if they have something -->
+    document.getElementById("TopApplicationNote").innerHTML = inlinenoteAbove;
+    if(inlinenoteAbove != "") {
+        document.getElementById("TopNoteTableID").onclick = function(){window.location.href = "#"+inlinerefAbove};
+        document.getElementById("TopNoteID").style.display = 'inherit';
+    } else {
+        document.getElementById("TopNoteID").style.display = 'none';
+    }
+    document.getElementById("BottomApplicationNote").innerHTML = inlinenoteBelow;
+    if(inlinenoteBelow != "") {
+        document.getElementById("BottomNoteTableID").onclick = function(){window.location.href = "#"+inlinerefBelow};
+        document.getElementById("BottomNoteID").style.display = 'inherit';    
+    } else {
+        document.getElementById("BottomNoteID").style.display = 'none';    
+    }
+    document.getElementById("TopNoteID").style.opacity = 1 - topOverlap;
+    document.getElementById("BottomNoteID").style.opacity = 1 - bottomOverlap;
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var rule = cssRule('span.snskrtphrase');
+        if(eorc == 'e') {
+            rule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            rule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        commentaryElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+function gotohash() {
+	if(window.location.hash == "") {
+		commentaryElm.scrollTop = 0;
+	} else {
+		var elmTogo = document.getElementById(window.location.hash.substr(1));
+		commentaryElm.scrollTop += elmTogo.getBoundingClientRect().top-1;
+	}
+}
+</script>
+
+</body>
+
+</html>
