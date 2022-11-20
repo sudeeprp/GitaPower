@@ -1,21 +1,31 @@
 #!/bin/bash
+
+# on windows, run from Git Bash
+
 set -e
 RED='\033[0;31m'
 NC='\033[0m'
 
-jscpd --min-lines 3 --min-tokens 50 --threshold 0 --gitignore --ignore "**/*.xml,**/*.json,windows"
+flutter format .
 flutter analyze
 flutter test --coverage
 
 echo
 filesWithoutFuncs=$(grep -rLE "\)\s*{" ./lib | sed 's/^.\///g' | tr '\n' , | sed 's/,$//g')
-echo "Files without functions, coverage ignored:"
-echo $filesWithoutFuncs
+if [ -z "$filesWithoutFuncs" ]
+then
+    echo "Only generated files excluded from coverage"
+    exclusion="--exclude=generated_plugin_registrant.dart"
+else
+    echo "Coverage ignored for files without functions and generated code:"
+    echo $filesWithoutFuncs
+    exclusion="--exclude=$filesWithoutFuncs,generated_plugin_registrant.dart"
+fi
 
-flutter pub run test_cov_console --exclude=$filesWithoutFuncs
+flutter pub run test_cov_console $exclusion
 flutter pub run test_cov_console --pass=100 | grep -q PASS
 
-flutter pub run test_cov_console --csv --exclude=$filesWithoutFuncs
+flutter pub run test_cov_console --csv $exclusion
 if grep -q "no unit test" coverage/test_cov_console.csv; then
   echo -e "${RED}Some files aren't covered${NC}"
   exit 1
