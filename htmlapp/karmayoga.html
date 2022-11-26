@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna's Gita explained by Ramanuja</title>
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.Matter {
+    overflow: auto;
+    overflow-x: hidden;
+    height: auto;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+    background: Beige;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Thin scrollbar*/
+.Matter::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Matter::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+.Matter a:link {
+    text-decoration: none;
+}
+.Matter a:visited {
+    text-decoration: none;
+}
+.Matter a:hover {
+    text-decoration: none;
+}
+.Matter a:active {
+    text-decoration: none;
+}
+p.MsoNormal, li.MsoNormal, div.MsoNormal, .MsoNormalToggle
+	{margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;}
+.MsoNormalToggle
+    {display:none;}
+.h1
+	{margin-top:3.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+    background-image:url(snskrtstationary.png); 
+    border-left: 6px solid brown; 
+    padding-left: 6px;
+	text-align:left;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial","sans-serif";
+    font-weight: bold;}
+.h2
+	{mso-style-link:"Heading 2 Char";
+	margin-top:3.0pt;
+	margin-right:3.0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;}
+p.Shloka, li.Shloka, div.Shloka
+	{mso-style-name:Shloka;
+	mso-style-link:"Shloka Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst
+	{mso-style-name:ShlokaCxSpFirst;
+	mso-style-link:"Shloka Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle
+	{mso-style-name:ShlokaCxSpMiddle;
+	mso-style-link:"Shloka Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast
+	{mso-style-name:ShlokaCxSpLast;
+	mso-style-link:"Shloka Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+span.snskrtphrase
+    {mso-style-name:Shloka;
+    color: Maroon;
+    }
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx
+	{mso-style-name:ApplNotes;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight
+	{mso-style-name:ApplNotes;
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-size:10.0pt;
+    line-height:150%;
+    border-bottom: 1px solid silver;
+	font-family:"Comic Sans MS";}
+.ApplNotesRight
+    {display:none;}
+.ApplNotesImg
+    {padding:0px 1px 0px 0px;
+    height:16pt;
+    display:none;}
+p.ApplNotesROp
+	{mso-style-name:ApplNotes;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:4.0pt;
+	font-size:18.0pt;
+	font-family:"Comic Sans MS";}
+.ApplNotesROpImg
+    {padding:0px 1px 0px 0px;
+    height:22pt;}
+.TouchFeet
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:center;
+	font-size:10.0pt;
+	font-family:"Comic Sans MS";
+    border-left: 6px solid brown; 
+    border-right: 6px solid brown;
+    background-image:url(snskrtstationary.png);}
+p.nextprev, li,nextprev, div.nextprev
+	{mso-style-name:MsoNormal;
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";}
+.button
+    {background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;}
+</style>
+</head>
+
+<body lang=EN-IN>
+<div class="Container" id=CoverContainer>
+<div class="Matter" id=MatterScroller>
+<p class=h1>&nbsp;<br>[karmayOga]<br>&nbsp;</p>
+<p class=h2>&nbsp;<br>The technique of working without being driven<br>&nbsp;</p>
+<p class=MsoNormal>What does it mean to work without being driven? Lord Krishna says in the Gita-<br>
+Work while being aware of the Self. Do it for The Lord. It brings out the best in you. It's the delight in your activity. You don't miss anything when you take a break.<br>
+Work without attachments, without being driven by desire, without being driven by expectations, without being driven by outcomes.
+Let's look at a few instances to see what's [karmayOga] and what it's not.</p>
+<p class=MsoNormal>Normally, we drive to a destination. However, many times we are driven by the destination - as ridiculous as it may sound! <br>
+For instance, consider the goal of making money. When we 'drive' towards it, we are free to choose our path and determine how much money is enough. Even choose not to get upset when we lose some money on the way. This is [karmayOga] - it's our choice and we do it for the Lord.<br>
+On the other hand, when the goal of making money 'drives' us, we're not in control of when we stop, sometimes we're not in control of the rest of our lives as well, dedicating all of it to this 'driver'. This is not [karmayOga]</p>
+<p class=MsoNormal>A more subtle example is when the body drives us. Sometimes our goal could be to feel happy, to avoid pain - something that concerns our sense organs. Again, this is not [karmayOga] - We end up working according to our 'mood' to satisfy some part of our body, instead of employing the body as a tool to drive through life.</p>
+<p class=MsoNormal>Your body is a well-engineered piece of the universe. You experience what's happening in your body and in the universe. [karmayOga] is about leaving <a href="Back%20to%20Basics.html#actions_and_happenings">happenings</a> in the environment and working to worship the Lord. It's about realizing the true purpose of your activity and attain <a href="Back%20to%20Basics.html#Moksha">liberation</a>. It doesn't matter what you do, you will keep progressing towards your destiny. That's why there's no failure in this technique.</p>
+</div>
+</div>
+</body>
+
+</html>

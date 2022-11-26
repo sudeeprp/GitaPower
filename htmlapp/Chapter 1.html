@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna&quot;s Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.TopNoteBlock, .BottomNoteBlock {
+    display: flex;
+    flex-direction: row;
+    position: fixed
+}
+.TopNote, .BottomNote {
+	width: 100%;
+    height: auto;
+    background-color: rgba(216,191,216,0.95);    
+    border-color: #E5DFEC;
+    position: fixed
+}
+.TopNote, .TopNoteBlock {
+    top: 0;
+    left: 0;
+}
+.BottomNote, .BottomNoteBlock {
+    bottom: 0;
+    left: 0;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    padding: .5rem;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: navy;
+    -webkit-overflow-scrolling: touch;
+}
+/*Thin scrollbar*/
+.Middle::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Middle::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+/*  Right has a set size while the Middle is set to flex one so it occupies all remaining space.*/
+.Middle {
+    flex: 1;
+	width: auto;
+    height: 80%;
+    background: Beige;
+}
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;
+}
+h1 {
+    margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;
+}
+h2 {
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;
+}
+p.Shloka, li.Shloka, div.Shloka {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+span.snskrtphrase {
+    color: Maroon;
+    display:none;
+}
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx, p.ApplNotesOpener {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";
+}
+p.ApplNotesOpener {
+    font-weight:bold;
+}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight, p.ApplNotesROp, .TopNote, .BottomNote {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	font-size:9.0pt;
+    line-height:150%;
+	font-family:"Comic Sans MS";
+}
+.TopNote {
+    border-style:none none dotted none;
+}
+.BottomNote {
+    border-style:dotted none none none;
+}
+p.ApplNotesROp {
+    font-style:italic;
+}
+.ApplNotesImg, .ApplNotesROpImg {
+    height:16pt;
+}
+p.nextprev, li,nextprev, div.nextprev {
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";
+}
+.button {
+    background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;
+}
+</style>
+</head>
+
+<body onresize="containerResize()" onpageshow="pageshown()" lang=EN-IN>
+
+<!-- Was: nothing was there -->
+<div class="Container" id='GitaContainer'>
+
+<!-- Was: div class=WordSection1 id='GitaCommentary' -->
+<div class="Middle" id='GitaCommentary'>
+
+<!-- Here starts the chapter -->
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Back%20to%20Basics.html">Back to Basics</a></span><span style="float:right;"><a href="Chapter%202.html">Chapter 2</a>&nbsp;&#xbb;</span></p>
+<h1>Chapter 1</h1>
+
+<p class=MsoNormal >
+<i >
+<span lang=EN-US >
+The first chapter begins with
+Dhrtarashtra, the king of Arjuna's enemies asking about the status on the
+battlefield.</span>
+</i>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+1-1 to 1-11</span>
+<a name="1-1%20to%201-11" > </a>
+<a name="1" > </a>
+<a name="2" > </a>
+<a name="3" > </a>
+<a name="4" > </a>
+<a name="5" > </a>
+<a name="6" > </a>
+<a name="7" > </a>
+<a name="8" > </a>
+<a name="9" > </a>
+<a name="10" > </a>
+<a name="11" > </a>
+<button class="button" id="shlokabox0" onclick="toggleSnskrtPhrase('shlokabox0')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+dhr'tarAShTra uvAcha<br>
+
+dharmakShEtrE kurukShEtrE samavEtA
+yuyutsava: |<br>
+
+mAmakA: pAMDavA: chaiva kimakurvata
+sanjaya || 1 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[dhr'tarAShTra uvAcha]</span></span>
+<span lang=EN-US >
+ Dhrtarashtra said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sanjaya]</span></span>
+<span lang=EN-US >
+ Sanjaya, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAmakA:]</span></span>
+<span lang=EN-US >
+
+my people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAMDavA:]</span></span>
+<span lang=EN-US >
+ the sons of Pandu </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[samavEtA:]</span></span>
+<span lang=EN-US >
+ have assembled </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kurukShEtrE]</span></span>
+<span lang=EN-US >
+ in Kurukshetra, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dharmakShEtrE]</span></span>
+<span lang=EN-US >
+ the place of righteousness. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kim akurvata]</span></span>
+<span lang=EN-US >
+ What are they doing?</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sanjaya uvAcha<br>
+
+dr'ShTvA tu pAMDavAnIkam vyUDham
+duryOdhana: tadA |<br>
+
+AchAryam upasaMgamya rAjA vachanam
+abravIt || 2 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sanjaya uvAcha]</span></span>
+<span lang=EN-US >
+ Sanjaya said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjA]</span></span>
+<span lang=EN-US >
+ my king, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dr'ShTvA tu tadA]</span></span>
+<span lang=EN-US >
+ upon seeing </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAMDavAnIkam vyUDham]</span></span>
+<span lang=EN-US >
+ the armies of the Pandava in formation, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[duryOdhana:]</span></span>
+<span lang=EN-US >
+ Duryodhana </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[upasaMgamya]</span></span>
+<span lang=EN-US >
+ approached </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AchAryam]</span></span>
+<span lang=EN-US >
+ his Guru </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[abravIt vachanam]</span></span>
+<span lang=EN-US >
+ and said this -</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+paShyaitAn pAMDuputrANAm AchArya
+mahatIm chamUm |<br>
+
+vyUDhAm drupada putrENa tava
+shiShyENa dhImatA || 3 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[AchArya]</span></span>
+<span lang=EN-US >
+ O my
+guru Drona, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paShyaitAn]</span></span>
+<span lang=EN-US >
+ see
+these </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mahatIm chamUm]</span></span>
+<span lang=EN-US >
+ great
+armies </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAMDuputrANAm]</span></span>
+<span lang=EN-US >
+ of the
+Pandava. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vyUDham]</span></span>
+<span lang=EN-US >
+ They have
+been placed in formation </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tava dhImatA shiShyENa]</span></span>
+<span lang=EN-US >
+ by your bright student, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[drupada putrENa]</span></span>
+<span lang=EN-US >
+ the Son of Drupada.</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+atra shUrA mahEShvAsA bhImArjuna
+samA yudhi |<br>
+
+yuyudhAnO virATashcha drupada: cha
+mahAratha: || 4 ||<br>
+
+&nbsp;<br>
+
+dhr'ShTakEtu: chEkitAna: kAshI
+rAjashcha vIryavAn |<br>
+
+purujit kuntibhOja: cha shaibya: cha
+narapuMgava: || 5 ||<br>
+
+&nbsp;<br>
+
+yudhAmanyu: cha vikrAnta: uttamauja:
+cha vIryavAn |<br>
+
+saubhadrO draupadEyA: cha sarva Eva
+mahArathA: || 6 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[atra]</span></span>
+<span lang=EN-US >
+ In that
+army, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shUrA:]</span></span>
+<span lang=EN-US >
+ the daring
+warriors </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mahEShvAsA:]</span></span>
+<span lang=EN-US >
+ carrying
+great bows, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhImArjuna samA:]</span></span>
+<span lang=EN-US >
+
+equal to Bhima and Arjuna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yudhi]</span></span>
+<span lang=EN-US >
+ in war are - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yuyudhana:]</span></span>
+<span lang=EN-US >
+ Satyaki, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[virATa:]</span></span>
+<span lang=EN-US >
+
+Virata, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[drupada: mahAratha:]</span></span>
+<span lang=EN-US >
+
+Drupada the great chariot-warrior, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhr'ShTakEtu:
+chEkitAna: cha vIryavAn kAshI rAja:]</span></span>
+<span lang=EN-US >
+ Dhrshtaketu,
+Chekitana along with the brave king of Kashi, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[purujit
+kuntibhOja: cha shaibya: narapuMgava:]</span></span>
+<span lang=EN-US >
+ Purujit,
+Kuntibhoja and Shaibya, who are heroes among men; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yudhAmanyu:
+cha vikrAnta:]</span></span>
+<span lang=EN-US >
+ Yudhamanyu, who is proficient in war, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha uttamauja: vIryavAn]</span></span>
+<span lang=EN-US >
+ along with
+Uttamauja the brave; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[saubhadra: draupadEyA:]</span></span>
+<span lang=EN-US >
+ the son of Saubhadra and the sons of Draupadi - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva Eva mahArathA:]</span></span>
+<span lang=EN-US >
+ they are all great
+chariot-warriors themselves.</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+asmAkam tu vishiShTA yE tAnnibOdha
+dvijottama |<br>
+
+nAyakA mama sainyasya saMjnArtham
+tAn bravImi tE || 7 ||<br>
+
+&nbsp;<br>
+
+bhavan bhIShma: cha karNa: cha
+kr'pa: cha samitinjaya: |<br>
+
+ashwatthAmA vikarNa: cha sOmadatta:
+tathaiva cha || 8 ||<br>
+
+&nbsp;<br>
+
+anyE cha bahava: shUrA: madarthO
+tyakta jIvitA: |<br>
+
+nAnA shastra praharaNA: sarvE yuddha
+vishAradA: || 9 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[dvijottama]</span></span>
+<span lang=EN-US >
+ O best of Brahmins, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ on the other hand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nibOdha]</span></span>
+<span lang=EN-US >
+ consider </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yE]</span></span>
+<span lang=EN-US >
+ those
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vishiShTA:]</span></span>
+<span lang=EN-US >
+ who are
+distinguished </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asmAkam]</span></span>
+<span lang=EN-US >
+ among
+us. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bravImi tE]</span></span>
+<span lang=EN-US >
+ I will tell
+you </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nAyakA: mama sainyasya]</span></span>
+<span lang=EN-US >
+
+about the leaders in my army </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[saMjnArtham]</span></span>
+<span lang=EN-US >
+ for your recognition. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavAn]</span></span>
+<span lang=EN-US >
+ Your illustrious self, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ along with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhIShma:]</span></span>
+<span lang=EN-US >
+ Bhishma, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karNa:]</span></span>
+<span lang=EN-US >
+
+Karna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha kr'pa: samitinjaya:]</span></span>
+<span lang=EN-US >
+
+and the victorious Kripacharya; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashwatthAmA vikarNa:
+cha sOmadatta:]</span></span>
+<span lang=EN-US >
+ Ashwatthama along with Vikarna and
+Somadatta; </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bahava: anyE]</span></span>
+<span lang=EN-US >
+ many
+other </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shUrA:]</span></span>
+<span lang=EN-US >
+ brave warriors </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tyakta jIvitA:]</span></span>
+<span lang=EN-US >
+ have left their livelihoods
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[madartha:]</span></span>
+<span lang=EN-US >
+ for my sake. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prajaraNA:]</span></span>
+<span lang=EN-US >
+ Wielding </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nAnA shastra]</span></span>
+<span lang=EN-US >
+ various weapons, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvE]</span></span>
+<span lang=EN-US >
+ they are all </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vishAradA:]</span></span>
+<span lang=EN-US >
+ skilled </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yuddhE]</span></span>
+<span lang=EN-US >
+ in warfare.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+aparyAptam tadasmAkam balam
+bhIShmAbhirakShitam |<br>
+
+paryAptam tu idam EtEShAm balam
+bhImAbhirakShitam || 10 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[tat balam asmAkam]</span></span>
+<span lang=EN-US >
+ This force of ours, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhIShmAbhirakShitam]</span></span>
+<span lang=EN-US >
+ protected by Bhishma, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aparyAptam]</span></span>
+<span lang=EN-US >
+ is insufficient. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ On the other hand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[idam balam EtEShAm]</span></span>
+<span lang=EN-US >
+ their force </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhImAbhirakShitam]</span></span>
+<span lang=EN-US >
+ protected by Bhima </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paryAptam]</span></span>
+<span lang=EN-US >
+ is sufficient.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+AyanEShu cha sarvEShu yathA bhAgam
+avasthitA: |<br>
+
+bhIShmam EvAbhirakShantu bhavanta:
+sarva Eva hi || 11 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavanta: sarva Eva hi]</span></span>
+<span lang=EN-US >
+ All of you </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhIShmam Eva abhirakShantu]</span></span>
+<span lang=EN-US >
+ protect Bhishma </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvEShu AyanEShu]</span></span>
+<span lang=EN-US >
+ in all movements of our army </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yathA bhAgam
+avasthitA:]</span></span>
+<span lang=EN-US >
+ in your respective divisions.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote12 >
+<span lang=EN-US style='color:black' >
+We often doubt and
+worry about achieving wealth, success and other outcomes.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Duryodhana saw the armies of his enemies
+protected by Bhima, and his own army protected by Bhishma. He expressed his
+anxiety that the enemy army is sufficient to defeat his own, and that his own
+army is unequal to the task.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+1-12 to 1-19</span>
+<a name="1-12%20to%201-19" > </a>
+<a name="12" > </a>
+<a name="13" > </a>
+<a name="14" > </a>
+<a name="15" > </a>
+<a name="16" > </a>
+<a name="17" > </a>
+<a name="18" > </a>
+<a name="19" > </a>
+<button class="button" id="shlokabox1" onclick="toggleSnskrtPhrase('shlokabox1')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tasya saMjayan harSham kuruvr'ddha:
+pitAmaha: |<br>
+
+simhanAdam vinadya uchchai: shankham
+dadhmau pratApavAn || 12 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[pitAmaha:]</span></span>
+<span lang=EN-US >
+ Grandfather Bhishma, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kuruvr'ddha:]</span></span>
+<span lang=EN-US >
+ the eldest among the Kurus, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[saMjayan tasya
+harSham]</span></span>
+<span lang=EN-US >
+ was the one to lift his spirits </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vinadya simhanAdam]</span></span>
+<span lang=EN-US >
+ by roaring like a lion.
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dadhmau shankham]</span></span>
+<span lang=EN-US >
+ He blew his
+conch </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uchchai:]</span></span>
+<span lang=EN-US >
+ loudly </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pratApavAn]</span></span>
+<span lang=EN-US >
+ and turned on the heat.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tata: shankhA: cha bhEryA: cha paNavAnaka
+gOmukhA: |<br>
+
+sahasaiva abhyahanyanta sa shabda:
+tumulO_bhavat || 13 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[tata:]</span></span>
+<span lang=EN-US >
+ Then, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sahasaiva]</span></span>
+<span lang=EN-US >
+
+that instant, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shankhA:]</span></span>
+<span lang=EN-US >
+
+conches </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhEryA: paNavAnaka gOmukhA:]</span></span>
+<span lang=EN-US >
+ various
+instruments </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[abhyahanyanta]</span></span>
+<span lang=EN-US >
+
+were beaten. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa shabda:]</span></span>
+<span lang=EN-US >
+ That
+sound </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[abhavat]</span></span>
+<span lang=EN-US >
+ became </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tumula:]</span></span>
+<span lang=EN-US >
+ a violent uproar.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tata: shwEtai: hayairyuktE mahati
+syandanE sthitau |<br>
+
+mAdhava: pAMDava: chaiva divyau
+shankhau pradadhmatu: || 14 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[tata:]</span></span>
+<span lang=EN-US >
+ After that, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAdhava:]</span></span>
+<span lang=EN-US >
+ Krishna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAMDava:]</span></span>
+<span lang=EN-US >
+ Arjuna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pradadhmatu:]</span></span>
+<span lang=EN-US >
+ sounded </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[divyau shankhau]</span></span>
+<span lang=EN-US >
+ their divine conches, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sthitau]</span></span>
+<span lang=EN-US >
+ standing </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mahati syandanE]</span></span>
+<span lang=EN-US >
+ in their famous chariot </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yuktE shwEtai:
+hayai:]</span></span>
+<span lang=EN-US >
+ pulled by white horses.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+pAnchajanyam hr'ShikEshO dEvadattam
+dhananjaya: |<br>
+
+paunDram dadhmau mahA shankham
+bhImakarma vr'kOdara: || 15 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[hr'ShikEsha:]</span></span>
+<span lang=EN-US >
+ Krishna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAnchajanyam]</span></span>
+<span lang=EN-US >
+ sounded the conch called Panchajanya, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhananjaya:]</span></span>
+<span lang=EN-US >
+ Arjuna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEvadattam]</span></span>
+<span lang=EN-US >
+
+the conch called Devadatta </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vr'kOdara:]</span></span>
+<span lang=EN-US >
+ and Bhima, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhImakarma]</span></span>
+<span lang=EN-US >
+ who is capable of fearsome deeds, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dadhmau]</span></span>
+<span lang=EN-US >
+ sounded </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paunDram]</span></span>
+<span lang=EN-US >
+
+the conch called Paundra.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+anantavijayam rAjA kuntIputrO
+yudhiShThira: |<br>
+
+nakula: sahadEvashcha sugHOSha
+maNipuShpakau || 16 ||<br>
+
+&nbsp;<br>
+
+kAshya: cha paramEShvAsa: shikhaNDI
+cha mahAratha: |<br>
+
+dhr'ShTadyumnO virATa: cha sAtyaki:
+chAparAjita: || 17 ||<br>
+
+&nbsp;<br>
+
+drupadO draupadEyA: cha sarvata:
+pr'thivIpatE |<br>
+
+saubhadra: cha mahAbAhu: shankhAn
+dadhmu: pr'thak pr'thak || 18 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjA]</span></span>
+<span lang=EN-US >
+
+My King, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kuntIputrO]</span></span>
+<span lang=EN-US >
+ the son
+of Kunti, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yudhiShThira:]</span></span>
+<span lang=EN-US >
+
+Yudhishtira, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dadhmu: anantavijayam]</span></span>
+<span lang=EN-US >
+ sounded the Anantavijaya, along with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nakula:
+sahadEvashcha sugHOSha maNipuShpakau]</span></span>
+<span lang=EN-US >
+ Nakula and
+Sahadeva blew their conches called Sughosha and Manipushpaka. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ Along with them, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kAshya: paramEShvAsa:]</span></span>
+<span lang=EN-US >
+ the King of Kasi
+with his great bow, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shikhaNDI cha mahAratha:]</span></span>
+<span lang=EN-US >
+ Shikhandi the great chariot-warrior, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhr'ShTadyumna:
+virATa: cha aparAjita: sAtyaki:]</span></span>
+<span lang=EN-US >
+ Drshtadyumna, Virata,
+the undefeated Satyaki, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[drupadO draupadEyA: cha
+sarvata: pr'thivIpatE]</span></span>
+<span lang=EN-US >
+ Drupada, his sons, all the Kings
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha saubhadra:  mahAbAhu:]</span></span>
+<span lang=EN-US >
+ and
+the mighty Son of Subhadra </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dadhmu: pr'thak pr'thak]</span></span>
+<span lang=EN-US >
+ sounded their respective </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shankhAn]</span></span>
+<span lang=EN-US >
+ conches.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sa ghOShO dhArtarAShTrANAm hr'dayAni
+vyadArayat |<br>
+
+nabha: cha pr'thivIm chaiva tumulO
+vyanunAdayan || 19 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sa ghOSha:]</span></span>
+<span lang=EN-US >
+
+That sound </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vyadArayat]</span></span>
+<span lang=EN-US >
+ tore
+through </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hr'dayAni]</span></span>
+<span lang=EN-US >
+ the hearts </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhArtarAShTrANAm]</span></span>
+<span lang=EN-US >
+ of Dhrtarashtra's sons. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vyanunAdayan]</span></span>
+<span lang=EN-US >
+ It resonated </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tumula:]</span></span>
+<span lang=EN-US >
+ into a tumultuous crescendo, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nabha: cha pr'thivIm]</span></span>
+<span lang=EN-US >
+ filling the earth and
+the sky.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote13 >
+<span lang=EN-US style='color:black' >
+In our anxiety, we
+interpret anything that happens as a signal of doom</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Looking at Duryodhana's anxiety, Bhishma
+uttered a roar and blew his conch to raise Duryodhana's spirits. Bhishma also
+got others in his army to utter sounds of victory.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other side, Krishna - The Lord of
+lords, the Master of everything, who was Arjuna's charioteer, and Arjuna
+himself, seated in a special chariot qualified to conquer all worlds, blew
+their conches- Panchajanya and Devadatta. Then Yudhishtira, Bhima and others
+blew their conches.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'That sound pierced the heart of Duryodhana
+and the rest of your sons. <i >
+The power of the Kauravas is destroyed today</i>
+,
+they thought.' - Sanjaya said this to Dhritarashtra, who desired the victory of
+the Kauravas.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+1-20 to 1-23</span>
+<a name="1-20%20to%201-23" > </a>
+<a name="20" > </a>
+<a name="21" > </a>
+<a name="22" > </a>
+<a name="23" > </a>
+<button class="button" id="shlokabox2" onclick="toggleSnskrtPhrase('shlokabox2')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+atha vyavasthitAn dr'ShTvA
+dhArtarAShTrAn kapidhvaja: |<br>
+
+pravr'ttE shastra saMpAtE
+dhanurudyamya pAMDava: || 20 ||<br>
+
+&nbsp;<br>
+
+hr'ShikEsham tadA vAkyam idam Aha
+mahIpatE |<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[atha]</span></span>
+<span lang=EN-US >
+
+Next, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mahIpatE]</span></span>
+<span lang=EN-US >
+ my King, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pravr'ttE shastra saMpAtE]</span></span>
+<span lang=EN-US >
+ it was time to
+start wielding weapons. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pAMDava:]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kapidhvaja:]</span></span>
+<span lang=EN-US >
+ with Hanuman on his flag, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dr'ShTvA]</span></span>
+<span lang=EN-US >
+ saw </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhArtarAShTrAn]</span></span>
+<span lang=EN-US >
+ the clan of Dhrtarashtra </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vyavasthitAn]</span></span>
+<span lang=EN-US >
+ present there. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tadA dhanurudyamya]</span></span>
+<span lang=EN-US >
+ Then he lifted his bow </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Aha idam]</span></span>
+<span lang=EN-US >
+ and said this </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hr'Shikesham]</span></span>
+<span lang=EN-US >
+ to Krishna -</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sEnayOrubhyO: madhyE ratham sthApaya
+mE achyuta || 21 ||<br>
+
+&nbsp;<br>
+
+yAvat EtAn nirIkShE aham yOddhukAmAn
+avasthitAn |<br>
+
+kairmayA saha yOddhavyam asmin rana
+samudyamE || 22 ||<br>
+
+&nbsp;<br>
+
+yOtsyamAnAn avEkShE_ham ya etE atra
+samAgatA: |<br>
+
+dhArtarAShTrasya durbuddhE: yuddhE
+priya chikIrShava: || 23 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[achyuta]</span></span>
+<span lang=EN-US >
+
+Krishna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sthApaya]</span></span>
+<span lang=EN-US >
+ park </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mE ratham]</span></span>
+<span lang=EN-US >
+ my chariot </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[madhyE sEnayO: ubhayO:]</span></span>
+<span lang=EN-US >
+ between the two
+armies </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yAvat]</span></span>
+<span lang=EN-US >
+ so that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham nirIkShE]</span></span>
+<span lang=EN-US >
+ I can see </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yOddhukAmAn avasthitAn]</span></span>
+<span lang=EN-US >
+ those who have
+assembled to fight - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kairmayA saha yOddhavyam]</span></span>
+<span lang=EN-US >
+ those whom I must confront </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asmin rana
+samudyamE]</span></span>
+<span lang=EN-US >
+ in this war. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham
+avEkShE]</span></span>
+<span lang=EN-US >
+ I shall see </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[etE yOtsyamAnAn]</span></span>
+<span lang=EN-US >
+ those warriors </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ya atra samAgatA:]</span></span>
+<span lang=EN-US >
+ who have come here </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[priya chikIrShava:]</span></span>
+<span lang=EN-US >
+ as the inspiration </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[durbuddhE:
+dhArtarAShTrasya]</span></span>
+<span lang=EN-US >
+ for the evil sons of Dhrtarashtra </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yuddhE]</span></span>
+<span lang=EN-US >
+ in war.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Arjuna was on the chariot and had Anjaneya,
+the one who burnt Lanka, on his flag. Seeing the Kauravas assembled with the
+intent of war, he wanted to see them in their true strength. 'Park my chariot
+at such a position that I can see them' he told Krishna, his charioteer.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote14 >
+<span lang=EN-US style='color:black' >
+It doesn't matter who you
+are or what you're asking for. Be in this conversation. Keep enquiring.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Krishna has the six qualities of knowledge,
+strength, force, wealth, valor and radiance. By His mere will, He can cause the
+creation, sustenance and destruction of whole worlds. He controls everyone in
+all ways, both from inside and out. He is invariably affectionate towards
+people who have taken refuge in Him. He was Arjuna's charioteer.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+1-24 to 1-25</span>
+<a name="1-24%20to%201-25" > </a>
+<a name="24" > </a>
+<a name="25" > </a>
+<button class="button" id="shlokabox3" onclick="toggleSnskrtPhrase('shlokabox3')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+Evam uktO hr'ShikEshO guDAkEshEna
+bhArata |<br>
+
+sEnayOrubhayO: madhyE sthApayitvA
+rathottamam || 24 ||<br>
+
+&nbsp;<br>
+
+bhIShma drONa pramukhata: sarvEshAm
+cha mahIkShitAm |<br>
+
+uvAcha pArtha pashyaitAn samavEtAn
+kurUn iti || 25 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhArata]</span></span>
+<span lang=EN-US >
+ O
+King of the Bharata dynasty, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Evam ukta: guDAkEshEna]</span></span>
+<span lang=EN-US >
+ as Arjuna said, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hr'ShikEsha:]</span></span>
+<span lang=EN-US >
+ Krishna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sthApayitvA]</span></span>
+<span lang=EN-US >
+ parked </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rathottamam]</span></span>
+<span lang=EN-US >
+ that superior chariot </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[senayOrubhayO:
+madhyE]</span></span>
+<span lang=EN-US >
+ between the two armies, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pramukhata:]</span></span>
+<span lang=EN-US >
+ in front of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhIShma drONa]</span></span>
+<span lang=EN-US >
+ Bhishma, Drona </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvEshAm cha mahIkShitAm]</span></span>
+<span lang=EN-US >
+ and all the
+other Kings. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[uvAcha]</span></span>
+<span lang=EN-US >
+ He then
+said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pArtha]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pashyaitAn]</span></span>
+<span lang=EN-US >
+ see this </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kurUn]</span></span>
+<span lang=EN-US >
+ army of the Kurus, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[samavEtAn]</span></span>
+<span lang=EN-US >
+ who have come together.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As requested by Arjuna, Krishna immediately
+stationed the chariot as instructed, even as all the kings were looking. Then
+Krishna said 'This is how your people are, such is their possibility of victory'</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+1-26 to 1-47</span>
+<a name="1-26%20to%201-47" > </a>
+<a name="26" > </a>
+<a name="27" > </a>
+<a name="28" > </a>
+<a name="29" > </a>
+<a name="30" > </a>
+<a name="31" > </a>
+<a name="32" > </a>
+<a name="33" > </a>
+<a name="34" > </a>
+<a name="35" > </a>
+<a name="36" > </a>
+<a name="37" > </a>
+<a name="38" > </a>
+<a name="39" > </a>
+<a name="40" > </a>
+<a name="41" > </a>
+<a name="42" > </a>
+<a name="43" > </a>
+<a name="44" > </a>
+<a name="45" > </a>
+<a name="46" > </a>
+<a name="47" > </a>
+<button class="button" id="shlokabox4" onclick="toggleSnskrtPhrase('shlokabox4')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tatrApashyat sthitAn pArtha: pitr''n
+atha pitAmahAn |<br>
+
+AchAryAn mAtulAn bhrAtr''n putrAn
+pautrAn sakhIn tathA || 26 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[tatra]</span></span>
+<span lang=EN-US >
+ There, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pArtha:]</span></span>
+<span lang=EN-US >
+
+Arjuna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[apashyat]</span></span>
+<span lang=EN-US >
+ saw </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pitr''n]</span></span>
+<span lang=EN-US >
+ his father's generation </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[atha]</span></span>
+<span lang=EN-US >
+ along with </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pitAmahAn]</span></span>
+<span lang=EN-US >
+ his grandfathers, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AchAryAn]</span></span>
+<span lang=EN-US >
+ teachers, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAtulAn]</span></span>
+<span lang=EN-US >
+
+uncles, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhrAtr''n]</span></span>
+<span lang=EN-US >
+ those who
+were like brothers, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[putrAn]</span></span>
+<span lang=EN-US >
+
+sons, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pautrAn]</span></span>
+<span lang=EN-US >
+ grandsons </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sakhIn]</span></span>
+<span lang=EN-US >
+ friends.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shvashurAn suhr'da: chaiva senayO:
+ubhayOrapi |<br>
+
+tAn samIkShya sa kauntEya: sarvAn
+bandhUn avasthitAn || 27 ||<br>
+
+&nbsp;<br>
+
+kr'payA parayAviShTO viShIdannidam
+abravIt |<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[samIkShya]</span></span>
+<span lang=EN-US >
+ Looking at </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAn]</span></span>
+<span lang=EN-US >
+
+all those </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shvashurAn suhr'da: chaiva]</span></span>
+<span lang=EN-US >
+ relatives and friends </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[senayO: ubhayOrapi]</span></span>
+<span lang=EN-US >
+ in both armies, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avasthitAn]</span></span>
+<span lang=EN-US >
+ standing there </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvAn bandhUn]</span></span>
+<span lang=EN-US >
+ along with everyone he called his own, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa
+kauntEya:]</span></span>
+<span lang=EN-US >
+ Arjuna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kr'payA
+parayAviShTa:]</span></span>
+<span lang=EN-US >
+ was overcome with great pity, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[idam abravIt]</span></span>
+<span lang=EN-US >
+ said this </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[viShIdan]</span></span>
+<span lang=EN-US >
+ in despair -</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+dr'ShTvA imam svajanam kr'ShNa
+yuyutsum samupasthitam || 28 ||<br>
+
+&nbsp;<br>
+
+sIdanti mama gAtrANi mukham cha
+parishuShyati |<br>
+
+vEpathushcha sharIrE mE rOmaharSha:
+cha jAyatE || 29 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kr'ShNa dr'ShTvA imam svajanam
+samupasthitam yuyutsum]</span></span>
+<span lang=EN-US >
+ Krishna, seeing my own people
+who have come here to wage war, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mama gAtrANi sIdanti]</span></span>
+<span lang=EN-US >
+ my limbs slacken </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mukham cha parishuShyati]</span></span>
+<span lang=EN-US >
+ and my mouth is dry. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mE sharIrE
+vEpathushcha]</span></span>
+<span lang=EN-US >
+ My body perspires </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rOmaharSha: cha jAyatE]</span></span>
+<span lang=EN-US >
+ and my hairs stand.</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+gANDIvam sramsatE hastAt tvakchaiva
+paridahyatE |<br>
+
+na cha shaknOmi avasthAtum
+bhramatIva cha me mana: || 30 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[gANDIvam sramsatE hastAt]</span></span>
+<span lang=EN-US >
+ My bow, the Gandiva, slips from my hand. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tvakchaiva
+paridahyatE]</span></span>
+<span lang=EN-US >
+ My body burns. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na
+cha shaknOmi avasthAtum]</span></span>
+<span lang=EN-US >
+ I will not be able to stand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhramatIva cha me mana:]</span></span>
+<span lang=EN-US >
+ I'm dizzy.</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+nimittAni cha pashyAmi viparItAni
+kEshava |<br>
+
+na cha shrEya: anupashyAmi hatvA
+svajanamAhavE || 31 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[kEshava pashyAmi viparItAni
+nimittAni cha]</span></span>
+<span lang=EN-US >
+ Krishna, I see only undesirable
+consequences. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na anupashyAmi cha shrEya: hatvA
+svajanamAhavE]</span></span>
+<span lang=EN-US >
+ I don't see anything good coming from
+killing my own people.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+na kAnkShE vijayam kr'ShNa na cha
+rAjyam sukhAni cha |<br>
+
+kim nO rAjyEna gOvinda kim bhOgai:
+jIvitEna vA || 32 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[kr'ShNa]</span></span>
+<span lang=EN-US >
+ Krishna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na kAnkShE]</span></span>
+<span lang=EN-US >
+ I do not desire </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vijayam]</span></span>
+<span lang=EN-US >
+ victory, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na cha rAjyam sukhAni cha]</span></span>
+<span lang=EN-US >
+ kingdom and comfort. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[gOvinda]</span></span>
+<span lang=EN-US >
+ O protector, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kim nO rAjyEna]</span></span>
+<span lang=EN-US >
+ what do we do with this kingdom, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhOgai:
+jIvitEna vA]</span></span>
+<span lang=EN-US >
+ its pleasures or with life itself? </span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yEShAmarthE kAnkShitam nO rAjyam
+bhOgA: sukhAni cha |<br>
+
+ta imE avasthitA yuddhE prANAn
+tyaktvA dhanAni cha || 33 ||<br>
+
+&nbsp;<br>
+
+AchAryA: pitara: putrA: tathaiva cha
+pitAmahA: |<br>
+
+mAtulA: shvashurA: pautrA: shyAlA:
+sambandhina: tathA || 34 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[yEShAmarthE kAnkShitam nO
+rAjyam bhOgA: sukhAni cha]</span></span>
+<span lang=EN-US >
+ The people for whom we desire
+the kingdom, it's comfort and enjoyment - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ta imE
+avasthitA yuddhE]</span></span>
+<span lang=EN-US >
+ those very people are standing in
+this war, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tyaktvA prANAn dhanAni cha]</span></span>
+<span lang=EN-US >
+ leaving behind their lives and their wealth - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AchAryA: pitara: putrA: tathaiva cha pitAmahA:]</span></span>
+<span lang=EN-US >
+ they are my teachers, they are like my father, sons, grandfathers, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAtulA: shvashurA: pautrA: shyAlA: sambandhina: tathA]</span></span>
+<span lang=EN-US >
+ uncles, fathers-in-law, grandsons, brothers-in-law and other
+relatives.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+EtAnna hantum ichChAmi ghnatO_pi
+madhusUdana |<br>
+
+api trailokya rAjyasya hEtO: kim nu
+mahIkr'tE || 35 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[madhusUdana]</span></span>
+<span lang=EN-US >
+ Krishna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na ichChAmi EtAn hantum]</span></span>
+<span lang=EN-US >
+ I don't want to kill them, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ghnatO_pi]</span></span>
+<span lang=EN-US >
+ even if it means I will get killed. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[api
+trailokya rAjyasya hEtO:]</span></span>
+<span lang=EN-US >
+ I wouldn't even do it for the
+sake of three worlds, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kim nu mahIkr'tE]</span></span>
+<span lang=EN-US >
+ why would I do it for this patch of land on Earth?</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+nihatya dhArtarAShTrAn na: kA prIti:
+syAt janArdana |<br>
+
+pApamEvAshrayEt asmAt hatvaitAn
+AtatAyina: || 36 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[janArdana]</span></span>
+<span lang=EN-US >
+ O slayer of enemies, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na: kA prIti: syAt]</span></span>
+<span lang=EN-US >
+ why would we take pleasure </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nihatya dhArtarAShTrAn]</span></span>
+<span lang=EN-US >
+ in killing the sons of Dhrtarashtra? </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hatvaitAn
+AtatAyina:]</span></span>
+<span lang=EN-US >
+ By killing these wicked people, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pApamEvAshrayEt asmAt]</span></span>
+<span lang=EN-US >
+ we will definitely
+court misfortune.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tasmAt nArhA vayam hantum
+dhArtarAShTrAn sva bAndhvAn |<br>
+
+svajanam hi katham hatvA sukhina: syAma
+mAdhava || 37 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[tasmAt]</span></span>
+<span lang=EN-US >
+ Hence, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hantum sva bAndhvAn dhArtarAShTrAn]</span></span>
+<span lang=EN-US >
+ killing our relatives, the sons of Dhrtarashtra </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nArhA vayam]</span></span>
+<span lang=EN-US >
+ doesn't befit us. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAdhava]</span></span>
+<span lang=EN-US >
+ Krishna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[katham
+syAma sukhina: hi]</span></span>
+<span lang=EN-US >
+ how can we be happy indeed, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hatvA svajanam]</span></span>
+<span lang=EN-US >
+ after killing or own
+people?</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yadyapi EtE na pashyanti lObhOpahata
+chEtasa: |<br>
+
+kulakShaya kr'tam dOSham mitradrOhE
+cha pAtakam || 38 ||<br>
+
+&nbsp;<br>
+
+katham na jnEyam asmAbhi: pApAt
+asmAt nivartitum |<br>
+
+kulakShaya kr'tam dOSham
+prapashyadbhi: janArdana || 39 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[yadyapi]</span></span>
+<span lang=EN-US >
+ Even if </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[EtE lObhOpahata chEtasA]</span></span>
+<span lang=EN-US >
+ they are overcome by greed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na pashyanti]</span></span>
+<span lang=EN-US >
+ and do not see </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kulakShaya kr'tam dOSham]</span></span>
+<span lang=EN-US >
+ the wrongs that come from the destruction of the clan </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mitradrOhE cha pAtakam]</span></span>
+<span lang=EN-US >
+ and the misfortune
+in betraying friends, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[katham na jnEyam asmAbhi:]</span></span>
+<span lang=EN-US >
+ why can't we think of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nivartitum asmAt
+pApAt]</span></span>
+<span lang=EN-US >
+ turning away from this sin, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[janArdana]</span></span>
+<span lang=EN-US >
+ Krishna? </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kulakShaya kr'tam dOSham prapashyadbhi:]</span></span>
+<span lang=EN-US >
+ We
+see the harmful effects of destroying the lineage clearly.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+kulakShayE praNashyanti kuladharmA:
+sanAtanA: |<br>
+
+dharmE naShTE kulam kr'tsnam adharmO
+abhibhavatyuta || 40 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[kulakShayE sanAtanA:
+kuladharmA: praNashyanti]</span></span>
+<span lang=EN-US >
+ With the destruction of the
+clan, the ancient code of conduct is lost. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[naShTE
+dharmE]</span></span>
+<span lang=EN-US >
+ With the loss of conduct, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adharmO abhibhavatyuta kulam kr'tsnam]</span></span>
+<span lang=EN-US >
+
+immorality would prevail in the entire clan.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+adharmAbhibhAvat kr'ShNa
+praduShyanti kulastriya: |<br>
+
+strIShu duShTAsu vArShNEya jAyatE
+varNasankara: || 41 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[kr'ShNa]</span></span>
+<span lang=EN-US >
+ Krishna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adharmAbhibhAvat]</span></span>
+<span lang=EN-US >
+ when immorality prevails, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kulastriya:
+praduShyanti]</span></span>
+<span lang=EN-US >
+ the ladies of the clan would be abused. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[strIShu duShTAsu vArShNEya jAyatE varNasankara:]</span></span>
+<span lang=EN-US >
+ With such abuse, different classes of people get mixed up.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sankarO narakAyaiva kulaghnAnAm
+kulasya cha |<br>
+
+patanti pitarO hyEShAm lupta
+piNDOdaka kriyA: || 42 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[sankarO]</span></span>
+<span lang=EN-US >
+ This mixture </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[narakAyaiva kulaghnAnAm
+kulasya cha]</span></span>
+<span lang=EN-US >
+ leads the clan and its slayers to hell. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[patanti pitarO hyEShAm]</span></span>
+<span lang=EN-US >
+ Their ancestors
+would lose their place, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[lupta piNDOdaka kriyA:]</span></span>
+<span lang=EN-US >
+ being deprived of ceremonies and offerings.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+dOShai: Etai: kulaghnAnAm
+varNasankara kArakai: |<br>
+
+utsAdyantE jAtidharmA: kuladharmA:
+cha shAshvatA: || 43 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[shAshvatA: jAtidharmA: cha
+kuladharmA:]</span></span>
+<span lang=EN-US >
+ Ancient codes of social order and family
+customs </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[utsAdyantE]</span></span>
+<span lang=EN-US >
+ are
+destroyed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dOShai: Etai: kulaghnAnAm]</span></span>
+<span lang=EN-US >
+ by the faults of these clan-destroyers </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[varNasankara
+kArakai:]</span></span>
+<span lang=EN-US >
+ who brought about the intermingling of the
+classes.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+utsanna kuladharmANAm manuShyANAm
+janArdana |<br>
+
+narakO_niyatam vAsO bhavatIti
+anushushruma || 44 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[janArdana]</span></span>
+<span lang=EN-US >
+ Krishna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anushushruma]</span></span>
+<span lang=EN-US >
+ we've heard </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti]</span></span>
+<span lang=EN-US >
+
+that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[utsanna kuladharmANAm manuShyANAm]</span></span>
+<span lang=EN-US >
+ people whose dynastic code of conduct is destroyed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[narakO_niyatam vAsO bhavati]</span></span>
+<span lang=EN-US >
+ will
+definitely get to live in hell.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+ahO bata mahat pApam kartum
+vyavasitA vayam |<br>
+
+yat rAjya sukha lObhEna hantum
+svajanam udyatA: || 45 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[ahO bata]</span></span>
+<span lang=EN-US >
+ Alas! </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vayam vyavasitA kartum mahat pApam]</span></span>
+<span lang=EN-US >
+ we are set to commit great crimes. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[hantum
+svajanam udyatA:]</span></span>
+<span lang=EN-US >
+ We are ready to kill our own people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat rAjya sukha lObhEna]</span></span>
+<span lang=EN-US >
+ due to our greed
+for kingdom, comforts and enjoyment.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yadi mAm apratIkAram ashastram
+shastra pANaya: |<br>
+
+dhArtarAShTrA raNE hanyu: tanmE
+kShEmataram bhavEt || 46 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yadi dhArtarAShTrA]</span></span>
+<span lang=EN-US >
+ If the sons of Dhrtarashtra </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shastra
+pANaya:]</span></span>
+<span lang=EN-US >
+ wield weapons </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[raNE
+hanyu: mAm]</span></span>
+<span lang=EN-US >
+ and kill me in war </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashastram]</span></span>
+<span lang=EN-US >
+ when I am unarmed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[apratIkAram]</span></span>
+<span lang=EN-US >
+ and unresisting, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tanmE kShEmataram bhavEt]</span></span>
+<span lang=EN-US >
+ it would seem the better option to me.</span>
+</p>
+
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=ShlokaCxSpMiddle >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sanjaya uvAcha<br>
+
+Evam uktvArjuna: sankhyE rathOpastha
+upAvishat |<br>
+
+visr'jya sasharam chApam shOka
+samvigna mAnasa: || 47 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[sanjaya uvAcha]</span></span>
+<span lang=EN-US >
+ Sanjaya said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Evam uktvA sankhyE]</span></span>
+<span lang=EN-US >
+ Having spoken thus on the battlefield, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[arjuna:]</span></span>
+<span lang=EN-US >
+ Arjuna </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[visr'jya chApam sasharam]</span></span>
+<span lang=EN-US >
+ put down his bow along with his arrows and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rathOpastha
+upAvishat]</span></span>
+<span lang=EN-US >
+ sat down on the seat of his chariot, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shOka samvigna mAnasa:]</span></span>
+<span lang=EN-US >
+ being overwhelmed
+by sorrow.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote15 >
+<span lang=EN-US style='color:black' >
+In the midst of action,
+we sometimes worry 'Am I going to hurt someone? Is the outcome worth it?' </span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal style='page-break-after:avoid' >
+<span lang=EN-US >
+Sanjaya said
+- </span>
+</p>
+
+
+<p class=MsoNormal style='page-break-after:avoid' >
+<span lang=EN-US >
+Arjuna is a
+person with a great mind. He is extremely sympathetic and maintains firm bonds
+of friendship. He is righteous and has similar-minded brothers. He was cheated
+by you (Dhritarashtra) many times by terrible acts - such as lodging them in a
+house of wax and setting fire to it. Arjuna has the Lord himself as his support.
+Having seen your people who were to be slain in battle, he was overcome by friendship,
+sympathy, fear of righteous and unrighteous behavior. He lost strength in his
+organs and said 'I will never wage war'. Then, overcome by sadness at the sight
+of his relatives to be treated as his opponents, he threw away the bow and
+arrow. He sat on the edge of his chariot.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Back%20to%20Basics.html">Back to Basics</a></span><span style="float:right;"><a href="Chapter%202.html">Chapter 2</a>&nbsp;&#xbb;</span></p>
+
+<!-- Here ends the chapter -->
+<div class="TopNoteBlock">
+<div class="TopNote" id='TopNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='TopNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_up.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px;margin-right:24pt" id='TopApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+<div style="position:fixed;top:0;right:0;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+</div>
+<div class="BottomNoteBlock">
+<div class="BottomNote" id='BottomNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='BottomNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_down.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px" id='BottomApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Middle (Gita commentary) div ends here -->
+</div>
+
+<!-- Container ends here -->
+</div>
+
+<!--scripts are at the end because they refer to the divs on top -->
+<script type="text/javascript">
+<!-- console.log('gita scroller 4'); -->
+var commentaryElm = document.getElementById('GitaCommentary');
+var chapapplnotestart = 12;
+document.addEventListener("DOMContentLoaded", domloaded());
+commentaryElm.onscroll = onCommentaryScroll;
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleSnskrtPhrase(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var rule = cssRule('span.snskrtphrase');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    commentaryElm.scrollTop = commentaryElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function containerResize(){
+<!--set top and bottom note to 'left' or 'centered' -->
+}
+function domloaded(){
+    containerResize();
+    <!--trigger the default top-bottom on loading the chapter -->
+    syncnote();
+}
+function onCommentaryScroll() {
+    syncnote();
+}
+function recordState() {
+    var currentScTop = commentaryElm.scrollTop;
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ 'c' + "=" + currentScTop);
+}
+function overlapFeedback(elm, overlap) {
+    var rgbastr = 'rgba(216,191,216,' + toString(1-overlap) + ')';
+    elm.style.backgroundColor = rgbastr;
+}
+function syncnote() {
+    var commentaryViewPort = commentaryElm.getBoundingClientRect(); 
+
+    <!--Find the inline application note right above current viewport and the one right below-->
+    var inlinenoteAbove = "";
+    var inlinerefAbove = "";
+    var inlinenoteBelow = "";
+    var inlinerefBelow = "";
+
+    var i = chapapplnotestart;
+    <!--The 'inline' word here is very important!! The code assumes this everywhere! -->
+    var inlinenote = 'inlineapplnote' + i;
+    var inlineElm = document.getElementById(inlinenote);
+    var topOverlap = 0;
+    var bottomOverlap = 0;
+    var topNoteRect = document.getElementById("TopNoteID").getBoundingClientRect();
+    var bottomNoteRect = document.getElementById("BottomNoteID").getBoundingClientRect();
+
+    while(inlineElm != null) {
+        inlineRect = inlineElm.getBoundingClientRect();
+        if(inlineRect.top <= topNoteRect.top) {
+            inlinenoteAbove = inlineElm.innerHTML;
+            inlinerefAbove = inlinenote;
+            topOverlap = Math.min(Math.max((inlineRect.bottom - topNoteRect.top) / 
+                                           (topNoteRect.bottom - topNoteRect.top), 0), 1);
+        }
+        else if(inlineRect.top < topNoteRect.bottom) {
+            topOverlap = (topNoteRect.bottom - inlineRect.top) / (topNoteRect.bottom - topNoteRect.top);
+        }
+		else if(topNoteRect.bottom == 0) {
+			topOverlap = 1;
+		}
+        if(inlineRect.bottom > bottomNoteRect.top && inlineRect.bottom < bottomNoteRect.bottom) {
+            bottomOverlap = (inlineRect.bottom - bottomNoteRect.top) / 
+                            (bottomNoteRect.bottom - bottomNoteRect.top);
+        }
+        else if (inlineRect.top > bottomNoteRect.top && inlineRect.top < bottomNoteRect.bottom) {
+            bottomOverlap = (bottomNoteRect.bottom - inlineRect.top) /
+                            (bottomNoteRect.bottom - bottomNoteRect.top)
+        }
+        <!--Latch the first one that breaches the bottom-->
+        if(inlinenoteBelow == "" && inlineRect.bottom > commentaryViewPort.bottom) {
+            inlinenoteBelow = inlineElm.innerHTML;
+            inlinerefBelow = inlinenote;
+        }
+        i++;
+        inlinenote = 'inlineapplnote' + i;
+        inlineElm = document.getElementById(inlinenote);
+    }
+    <!--Show the note above at the top and below at the bottom only if they have something -->
+    document.getElementById("TopApplicationNote").innerHTML = inlinenoteAbove;
+    if(inlinenoteAbove != "") {
+        document.getElementById("TopNoteTableID").onclick = function(){window.location.href = "#"+inlinerefAbove};
+        document.getElementById("TopNoteID").style.display = 'inherit';
+    } else {
+        document.getElementById("TopNoteID").style.display = 'none';
+    }
+    document.getElementById("BottomApplicationNote").innerHTML = inlinenoteBelow;
+    if(inlinenoteBelow != "") {
+        document.getElementById("BottomNoteTableID").onclick = function(){window.location.href = "#"+inlinerefBelow};
+        document.getElementById("BottomNoteID").style.display = 'inherit';    
+    } else {
+        document.getElementById("BottomNoteID").style.display = 'none';    
+    }
+    document.getElementById("TopNoteID").style.opacity = 1 - topOverlap;
+    document.getElementById("BottomNoteID").style.opacity = 1 - bottomOverlap;
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var rule = cssRule('span.snskrtphrase');
+        if(eorc == 'e') {
+            rule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            rule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        commentaryElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+function gotohash() {
+	if(window.location.hash == "") {
+		commentaryElm.scrollTop = 0;
+	} else {
+		var elmTogo = document.getElementById(window.location.hash.substr(1));
+		commentaryElm.scrollTop += elmTogo.getBoundingClientRect().top-1;
+	}
+}
+</script>
+
+</body>
+
+</html>

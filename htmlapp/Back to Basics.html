@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna&quot;s Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.TopNoteBlock, .BottomNoteBlock {
+    display: flex;
+    flex-direction: row;
+    position: fixed
+}
+.TopNote, .BottomNote {
+	width: 100%;
+    height: auto;
+    background-color: rgba(216,191,216,0.95);    
+    border-color: #E5DFEC;
+    position: fixed
+}
+.TopNote, .TopNoteBlock {
+    top: 0;
+    left: 0;
+}
+.BottomNote, .BottomNoteBlock {
+    bottom: 0;
+    left: 0;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    padding: .5rem;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: navy;
+    -webkit-overflow-scrolling: touch;
+}
+/*Thin scrollbar*/
+.Middle::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Middle::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+/*  Right has a set size while the Middle is set to flex one so it occupies all remaining space.*/
+.Middle {
+    flex: 1;
+	width: auto;
+    height: 80%;
+    background: Beige;
+}
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;
+}
+h1 {
+    margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;
+}
+h2 {
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;
+}
+p.Shloka, li.Shloka, div.Shloka {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+span.snskrtphrase {
+    color: Maroon;
+    display:none;
+}
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx, p.ApplNotesOpener {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";
+}
+p.ApplNotesOpener {
+    font-weight:bold;
+}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight, p.ApplNotesROp, .TopNote, .BottomNote {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	font-size:9.0pt;
+    line-height:150%;
+	font-family:"Comic Sans MS";
+}
+.TopNote {
+    border-style:none none dotted none;
+}
+.BottomNote {
+    border-style:dotted none none none;
+}
+p.ApplNotesROp {
+    font-style:italic;
+}
+.ApplNotesImg, .ApplNotesROpImg {
+    height:16pt;
+}
+p.nextprev, li,nextprev, div.nextprev {
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";
+}
+.button {
+    background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;
+}
+</style>
+</head>
+
+<body onresize="containerResize()" onpageshow="pageshown()" lang=EN-IN>
+
+<!-- Was: nothing was there -->
+<div class="Container" id='GitaContainer'>
+
+<!-- Was: div class=WordSection1 id='GitaCommentary' -->
+<div class="Middle" id='GitaCommentary'>
+
+<!-- Here starts the chapter -->
+<p class="nextprev"><span style="float:right;"><a href="Chapter%201.html">Chapter 1</a>&nbsp;&#xbb;</span></p>
+<h1>Back to Basics</h1>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Many words in Sanskrit and English have
+multiple meanings. Let's fix an interpretation to frequently encountered words.
+This interpretation may be different from what we're accustomed to. If you
+don't understand even after reading this, don't worry. Stay in the journey of
+inquiry and don't get anxious about answers.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote0 >
+<span lang=EN-US style='color:black' >
+Who am I?</span>
+</p>
+</td></tr></table>
+
+<h3 >
+<span lang=EN-US >
+[Atma]</span>
+<span lang=EN-US >
+ - The Self</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As the Lord Himself states, it is not
+possible to describe the </span>
+<span lang=EN-US >
+[Atma]</span>
+<span lang=EN-US >
+
+in speech, nor is it possible to understand it using the intellect. Needless to
+say, the word </span>
+<span lang=EN-US >
+[Atma]</span>
+<span lang=EN-US >
+ is
+difficult to translate. I have used the word 'Self' with an uppercase 'S' as
+the translation of the word </span>
+<span lang=EN-US >
+[Atma]</span>
+<span lang=EN-US >
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Rather than thinking about the </span>
+<span lang=EN-US >
+[Atma]</span>
+<span lang=EN-US >
+ as a ghostly soul, consider it as
+being 'me'. The Self is 'me'. That brings us to the question 'What am I?' Let's
+start by seeing what the Self isn't.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote1 >
+<span lang=EN-US style='color:black' >
+I am not my body, am I?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Am I a body, a walking bundle of cells and
+chemicals, a machine that keeps responding to stimuli? If that's the case, I
+would be a different 'me' through my life - the molecules in our body, our
+shape, size, even our knowledge and memory - none of them are constant through
+the life of the body. However, I still remain 'me' throughout my life even if
+every aspect of my body gets replaced along the way.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote2 >
+<span lang=EN-US style='color:black' >
+I am not just a
+thought, am I?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Let' go a little deeper. Am I my brain? The
+brain is part of the nervous system, which routes all stimuli through its
+circuits. Those circuits are nerve cells insulated from each other by fatty
+tissue, connected through gaps in the insulation. This is known to be the way
+memory is built and information is processed.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+There are thoughts in the brain that seem
+to run on their own. They seem to have an existence independent of external
+stimuli - something that I hear in my head when I just sit around doing
+nothing. It's the 'chatterbox center'. Somewhere in the brain, my 'identity' is
+located, which could be a 'memory of me'. It says things like 'I am short,
+arrogant, intelligent but lazy' and so on. Do these centers constitute 'me'?
+Does it cause the experience of 'I exist'?</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+No, these thoughts can change over time
+while I remain 'me'. If I change my identity, maybe become an active person
+from a lazy one, do I become a different 'me'? No. When I grow old and lose
+some memory and other mental faculties, 'I' still exist. The experience of 'I
+exist' is perhaps part of what's called 'consciousness'.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote3 >
+<span lang=EN-US style='color:black' >
+What am I? Let's begin
+the discovery of the Self and its relation with the Lord.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The current state of the art has not
+revealed the true nature of our consciousness. What is consciousness made of?
+Does it follow any laws of conservation? Did it exist when the universe was
+created? Is it responsible for the awareness and experience of the universe?
+Are there different types of consciousness?</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Let's use the term 'Self' to refer to that
+which gives rise to 'consciousness'. The Lord begins his conversation with
+Arjuna by describing the nature of the Self in the second chapter. He then
+explains the method of realizing it.</span>
+</p>
+
+
+<h3 >
+<a name="yoga_is_to_realize" >
+</a>
+<span lang=EN-US >
+[yOga]</span>
+<span lang=EN-US >
+ - To associate, gain and realize</span>
+</h3>
+
+
+<p class=MsoNormal >
+<a name="karmayOga_a_defn" >
+</a>
+<span lang=EN-US >
+Yoga is
+about realization - a journey to get real. To associate facts and observations,
+gain knowledge and materials required to realize our objective. We commonly use
+the word 'yoga' to mean the postures and activities that go into realizing the
+capabilities of our body and mind. This word has a deeper meaning. </span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote4 >
+<span lang=EN-US style='color:black' >
+Yoga is a journey to
+discover reality. Every form of yoga leads to the same discovery.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Three forms of yoga are seen in the
+conversation of the Gita.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+First, the Lord reveals the art of practicing
+yoga in all our activities. It's about realizing that we aren't entitled to any
+outcomes, that the Lord is the enjoyer and the purpose of our actions. This is
+reality. Practicing this reality is called </span>
+<span lang=EN-US >
+[karmayOga]</span>
+<span lang=EN-US >
+. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Second, He describes yoga in our thoughts. This
+is the realization that we are not our body; that the Self exists for the Lord;
+that The Lord is all-powerful and acts according to His principles. This is
+real knowledge and its practice is called </span>
+<span lang=EN-US >
+[jnAnayOga]</span>
+<span lang=EN-US >
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Third, He talks about practicing yoga in devotion.
+It is to adore the Lord and have Him in our thoughts always. This is our state
+of being and our relationship with the Lord. Such practice is called </span>
+<span lang=EN-US >
+[bhaktiyOga]</span>
+<span lang=EN-US >
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Yoga - be it postures, the forms described
+above, a study of a science or contemplation - each of them is a journey in our
+understanding of the material universe, our body as a part of the universe, us
+and our relationship with the Lord. Such understanding comes with equanimity.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote5 >
+<span lang=EN-US style='color:black' >
+What am I doing?</span>
+</p>
+</td></tr></table>
+
+<h3 >
+<a name="h.30j0zll" >
+</a>
+<a name="actions_and_happenings" >
+</a>
+<span lang=EN-US >
+[karma]</span>
+<span lang=EN-US >
+ - Action, Activity</span>
+</h3>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote6 >
+<span lang=EN-US style='color:black' >
+Our journey in life is
+a series of activities. Is it about 'doing' or 'making it happen'?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The word </span>
+<span lang=EN-US >
+[karma]</span>
+<span lang=EN-US >
+ is used in many contexts, so let's pick the basic meaning - any activity
+and any action we initiate is called </span>
+<span lang=EN-US >
+[karma]</span>
+<span lang=EN-US >
+. An 'action' is something we do with an intention. Activity happens
+in the material universe. We experience outcomes.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The distinction between actions, activities,
+happenings, goals and outcomes can be hazy, so let's clarify with an example -
+Let's say I intend to call my friend. I initiate the action by picking up the
+phone and dialing. The action itself is accomplished by the activities of my
+body. The call is transmitted by electromagnetic waves. My friend needs to
+receive the call. That's when the call happens. In this manner, I intend to do
+something and initiate an action. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Many things need to come together to make
+the activity 'happen'. Only one of them is 'me'. The belief that I make things
+happen is not reality. You may remark that none of it would happen unless I
+initiated the action. That would be right - I am entitled only to an
+independent intention and an initiation of the action. I don't make the rest of
+the story happen, though I can predict what happens in material terms. What I
+cannot predict is the outcome.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+An activity has an outcome that we
+experience. Let's take the example ahead- suppose my friend responds cheerfully
+to my call. Normally I would experience joy. However, if I were under a lot of
+stress, I may feel envy. Suppose my friend didn't answer my call. I could get
+frustrated. Or I could simply call later.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, we initiate an action with
+some intention. After that, things happen, followed by an outcome in the form
+of an experience. </span>
+<span lang=EN-US >
+[karma]</span>
+<span lang=EN-US >
+ is
+the initiation of the activity. It's not to be mixed up with what actually
+happens, or with any outcomes encountered along the way.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+These outcomes and experiences form the
+'fruit' of the action, called </span>
+<span lang=EN-US >
+[karmaphala]</span>
+<span lang=EN-US >
+. The results that follow my actions can give me joy or sorrow,
+depending on my attachment towards the action and its result. An outcome
+doesn't belong to the action - by doing something, I am not entitled to a
+particular experience. If I don't recognize this, I tie my activity to my
+experience and will be bound by it. Such activity wouldn't be liberating
+anymore, it would be pretty depressing.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote7 >
+<span lang=EN-US style='color:black' >
+Why am I doing
+it?</span>
+</p>
+</td></tr></table>
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote8 >
+<span lang=EN-US style='color:black' >
+If the action doesn't
+guarantee an outcome, why should I work, or give my 100% to achieve a goal?</span>
+</p>
+</td></tr></table>
+
+<h3 >
+<span lang=EN-US >
+[dharma]</span>
+<span lang=EN-US >
+ - That which uplifts</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It is the first word in the Gita and
+appears many times in the epic. Often, it's translated to mean 'righteousness',
+which gives the impression that there is always 'one right thing'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+That's not always the case. For instance,
+is it right to tolerate the mistakes of our dear ones? Or confront them even at
+the cost of friendship? Righteousness is indeed confusing, so Yudhishtira asks
+Bhishma at the end of the war- 'Which </span>
+<span lang=EN-US >
+[dharma]</span>
+<span lang=EN-US >
+ do you consider superior?' - implying many righteous behaviors. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Consider </span>
+<span lang=EN-US >
+[dharma]</span>
+<span lang=EN-US >
+ as a purpose that uplifts you. Usually, such an 'uplifting' would liberate
+you to see an even higher purpose. For instance, let's say you set out to earn
+money and achieve your goal legally. This may liberate you to pursue your interests,
+or it may open opportunities to make even more money. Which </span>
+<span lang=EN-US >
+[dharma]</span>
+<span lang=EN-US >
+ you pick is your choice.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This brings us to the distinction between
+goals, means, purpose, expectation and outcomes. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Let's take an example - the activity of
+cooking. The 'goal' is 'what' you're making - a meal, in this case. The 'means'
+is 'how' you're making it, including the utensils, recipe, and items that go
+into making the meal. The 'purpose' says 'why' you're doing it. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The purpose of cooking could be to eat, to
+feed your family, to feed guests, to earn money, as a duty or just for the love
+of cooking. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The 'expectation' is linked to desire - it's
+what we want for ourselves from the activity. In this example, while cooking
+for the family, we could expect appreciation; we could also expect them to
+simply finish the food. Something happens as an outcome of the activity. Our
+experience of the outcome depends on how we relate it to our expectations.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In all of this, </span>
+<span lang=EN-US >
+[dharma]</span>
+<span lang=EN-US >
+ relates to the purpose. Your purpose 'uplifts' you in varying
+degrees- cooking for the love of cooking may be more uplifting than just doing
+it for someone else. On the other hand, if you're doing it for someone whom you
+adore, that may be more uplifting than doing it for yourself.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote9 >
+<span lang=EN-US style='color:black' >
+Look beyond desire.
+Focus on the purpose even when you don't reach the goal you expect.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With this example, I know the meaning of </span>
+<span lang=EN-US >
+[dharma]</span>
+<span lang=EN-US >
+ but its application remains shady.
+Do I consider my duty and profession to be above personal relationships? Or
+cater to the needs of my dear ones, disregarding rights and opportunity when
+they come in the way? What is the purpose of my activities? </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The problem of purpose appears again and
+again in the Mahabharata. The resolution is also consistently stated each time:
+Look beyond desires. Focus on purpose and don't go behind outcomes. Have the
+Lord as your purpose and worship Him. At this point, there doesn't seem to be a
+logical link from the 'problem of purpose' to the 'resolution by worship'. That's
+the journey of the Gita.</span>
+</p>
+
+
+<h3 >
+<span lang=EN-US >
+[yajna]</span>
+<span lang=EN-US >
+ - An act of worship</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+To 'worship' is to 'honor and adore'. Doing
+this consciously means doing it according to a procedure. Though the word </span>
+<span lang=EN-US >
+[yajna]</span>
+<span lang=EN-US >
+ is often used to mean 'sacrifice', here
+we consider the more general meaning of 'worship'.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote10 >
+<span lang=EN-US style='color:black' >
+Is there a
+different way?</span>
+</p>
+</td></tr></table>
+
+<h3 >
+<a name="Moksha" >
+</a>
+<span lang=EN-US >
+[mOksha]</span>
+<span lang=EN-US >
+ - The
+joy of liberation</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Moksha is to be free of all limitations. </span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote11 >
+<span lang=EN-US style='color:black' >
+What's it like to be
+really free?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+We cannot really imagine this state of
+being, since we've never been free of all limitations. To start with, we need
+to live with the limitations of our body. Then there is the limitation that
+comes from our desires and attachments - which may come from things we own, the
+society, family or friends. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All of them are undoubtedly valuable - be
+it the body, the society, family or friends. We cannot accomplish much without
+them. The question is: How many activities do we initiate, expecting to gain or
+maintain them? How many activities do we initiate independently, after which
+the rest of the story comes together to make it </span>
+<span lang=EN-US >
+<a href="Back%20to%20Basics.html#actions_and_happenings">happen</a>
+?</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It isn't necessary to have expectations
+whenever we initiate something. In fact, expectations are limiting in nature. Take
+the activity of singing, for instance. When I expect appreciation and sing, I
+do not feel much liberty in the initiative, being constrained by my impression
+of the audience. Even when I'm appreciated, it's temporary and I need more
+appreciation the next time. It doesn't liberate me in any way. On the other
+hand, if I sing for the joy of singing, it feels more liberating. There is no
+question of failure while I'm enjoying my singing. Though I may delight in an
+activity in this way, repeating the same thing feels boring and my initiative
+reduces. Then, such an initiative is not totally liberating either.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+What if there is a purpose that we're always
+meant to achieve? What if any initiative towards that purpose was never to
+fail? What if that purpose is easy and always delightful, no matter how many
+times it's repeated, no matter how much criticism happens? Being in such a
+purpose is the ultimate liberty. That purpose is the Lord. Achievement of that
+purpose is Moksha.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Those who are in this purpose </span>
+<span lang=EN-US >
+<a href="karmayoga.html">are not driven</a>
+
+by the world.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+&nbsp;</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Let's examine a few more words before we
+get started with the Bhagavad-Gita.</span>
+</p>
+
+
+<h3 >
+<span lang=EN-US >
+[anAdi kAla]</span>
+<span lang=EN-US >
+ - Beginning-less time
+</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It's the time that transcends the creation
+and destruction of the universe. As opposed to this, the 'normal' time is the
+one we experience, which starts with the creation of this universe.</span>
+</p>
+
+
+<h3 >
+<span lang=EN-US >
+[vishEShaNa]</span>
+<span lang=EN-US >
+ - Attribute</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+An attribute is a property that cannot
+exist on its own. For example, 'red color' is an attribute of blood: the
+attribute of 'redness' cannot exist on its own: there has to be an object that
+shows up as red, for the attribute to exist. Likewise, we and our universe are
+attributes of the Lord.</span>
+</p>
+
+
+<h3 >
+<span lang=EN-US >
+[mana:]</span>
+<span lang=EN-US >
+ - The mind </span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The mind is an instrument for the Self to
+experience this universe. Understanding, perception, intelligence and cognition
+come from the mind.</span>
+</p>
+
+
+<h3 >
+<span lang=EN-US >
+[buddhi]</span>
+<span lang=EN-US >
+ - The intellect </span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The intellect gives the ability to reason
+and distinguish.</span>
+</p>
+
+
+<h3 >
+<span lang=EN-US >
+References to the Lord:</span>
+</h3>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All references to the Lord, including
+pronouns, start with an uppercase letter. For example: The Lord said 'I make
+Myself come into being by My own will'.</span>
+</p>
+
+
+<p class="nextprev"><span style="float:right;"><a href="Chapter%201.html">Chapter 1</a>&nbsp;&#xbb;</span></p>
+
+<!-- Here ends the chapter -->
+<div class="TopNoteBlock">
+<div class="TopNote" id='TopNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='TopNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_up.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px;margin-right:24pt" id='TopApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+<div style="position:fixed;top:0;right:0;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+</div>
+<div class="BottomNoteBlock">
+<div class="BottomNote" id='BottomNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='BottomNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_down.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px" id='BottomApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Middle (Gita commentary) div ends here -->
+</div>
+
+<!-- Container ends here -->
+</div>
+
+<!--scripts are at the end because they refer to the divs on top -->
+<script type="text/javascript">
+<!-- console.log('gita scroller 4'); -->
+var commentaryElm = document.getElementById('GitaCommentary');
+var chapapplnotestart = 0;
+document.addEventListener("DOMContentLoaded", domloaded());
+commentaryElm.onscroll = onCommentaryScroll;
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleSnskrtPhrase(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var rule = cssRule('span.snskrtphrase');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    commentaryElm.scrollTop = commentaryElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function containerResize(){
+<!--set top and bottom note to 'left' or 'centered' -->
+}
+function domloaded(){
+    containerResize();
+    <!--trigger the default top-bottom on loading the chapter -->
+    syncnote();
+}
+function onCommentaryScroll() {
+    syncnote();
+}
+function recordState() {
+    var currentScTop = commentaryElm.scrollTop;
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ 'c' + "=" + currentScTop);
+}
+function overlapFeedback(elm, overlap) {
+    var rgbastr = 'rgba(216,191,216,' + toString(1-overlap) + ')';
+    elm.style.backgroundColor = rgbastr;
+}
+function syncnote() {
+    var commentaryViewPort = commentaryElm.getBoundingClientRect(); 
+
+    <!--Find the inline application note right above current viewport and the one right below-->
+    var inlinenoteAbove = "";
+    var inlinerefAbove = "";
+    var inlinenoteBelow = "";
+    var inlinerefBelow = "";
+
+    var i = chapapplnotestart;
+    <!--The 'inline' word here is very important!! The code assumes this everywhere! -->
+    var inlinenote = 'inlineapplnote' + i;
+    var inlineElm = document.getElementById(inlinenote);
+    var topOverlap = 0;
+    var bottomOverlap = 0;
+    var topNoteRect = document.getElementById("TopNoteID").getBoundingClientRect();
+    var bottomNoteRect = document.getElementById("BottomNoteID").getBoundingClientRect();
+
+    while(inlineElm != null) {
+        inlineRect = inlineElm.getBoundingClientRect();
+        if(inlineRect.top <= topNoteRect.top) {
+            inlinenoteAbove = inlineElm.innerHTML;
+            inlinerefAbove = inlinenote;
+            topOverlap = Math.min(Math.max((inlineRect.bottom - topNoteRect.top) / 
+                                           (topNoteRect.bottom - topNoteRect.top), 0), 1);
+        }
+        else if(inlineRect.top < topNoteRect.bottom) {
+            topOverlap = (topNoteRect.bottom - inlineRect.top) / (topNoteRect.bottom - topNoteRect.top);
+        }
+		else if(topNoteRect.bottom == 0) {
+			topOverlap = 1;
+		}
+        if(inlineRect.bottom > bottomNoteRect.top && inlineRect.bottom < bottomNoteRect.bottom) {
+            bottomOverlap = (inlineRect.bottom - bottomNoteRect.top) / 
+                            (bottomNoteRect.bottom - bottomNoteRect.top);
+        }
+        else if (inlineRect.top > bottomNoteRect.top && inlineRect.top < bottomNoteRect.bottom) {
+            bottomOverlap = (bottomNoteRect.bottom - inlineRect.top) /
+                            (bottomNoteRect.bottom - bottomNoteRect.top)
+        }
+        <!--Latch the first one that breaches the bottom-->
+        if(inlinenoteBelow == "" && inlineRect.bottom > commentaryViewPort.bottom) {
+            inlinenoteBelow = inlineElm.innerHTML;
+            inlinerefBelow = inlinenote;
+        }
+        i++;
+        inlinenote = 'inlineapplnote' + i;
+        inlineElm = document.getElementById(inlinenote);
+    }
+    <!--Show the note above at the top and below at the bottom only if they have something -->
+    document.getElementById("TopApplicationNote").innerHTML = inlinenoteAbove;
+    if(inlinenoteAbove != "") {
+        document.getElementById("TopNoteTableID").onclick = function(){window.location.href = "#"+inlinerefAbove};
+        document.getElementById("TopNoteID").style.display = 'inherit';
+    } else {
+        document.getElementById("TopNoteID").style.display = 'none';
+    }
+    document.getElementById("BottomApplicationNote").innerHTML = inlinenoteBelow;
+    if(inlinenoteBelow != "") {
+        document.getElementById("BottomNoteTableID").onclick = function(){window.location.href = "#"+inlinerefBelow};
+        document.getElementById("BottomNoteID").style.display = 'inherit';    
+    } else {
+        document.getElementById("BottomNoteID").style.display = 'none';    
+    }
+    document.getElementById("TopNoteID").style.opacity = 1 - topOverlap;
+    document.getElementById("BottomNoteID").style.opacity = 1 - bottomOverlap;
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var rule = cssRule('span.snskrtphrase');
+        if(eorc == 'e') {
+            rule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            rule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        commentaryElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+function gotohash() {
+	if(window.location.hash == "") {
+		commentaryElm.scrollTop = 0;
+	} else {
+		var elmTogo = document.getElementById(window.location.hash.substr(1));
+		commentaryElm.scrollTop += elmTogo.getBoundingClientRect().top-1;
+	}
+}
+</script>
+
+</body>
+
+</html>

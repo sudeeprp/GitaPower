@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna's Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.CoverMatter {
+    overflow: auto;
+    overflow-x: hidden;
+    height: auto;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+    background: Thistle;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Thin scrollbar*/
+.CoverMatter::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.CoverMatter::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+.CoverMatter a:link {
+    text-decoration: none;
+}
+.CoverMatter a:visited {
+    text-decoration: none;
+}
+.CoverMatter a:hover {
+    text-decoration: none;
+}
+.CoverMatter a:active {
+    text-decoration: none;
+}
+p.MsoNormal, li.MsoNormal, div.MsoNormal, .MsoNormalToggle
+	{margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;}
+.MsoNormalToggle
+    {display:none;}
+.h1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+    background-image:url(snskrtstationary.png); 
+    border-left: 6px solid brown; 
+    border-right: 6px solid brown;
+	text-align:center;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;}
+.h2
+	{mso-style-link:"Heading 2 Char";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;}
+p.Shloka, li.Shloka, div.Shloka
+	{mso-style-name:Shloka;
+	mso-style-link:"Shloka Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst
+	{mso-style-name:ShlokaCxSpFirst;
+	mso-style-link:"Shloka Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle
+	{mso-style-name:ShlokaCxSpMiddle;
+	mso-style-link:"Shloka Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast
+	{mso-style-name:ShlokaCxSpLast;
+	mso-style-link:"Shloka Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";}
+span.snskrtphrase
+    {mso-style-name:Shloka;
+    color: Maroon;
+    }
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx
+	{mso-style-name:ApplNotes;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight
+	{mso-style-name:ApplNotes;
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-size:10.0pt;
+    line-height:150%;
+    border-bottom: 1px solid silver;
+	font-family:"Comic Sans MS";}
+.ApplNotesRight
+    {display:none;}
+.ApplNotesImg
+    {padding:0px 1px 0px 0px;
+    height:16pt;
+    display:none;}
+p.ApplNotesROp
+	{mso-style-name:ApplNotes;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:4.0pt;
+	font-size:18.0pt;
+	font-family:"Comic Sans MS";}
+.ApplNotesROpImg
+    {padding:0px 1px 0px 0px;
+    height:22pt;}
+.TouchFeet
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:center;
+	font-size:10.0pt;
+	font-family:"Comic Sans MS";
+    border-left: 6px solid brown; 
+    border-right: 6px solid brown;
+    background-image:url(snskrtstationary.png);}
+p.nextprev, li,nextprev, div.nextprev
+	{mso-style-name:MsoNormal;
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";}
+.button
+    {background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;}
+</style>
+</head>
+
+<body onpageshow="pageshown()" lang=EN-IN>
+<div class="Container" id=CoverContainer>
+<div class="CoverMatter" id=CoverMatterScroller>
+<p class=h1>&nbsp;<br>Krishna's Gita<br>&nbsp;</p>
+<p class=MsoNormal><a href="javascript:toggleIntro()">Welcome to this conversation!<span id=tglintro>&nbsp;&#xbb;&nbsp;</span></a></p>
+<p class=MsoNormalToggle>The Gita is a conversation between Lord Krishna and Arjuna. When Arjuna developed cold feet on the battlefield, Krishna revealed the fundamental truth of life and living to him. This conversation between Krishna and Arjuna is also a journey through our selves, our purpose and our relation with the Lord.<br> 
+Part of the epic poem Mahabharata, composed by <span class=snskrtphrase>[vEdavyAsa]</span>, this conversation is narrated by Sanjaya to the blind king <span class=snskrtphrase>[dhr'tarAShTra]</span>. The poetry is rich in meaning, yielding multiple possible interpretations. It requires some explanation to grasp with consistency. Several commentaries have been written and they help us interpret this work.<br>
+Ramanuja made a consistent, interwoven commentary along the philosophy of <span class=snskrtphrase>[vishiShTAdvaita]</span>. This philosophy has one Supreme Lord, having the material world and all conscious beings as its attributes. Krishna is the Supreme Lord.<br>
+Ramanuja's commentary on the Gita dates back a thousand years.</p>
+<p class=MsoNormalToggle>Do we need to believe in the Lord to benefit from this conversation? Well, to believe, you first need to know yourself and your relation with the Lord. That's what this conversation is about, anyway. To start, it's sufficient to allow for His presence. Let's relish the conversation and not be stuck in denial.</p>
+<p class=MsoNormalToggle>This is an English-translation of Ramanuja's commentary on the Gita. <a href="Transliteration%20notes.html">Transliteration</a> of Sanskrit in the English alphabet is in square braces [ ].<br>
+About the tendency to use the masculine: The Lord is referred to as 'Him'. References to people are in the masculine gender as well. This is a limitation of language and purely for ease of expression. As you will see, the Lord and the core of our selves are subtle and not subject to limitations of gender.<br>
+Let's start.</p>
+<p class=TouchFeet>Touch feet to explore; text to dive</p>
+<table border=0 style="border-collapse:collapse;border:none">
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Back%20to%20Basics.html">Back to Basics</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote0')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote0><a href="Back%20to%20Basics.html#inlineapplnote0">Who am I?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote1'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote1><a href="Back%20to%20Basics.html#inlineapplnote1">I am not my body, am I?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote2'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote2><a href="Back%20to%20Basics.html#inlineapplnote2">I am not just a thought, am I?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote3'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote3><a href="Back%20to%20Basics.html#inlineapplnote3">What am I? Let's begin the discovery of the Self and its relation with the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote4'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote4><a href="Back%20to%20Basics.html#inlineapplnote4">Yoga is a journey to discover reality. Every form of yoga leads to the same discovery.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote5')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote5><a href="Back%20to%20Basics.html#inlineapplnote5">What am I doing?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote6'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote6><a href="Back%20to%20Basics.html#inlineapplnote6">Our journey in life is a series of activities. Is it about 'doing' or 'making it happen'?</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote7')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote7><a href="Back%20to%20Basics.html#inlineapplnote7">Why am I doing it?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote8'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote8><a href="Back%20to%20Basics.html#inlineapplnote8">If the action doesn't guarantee an outcome, why should I work, or give my 100% to achieve a goal?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote9'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote9><a href="Back%20to%20Basics.html#inlineapplnote9">Look beyond desire. Focus on the purpose even when you don't reach the goal you expect.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote10')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote10><a href="Back%20to%20Basics.html#inlineapplnote10">Is there a different way?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Back%20to%20Basics.html#inlineapplnote11'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote11><a href="Back%20to%20Basics.html#inlineapplnote11">What's it like to be really free?</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%201.html">Chapter 1</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%201.html#inlineapplnote12'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote12><a href="Chapter%201.html#inlineapplnote12">We often doubt and worry about achieving wealth, success and other outcomes.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%201.html#inlineapplnote13'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote13><a href="Chapter%201.html#inlineapplnote13">In our anxiety, we interpret anything that happens as a signal of doom</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%201.html#inlineapplnote14'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote14><a href="Chapter%201.html#inlineapplnote14">It doesn't matter who you are or what you're asking for. Be in this conversation. Keep enquiring.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%201.html#inlineapplnote15'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote15><a href="Chapter%201.html#inlineapplnote15">In the midst of action, we sometimes worry 'Am I going to hurt someone? Is the outcome worth it?' </a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%202.html">Chapter 2</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote16')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote16><a href="Chapter%202.html#inlineapplnote16">Why do I hesitate?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote17'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote17><a href="Chapter%202.html#inlineapplnote17">Hesitation happens when you mix-up the Self with your body and the rest of the environment.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote18'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote18><a href="Chapter%202.html#inlineapplnote18">The Self is separate from the environment and your body. The Self is ever-lasting. So is the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote19'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote19><a href="Chapter%202.html#inlineapplnote19">Is there anything other than the observable universe?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote20'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote20><a href="Chapter%202.html#inlineapplnote20">Is the universe only an effect of the law governing it? </a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote21'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote21><a href="Chapter%202.html#inlineapplnote21">Let's be free of doubt in our journey to realization</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote22'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote22><a href="Chapter%202.html#inlineapplnote22">We are distinct from the Lord. Each of us is distinct as well.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote23'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote23><a href="Chapter%202.html#inlineapplnote23">Is there any possibility that the distinctions are a figment of our imagination?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote24'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote24><a href="Chapter%202.html#inlineapplnote24">No, we don't need to doubt our existence in our journey of realization and worship.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote25'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote25><a href="Chapter%202.html#inlineapplnote25">Whenever you are driven by outcomes, you confuse the Self with the environment. </a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote26'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote26><a href="Chapter%202.html#inlineapplnote26">Tolerate your experiences. They are effects of past activities that were driven by outcomes.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote27'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote27><a href="Chapter%202.html#inlineapplnote27">Do your duties to attain liberation. Then those experiences do not drain you.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote28')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote28><a href="Chapter%202.html#inlineapplnote28">How is the Self different?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote29'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote29><a href="Chapter%202.html#inlineapplnote29">The Self is pure and unbounded knowledge. It has been that way and will always remain so.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote30'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote30><a href="Chapter%202.html#inlineapplnote30">The Self is indestructible because it is subtle. It's not made up of anything else.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote31'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote31><a href="Chapter%202.html#inlineapplnote31">The Self brings awareness - the power to experience and know.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote32'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote32><a href="Chapter%202.html#inlineapplnote32">The Self owns different bodies over time. It remains unchanged even as the body keeps changing.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote33'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote33><a href="Chapter%202.html#inlineapplnote33">We get into situations by the will of the Lord. He is always with us.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote34'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote34><a href="Chapter%202.html#inlineapplnote34">Duty is superior to hesitation and inaction - irrespective of the outcome.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote35'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote35><a href="Chapter%202.html#inlineapplnote35">Outcomes of our actions do not matter when we're aware of the Self.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote36'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote36><a href="Chapter%202.html#inlineapplnote36">When outcomes don't matter, we can't do anything wrong.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote37'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote37><a href="Chapter%202.html#inlineapplnote37">It doesn't really matter what drives your action; Do it for the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote38'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote38><a href="Chapter%202.html#inlineapplnote38">The world is full of passion and ignorance. Don't let them control you.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote39'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote39><a href="Chapter%202.html#inlineapplnote39">You have the authority to initiate activity. You are not the one who makes things happen.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote40'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote40><a href="Chapter%202.html#inlineapplnote40">Do not avoid activity.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote41')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote41><a href="Chapter%202.html#inlineapplnote41">Why know the Self?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote42'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote42><a href="Chapter%202.html#inlineapplnote42">Working with an awareness of the Self brings out the best in us - the skill in our actions.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote43'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote43><a href="Chapter%202.html#inlineapplnote43">An experience of the Self is so pleasant that likes and dislikes don't matter anymore.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%202.html#inlineapplnote44'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote44><a href="Chapter%202.html#inlineapplnote44">It isn't possible to experience the Self without placing ourselves in the refuge of the Lord.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%203.html">Chapter 3</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote45'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote45><a href="Chapter%203.html#inlineapplnote45">Should I employ my organs in activity? Or pull them back?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote46'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote46><a href="Chapter%203.html#inlineapplnote46">You reach the goal by being active and offering your activity as service to the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote47'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote47><a href="Chapter%203.html#inlineapplnote47">Focusing your thought without being affected by this world is another way to achieve the goal.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote48'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote48><a href="Chapter%203.html#inlineapplnote48">You cannot exist in this world without activity.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote49'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote49><a href="Chapter%203.html#inlineapplnote49">Restraint and sacrifice are pretense when you still yearn for 'what could have been'.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote50'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote50><a href="Chapter%203.html#inlineapplnote50">Do your activities to realize your Self - instead of having your attachments agitate you.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote51'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote51><a href="Chapter%203.html#inlineapplnote51">Often, our activities themselves cause agitation, don't they?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote52'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote52><a href="Chapter%203.html#inlineapplnote52">It's true that activity needs a purpose. Make the Lord's worship as your purpose.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote53'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote53><a href="Chapter%203.html#inlineapplnote53">Whatever your purpose, whomever you work for - it's the Lord's worship and He is the enjoyer.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote54')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote54><a href="Chapter%203.html#inlineapplnote54">Everything happens for the Lord's worship</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote55'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote55><a href="Chapter%203.html#inlineapplnote55">Activity happens in the environment, not for our purpose. The Self must engage in worship.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote56'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote56><a href="Chapter%203.html#inlineapplnote56">Though the Lord isn't bound to any duty or purpose, He stays active to reassure us.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote57'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote57><a href="Chapter%203.html#inlineapplnote57">We realize our Self by being active while acknowledging that we don't make things happen.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote58'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote58><a href="Chapter%203.html#inlineapplnote58">Delight in your activity. It is part of the Lord's play.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote59'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote59><a href="Chapter%203.html#inlineapplnote59">Without knowing the Self, we believe that we are our body.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote60'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote60><a href="Chapter%203.html#inlineapplnote60">If we know that the environment makes things happen, why should we involve in activity at all?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote61'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote61><a href="Chapter%203.html#inlineapplnote61">Even in the realization that the Self doesn't make things happen, be active and inspire others.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote62'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote62><a href="Chapter%203.html#inlineapplnote62">Dedicate your activity to the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote63'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote63><a href="Chapter%203.html#inlineapplnote63">Everything happens by the will of The Lord, for his pleasure alone.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote64'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote64><a href="Chapter%203.html#inlineapplnote64">Even if we don't live this all the time, it is still sufficient to simply accept His existence.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote65'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote65><a href="Chapter%203.html#inlineapplnote65">When you deny that The Lord is the basis of your existence, you live a myth.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote66'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote66><a href="Chapter%203.html#inlineapplnote66">Even when you believe in the Lord, desire and hatred are inevitable. Beware of them.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote67'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote67><a href="Chapter%203.html#inlineapplnote67">Work according to your nature. Don't be anxious about your goal. Your work will continue.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote68'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote68><a href="Chapter%203.html#inlineapplnote68">Even after knowing this, why are we ever-anxious about outcomes? Why do we feel regret and guilt?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote69'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote69><a href="Chapter%203.html#inlineapplnote69">Recognize desire as the cause of regret and guilt. It blocks your destiny. Look beyond desire.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%203.html#inlineapplnote70'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote70><a href="Chapter%203.html#inlineapplnote70">To look beyond desire, work without being driven by outcomes.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%204.html">Chapter 4</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote71'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote71><a href="Chapter%204.html#inlineapplnote71">The Lord says- 'I've been teaching this method for millions of years'</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote72')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote72><a href="Chapter%204.html#inlineapplnote72">Does the Lord take birth?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote73'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote73><a href="Chapter%204.html#inlineapplnote73">The Lord is supreme and there's nothing He needs. Why does he need to take birth in this world?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote74'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote74><a href="Chapter%204.html#inlineapplnote74">The Lord says- I take birth by My own will, retaining all of my characteristics</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote75'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote75><a href="Chapter%204.html#inlineapplnote75">I form Myself, so that My followers can grasp and worship Me.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote76'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote76><a href="Chapter%204.html#inlineapplnote76">I am easily grasped in any form you expect.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote77'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote77><a href="Chapter%204.html#inlineapplnote77">Though the Lord is so easy to grasp, we remain focused on other short-term accomplishments.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote78'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote78><a href="Chapter%204.html#inlineapplnote78">Given that the Lord is supreme, is He the One who traps us in short-term gratification?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote79'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote79><a href="Chapter%204.html#inlineapplnote79">The Lord doesn't trap us. We are trapped by our own expectations.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote80'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote80><a href="Chapter%204.html#inlineapplnote80">Given that we're trapped by our experience, where does activity figure?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote81'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote81><a href="Chapter%204.html#inlineapplnote81">Be active without being driven by desire. Be liberated from the burden of expectations.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote82'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote82><a href="Chapter%204.html#inlineapplnote82">When we know the true nature of the Self, we realize that it isn't bound by activity. Things happen.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote83'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote83><a href="Chapter%204.html#inlineapplnote83">Activity is an inquiry into the nature of the Self.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote84'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote84><a href="Chapter%204.html#inlineapplnote84">Activity without attachment is the realization of the Self.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote85'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote85><a href="Chapter%204.html#inlineapplnote85">All activities burn something provided by the Lord, for the purpose of the Lord. This is worship.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote86')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote86><a href="Chapter%204.html#inlineapplnote86">How do I worship with activity?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote87'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote87><a href="Chapter%204.html#inlineapplnote87">Worship is to remove the pre-occupation with the material world.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote88'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote88><a href="Chapter%204.html#inlineapplnote88">Working, offering something, breathing, self-control: each one is a form of worship.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote89'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote89><a href="Chapter%204.html#inlineapplnote89">A person who doesn't recognize worship is living a myth and is doomed to fail.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote90'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote90><a href="Chapter%204.html#inlineapplnote90">In each activity, recognize the Self and its relationship with the Lord,</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote91'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote91><a href="Chapter%204.html#inlineapplnote91">Awareness of the Self and the Lord liberates us from our flaws.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%204.html#inlineapplnote92'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote92><a href="Chapter%204.html#inlineapplnote92">Doubts and suspicions come from ignorance. Get rid of it by working without attachments.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%205.html">Chapter 5</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote93'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote93><a href="Chapter%205.html#inlineapplnote93">Isn't it easier to realize the Self by contemplation, instead of doing all kinds of activities?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote94'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote94><a href="Chapter%205.html#inlineapplnote94">Working without being driven is the quickest way to look beyond desires</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote95'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote95><a href="Chapter%205.html#inlineapplnote95">The Self in every person is identical. It doesn't make anything happen.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote96'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote96><a href="Chapter%205.html#inlineapplnote96">The illusion that we make things happen is a result of our past deeds.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote97'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote97><a href="Chapter%205.html#inlineapplnote97">Happenings and asymmetry belong in the environment.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote98'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote98><a href="Chapter%205.html#inlineapplnote98">The Self is pure knowledge, covered over by ignorance. This makes the variety of this world.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote99'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote99><a href="Chapter%205.html#inlineapplnote99">When ignorance is gone, we see all beings as being equal, equally related to the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote100'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote100><a href="Chapter%205.html#inlineapplnote100">The joy in the Self is beyond any enjoyment dictated by our preferences and aversions.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%205.html#inlineapplnote101'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote101><a href="Chapter%205.html#inlineapplnote101">Worship the Lord to experience the joy of the Self</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%206.html">Chapter 6</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote102'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote102><a href="Chapter%206.html#inlineapplnote102">We get driven by expectations when we think that we are our body.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote103'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote103><a href="Chapter%206.html#inlineapplnote103">Tranquility of the Self is gained by working without being driven</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote104'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote104><a href="Chapter%206.html#inlineapplnote104">Driving or being driven - it's your choice</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote105'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote105><a href="Chapter%206.html#inlineapplnote105">Offer your work to the Lord and be with Him constantly</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote106'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote106><a href="Chapter%206.html#inlineapplnote106">Yoga is the realization of your Self and its intimacy with the Lord. It is a state of being.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote107'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote107><a href="Chapter%206.html#inlineapplnote107">The Self in you is identical to the Self in every other being</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote108'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote108><a href="Chapter%206.html#inlineapplnote108">The characteristic of every Self is identical to the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote109'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote109><a href="Chapter%206.html#inlineapplnote109">Is such a state of being really possible?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote110'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote110><a href="Chapter%206.html#inlineapplnote110">Your intention to drive lets you stay in the state of yoga.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote111'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote111><a href="Chapter%206.html#inlineapplnote111">What if my intention breaks?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote112'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote112><a href="Chapter%206.html#inlineapplnote112">Don't worry; your intention is never destroyed</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote113')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote113><a href="Chapter%206.html#inlineapplnote113">What is our intimacy with the Lord?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%206.html#inlineapplnote114'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote114><a href="Chapter%206.html#inlineapplnote114">We spoke about realizing the Self within us. What about its intimacy with the Lord?</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%207.html">Chapter 7</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote115'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote115><a href="Chapter%207.html#inlineapplnote115">Worship is an uninterrupted chain of thought</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote116'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote116><a href="Chapter%207.html#inlineapplnote116">Devotion is to worship with friendship</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote117'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote117><a href="Chapter%207.html#inlineapplnote117">Awareness of the Lord's uniqueness generates affection towards Him</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote118'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote118><a href="Chapter%207.html#inlineapplnote118">Our understanding comes from breakdown and analysis. The Lord cannot be analyzed in this way, so how do we bring Him into our thoughts?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote119'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote119><a href="Chapter%207.html#inlineapplnote119">The universe is one of The Lord's natures, which all conscious beings experience</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote120'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote120><a href="Chapter%207.html#inlineapplnote120">Consciousness - the ability to know - is The Lord's primary nature</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote121')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote121><a href="Chapter%207.html#inlineapplnote121">Why do we pursue constrained happiness?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote122'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote122><a href="Chapter%207.html#inlineapplnote122">It isn't possible to see beyond our cognition of this material world, unless we surrender to the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote123'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote123><a href="Chapter%207.html#inlineapplnote123">We have different objectives and we surrender to the Lord accordingly</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote124'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote124><a href="Chapter%207.html#inlineapplnote124">Once we know the Lord, other objectives seem insignificant</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote125'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote125><a href="Chapter%207.html#inlineapplnote125">Our true nature is to be of service to the Lord alone.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote126'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote126><a href="Chapter%207.html#inlineapplnote126">Dedication to a cause is dedication to the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote127'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote127><a href="Chapter%207.html#inlineapplnote127">Your outcomes are as temporary as you intend</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote128'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote128><a href="Chapter%207.html#inlineapplnote128">Most people don't recognize Krishna as the permanent enjoyer of everything</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote129'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote129><a href="Chapter%207.html#inlineapplnote129">Ignorance and pre-occupation with life's dualities are part of our characteristics</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote130'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote130><a href="Chapter%207.html#inlineapplnote130">While everyone is born with delusion, how do some of us end up knowing the Lord?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%207.html#inlineapplnote131'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote131><a href="Chapter%207.html#inlineapplnote131">By leaving the misfortune of delusion, we get to know the Lord and worship him for a purpose</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%208.html">Chapter 8</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote132')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote132><a href="Chapter%208.html#inlineapplnote132">How do we get to know the Lord?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote133'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote133><a href="Chapter%208.html#inlineapplnote133">Start by knowing the body of the Lord - The Self, the environment and its activities</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote134'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote134><a href="Chapter%208.html#inlineapplnote134">Those who think of the Lord while leaving their body will attain the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote135'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote135><a href="Chapter%208.html#inlineapplnote135">The final thought comes by habit. Make it a habit to think about the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote136'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote136><a href="Chapter%208.html#inlineapplnote136">If you yearn for wealth, think of the Lord as the owner of all wealth</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote137'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote137><a href="Chapter%208.html#inlineapplnote137">If you yearn for timeless knowledge of your Self, think of the Lord as the core of the Self</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote138'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote138><a href="Chapter%208.html#inlineapplnote138">If you yearn for the Lord Himself, just adore him!</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote139'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote139><a href="Chapter%208.html#inlineapplnote139">The material universe keeps going in cycles. So does a person who yearns for material wealth</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote140'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote140><a href="Chapter%208.html#inlineapplnote140">The Self is ever-lasting, so the one who yearns for the Self isn't stuck in creation and destruction</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%208.html#inlineapplnote141'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote141><a href="Chapter%208.html#inlineapplnote141">The person who adores the Lord gets the Lord Himself. He goes beyond all cycles</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%209.html">Chapter 9</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote142')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote142><a href="Chapter%209.html#inlineapplnote142">Worship the Lord with devotion</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote143'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote143><a href="Chapter%209.html#inlineapplnote143">Awareness comes out as devotion in very few people, though it's easy to practice</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote144'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote144><a href="Chapter%209.html#inlineapplnote144">The will of the Lord causes all beings to 'be'</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote145'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote145><a href="Chapter%209.html#inlineapplnote145">The Lord doesn't discriminate. He supervises.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote146'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote146><a href="Chapter%209.html#inlineapplnote146">Without knowing this reality, people go behind imaginary goals</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote147'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote147><a href="Chapter%209.html#inlineapplnote147">Worship and take refuge in The Lord - He is everything</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote148'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote148><a href="Chapter%209.html#inlineapplnote148">The Lord takes care of those who take His refuge</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote149'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote149><a href="Chapter%209.html#inlineapplnote149">The Lord lovingly accepts all offerings and activities of his devotees</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote150'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote150><a href="Chapter%209.html#inlineapplnote150">What can we possibly offer the Lord of the universe?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%209.html#inlineapplnote151'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote151><a href="Chapter%209.html#inlineapplnote151">Without exception, everyone can devote themselves to the Lord</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2010.html">Chapter 10</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2010.html#inlineapplnote152'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote152><a href="Chapter%2010.html#inlineapplnote152">Unfortunately, nobody knows the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote153')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote153><a href="Chapter%2010.html#inlineapplnote153">Let's get to know the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2010.html#inlineapplnote154'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote154><a href="Chapter%2010.html#inlineapplnote154">The Lord gifts His awareness to those who want Him</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2010.html#inlineapplnote155'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote155><a href="Chapter%2010.html#inlineapplnote155">The Lord's qualities cannot be understood. So how do we think of Him?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2010.html#inlineapplnote156'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote156><a href="Chapter%2010.html#inlineapplnote156">The specialties of the Lord are endless</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2010.html#inlineapplnote157'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote157><a href="Chapter%2010.html#inlineapplnote157">You experience the Lord whenever you experience something special</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2010.html#inlineapplnote158'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote158><a href="Chapter%2010.html#inlineapplnote158">The Lord is the pervasive essence that inspires</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2011.html">Chapter 11</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote159'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote159><a href="Chapter%2011.html#inlineapplnote159">When we believe in the Lord, He will show Himself and give us the ability to see Him.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote160'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote160><a href="Chapter%2011.html#inlineapplnote160">This entire universe forms a small part of the Lord's body</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote161'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote161><a href="Chapter%2011.html#inlineapplnote161">You can imagine the Lord anyway you like</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote162'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote162><a href="Chapter%2011.html#inlineapplnote162">The Lord encompasses the whole world with all His activities. </a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote163'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote163><a href="Chapter%2011.html#inlineapplnote163">At times we experience the universe as being terrible, due to the influence of past deeds.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote164'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote164><a href="Chapter%2011.html#inlineapplnote164">We only need to request the Lord to step out of a terrible experience</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2011.html#inlineapplnote165'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote165><a href="Chapter%2011.html#inlineapplnote165">A true devotee of the Lord isn't attached to anything other than the Lord, so doesn't experience agitation.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2012.html">Chapter 12</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote166')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote166><a href="Chapter%2012.html#inlineapplnote166">Let's devote ourselves to the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2012.html#inlineapplnote167'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote167><a href="Chapter%2012.html#inlineapplnote167">How do we realize our goal? By being devoted to it, or by knowing everything about it?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2012.html#inlineapplnote168'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote168><a href="Chapter%2012.html#inlineapplnote168">Being devoted is to trust and be with the Lord, recognizing that He is the ultimate purpose</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2012.html#inlineapplnote169'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote169><a href="Chapter%2012.html#inlineapplnote169">Knowing is about deciphering ourselves and our relationship with the Lord</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2012.html#inlineapplnote170'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote170><a href="Chapter%2012.html#inlineapplnote170">Deciphering the Self is tough. Entrust yourself to the Lord - He accepts you directly.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2012.html#inlineapplnote171'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote171><a href="Chapter%2012.html#inlineapplnote171">When it isn't possible to adore the Lord or decipher the Self, work without attachment</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2012.html#inlineapplnote172'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote172><a href="Chapter%2012.html#inlineapplnote172">Adoring the Lord is special. Aspire to adore.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2013.html">Chapter 13</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote173')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote173><a href="Chapter%2013.html#inlineapplnote173">Devotion in this world</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote174'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote174><a href="Chapter%2013.html#inlineapplnote174">The knower of the body is not the body, it is the Self.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote175'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote175><a href="Chapter%2013.html#inlineapplnote175">That which knows the Self is the Lord. Doesn't that make the Self redundant? Is it same as the Lord?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote176'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote176><a href="Chapter%2013.html#inlineapplnote176">The Lord is both the effect and the cause</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote177'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote177><a href="Chapter%2013.html#inlineapplnote177">The Self and the environment are effects of the Lord's creation</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote178'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote178><a href="Chapter%2013.html#inlineapplnote178">The Self and the environment have their own characteristics, while being part of the Lord's form.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote179'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote179><a href="Chapter%2013.html#inlineapplnote179">The body is a collection of elements formed since the birth of the universe</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote180'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote180><a href="Chapter%2013.html#inlineapplnote180">When we recognize the body for what it is, we live the life we're meant to live</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote181')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote181><a href="Chapter%2013.html#inlineapplnote181">What obstacles come in the way of our lives?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote182'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote182><a href="Chapter%2013.html#inlineapplnote182">Ignorance prevents the Self from expressing its completeness</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote183'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote183><a href="Chapter%2013.html#inlineapplnote183">The Self is pure knowledge</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote184'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote184><a href="Chapter%2013.html#inlineapplnote184">Use the body to get entangled or liberated - it's your choice</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote185'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote185><a href="Chapter%2013.html#inlineapplnote185">The Self has been entangled since beginning-less time</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote186'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote186><a href="Chapter%2013.html#inlineapplnote186">A person who distinguishes the Self gets disentangled.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2013.html#inlineapplnote187'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote187><a href="Chapter%2013.html#inlineapplnote187">Though the Self pervades the body, it doesn't have any characteristics of the body</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2014.html">Chapter 14</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote188'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote188><a href="Chapter%2014.html#inlineapplnote188">The three qualities bind the Self in a body.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote189'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote189><a href="Chapter%2014.html#inlineapplnote189">Sattva is the joy of knowledge.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote190'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote190><a href="Chapter%2014.html#inlineapplnote190">Rajas is passion.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote191'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote191><a href="Chapter%2014.html#inlineapplnote191">Tamas is ignorance and lethargy.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote192'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote192><a href="Chapter%2014.html#inlineapplnote192">At any point in time, one of these qualities dominates the other two.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote193'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote193><a href="Chapter%2014.html#inlineapplnote193">The Self initiates action. Outcomes happen as a result of the qualities that bind the person.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote194')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote194><a href="Chapter%2014.html#inlineapplnote194">Step-over with Awareness and Devotion</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote195'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote195><a href="Chapter%2014.html#inlineapplnote195">Self-awareness is an enabler to step over the three qualities.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2014.html#inlineapplnote196'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote196><a href="Chapter%2014.html#inlineapplnote196">The three qualities can only be overcome by surrendering to the Lord with devotion.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2015.html">Chapter 15</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2015.html#inlineapplnote197'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote197><a href="Chapter%2015.html#inlineapplnote197">The extent of your entanglement doesn't matter. Surrender to the source and get free.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2015.html#inlineapplnote198'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote198><a href="Chapter%2015.html#inlineapplnote198">The Self is a part of the Lord, the source of awareness.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2015.html#inlineapplnote199'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote199><a href="Chapter%2015.html#inlineapplnote199">Whatever the Self is aware of, that is also the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2015.html#inlineapplnote200'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote200><a href="Chapter%2015.html#inlineapplnote200">The Lord is superior to all of this.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2016.html">Chapter 16</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote201')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote201><a href="Chapter%2016.html#inlineapplnote201">Isn't it tough to follow the Lord's instructions?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2016.html#inlineapplnote202'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote202><a href="Chapter%2016.html#inlineapplnote202">Our attitudes are an effect of deeds we committed in the past.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2016.html#inlineapplnote203'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote203><a href="Chapter%2016.html#inlineapplnote203">An attitude of disregard is a way to torture ourselves.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2016.html#inlineapplnote204'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote204><a href="Chapter%2016.html#inlineapplnote204">We can choose to stop torturing ourselves.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2017.html">Chapter 17</a></p></td></tr>
+<tr>
+<td onclick="toggleApplNotes('applnote205')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote205><a href="Chapter%2017.html#inlineapplnote205">Where does difficulty come from?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote206'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote206><a href="Chapter%2017.html#inlineapplnote206">Our past gives the qualities of our body and our outlook to life.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote207'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote207><a href="Chapter%2017.html#inlineapplnote207">Given an outlook, we can choose to live in reality or live in vain.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote208'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote208><a href="Chapter%2017.html#inlineapplnote208">Food builds our body and the qualities in it.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote209'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote209><a href="Chapter%2017.html#inlineapplnote209">A purpose of devotion brings knowledge and well-being.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote210'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote210><a href="Chapter%2017.html#inlineapplnote210">Any other purpose brings restlessness.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote211'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote211><a href="Chapter%2017.html#inlineapplnote211">Purposelessness brings ignorance.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote212'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote212><a href="Chapter%2017.html#inlineapplnote212">The three qualities give behavior. Our behavior enhances them further.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote213')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote213><a href="Chapter%2017.html#inlineapplnote213">What are the Lord's instructions?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote214'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote214><a href="Chapter%2017.html#inlineapplnote214">The sound of 'Om' points to a higher purpose</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote215'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote215><a href="Chapter%2017.html#inlineapplnote215">The Lord, as the highest purpose, has great expanse.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2017.html#inlineapplnote216'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote216><a href="Chapter%2017.html#inlineapplnote216">That purpose exists and it always brings excellence.</a></p></td>
+</tr>
+<tr><td colspan=2 style="width:100%;"><p class=ApplNotes><a href="Chapter%2018.html">Chapter 18</a></p></td></tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote217'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote217><a href="Chapter%2018.html#inlineapplnote217">In this quest of purpose, what do we let go of?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote218'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote218><a href="Chapter%2018.html#inlineapplnote218">Let go of outcomes and possessiveness. Don't be the reason.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote219'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote219><a href="Chapter%2018.html#inlineapplnote219">Don't give up activity.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote220'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote220><a href="Chapter%2018.html#inlineapplnote220">Isn't activity designed to give outcomes, which we are bound to?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote221'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote221><a href="Chapter%2018.html#inlineapplnote221">If we aren't the reason for outcomes, what causes things to happen?</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote222'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote222><a href="Chapter%2018.html#inlineapplnote222">The action we conceive depends on our awareness.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote223'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote223><a href="Chapter%2018.html#inlineapplnote223">Our intention leads to activity.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote224'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote224><a href="Chapter%2018.html#inlineapplnote224">During the activity, we achieve the state-of-being as a doer.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote225'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote225><a href="Chapter%2018.html#inlineapplnote225">Resolve and Enthusiasm are our state-of-being when we let-go of outcomes.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote226'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote226><a href="Chapter%2018.html#inlineapplnote226">We discern with our intellect.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote227'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote227><a href="Chapter%2018.html#inlineapplnote227">We sustain with our resolve.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote228'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote228><a href="Chapter%2018.html#inlineapplnote228">Activities are done in the pursuit of happiness.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote229'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote229><a href="Chapter%2018.html#inlineapplnote229">This is the material world - it is full of the three qualities. Nurture sattva and adore the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote230'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote230><a href="Chapter%2018.html#inlineapplnote230">By worshipping the Lord with our actions, we let go.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote231'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote231><a href="Chapter%2018.html#inlineapplnote231">With this worship, we gain limitless love for the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote232'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote232><a href="Chapter%2018.html#inlineapplnote232">Worship with activities that are natural to you - even your material desires and pursuits.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote233'}" align="center"><img class=ApplNotesImg src="step_3.png"></td>
+<td><p class=ApplNotesRight id=applnote233><a href="Chapter%2018.html#inlineapplnote233">If you aren't working for the Lord, you are at the mercy of your environment.</a></p></td>
+</tr>
+<tr>
+<td onclick="toggleApplNotes('applnote234')" style="white-space:nowrap;"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td>
+<td><p class=ApplNotesROp id=applnote234><a href="Chapter%2018.html#inlineapplnote234">Surrender and let the Lord liberate you. Don't worry.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote235'}" align="center"><img class=ApplNotesImg src="step_0.png"></td>
+<td><p class=ApplNotesRight id=applnote235><a href="Chapter%2018.html#inlineapplnote235">Share it with others who adore the Lord.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote236'}" align="left"><img class=ApplNotesImg src="step_1.png"></td>
+<td><p class=ApplNotesRight id=applnote236><a href="Chapter%2018.html#inlineapplnote236">Listen to someone who shares.</a></p></td>
+</tr>
+<tr>
+<td onclick="{window.location.href='Chapter%2018.html#inlineapplnote237'}" align="left"><img class=ApplNotesImg src="step_2.png"></td>
+<td><p class=ApplNotesRight id=applnote237><a href="Chapter%2018.html#inlineapplnote237">Krishna is in each of us and He is our best friend. Everything we need will come to us.</a></p></td>
+</tr>
+</table>
+</div>
+</div>
+<div style="position:fixed;top:12pt;right:12pt;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+<script type="text/javascript">
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleApplNotes(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    
+    var rule = cssRule('.ApplNotesImg');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    rule = cssRule('.ApplNotesRight');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var matterElm = document.getElementById('CoverMatterScroller')
+    matterElm.scrollTop = matterElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function toggleIntro(){
+    var rule = cssRule('.MsoNormalToggle');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+        document.getElementById('tglintro').innerHTML = '&nbsp;&#xbb;'
+    }
+    else {
+        rule.style.display = 'inherit';
+        document.getElementById('tglintro').innerHTML = '&nbsp;&#xab;'
+    }
+}
+function recordState() {
+    var matterElm = document.getElementById('CoverMatterScroller')
+    var currentScTop = matterElm.scrollTop;
+    var eorc = 'c';
+    var rule = cssRule('.ApplNotesRight');
+    if(rule.style.display != 'none') {
+        eorc = 'e';
+    }
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ eorc + "=" + currentScTop);
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var imgrule = cssRule('.ApplNotesImg');
+        var noterule = cssRule('.ApplNotesRight');
+        if(eorc == 'e') {
+            imgrule.style.display = 'inherit';
+            noterule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            imgrule.style.display = 'none';
+            noterule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        var matterElm = document.getElementById('CoverMatterScroller')
+        matterElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+</script>
+
+</body>
+
+</html>

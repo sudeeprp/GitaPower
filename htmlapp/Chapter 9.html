@@ -1,0 +1,4213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Krishna&quot;s Gita explained by Ramanuja</title>
+<link rel="shortcut icon" href="appic.png" />
+
+<style type="text/css">
+* {
+    box-sizing: border-box;
+}
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: darkblue
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place*/
+.Container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+.TopNoteBlock, .BottomNoteBlock {
+    display: flex;
+    flex-direction: row;
+    position: fixed
+}
+.TopNote, .BottomNote {
+	width: 100%;
+    height: auto;
+    background-color: rgba(216,191,216,0.95);    
+    border-color: #E5DFEC;
+    position: fixed
+}
+.TopNote, .TopNoteBlock {
+    top: 0;
+    left: 0;
+}
+.BottomNote, .BottomNoteBlock {
+    bottom: 0;
+    left: 0;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    padding: .5rem;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: navy;
+    -webkit-overflow-scrolling: touch;
+}
+/*Thin scrollbar*/
+.Middle::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.Middle::-webkit-scrollbar-thumb {
+    background: #E5DFEC;
+}
+/*  Right has a set size while the Middle is set to flex one so it occupies all remaining space.*/
+.Middle {
+    flex: 1;
+	width: auto;
+    height: 80%;
+    background: Beige;
+}
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	font-family:"Arial","serif";
+    line-height:150%;
+}
+h1 {
+    margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-before:always;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;
+}
+h2 {
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-style:italic;
+}
+p.Shloka, li.Shloka, div.Shloka {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpFirst, li.ShlokaCxSpFirst, div.ShlokaCxSpFirst {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpMiddle, li.ShlokaCxSpMiddle, div.ShlokaCxSpMiddle {
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+p.ShlokaCxSpLast, li.ShlokaCxSpLast, div.ShlokaCxSpLast {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:justify;
+	border:none;
+	padding:0in;
+	font-size:10.0pt;
+	font-family:"Verdana","sans-serif";
+}
+span.snskrtphrase {
+    color: Maroon;
+    display:none;
+}
+p.ApplNotes, li.ApplNotes, div.ApplNotes, p.ApplNotesEx, p.ApplNotesOpener {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	background:#E5DFEC;
+    border-style:dotted none none none;
+    border-color:Thistle;
+	font-size:9.0pt;
+	font-family:"Comic Sans MS";
+}
+p.ApplNotesOpener {
+    font-weight:bold;
+}
+p.ApplNotesRight, li.ApplNotesRight, div.ApplNotesRight, p.ApplNotesROp, .TopNote, .BottomNote {
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	text-align:justify;
+	font-size:9.0pt;
+    line-height:150%;
+	font-family:"Comic Sans MS";
+}
+.TopNote {
+    border-style:none none dotted none;
+}
+.BottomNote {
+    border-style:dotted none none none;
+}
+p.ApplNotesROp {
+    font-style:italic;
+}
+.ApplNotesImg, .ApplNotesROpImg {
+    height:16pt;
+}
+p.nextprev, li,nextprev, div.nextprev {
+	margin-top:0in;
+	margin-right:6.0pt;
+	margin-bottom:6.0pt;
+	margin-left:6.0pt;
+	background:#E5DFEC;
+	font-size:9.0pt;
+    font-weight: bold;
+	font-family:"Verdana";
+}
+.button {
+    background-image:url(sanskrtphrasetgl.png);
+    width:64px; height:26px;
+    float:right;
+}
+</style>
+</head>
+
+<body onresize="containerResize()" onpageshow="pageshown()" lang=EN-IN>
+
+<!-- Was: nothing was there -->
+<div class="Container" id='GitaContainer'>
+
+<!-- Was: div class=WordSection1 id='GitaCommentary' -->
+<div class="Middle" id='GitaCommentary'>
+
+<!-- Here starts the chapter -->
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%208.html">Chapter 8</a></span><span style="float:right;"><a href="Chapter%2010.html">Chapter 10</a>&nbsp;&#xbb;</span></p>
+<h1>Chapter 9</h1>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the previous chapter, The Lord described
+the <a href="Chapter%207.html#four_types_of_worshippers">four types of worshippers</a>
+ and their
+distinctions.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This chapter explores the greatness of the
+Lord- He is the objective of any worship. It also explores the specialty of the
+devotee - <a href="Chapter%207.html#jnAnI">the one who knows</a>
+. After that, the Lord
+describes the characteristics of worship, which is called <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesROpImg src="rightfoot.png"><img class=ApplNotesROpImg src="leftfoot.png"></td><td><p class=ApplNotesOpener id=inlineapplnote142 >
+<span lang=EN-US style='color:black' >
+Worship the Lord
+with devotion</span>
+</p>
+</td></tr></table>
+
+<h2 >
+<span lang=EN-US >
+9-1</span>
+<a name="9-1" > </a>
+<a name="1" > </a>
+<button class="button" id="shlokabox253" onclick="toggleSnskrtPhrase('shlokabox253')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shrI bhagavAn uvAcha<br>
+
+idam tu tE guhyatamam pravakShyAmi
+anasUyavE |<br>
+
+jnAnam vijnAna sahitam yat jnAtvA
+mOkShyasE ashubhAt || 1 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[shrI bhagavAn uvAcha]</span></span>
+<span lang=EN-US >
+ The Lord said - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anasUyavE]</span></span>
+<span lang=EN-US >
+ You are not jealous. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE pravakShyAmi]</span></span>
+<span lang=EN-US >
+ I will tell you </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[idam jnAnam]</span></span>
+<span lang=EN-US >
+ this awareness </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[guhyatamam tu]</span></span>
+<span lang=EN-US >
+ which is extremely concealed, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vijnAna
+sahitam]</span></span>
+<span lang=EN-US >
+ along with the science to comprehend it. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat jnAtvA]</span></span>
+<span lang=EN-US >
+ Knowing this, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOkShyasE]</span></span>
+<span lang=EN-US >
+ you will be free from </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashubhAt]</span></span>
+<span lang=EN-US >
+ everything that's undesirable.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says- You are without jealousy
+even after you've heard about My great and limitless form, which is distinct
+from everything else. You acknowledge this as a fact and do not grudge it. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Now, I will tell you this secret awareness.
+You will be free of everything undesirable after knowing it by practice. Things
+are 'undesirable' when they come in the way of attaining Me.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote143 >
+<span lang=EN-US style='color:black' >
+Awareness comes out as
+devotion in very few people, though it's easy to practice</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This awareness is concealed. It comes in
+the form of <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ and is called as worship, a
+service to the Lord. I will now tell you about it, along with the science of realization.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-2</span>
+<a name="9-2" > </a>
+<a name="2" > </a>
+<button class="button" id="shlokabox254" onclick="toggleSnskrtPhrase('shlokabox254')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+rAjavidyA rAjaguhyam pavitram idam
+uttamam |<br>
+
+pratyakShAvagamam dharmyam susukham
+kartumavyayam || 2 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjavidyA]</span></span>
+<span lang=EN-US >
+ It
+is the king of all learning </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[rAjaguhyam]</span></span>
+<span lang=EN-US >
+ and the foremost among everything that's tough to find - it's the
+king of secrets. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[idam uttamam]</span></span>
+<span lang=EN-US >
+
+It is supreme </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pavitram]</span></span>
+<span lang=EN-US >
+ and
+pure. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pratyakShAvagamam]</span></span>
+<span lang=EN-US >
+ It is
+there for us to experience. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dharmyam]</span></span>
+<span lang=EN-US >
+ It has virtue embedded in it. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kartum
+susukham]</span></span>
+<span lang=EN-US >
+ It's very easy to practice and perform. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyayam]</span></span>
+<span lang=EN-US >
+ It never wears out.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This awareness is the foremost among all
+learnings - it is supreme among all that can be learnt. It is the foremost
+among everything that's tough to find. It is concealed the most, beyond
+everything that's concealed from us. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The phrase </span>
+<span lang=EN-US >
+[rAjavidyA]</span>
+<span lang=EN-US >
+ in this Shloka could also be interpreted as 'a learning fit for
+kings'. The word 'king' refers to someone with great depth and a vast, open
+mind. Such people are good at learning, discovering and preserving. What's
+learnt stays with such people.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This awareness is supreme and pure. It
+takes away all faults that come in the way of attaining Me, not leaving any flaw
+behind. It's there for us to experience - to comprehend using our sense organs
+and our thoughts. Written as the Lord's words: 'When I am worshipped with
+service in the form of <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+, I become
+perceptible to the person who worships Me'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It also has virtue embedded in it -
+'Virtue' is practiced to achieve glory. Achieving Me is the highest glory. By
+its very nature, this <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ is an excess of
+love that's impossible to describe in words.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+You perceive Me with devotion. Though perceiving
+Me is excellent by itself, it's really a means to experience Me completely. You
+achieve Me in My unsurpassed form.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+You could choose to practice it very
+easily, because it has an un-measurable amount of love in it. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It never wears out - even after achieving
+Me, it does not get spent. Even after presenting Myself to the person who
+worships Me in this way, I keep feeling that there's something I still owe this
+person.</span>
+</p>
+
+
+<h2 >
+<a name="_3" >
+</a>
+<span lang=EN-US >
+9-3</span>
+<a name="9-3" > </a>
+<a name="3" > </a>
+<button class="button" id="shlokabox255" onclick="toggleSnskrtPhrase('shlokabox255')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+ashraddadhAnA: puruShA: dharmasya
+asya parantapa |<br>
+
+aprApya mAm nivartantE mr'tyu
+samsAra vartmani || 3 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[parantapa]</span></span>
+<span lang=EN-US >
+ O
+destroyer of enemies, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puruShA:]</span></span>
+<span lang=EN-US >
+ people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashraddadhAnA:]</span></span>
+<span lang=EN-US >
+ who do not believe in </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asya dharmasya]</span></span>
+<span lang=EN-US >
+ this practice </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm aprApya]</span></span>
+<span lang=EN-US >
+ don't attain Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nivartantE]</span></span>
+<span lang=EN-US >
+ They return </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mr'tyu samsAra vartmani]</span></span>
+<span lang=EN-US >
+ to this material world, which is always subject to death and
+destruction.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the focus of this virtue called
+service and <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+. I am adored beyond any
+comparison. In this way, this virtue is also superlative - it is excellence in
+its ultimate form. It is a means to achieve Me. People are capable of
+practicing it. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Even though they are capable, those who
+don't believe in its practice - those who don't trust it and don't have the
+urge to follow it - will not attain Me. They continue to remain in this
+material world, characterized by cycles of death and destruction. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+It's indeed incredible that people still
+don't believe in its practice! That is the opinion expressed here. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Now listen to My greatness. It is meant to
+be attained, even though it cannot be grasped by thought.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-4 to 9-5</span>
+<a name="9-4%20to%209-5" > </a>
+<a name="4" > </a>
+<a name="5" > </a>
+<button class="button" id="shlokabox256" onclick="toggleSnskrtPhrase('shlokabox256')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mayA tatam idam sarvam jagat avyakta
+mUrtinA |<br>
+
+matsthAni sarva bhUtAni na chAham
+tEShu avasthita: || 4 ||<br>
+
+&nbsp;<br>
+
+na cha matsthAni bhUtAni pashya mE
+yOgam aishvaram |<br>
+
+bhUtabhr't na cha bhUtasthO mamAtmA
+bhUtabhAvana: || 5 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[idam sarvam jagat]</span></span>
+<span lang=EN-US >
+ This whole world </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tatam]</span></span>
+<span lang=EN-US >
+ is pervaded </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mayA]</span></span>
+<span lang=EN-US >
+
+by Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyakta mUrtinA]</span></span>
+<span lang=EN-US >
+ with My
+imperceptible form. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva bhUtAni]</span></span>
+<span lang=EN-US >
+ All beings </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[matsthAni]</span></span>
+<span lang=EN-US >
+ are situated in Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na avasthita:]</span></span>
+<span lang=EN-US >
+ do not have any dependency </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEShu]</span></span>
+<span lang=EN-US >
+ on them.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ Moreover,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[matsthAni na]</span></span>
+<span lang=EN-US >
+ I am not bound
+to carry </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtAni]</span></span>
+<span lang=EN-US >
+ all beings. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pashya]</span></span>
+<span lang=EN-US >
+ Look at </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mE]</span></span>
+<span lang=EN-US >
+ My </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yOgam]</span></span>
+<span lang=EN-US >
+ status </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aishvaram]</span></span>
+<span lang=EN-US >
+ as being the owner of the
+universe. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtabhr't]</span></span>
+<span lang=EN-US >
+ I
+support these beings </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na cha bhUtastha:]</span></span>
+<span lang=EN-US >
+ without being bound in them. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mama AtmA]</span></span>
+<span lang=EN-US >
+ My intent </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUta bhAvana:]</span></span>
+<span lang=EN-US >
+ causes all of them to be.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote144 >
+<span lang=EN-US style='color:black' >
+The will of the Lord
+causes all beings to 'be'</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This entire world, along with its conscious
+and non-conscious entities, is pervaded by Me. I pervade by being embedded in
+everything - in a form that's invisible and not accessible by any sense organ. I
+pervade this world to control and carry it forward.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This pervasive nature of the Lord embedded
+in everything is also described in:</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[br'hadArAnyaka]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 3-7-3</span>
+<span lang=EN-US >
+: 'The one who is on the Earth... whom the Earth does not know'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[br'hadArAnyaka]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 3-7-22</span>
+<span lang=EN-US >
+: 'The one who is inside the Self... whom the Self does not know'.
+Thus, the way in which all beings are pervaded has been described - conscious
+and non-conscious beings have the Lord embedded in them, while they don't see
+it. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Then the Lord says it the other way around-
+'All beings are in Me'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In other words: 'All beings are in Me,
+while I am embedded in them'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Further, the </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[br'hadArAnyaka]</span>
+<span lang=EN-US >
+ describes the dependence of everything on the Lord. Every entity is
+controlled by Him, as though it were <a href="Chapter%207.html#universe_as_his_body">His body</a>
+:
+'The One whose body is the Earth, The One who controls the Earth while being
+inside it' and 'The One whose body is the Self, The One who controls the Self
+from the inside'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Then the Lord says: 'I am not contained in
+them'. With this, He states- 'I am not in a state of dependence on these
+beings. I need no returns from them'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord continues: 'I am not bound to
+carry all beings' - when I say that I carry all beings, it isn't similar to a pot
+that carries water for some purpose. Then how does all this exist? The universe
+exists by My will.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord elaborates in this Shloka: 'Look
+at My status as being the owner of the universe'. Look at this astonishing state
+of being. It is unique to Me and doesn't exist anywhere else. What is this
+state of being? </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord clarifies in this Shloka - 'I
+support these beings without being bound in them. My intent causes all of them
+to be' - I carry them and sustain them, while having no relationship of
+usefulness with them. I create, control and sustain purely by My intent - My
+intent is Mine alone, it does not depend on anything else.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord shows an example to
+illustrate that everything exists by his will.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-6</span>
+<a name="9-6" > </a>
+<a name="6" > </a>
+<button class="button" id="shlokabox257" onclick="toggleSnskrtPhrase('shlokabox257')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yathA AkAshasthitO nityam vAyu:
+sarvatragO mahAn |<br>
+
+tathA sarvANi bhUtAni matsthAni
+ityupadhAraya || 6 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[mahAn]</span></span>
+<span lang=EN-US >
+ The great
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vAyu:]</span></span>
+<span lang=EN-US >
+ wind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvatraga:]</span></span>
+<span lang=EN-US >
+ roams everywhere, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AkAshE sthita: nityam]</span></span>
+<span lang=EN-US >
+ while being situated
+in the sky always. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[upadhAraya]</span></span>
+<span lang=EN-US >
+
+Know </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[iti]</span></span>
+<span lang=EN-US >
+ that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yathA]</span></span>
+<span lang=EN-US >
+ the way in which </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarvANi bhUtAni]</span></span>
+<span lang=EN-US >
+ all beings </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[matsthAni]</span></span>
+<span lang=EN-US >
+ are situated in Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[taThA]</span></span>
+<span lang=EN-US >
+ is similar.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The great winds exist in space. Space
+doesn't need anything to exist. It blows independently everywhere. Yet, know
+that its existence depends on Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the one who carries the wind and all
+beings. They do not experience this. All beings are situated in Me and I carry
+them.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Vedas describe The Lord's power: 'The
+formation of clouds, the way in which the sea is limited to the sea-level, the
+phases of the moon, the agitation of the wind, the way in which lightning strikes,
+the movement of the Sun - all these exist as manifestations of Vishnu's
+wonderful <a href="Chapter%204.html#gods_and_other_powers">power</a>
+'. This amazing <a href="Chapter%204.html#gods_and_other_powers">power</a>
+ is unique to Vishnu, not present in
+anything else. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The scriptures describe it too:</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[br'hadArAnyaka]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 3-8-9</span>
+<span lang=EN-US >
+ says: 'The sun, moon and others are carried forth by the Lord, who
+is called indestructible. They remain under His total control'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[taittariya]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 2-8-1</span>
+<span lang=EN-US >
+ says: 'The wind blows in submission to His will. The Sun glows in
+submission to His will. The atmosphere, sky, rain and fire perform their
+functions in submission to His will'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Till now, it was stated that the state of
+existence of everything is brought about by the will of the Lord. The will of
+the Lord does not depend on anything other than the Lord Himself. Next, He says
+that their creation and destruction too are also brought about by His will
+alone.</span>
+</p>
+
+
+<h2 >
+<a name="_7_1" >
+</a>
+<span lang=EN-US >
+9-7</span>
+<a name="9-7" > </a>
+<a name="7" > </a>
+<button class="button" id="shlokabox258" onclick="toggleSnskrtPhrase('shlokabox258')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+sarva bhUtAni kauntEya prakr'tim
+yAnti mAmikAm |<br>
+
+kalpa kShayE puna: tAni kalpAdau
+visr'jAmyaham || 7 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kauntEya]</span></span>
+<span lang=EN-US >
+ Arjuna,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva bhUtAni]</span></span>
+<span lang=EN-US >
+ all beings </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yAnti]</span></span>
+<span lang=EN-US >
+ end up </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'tim]</span></span>
+<span lang=EN-US >
+ in a dormant state </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAmikAm]</span></span>
+<span lang=EN-US >
+ inside My body </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kalpa kShayE]</span></span>
+<span lang=EN-US >
+ at the end of a <a href="Chapter%204.html#kalpa_definition">kalpa</a>
+. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puna: kalpAdau]</span></span>
+<span lang=EN-US >
+ Again, at the beginning of
+the next <a href="Chapter%204.html#kalpa_definition">kalpa</a>
+, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAni visr'jaAmi]</span></span>
+<span lang=EN-US >
+
+create them in various forms.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All moving and stationary beings are <a href="Chapter%207.html#universe_as_his_body">like My body</a>
+. At the end of a <a href="Chapter%204.html#kalpa_definition">kalpa</a>
+, the life of Brahma, the principal engineer
+of the universe comes to an end. All these beings attain a state of inactivity,
+a state in which they cannot be distinguished by names. They end up in this
+state by My will. I bring them back to form again at the beginning of the next <a href="Chapter%204.html#kalpa_definition">kalpa</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[manu]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 1-5 says</span>
+<span lang=EN-US >
+:
+'All this was in a state of inactivity.  He brought forth all of it from His
+body'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Also read in </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[subAla]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 7</span>
+<span lang=EN-US >
+: 'For whom
+subtle is the body' and in </span>
+<span lang=EN-US style='font-size:8.0pt;
+line-height:150%' >
+[subAla]</span>
+<span lang=EN-US style='font-size:8.0pt;
+line-height:150%' >
+, 2</span>
+<span lang=EN-US >
+: 'The subtle merges into the
+indestructible. That in turn merges into darkness'. In </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[aShTa]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 2-8-9</span>
+<span lang=EN-US >
+: 'At
+the beginning, darkness was present without any other characteristic'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-8</span>
+<a name="9-8" > </a>
+<a name="8" > </a>
+<button class="button" id="shlokabox259" onclick="toggleSnskrtPhrase('shlokabox259')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+prakr'tim svAm avaShTabhya visr'jAmi
+puna: puna: |<br>
+
+bhUta grAmam imam kr'tsnam avasham
+prakr'tErvashAt || 8 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[visr'jAmi]</span></span>
+<span lang=EN-US >
+ I
+create </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[imam kr'tsnam]</span></span>
+<span lang=EN-US >
+ this
+entire </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUta grAmam]</span></span>
+<span lang=EN-US >
+ system of
+beings </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puna: puna:]</span></span>
+<span lang=EN-US >
+ again and
+again, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'tim svam avaShTabhya]</span></span>
+<span lang=EN-US >
+ while keeping My material nature as the basis. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'tErvashAt]</span></span>
+<span lang=EN-US >
+ Under the influence of the
+material world, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avasham]</span></span>
+<span lang=EN-US >
+ they
+are not free.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I create the various beings repeatedly over
+time, in the four forms of <a href="Chapter%204.html#gods_and_other_powers">gods</a>
+, humans,
+other animals and non-mobile beings, keeping My material nature as the basis.
+This material nature has varied forms and manifests in eight ways (see
+<a href="Chapter%207.html#4">Chapter 7-4</a>). It is rich in the <a href="Chapter%202.html#satva_rajas_tamas">three qualities</a>
+
+and is very attractive. All types of beings are under the influence of this
+material world. Hence, they are deprived of freedom.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Now, you may doubt: If The Lord is so
+inconsiderate as to perform His act of creation in this way, doesn't this
+merciless behavior tarnish Him in any way? The next Shloka resolves this question.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-9</span>
+<a name="9-9" > </a>
+<a name="9" > </a>
+<button class="button" id="shlokabox260" onclick="toggleSnskrtPhrase('shlokabox260')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+na cha mAm tAni karmANi nibadhnanti
+dhananjaya |<br>
+
+udAsInavadAsInam asaktam tEShu
+karmasu || 9 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[dhananjaya]</span></span>
+<span lang=EN-US >
+ Arjuna,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tAni karmANi]</span></span>
+<span lang=EN-US >
+ those deeds </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm na nibadhnanti]</span></span>
+<span lang=EN-US >
+ do not bind Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[udAsInavadAsInam cha]</span></span>
+<span lang=EN-US >
+ Being neutral, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEShu karmasu asaktam]</span></span>
+<span lang=EN-US >
+ I have no attachment
+towards those deeds.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote145 >
+<span lang=EN-US style='color:black' >
+The Lord doesn't
+discriminate. He supervises.</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord continues- Yet, these actions such
+as the creation of the universe and its beings don't bind Me. They do not
+reward Me with anything. They do not result in accusations of being merciless.
+That's because the past deeds of conscious beings are reason for the
+inequalities among them. In this creation of variety, I stay without
+attachment, as though I am neutral.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As said in </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[vEdAnta sUtra]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 2-1-34</span>
+<span lang=EN-US >
+: 'In the disparity of creation, there is no mercilessness on the
+part of the Lord. The disparity arises due to the past deeds of the various
+beings'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In </span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[vEdAnta sUtra]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 2-1-35</span>
+<span lang=EN-US >
+: 'Variety comes from the eternal nature of the various beings and
+the influence of their deeds. The deeds didn't come into being at the time of
+the Lord's creation'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-10</span>
+<a name="9-10" > </a>
+<a name="10" > </a>
+<button class="button" id="shlokabox261" onclick="toggleSnskrtPhrase('shlokabox261')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mayA adhyakShENa prakr'ti: sUyatE
+sacharAcharam |<br>
+
+hEtunA anEna kauntEya jagaddhi parivartatE
+|| 10 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kauntEya]</span></span>
+<span lang=EN-US >
+ Arjuna,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'ti:]</span></span>
+<span lang=EN-US >
+ the material
+environment </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sUyatE]</span></span>
+<span lang=EN-US >
+ guides </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jagat]</span></span>
+<span lang=EN-US >
+ this world </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mayA]</span></span>
+<span lang=EN-US >
+ by My will, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sacharAcharam]</span></span>
+<span lang=EN-US >
+ including everything that's stationary and moving, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[adhyakShENa]</span></span>
+<span lang=EN-US >
+ with My supervision. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jagat parivartatE]</span></span>
+<span lang=EN-US >
+ This world goes through
+its cycles </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anEna hEtunA hi]</span></span>
+<span lang=EN-US >
+ with
+this purpose itself.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, My material nature guides this
+world in accordance with the deeds committed by conscious beings, including
+everything that moves and everything that doesn't. I supervise and witness,
+being the one whose intention is always fulfilled.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In fact, My supervision is the reason for
+the Universe to run as per the deeds of all its beings. See My ownership, the
+realization of My every intent without flaws such as mercilessness, see me as
+the son of Vasudeva, see My wealth and My state of being.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+[shwEtAshvatara]</span>
+<span lang=EN-US style='font-size:8.0pt;line-height:150%' >
+, 4-9</span>
+<span lang=EN-US >
+ says: 'From the environment, the Creator makes this world. The
+other conscious being is trapped in delusion. Know this delusion as the effect
+of the environment. Know the Creator as the Supreme Lord of the universe'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-11</span>
+<a name="9-11" > </a>
+<a name="11" > </a>
+<button class="button" id="shlokabox262" onclick="toggleSnskrtPhrase('shlokabox262')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+avajAnanti mAm mUDhA: mAnuShIm tanum
+AshritAm |<br>
+
+param bhAvam ajAnantO mama bhUta
+mahEshvaram || 11 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[mUDhA:]</span></span>
+<span lang=EN-US >
+ People
+who are deluded </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avajAnanti mAm]</span></span>
+<span lang=EN-US >
+ disregard Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ajAnanta:]</span></span>
+<span lang=EN-US >
+ They do not know </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mama param bhAvam]</span></span>
+<span lang=EN-US >
+ My superior state </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUta mahEshvaram]</span></span>
+<span lang=EN-US >
+ as the Lord of all beings, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAnuShIm tanum
+AshritAm]</span></span>
+<span lang=EN-US >
+ the Lord who has taken a human form.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Ignorant people are deluded by the effects
+of their past deeds. They assume that I am a normal human being and disregard
+Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am in the form of a human with great
+compassion. This form is for everyone to take refuge in Me, while My will is
+always fulfilled. Being the Lord of all beings, I am the all-knowing, single
+cause of the universe.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The ignorant do not know Me as the Supreme
+Lord of all beings, situated in a limitless amount of compassion and affection.
+Instead, they are biased by My human appearance, thinking of Me as just another
+human among them. So, they disregard Me.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-12</span>
+<a name="9-12" > </a>
+<a name="12" > </a>
+<button class="button" id="shlokabox263" onclick="toggleSnskrtPhrase('shlokabox263')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mOghAshA mOgha karmaNO mOgha jnAnA vichEtasa:
+|<br>
+
+rAkShasIm AsurIm chaiva prakr'tim
+mOhinIm shritA: || 12 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[shritA:]</span></span>
+<span lang=EN-US >
+ They
+remain inside </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prakr'tim]</span></span>
+<span lang=EN-US >
+ this
+material world, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AsurIm mOhinIm]</span></span>
+<span lang=EN-US >
+ which advocates the enjoyment of everything that's attractive. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chaiva rAkShasIm]</span></span>
+<span lang=EN-US >
+ This world will definitely
+devour them. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vichEtasa:]</span></span>
+<span lang=EN-US >
+
+Without the ability to recognize reality, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOghAshA]</span></span>
+<span lang=EN-US >
+ they have useless desires, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOgha karmaNO]</span></span>
+<span lang=EN-US >
+ do useless activities </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOgha jnAnA]</span></span>
+<span lang=EN-US >
+ and have knowledge that's useless.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote146 >
+<span lang=EN-US style='color:black' >
+Without knowing this
+reality, people go behind imaginary goals</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The material world conceals the supreme
+qualities of the Lord in His human form. His qualities, such as the abundance
+of compassion, aren't apparent.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This world advocates the enjoyment of
+everything that's attractive and devours anyone who remains in it. People go
+behind useless desires - their wants lead them nowhere. They indulge in useless
+activities - they start work that is fruitless. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They have knowledge that's useless. They
+observe moving and stationary objects that belong to Me. Due to the adverse
+nature of their knowledge, the understanding they gain is contrary to reality.
+Such knowledge does not yield anything. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Without the ability to recognize reality,
+they are unable to learn the true nature of anything. They consider Me, the
+Lord of the universe, to be equivalent to others. With this conviction,
+whatever they set out to do in regard to Me will fail to yield anything.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-13</span>
+<a name="9-13" > </a>
+<a name="13" > </a>
+<button class="button" id="shlokabox264" onclick="toggleSnskrtPhrase('shlokabox264')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mahAtmAnastu mAm pArtha daivIm
+prakr'tim AshritA: |<br>
+
+bhajanti ananya manasO jnAtvA
+bhUtAdim avyayam || 13 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ On the
+other hand, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pArtha]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mahAtmAna:]</span></span>
+<span lang=EN-US >
+ great people </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[daivIm prakr'tim AshritA:]</span></span>
+<span lang=EN-US >
+ take refuge in My
+divine nature. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAtvA]</span></span>
+<span lang=EN-US >
+ Knowing
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm]</span></span>
+<span lang=EN-US >
+ Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtAdim]</span></span>
+<span lang=EN-US >
+ the origin of all beings, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyayam]</span></span>
+<span lang=EN-US >
+ the One who never wears out, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhajantE]</span></span>
+<span lang=EN-US >
+ they worship Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ananya manasa:]</span></span>
+<span lang=EN-US >
+ without letting their minds
+wander among other subjects.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote147 >
+<span lang=EN-US style='color:black' >
+Worship and take refuge
+in The Lord - He is everything</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+People take refuge in Me. With many
+virtuous deeds, they get rid of all undesirable influences that come in the way
+of my refuge. They reside in the divine environment, knowing it to be one of My
+attributes. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Such people are great and have realized
+their Self well. They know Me as the origin of all beings, the One who never
+wears out, as the One who is inaccessible to speech and thought. My form and
+deeds cannot be expressed by names. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They know that I have stepped in as a human
+due to My vast compassion. They know I work for the protection of virtuous
+people. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Knowing all of this, they worship Me. They
+have abundant affection for Me and don't let their thoughts wander. They find
+it impossible to carry forward their thoughts, their Self and their activities
+without worshipping Me. They worship Me purely for the sake of worship.</span>
+</p>
+
+
+<h2 >
+<a name="_14_1" >
+</a>
+<span lang=EN-US >
+9-14</span>
+<a name="9-14" > </a>
+<a name="14" > </a>
+<button class="button" id="shlokabox265" onclick="toggleSnskrtPhrase('shlokabox265')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+satatam kIrtayantO mAm yatanta: cha
+dr'DhavratA: |<br>
+
+namasyanta: cha mAm bhaktyA
+nityayuktA upAsatE || 14 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[upAsatE mAm]</span></span>
+<span lang=EN-US >
+
+They worship Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhaktyA]</span></span>
+<span lang=EN-US >
+ with <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kIrtayanta: mAm]</span></span>
+<span lang=EN-US >
+ while praising Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dr'DhavratA:]</span></span>
+<span lang=EN-US >
+ while being firm in their vows </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yatanta:
+cha]</span></span>
+<span lang=EN-US >
+ and in their endeavor to attain Me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[namasyanta: mAm]</span></span>
+<span lang=EN-US >
+ They regard Me with
+reverence </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[satatam]</span></span>
+<span lang=EN-US >
+ always </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nityayuktA: cha]</span></span>
+<span lang=EN-US >
+ and are constantly in
+touch with Me.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With limitless amount of affection towards
+Me, they are unable to sustain themselves without My praise, My worship and My
+endeavor, even for a moment. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+All their limbs bristle with delight when
+they listen to My names highlighting My qualities. This delight moves them so
+much that they are left speech-less. They keep praising Me with names such as
+'Narayana', 'Krishna' and 'Vasudeva'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+They endeavor to achieve Me - they strive
+to be in worship and other activities that address Me. They maintain structures
+of worship that help in these activities. They do these activities with firm
+conviction. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Their mind, intellect and attitudes are
+weighed down by the intensity of their <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+. Unmindful
+of dust, dirt and stones that touch their feet, palms and head, they fall back
+to My worship - Like a vertical stick that automatically falls to the ground.
+They desire to be in contact with Me constantly and worship Me, dedicating
+their entire Selves to My service.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-15</span>
+<a name="9-15" > </a>
+<a name="15" > </a>
+<button class="button" id="shlokabox266" onclick="toggleSnskrtPhrase('shlokabox266')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+jnAnayajnEna chApyanyE yajantO mAm
+upAsatE |<br>
+
+EkatvEna pr'thaktvEna bahudhA
+vishvatOmukham || 15 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[anyE cha api]</span></span>
+<span lang=EN-US >
+
+Yet others </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajanta:]</span></span>
+<span lang=EN-US >
+ worship </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[jnAna yajnEna]</span></span>
+<span lang=EN-US >
+ through study. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm upAsatE]</span></span>
+<span lang=EN-US >
+ They worship Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[EkatvEna]</span></span>
+<span lang=EN-US >
+ in the form of a single person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vishvatO mukham]</span></span>
+<span lang=EN-US >
+ having the universe as His
+form, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bahudhA]</span></span>
+<span lang=EN-US >
+ appearing in
+many </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pr'thaktvEna]</span></span>
+<span lang=EN-US >
+ different
+ways.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Other people, equally gifted, worship Me with
+systematic study, along with praise and other means. How do they do this? They
+worship Me as the Unique Person present in the form of this universe in
+numerous different ways. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This is what the Lord says here- Lord
+Krishna Himself existed with everything conscious and non-conscious in subtle
+form. They were so subtle that they couldn't even be called out by names. The
+Lord willed to exist with great variety. His will is always fulfilled, of
+course. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+He is now present with everything <a href="Chapter%207.html#universe_as_his_body">as His body</a>
+ - everything conscious and
+non-conscious in gross, non-subtle form. This variety includes all powers,
+animals, humans, non-mobile things. Thinking of the Lord in this way, they
+worship Him.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, Lord Krishna says- 'I am the One who
+is present with this universe as My body'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-16</span>
+<a name="9-16" > </a>
+<a name="16" > </a>
+<button class="button" id="shlokabox267" onclick="toggleSnskrtPhrase('shlokabox267')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+aham kraturaham yajna: svadhA aham
+aham auShadham |<br>
+
+mantrO aham aham Eva Ajyam aham
+agniraham hutam || 16 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham kratu:]</span></span>
+<span lang=EN-US >
+ I
+am the inspiration and the ceremony. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham yajna:]</span></span>
+<span lang=EN-US >
+ I am worship. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham svadhA]</span></span>
+<span lang=EN-US >
+ I am the offering given to elders. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham
+auShadham]</span></span>
+<span lang=EN-US >
+ I am the preparation that's offered. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham mantra:]</span></span>
+<span lang=EN-US >
+ I am the chant. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham Eva Ajyam]</span></span>
+<span lang=EN-US >
+ I am the one who fuels the
+fire. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham agni:]</span></span>
+<span lang=EN-US >
+ I am the
+fire. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham hutam]</span></span>
+<span lang=EN-US >
+ I am the One
+into which the offering is made.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the inspiration and the ceremony - I
+am the action that's prescribed to achieve a goal. I Myself am worship. I am
+the offering that is made out of respect. I am the preparation that's being
+offered. I am the chant. I am the one who fuels the fire. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+These statements are representative of the
+actions we do. The Lord Himself is the energy that fuels activity. He is the
+object involved in the activity. He is the activity itself.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-17</span>
+<a name="9-17" > </a>
+<a name="17" > </a>
+<button class="button" id="shlokabox268" onclick="toggleSnskrtPhrase('shlokabox268')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+pitA aham asya jagatO mAtA dhAtA
+pitAmaha: |<br>
+
+vEdyam pavitram OmkAra: r'k sAma
+yajurEva cha || 17 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pitA]</span></span>
+<span lang=EN-US >
+ the father </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asya
+jagatO]</span></span>
+<span lang=EN-US >
+ of this world, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAtA]</span></span>
+<span lang=EN-US >
+ the mother, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dhAtA]</span></span>
+<span lang=EN-US >
+
+the founder, the bearer, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pitAmaha:]</span></span>
+<span lang=EN-US >
+ the grandfather. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham Eva]</span></span>
+<span lang=EN-US >
+ Indeed, I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vEdyam pavitram]</span></span>
+<span lang=EN-US >
+ the auspicious knowledge in the Vedas, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[OmkAra:]</span></span>
+<span lang=EN-US >
+ the sound of Om, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[r'k sAma yaju:]</span></span>
+<span lang=EN-US >
+ the Rig, Sama and Yajur Vedas.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says 'I am the one who is present
+in the form of a father, a mother, a grandfather, the founder and bearer of
+various moving and stationary things in this material world'. Here, the phrase
+'founder and bearer' specially denotes the personality that brings forth the
+act of creation, in addition to the birth of every being from a mother and
+father. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord continues: 'Any virtue that is
+learnt from the Vedas - that is nothing but Me. The sound of Om, which is the
+seed of the Vedas, which is the source of Vedic teachings, is Me alone. The
+Vedas themselves, consisting of Rig, Yajur and Sama are Me'</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-18</span>
+<a name="9-18" > </a>
+<a name="18" > </a>
+<button class="button" id="shlokabox269" onclick="toggleSnskrtPhrase('shlokabox269')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+gatirbhartA prabhu: sAkShI nivAsa:
+sharaNam suhr't |<br>
+
+prabhava pralaya sthAnam nidhAnam
+bIjam avyayam || 18 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[gati:]</span></span>
+<span lang=EN-US >
+ The
+goal, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhartA]</span></span>
+<span lang=EN-US >
+ the bearer, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prabhu:]</span></span>
+<span lang=EN-US >
+ the Lord, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAkShI]</span></span>
+<span lang=EN-US >
+ the one who sees everything directly, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nivAsa:]</span></span>
+<span lang=EN-US >
+ a place to live in, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sharaNam]</span></span>
+<span lang=EN-US >
+ the refuge, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[suhr't]</span></span>
+<span lang=EN-US >
+ the well-wisher, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prabhava pralaya sthAnam]</span></span>
+<span lang=EN-US >
+ the place in which creation and destruction occur, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nidhAnam]</span></span>
+<span lang=EN-US >
+ an investment, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bIjam]</span></span>
+<span lang=EN-US >
+ the seed, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avyayam]</span></span>
+<span lang=EN-US >
+ which does not wear out.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the goal - the various objectives that
+are to be achieved. I am the bearer - the one who carries the universe. I am
+the Lord who controls everything. I see everything directly. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am a place where people stay, such as a
+home. I am the refuge - the person to whom you surrender for the experience of
+favorable things and the avoidance of the unfavorable. I am the well-wisher
+that you see around you.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A place where every creation and
+destruction happens - that is Me. Anything that's kept as an investment, which
+gets created and then gets spent, that is Me. A cause that does not wear out -
+that's Me.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-19</span>
+<a name="9-19" > </a>
+<a name="19" > </a>
+<button class="button" id="shlokabox270" onclick="toggleSnskrtPhrase('shlokabox270')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+tapAmyaham aham varSha nigr'hNAmi
+utsr'jAmi cha |<br>
+
+amr'tam chaiva mr'tyu: cha sadasat
+cha aham arjuna || 19 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[arjuna]</span></span>
+<span lang=EN-US >
+ Arjuna,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tapAmi]</span></span>
+<span lang=EN-US >
+ give rise to heat </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[varSham nigr'hNAmi]</span></span>
+<span lang=EN-US >
+ I restrict rain </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[utsr'jAmi cha]</span></span>
+<span lang=EN-US >
+ and make it pour too. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[amr'tam
+chaiva]</span></span>
+<span lang=EN-US >
+ life itself, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mr'tyu:
+cha]</span></span>
+<span lang=EN-US >
+ I am death, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sat asat cha]</span></span>
+<span lang=EN-US >
+ I am the real and the imaginary.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I cause heat in the form of the sun, a fire
+and so on. During times like the summer, I am the one who restricts the rains.
+Then, at the time of the monsoon, it is I who makes it rain. The entity by
+which all beings gain life and the one by which they die - both are Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the real and the imaginary - the
+'real' refers to things that are present. The 'imaginary' refers to things
+which have happened in the past and those that have not yet happened.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+There's no need to elaborate more. The Lord
+has said-</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'All the conscious and non-conscious
+things, in all their states of existence, exist as<u >
+ </u>
+<a href="Chapter%207.html#universe_as_his_body">My body</a>
+. In this way, I am the one who is
+present in all those different forms. My devotees worship Me with single-minded
+thought, knowing that I have the entire universe as My body - this universe,
+containing all types of things, which are divided and classified in many ways.
+They worship Me, knowing that I am the one who is present in the form of all
+those different entities'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-20 to 9-21</span>
+<a name="9-20%20to%209-21" > </a>
+<a name="20" > </a>
+<a name="21" > </a>
+<button class="button" id="shlokabox271" onclick="toggleSnskrtPhrase('shlokabox271')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+traividyA mAm sOmapA: pUtapApA:<br>
+
+yajnairiShTvA svargatim prArthayantE
+|<br>
+
+tE puNyamAsAdya surEndra lOkam<br>
+
+ashnanti divyAn divi dEva-bhOgAn ||
+20 ||<br>
+
+&nbsp;<br>
+
+tE tam bhuktvA svarga lOkam vishAlam<br>
+
+kShINE puNyE martya lOkam vishanti |<br>
+
+Evam trayI dharmam anuprapannA:<br>
+
+gatAgatam kAmakAmA labhantE || 21 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[traividyA:]</span></span>
+<span lang=EN-US >
+ Those who know the three Vedas </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm
+yajnyai: iShTvA]</span></span>
+<span lang=EN-US >
+ worship Me with ceremonies, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sOmapA:]</span></span>
+<span lang=EN-US >
+ consume the residue from the
+ceremony and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pUta pApA:]</span></span>
+<span lang=EN-US >
+ get
+rid of their misfortune. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[svargatim prArthayantE]</span></span>
+<span lang=EN-US >
+ They pray for a world of comforts. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AsAdya]</span></span>
+<span lang=EN-US >
+ Having arrived </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puNyam surEndra lOkam]</span></span>
+<span lang=EN-US >
+ in the world of comforts, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE ashnanti]</span></span>
+<span lang=EN-US >
+ they enjoy </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[divyAn dEva bhOgAn]</span></span>
+<span lang=EN-US >
+ divine pleasures of the elite </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[divi]</span></span>
+<span lang=EN-US >
+ in that world.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhuktvA]</span></span>
+<span lang=EN-US >
+ Having enjoyed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tam vishAlam svarga lOkam]</span></span>
+<span lang=EN-US >
+ the vast world of comforts, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE martya
+lOkam vishanti]</span></span>
+<span lang=EN-US >
+ they enter the world of ordinary humans
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puNyE kShINE]</span></span>
+<span lang=EN-US >
+ once their
+virtues are spent. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Evam]</span></span>
+<span lang=EN-US >
+ In
+this way, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kAma kAmA:]</span></span>
+<span lang=EN-US >
+ people
+who crave for desirable things </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anuprapannA:]</span></span>
+<span lang=EN-US >
+ and advocate </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[trayI dharmam]</span></span>
+<span lang=EN-US >
+ the three Vedas to gain these ends </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[labhantE]</span></span>
+<span lang=EN-US >
+ keep </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[gatAgatam]</span></span>
+<span lang=EN-US >
+
+going and coming back.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The three Vedas refer to the knowledge
+contained in the form of the Rig, Yajur and Sama Vedas. People who are focused
+only on the three Vedas are different from the ones who focus on the Vedantas (also
+known as Upanishads), which are at the end of the Vedas. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Only people who focus on the Upanishads are
+truly great persons. They worship Me alone, in the manner <a href="Chapter%209.html#_14_1">described
+before</a>
+. Ultimately, I am the one who is to be known from all the Vedas.
+Knowing Me in this way, they recollect me repeatedly. Such recollection is
+inspired by excessive devotion towards Me. They worship Me and dedicate
+themselves to My study. They desire to achieve Me alone.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, people who focus only on
+the three Vedas get free from misfortunes that prevent them achieving a world
+of comfort. Their method is to follow the rituals prescribed in the Vedas.
+Those rituals concern the forces of the environment. They consume the left-overs
+from those rituals. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Actually, with these rituals, they are
+appeasing forces that are a manifestation of My form. However, they don't know
+it, so they end up craving for material comforts. They enter worlds that are
+auspicious - meaning they are not mingled in sorrow. They experience a vast
+amount of comfort. When the effect of their virtuous deeds wanes, they end up
+in the human world again, with all its attendant sorrows.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, they miss the knowledge in the
+Vedantas - they do not know Me and end up craving for various comforts and
+desires. They merely follow the three Vedas and end up returning repeatedly -
+they only experience comforts that are small and temporary and return to the
+normal world again. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, those who are gifted think
+of Me with unbounded affection. They attain Me, the supreme and ever-lasting
+joy. They do not return. Their specialty is described next.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-22</span>
+<a name="9-22" > </a>
+<a name="22" > </a>
+<button class="button" id="shlokabox272" onclick="toggleSnskrtPhrase('shlokabox272')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+ananyA: chintayantO mAm yE janA:
+paryupAsatE |<br>
+
+tEShAm nityAbhiyuktAnAm yOga kShEmam
+vahAmyaham || 22 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yE janA:]</span></span>
+<span lang=EN-US >
+ The
+people who </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[paryupAsatE]</span></span>
+<span lang=EN-US >
+
+worship Me constantly </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm chintayanta:]</span></span>
+<span lang=EN-US >
+ while having Me in their thoughts, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ananyA:]</span></span>
+<span lang=EN-US >
+ without having any other objective in mind </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nityAbhiyuktAnAm]</span></span>
+<span lang=EN-US >
+ desire to be united with Me forever. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham
+vahAmi]</span></span>
+<span lang=EN-US >
+ I take care of </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEshAm]</span></span>
+<span lang=EN-US >
+ their </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yOga]</span></span>
+<span lang=EN-US >
+
+achievements </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kShEma]</span></span>
+<span lang=EN-US >
+ and the
+preservation of what they have achieved.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_2.png"></td><td><p class=ApplNotes id=inlineapplnote148 >
+<span lang=EN-US style='color:black' >
+The Lord takes care of
+those who take His refuge</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The people described in this Shloka do not
+have any objective other than being united with Me forever - it is not possible
+for them to exist without My thought, hence they have My thought itself as
+their objective. These great people worship Me while keeping Me fixed in their
+minds as the one endowed with all great qualities and the one who has all the
+power. Their worship is whole and complete, without any malice. Such people
+desire to be united with Me forever. I take care of their achievements. Their ultimate
+achievement is Me. I take care of the preservation of their achievements by
+freeing them from the cycle of return into this material world.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-23</span>
+<a name="9-23" > </a>
+<a name="23" > </a>
+<button class="button" id="shlokabox273" onclick="toggleSnskrtPhrase('shlokabox273')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yO tu anya dEvatA bhaktA: yajantE
+shraddhayA_nvitA: |<br>
+
+tE_pi mAmEva kauntEya yajanti avidhipUrvakam
+|| 23 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yO tu]</span></span>
+<span lang=EN-US >
+ On the
+other hand, those who </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anya dEvatA bhaktA:]</span></span>
+<span lang=EN-US >
+ are devoted to other sources of power </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yajantE]</span></span>
+<span lang=EN-US >
+ worship </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shraddhayA_nvitA:]</span></span>
+<span lang=EN-US >
+ in complete faith. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE api]</span></span>
+<span lang=EN-US >
+ Even they </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAmEva yajanti]</span></span>
+<span lang=EN-US >
+ worship Me alone </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[avidhipUrvakam]</span></span>
+<span lang=EN-US >
+ without following the prescribed rules completely.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Followers of the three Vedas worship
+various sources of power with great faith. In reality, they worship Me too.
+That's because everything exists as<u >
+ </u>
+<a href="Chapter%207.html#universe_as_his_body">My
+body</a>
+. The names of all gods and <a href="Chapter%204.html#gods_and_other_powers">various
+powers</a>
+ actually address Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+However, these followers worship without
+following the prescribed procedure completely. They do not worship according to
+the Vedantas, which have laid out the fact that everything in the universe
+exists as the Lord's body. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Service to any source of power, when
+rendered with the thought that it exists as the body of the Lord, is worship
+according to the prescribed procedure. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, service to anyone, rendered
+while seeing them as the recipient of the service isn't according to the
+prescribed procedure. People who render service in this way practice Vedic philosophy
+that's related to material comforts. They don't know that the Lord is the One
+who is worshipped by all forms of service; that He alone is to be worshipped. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Such people attain limited results. After
+their achievement is done, it's in their nature to fall back and lose the
+achievement. This is said in the next Shloka:</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-24</span>
+<a name="9-24" > </a>
+<a name="24" > </a>
+<button class="button" id="shlokabox274" onclick="toggleSnskrtPhrase('shlokabox274')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+aham hi sarva yajnAnAm bhOktA cha
+prabhurEva cha |<br>
+
+na tu mAm abhijAnanti tatvEnAta:
+chyavanti tE || 24 || <br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham hi]</span></span>
+<span lang=EN-US >
+ I am
+indeed </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhOktA]</span></span>
+<span lang=EN-US >
+ the enjoyer </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[cha]</span></span>
+<span lang=EN-US >
+ and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prabhurEva
+cha]</span></span>
+<span lang=EN-US >
+ the single Master </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva
+yajnAnAm]</span></span>
+<span lang=EN-US >
+ of all services rendered to anyone or
+anything. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE]</span></span>
+<span lang=EN-US >
+ Those who crave
+for material wealth </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na abhijAnanti]</span></span>
+<span lang=EN-US >
+ do not know Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tatvEna]</span></span>
+<span lang=EN-US >
+ as I am. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ata:]</span></span>
+<span lang=EN-US >
+
+Hence, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE chyavanti]</span></span>
+<span lang=EN-US >
+ they fall
+back.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With the phrase 'Single Master', the Lord
+state that He Himself appears as the benefactor wherever benefits are
+delivered.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Indeed, this strange distinction is astounding
+- Some people get stuck with minor results and keep falling from their place. Others
+end up enjoying uninterrupted, unlimited joy, in the form of eternal union with
+the Lord. They both are involved in the very same action. This distinction
+comes from their conviction. This is described next:</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-25</span>
+<a name="9-25" > </a>
+<a name="25" > </a>
+<button class="button" id="shlokabox275" onclick="toggleSnskrtPhrase('shlokabox275')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yAnti dEvavratA dEvAn<br>
+
+pitr'n yAnti pitr'vratA: |<br>
+
+bhUtAni yAnti bhUtEjyA:<br>
+
+yAnti madyAjinO_pi mAm || 25 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[dEvavratA:]</span></span>
+<span lang=EN-US >
+
+People who dedicate themselves to power </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yAnti]</span></span>
+<span lang=EN-US >
+ will achieve </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dEvAn]</span></span>
+<span lang=EN-US >
+ those powers. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pitr'vratA:]</span></span>
+<span lang=EN-US >
+ Those who dedicate themselves to their ancestors </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pitr'n yAnti]</span></span>
+<span lang=EN-US >
+ join those ancestors. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtEjya:]</span></span>
+<span lang=EN-US >
+ Those who persevere to achieve
+material gains </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhUtAni yAnti]</span></span>
+<span lang=EN-US >
+
+will attain those materials. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[madyAjina:]</span></span>
+<span lang=EN-US >
+ People who worship Me with the aim to achieve Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[api]</span></span>
+<span lang=EN-US >
+ while dedicating themselves to any cause
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm yAnti]</span></span>
+<span lang=EN-US >
+ will achieve Me.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Here, the word 'dedication' is used in the
+sense of 'intent' and 'conviction'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'People who dedicate themselves to power'
+are those who work to please various <a href="Chapter%204.html#gods_and_other_powers">sources
+of power</a>
+ and devote themselves to those powers. They will achieve those powers.
+Similarly, those who commit to worship their elders and dedicate themselves to
+their service will join them. Those who persevere with the intent to achieve
+material gains will attain those materials.</span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_3.png"></td><td><p class=ApplNotes id=inlineapplnote149 >
+<span lang=EN-US style='color:black' >
+The Lord lovingly
+accepts all offerings and activities of his devotees</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, those who commit to
+worship Me do the same things - they may devote themselves to gain power, serve
+their elders and persevere to achieve material gains. They do all this while
+knowing that they are worshipping the Supreme Lord Krishna, the ultimate Self
+who has all of this as <a href="Chapter%207.html#universe_as_his_body">His body</a>
+.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says 'People who worship Me in
+this way will definitely achieve Me. Those who intend to gain <a href="Chapter%204.html#gods_and_other_powers">power</a>
+ will achieve power, enjoy a little and
+eventually fall off when the power wanes. My devotees, on the other hand,
+achieve Me and never fall back. I am without birth or destruction. I know
+everything and My intent is always fulfilled. I am a great ocean of unlimited
+variety of great qualities, an abode of unbroken and infinite joy'. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord describes yet another aspect
+that's special in His devotees:</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-26</span>
+<a name="9-26" > </a>
+<a name="26" > </a>
+<button class="button" id="shlokabox276" onclick="toggleSnskrtPhrase('shlokabox276')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+patram puShpam phalam tOyam yO mE
+bhaktyA prayachChati |<br>
+
+tadaham bhaktyupahr'tam ashnAmi
+prayatAtmana: || 26 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yO]</span></span>
+<span lang=EN-US >
+ Anyone who
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prayachChati]</span></span>
+<span lang=EN-US >
+ offers </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[patram]</span></span>
+<span lang=EN-US >
+ a leaf, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puShpam]</span></span>
+<span lang=EN-US >
+ a flower, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[phalam]</span></span>
+<span lang=EN-US >
+,
+a fruit </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tOyam]</span></span>
+<span lang=EN-US >
+ or water </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mE]</span></span>
+<span lang=EN-US >
+ to Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhaktyA]</span></span>
+<span lang=EN-US >
+ with devotion - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ashnAmi]</span></span>
+<span lang=EN-US >
+ will
+accept </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat]</span></span>
+<span lang=EN-US >
+ whatever </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhaktyupahr'tam]</span></span>
+<span lang=EN-US >
+ is offered with <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prayatAtmana:]</span></span>
+<span lang=EN-US >
+ by a person who is so dedicated to Me.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A devotee offers Me something with <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+. It could be anything that's easily
+available - like a leaf, a flower, a fruit or water. Such a devotee has
+limitless affection towards Me and can't sustain himself without offering
+things to Me. To this person, making the offering itself is the reward.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Even though I am the Lord of everything,
+though the lifecycle of the universe is My sport, though all My desires are
+always fulfilled and My intent always realized, though I exist with limitless
+and unbroken favorable qualities of infinite variety, though My nature is one
+of infinite amounts of continuous joy, I accept this offering.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In fact, I accept it with all eagerness; like
+I finally got something I yearned for, which was out of My reach. That's
+because it was made with devotion, dedication and a pure mind, without any intention
+other than making the offering to Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As stated in </span>
+<span lang=EN-US >
+[mOkSha
+dharma]</span>
+<span lang=EN-US >
+, 353-64: Being engaged in our work, with our
+intellect working towards a single goal (to attain the Supreme Lord), any
+actions performed are accepted with great regard by the Lord Himself.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Gifted people <a href="Chapter%207.html#jnAnI">who know Me</a>
+
+are special in a way that's not expressible by thought and speech. Be a <a href="Chapter%207.html#jnAnI">person who knows</a>
+. Weigh down your Self and everything that's
+yours with the weight of <a href="Chapter%207.html#bhakti_a_defn">devotion described before</a>
+.
+Indulge in praise, work, worship and respect without interruption. While
+indulging in them, do your work in this world as follows-</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-27</span>
+<a name="9-27" > </a>
+<a name="27" > </a>
+<button class="button" id="shlokabox277" onclick="toggleSnskrtPhrase('shlokabox277')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+yat karOShi yat ashnAsi jat juhOShi
+dadAsi yat |<br>
+
+yat tapasyasi kauntEya tat kuruShva
+madarpaNam || 27 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[yat karOShi]</span></span>
+<span lang=EN-US >
+
+Whatever you do, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat ashnAsi]</span></span>
+<span lang=EN-US >
+
+whatever you consume, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat juhOShi]</span></span>
+<span lang=EN-US >
+ whatever you sacrifice, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dadAsi yat]</span></span>
+<span lang=EN-US >
+ whatever you give away, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yat tapasyasi]</span></span>
+<span lang=EN-US >
+ any thought you concentrate on, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tat
+kuruShva]</span></span>
+<span lang=EN-US >
+ make it </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[arpaNam]</span></span>
+<span lang=EN-US >
+ a dedication </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mat]</span></span>
+<span lang=EN-US >
+
+to Me</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<a name="dedicate_actions_to_Krishna" >
+</a>
+<span lang=EN-US >
+The
+Lord states- 'Dedicate everything to Me. That includes any remaining activities
+you do in this world till you depart from your body. Your daily routine, your
+responsibilities such as charity, focus and sacrifice, everything you consume
+to maintain your body- dedicate all of it to Me'.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Dedication' is to make an offering to the
+Lord. </span>
+</p>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_0.png"></td><td><p class=ApplNotes id=inlineapplnote150 >
+<span lang=EN-US style='color:black' >
+What can we possibly offer
+the Lord of the universe?</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+As The Lord Himself stated- Your activities
+and responsibilities bring a feeling of having done something. They also bring
+enjoyment, experience and the sense of having rendered service. Do them in such
+a way that they are offered to Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In other words: You are a doer of your
+work. You have a purpose and experience the outcome. All of this belongs to Me
+and takes form, exists and sustains according to My will. So, leave all of it
+in Me, the ultimate controller and reason for all existence. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With abundant affection towards Me, your
+ultimate joy is in being under My control alone - stay in this thought always,
+knowing that you are being controlled by Me. Any other person or <a href="Chapter%204.html#gods_and_other_powers">power</a>
+ has this very same property. </span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-28</span>
+<a name="9-28" > </a>
+<a name="28" > </a>
+<button class="button" id="shlokabox278" onclick="toggleSnskrtPhrase('shlokabox278')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+shubhAshubha phalairEvam mOkShyasE
+karma bandhanai: |<br>
+
+saMnyAsa yOga yuktAtmA vimuktO mAm
+upaiShyasi || 28 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[Evam]</span></span>
+<span lang=EN-US >
+ In this
+way, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mOkShyasE]</span></span>
+<span lang=EN-US >
+ you will be
+free </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[karma bandhanai:]</span></span>
+<span lang=EN-US >
+ from the
+bondage of activity </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shubhAshuba phalai:]</span></span>
+<span lang=EN-US >
+ with its favorable and unfavorable outcomes. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[saMnyAsa yOga yuktAtmA]</span></span>
+<span lang=EN-US >
+ Be with the intent
+of letting-go. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[vimukta:]</span></span>
+<span lang=EN-US >
+ You
+will be free and </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm upaiShyasi]</span></span>
+<span lang=EN-US >
+ attain Me.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this way, with the intention of
+letting-go, your joy is to perform under My will in My service. Then, all your
+activities become My worship. By arranging yourself in this way and doing your
+work, you get freedom from all expectations and outcomes. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Ordinarily, these outcomes seem favorable
+or unfavorable, going by your bondage to an endless list of past deeds. That
+becomes a barrier to attain Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When all your activities become My worship,
+you get free of all those barriers. You will attain Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, listen to My characteristic that goes
+beyond all activities of this world-</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-29</span>
+<a name="9-29" > </a>
+<a name="29" > </a>
+<button class="button" id="shlokabox279" onclick="toggleSnskrtPhrase('shlokabox279')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+samO_ham sarva bhUtEShu<br>
+
+na mE dvEShO_sti na priya: |<br>
+
+yE bhajanti tu mAm bhaktyA<br>
+
+mayi tE tEShu chApyaham || 29 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sama:]</span></span>
+<span lang=EN-US >
+ equal </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sarva
+bhUtEShu]</span></span>
+<span lang=EN-US >
+ to all beings. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na mE
+dvEShO_sti]</span></span>
+<span lang=EN-US >
+ I do not have hatred, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na priya:]</span></span>
+<span lang=EN-US >
+ neither do I have the attachment
+of love. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tu]</span></span>
+<span lang=EN-US >
+ However, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yE]</span></span>
+<span lang=EN-US >
+ those who </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhajanti
+mAm]</span></span>
+<span lang=EN-US >
+ worship Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhaktyA]</span></span>
+<span lang=EN-US >
+ with <a href="Chapter%207.html#bhakti_a_defn">devotion</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE
+mayi]</span></span>
+<span lang=EN-US >
+ are situated in Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[aham]</span></span>
+<span lang=EN-US >
+ I am </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tEShu]</span></span>
+<span lang=EN-US >
+ within
+them </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[chApi]</span></span>
+<span lang=EN-US >
+ as well.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+We see a great variety among humans,
+animals and all beings - in terms of their shape, form, status, abilities and their
+level of awareness. We see them ranging from high to being extremely low. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The Lord says - 'I look at all of them as
+being equal when they seek refuge in Me. I do not despise anyone due to their
+lowly shape, lack of awareness or inferior status. I do not reject them because
+they have acted against My instructions. Also, I do not have the attachment of
+love towards someone of high status and knowledge - unless they have
+surrendered to Me. They do not gain My acceptance just because they have good
+fortune. Their status doesn't matter to Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+On the other hand, those who worship Me
+with affection cannot stay without worshipping Me. They have My worship as
+their only goal. Their status, capability and knowledge may be high or low -
+they are all equal to Me. They are content to be in My thoughts. I value them
+more than Myself.'</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Moreover:</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-30</span>
+<a name="9-30" > </a>
+<a name="30" > </a>
+<button class="button" id="shlokabox280" onclick="toggleSnskrtPhrase('shlokabox280')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+api chEt sudurAchArO bhajatE mAm
+ananyabhAk |<br>
+
+sAdhurEva sa mantavya: samyak
+vyavasitO hi sa: || 30 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[api chEt]</span></span>
+<span lang=EN-US >
+ Even
+when </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sudurAchAra:]</span></span>
+<span lang=EN-US >
+ a very
+offensive person </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhajatE mAm]</span></span>
+<span lang=EN-US >
+
+worships Me </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[ananyabhAk]</span></span>
+<span lang=EN-US >
+ with
+unwavering devotion, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mantavya:]</span></span>
+<span lang=EN-US >
+ he needs to be considered as </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sAdhu: Eva]</span></span>
+<span lang=EN-US >
+ virtuous indeed. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[sa: hi]</span></span>
+<span lang=EN-US >
+ He definitely </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[samyak vyavasita:]</span></span>
+<span lang=EN-US >
+ has the appropriate determination.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Having been born as a certain type of
+being, there are certain ways to behave and certain misbehaviors to avoid. A
+person who doesn't comply and crosses the line is considered very offensive. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+When such a person worships the Lord with
+unwavering devotion, with the worship alone being the goal, he needs to be
+considered virtuous. He is a topper among the followers of the Lord, equal to
+the kind of people described in the previous Shloka.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+How come? </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In this Shloka, the statement 'he has made
+the appropriate resolution' says that his determination is true and proper.
+This person has firmly resolved- 'The Lord is the one and only origin of the
+entire universe. He is the ultimate creator. He is the goal of all humans. He
+is the master of all things moving and stationary. He is our controller, my
+guide, my friend and He gives ultimate joy'. Such a resolution is difficult and
+rare. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With this kind of resolution, a person is
+in constant worship of the Lord - with worship itself being the goal of his
+worship. Hence, this person must be considered virtuous indeed and be
+respected. Considering his resolve and consequent worship, the malicious deeds
+he commits are to be considered as minor imperfections. This person is not to
+be disrespected for those deeds. Instead, this person must be praised - this is
+the summary here.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Now, a question arises - Will the misconduct
+of this person not restrict the flow of devotion in future? As said in </span>
+<span lang=EN-US >
+[kaThOpaniShat, 1-2-24]</span>
+<span lang=EN-US >
+: 'Those who cannot
+keep off misconduct, those in whom desire and anger do not subside, even those whose
+mind does not have peace - such people cannot achieve Him through knowledge'.
+Will he still be capable of devotion?</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+This question is answered next -</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-31</span>
+<a name="9-31" > </a>
+<a name="31" > </a>
+<button class="button" id="shlokabox281" onclick="toggleSnskrtPhrase('shlokabox281')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+kShipram bhavati dharmAtmA shashvat
+shAntim nigachChati |<br>
+
+kauntEya pratijAnIhI na mE bhakta:
+paNashyati || 31 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[kShipram]</span></span>
+<span lang=EN-US >
+ Very
+soon, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhavati]</span></span>
+<span lang=EN-US >
+ this person
+becomes </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[dharmAtmA]</span></span>
+<span lang=EN-US >
+ an
+excellent devotee, who worships Me without flaw. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[nigachChati]</span></span>
+<span lang=EN-US >
+ He attains </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shAntim]</span></span>
+<span lang=EN-US >
+ peaceful existence </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[shashwat]</span></span>
+<span lang=EN-US >
+ forever. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[kauntEya]</span></span>
+<span lang=EN-US >
+
+Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pratijAnIhi]</span></span>
+<span lang=EN-US >
+ resolve
+firmly within yourself that </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mE bhakta:]</span></span>
+<span lang=EN-US >
+ My devotee </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[na praNashyati]</span></span>
+<span lang=EN-US >
+ shall not waste away.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Affection towards Me inspires My worship.
+When a person has no other objective, he gets rid of his flaws. By the same
+worship, he uproots the qualities of <a href="Chapter%202.html#satva_rajas_tamas">rajas</a>
+ and
+<a href="Chapter%202.html#satva_rajas_tamas">tamas</a>
+. In this way he attains excellence
+quickly. Without delay, he is free of obstacles and is fully able to worship Me
+alone in his mind. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+The word 'dharma' used in this Shloka to
+mean '<a href="Chapter%207.html#bhakti_a_defn">devoted worship</a>
+' has also been used in the beginning
+of this chapter (<a href="Chapter%209.html#3">Chapter 9-3</a>) in a similar manner.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+A person who worships attains ever-lasting
+peace - he gets rid of behaviors and deeds that prevent him from attaining Me.
+Those deeds and behaviors never return. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Arjuna, now resolve to yourself - 'The
+Lord's devotee shall not waste away, even if he strays from the path of virtue
+and mingles with behaviors that are against My instructions. Instead, by the
+greatness of My devotion, he destroys all types of bondage. He attains
+ever-lasting freedom from them. He shall attain whole and complete devotion
+very soon'.</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-32 to 9-33</span>
+<a name="9-32%20to%209-33" > </a>
+<a name="32" > </a>
+<a name="33" > </a>
+<button class="button" id="shlokabox282" onclick="toggleSnskrtPhrase('shlokabox282')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+mAm hi pArtha vyapAshritya yO_pi
+syu: pApayOnaya: |<br>
+
+striyO vaishyA: tathA shUdrA: tE_pi
+yAnti parAm gatim || 32 ||<br>
+
+&nbsp;<br>
+
+kim puna: brAhmaNA: puNyA: bhaktA
+rAjarShaya: tathA |<br>
+
+anityam asukham lOkam imam prApya
+bhajasva mAm || 33 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[pArtha]</span></span>
+<span lang=EN-US >
+ Arjuna, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[yO_pi striyO vaishyA: tathA
+shUdrA:]</span></span>
+<span lang=EN-US >
+ anyone, irrespective of gender and profession,
+</span>
+<span lang=EN-US >
+<span class="snskrtphrase">[pApayOnaya: syu:]</span></span>
+<span lang=EN-US >
+ even those
+who've tread the path of malice - </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tE_pi]</span></span>
+<span lang=EN-US >
+ they will </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[parAm gatim yAnti hi]</span></span>
+<span lang=EN-US >
+ definitely attain the <a href="Back%20to%20Basics.html#Moksha">supreme goal</a>
+ </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm vyapAshritya]</span></span>
+<span lang=EN-US >
+ after taking refuge in
+Me.</span>
+</p>
+
+
+<p class=ExplnOfShlokaCxSpLast >
+<span lang=EN-US >
+<span class="snskrtphrase">[kim puna:]</span></span>
+<span lang=EN-US >
+ It goes without saying that the same applies </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[puNyA:]</span></span>
+<span lang=EN-US >
+ to the virtuous, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhaktA:]</span></span>
+<span lang=EN-US >
+ to My devotees, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[brAhmaNA:]</span></span>
+<span lang=EN-US >
+ to those who seek to worship </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[tathA rAjarShaya:]</span></span>
+<span lang=EN-US >
+ and administrators who
+rule on My behalf. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[bhajasva mAm]</span></span>
+<span lang=EN-US >
+ Worship Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[prApya]</span></span>
+<span lang=EN-US >
+ now that you have obtained </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[imam lOkam]</span></span>
+<span lang=EN-US >
+ this world, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[anityam]</span></span>
+<span lang=EN-US >
+ which is temporary </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[asukham]</span></span>
+<span lang=EN-US >
+ and is devoid of lasting joy.</span>
+</p>
+
+
+</div>
+
+
+<table class=ApplNotes border=0><tr><td class=ApplNotes align="center"><img class=ApplNotesImg src="step_1.png"></td><td><p class=ApplNotes id=inlineapplnote151 >
+<span lang=EN-US style='color:black' >
+Without exception,
+everyone can devote themselves to the Lord</span>
+</p>
+</td></tr></table>
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Anyone can attain Me and reach the ultimate
+goal - Ladies, Gentlemen, people of various occupations, traders, those who
+serve other people, even those who may have tread the path of ill-will and misbehavior.
+It goes without saying that people who tread the path of virtue, who seek to
+worship Me, who administer on My behalf - they can equally take refuge by being
+devoted to Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+You, Arjuna, are here in this temporary
+world. It is bombarded by the three types of miseries- those inflicted by
+others, those inflicted by ourselves, those brought on by effects beyond our
+limits. Hence, it lacks peace.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+You are here to administer on My behalf.
+Worship Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Next, the Lord describes the
+characteristics of <a href="Chapter%207.html#bhakti_a_defn">bhakti</a>
+:</span>
+</p>
+
+
+<h2 >
+<span lang=EN-US >
+9-34</span>
+<a name="9-34" > </a>
+<a name="34" > </a>
+<button class="button" id="shlokabox283" onclick="toggleSnskrtPhrase('shlokabox283')"></button>
+</h2>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;background-image:url(snskrtstationary.png)' >
+
+<p class=ShlokaCxSpFirst >
+<span lang=EN-US >
+<span class="snskrtphrase">[<br>
+
+manmanA bhava madbhaktO madyAjI mAm
+namaskuru |<br>
+
+mAm EvaiShyasi yuktvaivam AtmAnam
+matparAyaNa: || 34 ||<br>
+
+]</span></span>
+</p>
+
+
+<p class=ExplnOfShloka >
+<span lang=EN-US >
+<span class="snskrtphrase">[bhava madbhakta:]</span></span>
+<span lang=EN-US >
+ Be My devotee, having excessive affection towards me. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[manmanA]</span></span>
+<span lang=EN-US >
+ Keep your mind in Me always. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[madyAjI]</span></span>
+<span lang=EN-US >
+ Worship Me alone. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm namaskuru]</span></span>
+<span lang=EN-US >
+ Surrender to Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[matparAyaNa:]</span></span>
+<span lang=EN-US >
+ have Me as your ultimate
+goal. </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[Evam]</span></span>
+<span lang=EN-US >
+ In this way, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[AtmAnam yuktvA]</span></span>
+<span lang=EN-US >
+ by attaching your thoughts
+to Me, </span>
+<span lang=EN-US >
+<span class="snskrtphrase">[mAm Eva EShyasi]</span></span>
+<span lang=EN-US >
+ you
+will certainly attain Me.</span>
+</p>
+
+
+</div>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Keep your mind in Me always' - Like the
+unbroken flow of oil, have an unbroken stream of thought that stays in Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the Lord of Lords, The One abode of
+all that's favorable, without a hint of a blemish. I am The One who knows
+everything. My every intent is fulfilled. I'm The Single Cause behind the
+entire universe, The Supreme Creator, The best among Men. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+My eyes are wide and pure like lotus leaves.
+My appearance is like a flawless dark-blue cloud. I have the brightness of a
+thousand suns that rise simultaneously.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am a great ocean of tasty nectar. I have
+four gentle and large arms; I wear a yellow garment of great brilliance,
+decorated with a flawless crown, ear-ring, a garland, with bracelets on the
+biceps and forearms. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am an abode of enormous favorable
+qualities, limitless compassion, beauty, charm, generosity, grandeur and an
+innate nature to look at everyone equally with an ocean of affection; </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am a refuge for the entire universe
+without exception, accepting everyone who seeks refuge without considering any
+of their peculiarities.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+I am the controller of everything. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Again, the Lord emphasizes - 'Be My
+devotee, have your thoughts stationed in Me with a limitless amount of love
+towards Me'. Once more, the emphasis is laid with the instruction 'Worship Me
+alone'- Experiencing Me is unlimited and uninterrupted joy. With such an experience,
+return to My worship always.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Worship is to let-go and run with the will
+of The Lord. Indeed, all actions like serving someone, transacting and
+experiencing are all different forms of serving the Lord. In this way, you will
+dedicate yourself to My worship - worship that is done out of excessive and
+unbroken affection towards Me, arising from your experience of Me. </span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+In the same way, keep your thoughts in Me.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Once again, the instruction is emphasized
+as - </span>
+<span lang=EN-US >
+[mAm namaskuru]</span>
+<span lang=EN-US >
+: Occupy
+yourself with an intense and abundant spirit of surrendering to Me. Do this
+without opposing or intending to terminate the surrender - This surrender comes
+from an excess of affection towards Me - it comes from experiencing Me with
+limitless and uninterrupted joy.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+'Have Me as your ultimate goal': The person
+who has Me as the ultimate goal is incapable of supporting himself without Me,
+hence he takes My refuge.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+With this, fasten your mind and have Me as
+your ultimate goal. With an unbroken, limitless affection towards me, you get a
+mind that's capable of experiencing Me. With it, you will attain Me. You do
+this by thinking and meditating upon Me with your mind, experiencing and
+adoring Me, surrendering to Me and having Me as the ultimate goal.</span>
+</p>
+
+
+<p class=MsoNormal >
+<span lang=EN-US >
+Do your activities that are necessary to
+sustain your body, perform the duties prescribed in the scriptures and your daily
+routine. Do them for My pleasure, as work that I've effected, with My service
+as the driver. Always repeat My praise, be in the effort to achieve Me and
+surrender to Me out of love. Resolve that the entire universe is subject to My will.
+Being in My service is its only desire. Think of all My qualities. They give
+vast amounts of joy. Be present daily in this world and worship Me in the
+manner described before. You will definitely achieve Me.</span>
+</p>
+
+
+<p class="nextprev"><span style="text-align:left;">&#xab;&nbsp;<a href="Chapter%208.html">Chapter 8</a></span><span style="float:right;"><a href="Chapter%2010.html">Chapter 10</a>&nbsp;&#xbb;</span></p>
+
+<!-- Here ends the chapter -->
+<div class="TopNoteBlock">
+<div class="TopNote" id='TopNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='TopNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_up.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px;margin-right:24pt" id='TopApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+<div style="position:fixed;top:0;right:0;">
+<img style="height:20pt;margin-right:6px;margin-top:3px" src="search.png" onclick="GitaHTML.showToast('')">
+</div>
+</div>
+<div class="BottomNoteBlock">
+<div class="BottomNote" id='BottomNoteID'>
+<table border=0 style="border-collapse:collapse;border:none;width:100%">
+<tr id='BottomNoteTableID'>
+<td align="center" style="width:3px"><img style="height:20pt;margin-left:6px;margin-top:3px" src="step_down.png"></td>
+<td><p class=ApplNotesRight style="margin-left:6px" id='BottomApplicationNote'></p></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Middle (Gita commentary) div ends here -->
+</div>
+
+<!-- Container ends here -->
+</div>
+
+<!--scripts are at the end because they refer to the divs on top -->
+<script type="text/javascript">
+<!-- console.log('gita scroller 4'); -->
+var commentaryElm = document.getElementById('GitaCommentary');
+var chapapplnotestart = 142;
+document.addEventListener("DOMContentLoaded", domloaded());
+commentaryElm.onscroll = onCommentaryScroll;
+window.onpopstate = pagestatechanged;
+window.onunload = recordState;
+
+function cssRule(s){
+    for(i=0; i<document.styleSheets[0].cssRules.length; i++){
+        if(document.styleSheets[0].cssRules[i].selectorText == s){
+            return document.styleSheets[0].cssRules[i];
+        }
+    }
+    console.log('rule not found: '+s);
+}
+function toggleSnskrtPhrase(anchor){
+    var initialAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+
+    var rule = cssRule('span.snskrtphrase');
+    if(rule.style.display != 'none') {
+        rule.style.display = 'none';
+    }
+    else {
+        rule.style.display = 'inherit';
+    }
+    var finalAnchorOffset = document.getElementById(anchor).getBoundingClientRect().top;
+    commentaryElm.scrollTop = commentaryElm.scrollTop + finalAnchorOffset - initialAnchorOffset;
+}
+function containerResize(){
+<!--set top and bottom note to 'left' or 'centered' -->
+}
+function domloaded(){
+    containerResize();
+    <!--trigger the default top-bottom on loading the chapter -->
+    syncnote();
+}
+function onCommentaryScroll() {
+    syncnote();
+}
+function recordState() {
+    var currentScTop = commentaryElm.scrollTop;
+    window.history.replaceState({cst: currentScTop}, window.location.href, "?"+ 'c' + "=" + currentScTop);
+}
+function overlapFeedback(elm, overlap) {
+    var rgbastr = 'rgba(216,191,216,' + toString(1-overlap) + ')';
+    elm.style.backgroundColor = rgbastr;
+}
+function syncnote() {
+    var commentaryViewPort = commentaryElm.getBoundingClientRect(); 
+
+    <!--Find the inline application note right above current viewport and the one right below-->
+    var inlinenoteAbove = "";
+    var inlinerefAbove = "";
+    var inlinenoteBelow = "";
+    var inlinerefBelow = "";
+
+    var i = chapapplnotestart;
+    <!--The 'inline' word here is very important!! The code assumes this everywhere! -->
+    var inlinenote = 'inlineapplnote' + i;
+    var inlineElm = document.getElementById(inlinenote);
+    var topOverlap = 0;
+    var bottomOverlap = 0;
+    var topNoteRect = document.getElementById("TopNoteID").getBoundingClientRect();
+    var bottomNoteRect = document.getElementById("BottomNoteID").getBoundingClientRect();
+
+    while(inlineElm != null) {
+        inlineRect = inlineElm.getBoundingClientRect();
+        if(inlineRect.top <= topNoteRect.top) {
+            inlinenoteAbove = inlineElm.innerHTML;
+            inlinerefAbove = inlinenote;
+            topOverlap = Math.min(Math.max((inlineRect.bottom - topNoteRect.top) / 
+                                           (topNoteRect.bottom - topNoteRect.top), 0), 1);
+        }
+        else if(inlineRect.top < topNoteRect.bottom) {
+            topOverlap = (topNoteRect.bottom - inlineRect.top) / (topNoteRect.bottom - topNoteRect.top);
+        }
+		else if(topNoteRect.bottom == 0) {
+			topOverlap = 1;
+		}
+        if(inlineRect.bottom > bottomNoteRect.top && inlineRect.bottom < bottomNoteRect.bottom) {
+            bottomOverlap = (inlineRect.bottom - bottomNoteRect.top) / 
+                            (bottomNoteRect.bottom - bottomNoteRect.top);
+        }
+        else if (inlineRect.top > bottomNoteRect.top && inlineRect.top < bottomNoteRect.bottom) {
+            bottomOverlap = (bottomNoteRect.bottom - inlineRect.top) /
+                            (bottomNoteRect.bottom - bottomNoteRect.top)
+        }
+        <!--Latch the first one that breaches the bottom-->
+        if(inlinenoteBelow == "" && inlineRect.bottom > commentaryViewPort.bottom) {
+            inlinenoteBelow = inlineElm.innerHTML;
+            inlinerefBelow = inlinenote;
+        }
+        i++;
+        inlinenote = 'inlineapplnote' + i;
+        inlineElm = document.getElementById(inlinenote);
+    }
+    <!--Show the note above at the top and below at the bottom only if they have something -->
+    document.getElementById("TopApplicationNote").innerHTML = inlinenoteAbove;
+    if(inlinenoteAbove != "") {
+        document.getElementById("TopNoteTableID").onclick = function(){window.location.href = "#"+inlinerefAbove};
+        document.getElementById("TopNoteID").style.display = 'inherit';
+    } else {
+        document.getElementById("TopNoteID").style.display = 'none';
+    }
+    document.getElementById("BottomApplicationNote").innerHTML = inlinenoteBelow;
+    if(inlinenoteBelow != "") {
+        document.getElementById("BottomNoteTableID").onclick = function(){window.location.href = "#"+inlinerefBelow};
+        document.getElementById("BottomNoteID").style.display = 'inherit';    
+    } else {
+        document.getElementById("BottomNoteID").style.display = 'none';    
+    }
+    document.getElementById("TopNoteID").style.opacity = 1 - topOverlap;
+    document.getElementById("BottomNoteID").style.opacity = 1 - bottomOverlap;
+}
+function scrollback() {
+    var currenturl = window.location.href;
+    var posQ = currenturl.indexOf("?");
+    if (posQ != -1) {
+        var eorc = currenturl.charAt(posQ+1);
+        var rule = cssRule('span.snskrtphrase');
+        if(eorc == 'e') {
+            rule.style.display = 'inherit';
+        }
+        else if(eorc == 'c') {
+            rule.style.display = 'none';
+        }
+        else {
+            console.log('unknown eorc');
+        }
+        
+        var targetscrolltop = parseInt(currenturl.substr(posQ + 3));
+        commentaryElm.scrollTop = targetscrolltop;
+    }
+}
+function pagestatechanged(event) {
+    scrollback();
+}
+function pageshown() {
+    scrollback();
+}
+function gotohash() {
+	if(window.location.hash == "") {
+		commentaryElm.scrollTop = 0;
+	} else {
+		var elmTogo = document.getElementById(window.location.hash.substr(1));
+		commentaryElm.scrollTop += elmTogo.getBoundingClientRect().top-1;
+	}
+}
+</script>
+
+</body>
+
+</html>
