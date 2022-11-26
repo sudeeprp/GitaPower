@@ -1,9 +1,6 @@
-# Till we customize
-android/
-ios/
+# Till we need these builds
 linux/
 windows/
-web/
 
 # Miscellaneous
 *.class
