@@ -21,48 +21,49 @@ class ThemePick {
   final AssetImage shlokaBackground;
 }
 
-final darkTheme = ThemePick('Dark', ReadingTheme.dark,
-    background: Colors.black,
-    textColor: Colors.white,
-    shlokaColor: const Color(0xff800000),
-    shlokaBackground: const AssetImage('images/snskrtstationary.png'));
-final lightTheme = ThemePick('Light', ReadingTheme.light,
-    background: Colors.white,
-    textColor: Colors.black,
-    shlokaColor: const Color(0xff800000),
-    shlokaBackground: const AssetImage('images/snskrtstationary.png'));
-final classicTheme = ThemePick('Classic', ReadingTheme.classic,
-    background: const Color(0xfff5f5dc),
-    textColor: Colors.black,
-    shlokaColor: const Color(0xff800000),
-    shlokaBackground: const AssetImage('images/snskrtstationary.png'));
+final appearanceChoices = {
+  ReadingTheme.dark: ThemePick('Dark', ReadingTheme.dark,
+      background: Colors.black,
+      textColor: Colors.white,
+      shlokaColor: const Color(0xff800000),
+      shlokaBackground: const AssetImage('images/snskrtstationary.png')),
+  ReadingTheme.light: ThemePick('Light', ReadingTheme.light,
+      background: Colors.white,
+      textColor: Colors.black,
+      shlokaColor: const Color(0xff800000),
+      shlokaBackground: const AssetImage('images/snskrtstationary.png')),
+  ReadingTheme.classic: ThemePick('Classic', ReadingTheme.classic,
+      background: const Color(0xfff5f5dc),
+      textColor: Colors.black,
+      shlokaColor: const Color(0xff800000),
+      shlokaBackground: const AssetImage('images/snskrtstationary.png')),
+};
+const defaultAppearance = ReadingTheme.classic;
 
 class Choices extends GetxController {
-  var theme = ReadingTheme.classic.obs;
+  var theme = defaultAppearance.obs;
 }
 
 class TextSample extends StatelessWidget {
   final ThemePick _themePick;
   const TextSample(this._themePick, {Key? key}) : super(key: key);
   Widget _sampleTextContent() {
-    return RichText(
-        text: TextSpan(children: [
-      WidgetSpan(
-          child: Text(
+    return Column(children: [
+      Text(
         _themePick.name,
         style: TextStyle(
             backgroundColor: _themePick.background,
             color: _themePick.textColor),
         textScaleFactor: 1.5,
-      )),
-      WidgetSpan(
-          child: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: _themePick.shlokaBackground, fit: BoxFit.fill)),
-              child: Text('मा शुच​:',
-                  style: TextStyle(color: _themePick.shlokaColor)))),
-    ]));
+      ),
+      Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: _themePick.shlokaBackground, fit: BoxFit.fill)),
+          child: Text('मा शुच​:',
+              style: TextStyle(color: _themePick.shlokaColor),
+              textScaleFactor: 1.5)),
+    ]);
   }
 
   @override
@@ -94,9 +95,9 @@ class ThemeSelector extends StatelessWidget {
   @override
   Widget build(context) {
     return Row(children: [
-      TextSample(darkTheme),
-      TextSample(lightTheme),
-      TextSample(classicTheme)
+      TextSample(appearanceChoices[ReadingTheme.dark]!),
+      TextSample(appearanceChoices[ReadingTheme.light]!),
+      TextSample(appearanceChoices[ReadingTheme.classic]!)
     ]);
   }
 }

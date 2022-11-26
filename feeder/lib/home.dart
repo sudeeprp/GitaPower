@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
+import 'package:askys/choice_bindings.dart';
+import 'package:askys/content.dart';
+
+Widget makeMyHome() {
+  return GetMaterialApp(initialBinding: ChoiceBinding(), home: const Home());
+}
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,13 +20,10 @@ class Home extends StatelessWidget {
         actions: [
           GestureDetector(
               onTap: () => Get.to(() => const ChoiceSelector()),
-              child: const Icon(Icons.settings))
+              child: const Icon(Icons.settings, key: Key('home/settingsicon')))
         ],
       ),
-      body: Center(
-          child: ElevatedButton(
-              child: const Text("Go to Choices"),
-              onPressed: () => Get.to(() => const ChoiceSelector()))),
+      body: const Content(),
     );
   }
 }
