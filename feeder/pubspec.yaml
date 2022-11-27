@@ -23,7 +23,8 @@ dependencies:
     sdk: flutter
   get:
   card_settings:
-
+  markdown:
+  flutter_widget_from_html:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
