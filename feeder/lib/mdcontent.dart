@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class MDContent extends GetxController {
   var mdContent = ''.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
