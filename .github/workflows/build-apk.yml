@@ -10,7 +10,7 @@ jobs:
       uses: actions/checkout@master
     - name: setup flutter
       uses: subosito/flutter-action@v2
-
+    - run: flutter --version
     - name: get dependencies
       working-directory: ./feeder
       run: flutter pub get
