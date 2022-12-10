@@ -8,33 +8,23 @@ enum ReadingTheme {
 }
 
 class ThemePick {
-  ThemePick(this.name, this.theme,
-      {required this.background,
-      required this.textColor,
-      required this.shlokaColor,
-      required this.shlokaBackground});
+  ThemePick(this.name, this.theme, this.flutterTheme,
+      {required this.shlokaColor, required this.shlokaBackground});
   final String name;
   final ReadingTheme theme;
-  final Color background;
-  final Color textColor;
+  final ThemeData flutterTheme;
   final Color shlokaColor;
   final AssetImage shlokaBackground;
 }
 
 final appearanceChoices = {
-  ReadingTheme.dark: ThemePick('Dark', ReadingTheme.dark,
-      background: Colors.black,
-      textColor: Colors.white,
+  ReadingTheme.dark: ThemePick('Dark', ReadingTheme.dark, ThemeData.dark(),
       shlokaColor: const Color(0xff800000),
       shlokaBackground: const AssetImage('images/snskrtstationary.png')),
-  ReadingTheme.light: ThemePick('Light', ReadingTheme.light,
-      background: Colors.white,
-      textColor: Colors.black,
-      shlokaColor: const Color(0xff800000),
+  ReadingTheme.light: ThemePick('Light', ReadingTheme.light, ThemeData.light(),
+      shlokaColor: const Color.fromARGB(255, 41, 0, 128),
       shlokaBackground: const AssetImage('images/snskrtstationary.png')),
-  ReadingTheme.classic: ThemePick('Classic', ReadingTheme.classic,
-      background: const Color(0xfff5f5dc),
-      textColor: Colors.black,
+  ReadingTheme.classic: ThemePick('Classic', ReadingTheme.classic, ThemeData.light(),
       shlokaColor: const Color(0xff800000),
       shlokaBackground: const AssetImage('images/snskrtstationary.png')),
 };
@@ -42,6 +32,13 @@ const defaultAppearance = ReadingTheme.classic;
 
 class Choices extends GetxController {
   var theme = defaultAppearance.obs;
+  @override
+  void onInit() {
+    theme.listen((themeValue) {
+      Get.changeTheme(appearanceChoices[themeValue]!.flutterTheme);
+    });
+    super.onInit();
+  }
 }
 
 class TextSample extends StatelessWidget {
@@ -52,8 +49,8 @@ class TextSample extends StatelessWidget {
       Text(
         _themePick.name,
         style: TextStyle(
-            backgroundColor: _themePick.background,
-            color: _themePick.textColor),
+            backgroundColor: _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
+            color: _themePick.flutterTheme.textTheme.bodyText2!.color),
         textScaleFactor: 1.5,
       ),
       Container(
@@ -79,7 +76,7 @@ class TextSample extends StatelessWidget {
                   ? BoxDecoration(border: Border.all(color: Colors.blueAccent))
                   : null,
               child: Container(
-                color: _themePick.background,
+                color: _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
                 margin: const EdgeInsets.all(3.0),
                 padding: const EdgeInsets.all(2.0),
                 child: _sampleTextContent(),

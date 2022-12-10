@@ -5,7 +5,13 @@ import 'package:askys/choice_bindings.dart';
 import 'package:askys/content_widget.dart';
 
 Widget makeMyHome() {
-  return GetMaterialApp(initialBinding: ChoiceBinding(), home: const Home());
+  return GetMaterialApp(
+    title: 'The Gita',
+    initialBinding: ChoiceBinding(),
+    theme: ThemeData(brightness: Brightness.light),
+    darkTheme: ThemeData(brightness: Brightness.dark),
+    home: const Home()
+  );
 }
 
 class Home extends StatelessWidget {
