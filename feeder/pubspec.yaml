@@ -24,7 +24,7 @@ dependencies:
   get:
   card_settings:
   markdown:
-  flutter_widget_from_html:
+  google_fonts:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

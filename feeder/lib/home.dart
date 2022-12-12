@@ -6,12 +6,11 @@ import 'package:askys/content_widget.dart';
 
 Widget makeMyHome() {
   return GetMaterialApp(
-    title: 'The Gita',
-    initialBinding: ChoiceBinding(),
-    theme: ThemeData(brightness: Brightness.light),
-    darkTheme: ThemeData(brightness: Brightness.dark),
-    home: const Home()
-  );
+      title: 'The Gita',
+      initialBinding: ChoiceBinding(),
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      home: const Home());
 }
 
 class Home extends StatelessWidget {

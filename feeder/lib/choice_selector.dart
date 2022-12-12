@@ -24,7 +24,8 @@ final appearanceChoices = {
   ReadingTheme.light: ThemePick('Light', ReadingTheme.light, ThemeData.light(),
       shlokaColor: const Color.fromARGB(255, 41, 0, 128),
       shlokaBackground: const AssetImage('images/snskrtstationary.png')),
-  ReadingTheme.classic: ThemePick('Classic', ReadingTheme.classic, ThemeData.light(),
+  ReadingTheme.classic: ThemePick(
+      'Classic', ReadingTheme.classic, ThemeData.light(),
       shlokaColor: const Color(0xff800000),
       shlokaBackground: const AssetImage('images/snskrtstationary.png')),
 };
@@ -49,7 +50,8 @@ class TextSample extends StatelessWidget {
       Text(
         _themePick.name,
         style: TextStyle(
-            backgroundColor: _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
+            backgroundColor:
+                _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
             color: _themePick.flutterTheme.textTheme.bodyText2!.color),
         textScaleFactor: 1.5,
       ),
@@ -76,7 +78,8 @@ class TextSample extends StatelessWidget {
                   ? BoxDecoration(border: Border.all(color: Colors.blueAccent))
                   : null,
               child: Container(
-                color: _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
+                color: _themePick
+                    .flutterTheme.textTheme.bodyText2!.backgroundColor,
                 margin: const EdgeInsets.all(3.0),
                 padding: const EdgeInsets.all(2.0),
                 child: _sampleTextContent(),
@@ -110,7 +113,7 @@ class ChoiceSelector extends StatelessWidget {
           title: const Text('Preferences'),
         ),
         body: Column(children: const [
-          Text('Version: maroon-style'),
+          Text('Version: textspans'),
           ThemeSelector(key: Key('theme-selector')),
         ]));
   }
