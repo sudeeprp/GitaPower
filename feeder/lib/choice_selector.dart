@@ -31,8 +31,14 @@ final appearanceChoices = {
 };
 const defaultAppearance = ReadingTheme.classic;
 
+enum ScriptPreference {
+  devanagari,
+  sahk,
+}
+
 class Choices extends GetxController {
   var theme = defaultAppearance.obs;
+  var script = ScriptPreference.devanagari.obs;
   @override
   void onInit() {
     theme.listen((themeValue) {
@@ -40,6 +46,8 @@ class Choices extends GetxController {
     });
     super.onInit();
   }
+  bool isDevanagari() {return script.value == ScriptPreference.devanagari;}
+  bool isSAHK() {return script.value == ScriptPreference.sahk;}
 }
 
 class TextSample extends StatelessWidget {
@@ -102,8 +110,26 @@ class ThemeSelector extends StatelessWidget {
   }
 }
 
+class ScriptSelector extends StatelessWidget {
+  const ScriptSelector({super.key});
+
+  @override
+  Widget build(context) {
+    Choices choice = Get.find();
+    return Row(children: [
+      const Text('Harward-Kyoto'),
+      Obx(() => Switch(
+        value: choice.script.value == ScriptPreference.devanagari,
+        onChanged: (bool newValue) {
+          choice.script.value = newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
+        })),
+      const Text('Devanagari'),
+    ]);
+  }
+}
+
 class ChoiceSelector extends StatelessWidget {
-  const ChoiceSelector({Key? key}) : super(key: key);
+  const ChoiceSelector({super.key});
 
   @override
   Widget build(context) {
@@ -115,6 +141,7 @@ class ChoiceSelector extends StatelessWidget {
         body: Column(children: const [
           Text('Version: textspans'),
           ThemeSelector(key: Key('theme-selector')),
+          ScriptSelector(),
         ]));
   }
 }
