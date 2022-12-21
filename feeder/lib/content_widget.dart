@@ -6,8 +6,43 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
+import 'package:markdown/markdown.dart' as md;
 
-List<Widget> mdToWidgets(String markdown, BuildContext context) {
+class MarkdownParser implements md.NodeVisitor {
+  final List<Widget> Function(String) _widgetMaker;
+  List<Widget> collectedWidgets = [];
+  MarkdownParser(this._widgetMaker);
+
+  List<Widget> parse(String markdownContent) {
+    List<String> lines = markdownContent.split('\n');
+    md.Document document = md.Document(encodeHtml: false);
+    for (md.Node node in document.parseLines(lines)) {
+      node.accept(this);
+    }
+    return collectedWidgets;
+  }
+
+  @override
+  void visitElementAfter(md.Element element) {
+    // TODO: implement visitElementAfter
+  }
+
+  @override
+  bool visitElementBefore(md.Element element) {
+    return true;
+  }
+
+  @override
+  void visitText(md.Text text) {
+    collectedWidgets.addAll(_widgetMaker(text.textContent));
+  }
+}
+
+List<Widget> mdToWidgets(String markdown, List<Widget> Function(String) widgetMaker) {
+  return MarkdownParser(widgetMaker).parse(markdown);
+}
+
+List<Widget> samplemdToWidgets(String markdown, BuildContext context) {
   Choices choice = Get.find();
   final codeStyle = GoogleFonts.robotoMono();
   return [
@@ -48,7 +83,7 @@ class ContentWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: mdToWidgets(md.mdContent.value, context),
+                  children: samplemdToWidgets(md.mdContent.value, context),
                 ))
           )));
   }
