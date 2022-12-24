@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:markdown/markdown.dart' as md;
 
 List<TextSpan> oneTextMaker(String content, String tag, String? elmclass)=> [TextSpan(text: content)];
-List<Widget> textRichMaker(List<TextSpan> spans, md.Element element) {
+List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   if (spans.isEmpty) {
     return [];
   } else if (spans.length == 1) {
