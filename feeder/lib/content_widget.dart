@@ -17,18 +17,13 @@ enum SectionType {
   commentary
 }
 
-class Section {
-  Section(this.sectionType, this.content);
-  SectionType sectionType;
-  Widget content;
-}
-
 class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(String text, String tag, String? elmclass) _inlineMaker;
-  final List<Widget> Function(List<TextSpan>, md.Element) _widgetMaker;
+  final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
   stack.Stack<md.Element> elementForCurrentText = stack.Stack();
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
+  var currentSectionIndex = 0;
   WidgetMaker(this._widgetMaker, this._inlineMaker);
 
   List<Widget> parse(String markdownContent) {
@@ -39,13 +34,19 @@ class WidgetMaker implements md.NodeVisitor {
     }
     return collectedWidgets;
   }
+  void _moveToNextSection() {
+    if (currentSectionIndex < SectionType.values.length - 1) {
+      currentSectionIndex++;
+    }
+  }
 
   @override
   void visitElementAfter(md.Element element) {
     const widgetSeparators = ['h2', 'p', 'pre'];
     if (widgetSeparators.contains(element.tag)) {
-      collectedWidgets.addAll(_widgetMaker(collectedElements, element));
+      collectedWidgets.addAll(_widgetMaker(collectedElements, SectionType.values[currentSectionIndex]));
       collectedElements = [];
+      _moveToNextSection();
     }
     elementForCurrentText.pop();
   }
@@ -102,20 +103,20 @@ List<TextSpan> formatMaker(String content, String tag, String? elmclass) {
   return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
 }
 
-bool _isVisible(md.Element element) {
+bool _isVisible(SectionType sectionType) {
   Choices choice = Get.find();
-  final elmclass = element.attributes['class'];
-  if (elmclass == 'language-shloka-sa') {
-    return choice.script.value == ScriptPreference.devanagari;
-  } else if (elmclass == 'language-shloka-sa-hk') {
-    return choice.script.value == ScriptPreference.sahk;
+  final scriptChoice = choice.script.value;
+  if (sectionType == SectionType.shlokaSA) {
+    return scriptChoice == ScriptPreference.devanagari;
+  } else if (sectionType == SectionType.shlokaSAHK) {
+    return scriptChoice == ScriptPreference.sahk;
   }
   return true;
 }
 
-List<Widget> textRichMaker(List<TextSpan> spans, md.Element element) {
+List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   return [Obx(()=> Visibility(
-       visible: _isVisible(element),
+       visible: _isVisible(sectionType),
        child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5), child: _spansToText(spans))
        ))];
 }
