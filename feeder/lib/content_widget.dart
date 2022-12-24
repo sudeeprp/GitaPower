@@ -80,13 +80,33 @@ class WidgetMaker implements md.NodeVisitor {
   }
 }
 
-Text _spansToText(List<TextSpan> spans) {
-  if (spans.isEmpty) {
-    return const Text('');
-  } else if (spans.length == 1) {
-    return Text.rich(spans[0]);
+bool _startsWithDevanagari(String? content) {
+  if (content == null) {
+    return false;
   } else {
-    return Text.rich(TextSpan(children: spans));
+    return RegExp('^[\u0900-\u097F]+').hasMatch(content);
+  }
+}
+
+Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
+  Choices choice = Get.find();
+  final scriptChoice = choice.script.value;
+  List<TextSpan> visibleSpans = [];
+  if (sectionType == SectionType.meaning) {
+    if (scriptChoice == ScriptPreference.devanagari) {
+      visibleSpans = spans.where((textSpan) => textSpan.text?[0] != '[').toList();
+    } else if (scriptChoice == ScriptPreference.sahk) {
+      visibleSpans = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
+    }
+  } else {
+    visibleSpans = spans;
+  }
+  if (visibleSpans.isEmpty) {
+    return const Text('');
+  } else if (visibleSpans.length == 1) {
+    return Text.rich(visibleSpans[0]);
+  } else {
+    return Text.rich(TextSpan(children: visibleSpans));
   }
 }
 
@@ -94,7 +114,7 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
     return const TextStyle(color: Colors.red, fontSize: 20);
   } else if (tag == 'code') {
-    return GoogleFonts.robotoMono(color: Colors.red);
+    return GoogleFonts.robotoMono(color: Colors.red, fontSize: 16);
   } else {
     return null;
   }
@@ -105,6 +125,7 @@ List<TextSpan> formatMaker(String content, String tag, String? elmclass) {
 
 bool _isVisible(SectionType sectionType) {
   Choices choice = Get.find();
+  // Assignment to a local variable is needed. Otherwise GetX throws an error when "return true" doesn't access any observable.
   final scriptChoice = choice.script.value;
   if (sectionType == SectionType.shlokaSA) {
     return scriptChoice == ScriptPreference.devanagari;
@@ -117,7 +138,7 @@ bool _isVisible(SectionType sectionType) {
 List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   return [Obx(()=> Visibility(
        visible: _isVisible(sectionType),
-       child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5), child: _spansToText(spans))
+       child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5), child: _spansToText(spans, sectionType))
        ))];
 }
 
