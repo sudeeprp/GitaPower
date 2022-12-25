@@ -135,11 +135,22 @@ bool _isVisible(SectionType sectionType) {
   return true;
 }
 
+Widget _enclosure(SectionType sectionType, Widget w) {
+  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
+    return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
+  } else {
+    return w;
+  }
+}
+
 List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   return [Obx(()=> Visibility(
-       visible: _isVisible(sectionType),
-       child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5), child: _spansToText(spans, sectionType))
-       ))];
+    visible: _isVisible(sectionType),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+      child: _enclosure(sectionType, _spansToText(spans, sectionType)),
+    )
+  ))];
 }
 
 List<Widget> samplemdToWidgets(String markdown, BuildContext context) {
