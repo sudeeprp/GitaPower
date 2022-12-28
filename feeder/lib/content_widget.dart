@@ -116,7 +116,7 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   } else if (tag == 'code') {
     return GoogleFonts.robotoMono(color: Colors.red, fontSize: 16);
   } else {
-    return null;
+    return const TextStyle(height: 1.5);
   }
 }
 List<TextSpan> formatMaker(String content, String tag, String? elmclass) {
