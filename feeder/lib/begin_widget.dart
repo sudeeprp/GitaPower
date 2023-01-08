@@ -13,10 +13,10 @@ Widget beginItem(String title, String about, Image image) {
     alignment: Alignment.centerLeft,
     child: titleText,
   );
-  return Expanded(child: Row(children: [
+  return Expanded(child: GestureDetector(onTap:() => Get.toNamed('/$title'), child: Row(children: [
     Expanded(child: textContainer),
     Expanded(child: Padding(padding: itemPadding, child: image)),
-  ]));
+  ])));
 }
 
 class BeginWidget extends StatelessWidget {
