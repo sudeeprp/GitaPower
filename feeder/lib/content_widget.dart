@@ -185,11 +185,14 @@ List<Widget> samplemdToWidgets(String markdown, BuildContext context) {
 // }
 
 class ContentWidget extends StatelessWidget {
-  const ContentWidget({Key? key}) : super(key: key);
+  final String mdFilename;
+  ContentWidget(this.mdFilename, {Key? key}): super(key: key) {
+    Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
+  }
 
   @override
   Widget build(context) {
-    MDContent md = Get.find();
+    MDContent md = Get.find(tag: mdFilename);
     return Center(
         child: Obx(() => SingleChildScrollView(
             child:

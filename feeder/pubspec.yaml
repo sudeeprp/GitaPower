@@ -22,6 +22,7 @@ dependencies:
   flutter:
     sdk: flutter
   get:
+  dio:
   card_settings:
   markdown:
   stack:

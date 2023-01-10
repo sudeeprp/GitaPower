@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'dart:convert';
+import 'package:dio/dio.dart';
 
 class Chapter {
   Chapter(this.title, this.shokas);
@@ -31,18 +32,13 @@ List<Chapter> notesJsonStrToChapters(String notesJsonStr) {
 }
 
 class ChaptersTOC extends GetxController {
-
-  final chapters = notesJsonStrToChapters('''[
-{"Chapter 1.md": []},
-{"1-20 to 1-23.md": ["applnote_15"]},
-{"1-24 to 1-25.md": []},
-{"1-26 to 1-47.md": ["applnote_16"]},
-{"Chapter 2.md": []},
-{"2-1.md": ["applopener_17"]},
-{"2-2.md": ["applnote_18"]}
-]''');
+  List<Chapter> chapters = [];
+  final chaptersLoaded = false.obs;
   @override
-  void onInit() {
+  void onInit() async {
+    final mdnoteids = await Dio().get('https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/compile/md_to_note_ids_compiled.json');
+    chapters.addAll(notesJsonStrToChapters(mdnoteids.data.toString()));
+    chaptersLoaded.value = true;
     super.onInit();
   }
 }

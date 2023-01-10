@@ -8,12 +8,22 @@ class ChaptersWidget extends StatelessWidget {
   @override
   Widget build(context) {
     final ChaptersTOC toc = Get.find();
-    List<ExpansionTile> tocListElements = toc.chapters.map((chapter)=>ExpansionTile(
-      title: Text(chapter.title),
-      controlAffinity: ListTileControlAffinity.leading,
-      children: chapter.shokas.map((shlokaTitle)=> ListTile(title: Text(shlokaTitle))).toList(),
-    )).toList();
-
-    return Scaffold(body: ListView(children: tocListElements));
+    return Obx(() {
+      if (toc.chaptersLoaded.value) {
+        List<ExpansionTile> tocListElements = toc.chapters.map((chapter)=>ExpansionTile(
+          title: Text(chapter.title),
+          controlAffinity: ListTileControlAffinity.leading,
+          children: chapter.shokas.map((shlokaTitle)=> ListTile(title: Text(shlokaTitle), onTap: () {
+            Get.toNamed('/shloka/$shlokaTitle.md');
+          },)).toList(),
+        )).toList();
+        return Scaffold(body: ListView(children: tocListElements));
+      } else {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [CircularProgressIndicator()],
+        );
+      }
+    });
   }
 }

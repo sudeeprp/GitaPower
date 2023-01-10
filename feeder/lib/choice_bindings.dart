@@ -7,7 +7,6 @@ class ChoiceBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(Choices());
-    Get.put(MDContent());
-    Get.lazyPut(()=>ChaptersTOC());
+    Get.put(ChaptersTOC());
   }
 }
