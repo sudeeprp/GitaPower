@@ -46,8 +46,14 @@ class Choices extends GetxController {
     });
     super.onInit();
   }
-  bool isDevanagari() {return script.value == ScriptPreference.devanagari;}
-  bool isSAHK() {return script.value == ScriptPreference.sahk;}
+
+  bool isDevanagari() {
+    return script.value == ScriptPreference.devanagari;
+  }
+
+  bool isSAHK() {
+    return script.value == ScriptPreference.sahk;
+  }
 }
 
 class TextSample extends StatelessWidget {
@@ -119,10 +125,11 @@ class ScriptSelector extends StatelessWidget {
     return Row(children: [
       const Text('Harward-Kyoto'),
       Obx(() => Switch(
-        value: choice.script.value == ScriptPreference.devanagari,
-        onChanged: (bool newValue) {
-          choice.script.value = newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
-        })),
+          value: choice.script.value == ScriptPreference.devanagari,
+          onChanged: (bool newValue) {
+            choice.script.value =
+                newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
+          })),
       const Text('Devanagari'),
     ]);
   }

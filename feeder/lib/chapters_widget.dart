@@ -10,13 +10,21 @@ class ChaptersWidget extends StatelessWidget {
     final ChaptersTOC toc = Get.find();
     return Obx(() {
       if (toc.chaptersLoaded.value) {
-        List<ExpansionTile> tocListElements = toc.chapters.map((chapter)=>ExpansionTile(
-          title: Text(chapter.title),
-          controlAffinity: ListTileControlAffinity.leading,
-          children: chapter.shokas.map((shlokaTitle)=> ListTile(title: Text(shlokaTitle), onTap: () {
-            Get.toNamed('/shloka', arguments: '$shlokaTitle.md');
-          },)).toList(),
-        )).toList();
+        List<ExpansionTile> tocListElements = toc.chapters
+            .map((chapter) => ExpansionTile(
+                  title: Text(chapter.title),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  children: chapter.shokas
+                      .map((shlokaTitle) => ListTile(
+                            title: Text(shlokaTitle),
+                            onTap: () {
+                              Get.toNamed('/shloka',
+                                  arguments: '$shlokaTitle.md');
+                            },
+                          ))
+                      .toList(),
+                ))
+            .toList();
         return Scaffold(body: ListView(children: tocListElements));
       } else {
         return Column(
