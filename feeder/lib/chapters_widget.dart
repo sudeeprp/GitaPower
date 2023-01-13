@@ -14,7 +14,7 @@ class ChaptersWidget extends StatelessWidget {
           title: Text(chapter.title),
           controlAffinity: ListTileControlAffinity.leading,
           children: chapter.shokas.map((shlokaTitle)=> ListTile(title: Text(shlokaTitle), onTap: () {
-            Get.toNamed('/shloka/$shlokaTitle.md');
+            Get.toNamed('/shloka', arguments: '$shlokaTitle.md');
           },)).toList(),
         )).toList();
         return Scaffold(body: ListView(children: tocListElements));
