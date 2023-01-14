@@ -18,8 +18,6 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
 void main() {
   testWidgets('Renders a plain-text markdown line together',
       (WidgetTester tester) async {
-    // Get.put(Choices());
-    // final BuildContext context = tester.element(find.byType(Container));
     final widgetWithOneMD =
         WidgetMaker(textRichMaker, oneTextMaker).parse('one two three');
     expect(widgetWithOneMD.length, equals(1));

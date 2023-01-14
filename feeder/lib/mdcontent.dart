@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:dio/dio.dart';
+import 'package:askys/content_source.dart';
 
 class MDContent extends GetxController {
   final String mdFilename;
@@ -7,9 +7,8 @@ class MDContent extends GetxController {
   MDContent(this.mdFilename);
   @override
   void onInit() async {
-    final md = await Dio().get(
-        'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/gita/$mdFilename');
-    mdContent.value = md.data.toString();
+    final GitHubFetcher contentSource = Get.find();
+    mdContent.value = await contentSource.mdString(mdFilename);
     super.onInit();
   }
 }

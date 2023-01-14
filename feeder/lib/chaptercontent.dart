@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'dart:convert';
-import 'package:dio/dio.dart';
+import 'content_source.dart';
 
 class Chapter {
   Chapter(this.title, this.shokas);
@@ -42,9 +42,8 @@ class ChaptersTOC extends GetxController {
   final chaptersLoaded = false.obs;
   @override
   void onInit() async {
-    final mdnoteids = await Dio().get(
-        'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/compile/md_to_note_ids_compiled.json');
-    chapters.addAll(notesJsonStrToChapters(mdnoteids.data.toString()));
+    final GitHubFetcher contentSource = Get.find();
+    chapters.addAll(notesJsonStrToChapters(await contentSource.compiledAsString('md_to_note_ids_compiled.json')));
     chaptersLoaded.value = true;
     super.onInit();
   }
