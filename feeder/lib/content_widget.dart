@@ -135,7 +135,7 @@ bool _isVisible(SectionType sectionType) {
   return true;
 }
 
-Widget _enclosure(SectionType sectionType, Widget w) {
+Widget _horizontalScroller(SectionType sectionType, Widget w) {
   if (sectionType == SectionType.shlokaSAHK ||
       sectionType == SectionType.shlokaSA) {
     return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
@@ -150,7 +150,8 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
         visible: _isVisible(sectionType),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          child: _enclosure(sectionType, _spansToText(spans, sectionType)),
+          child: _horizontalScroller(
+              sectionType, _spansToText(spans, sectionType)),
         )))
   ];
 }
@@ -158,33 +159,6 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
 List<Widget> samplemdToWidgets(String markdown, BuildContext context) {
   return WidgetMaker(textRichMaker, formatMaker).parse(markdown);
 }
-
-// List<Widget> samplemdToWidgets(String markdown, BuildContext context) {
-//   Choices choice = Get.find();
-//   final codeStyle = GoogleFonts.robotoMono();
-//   return [
-//     Text.rich(TextSpan(text: '2-54', style: Theme.of(context).textTheme.headline2)),
-//     Obx(()=> Visibility(
-//       visible: choice.script.value == ScriptPreference.devanagari,
-//       child: Text.rich(TextSpan(text: '''
-// अर्जुन उवाच -
-// स्थितप्रज्ञस्य का भाषा समाधिस्थस्य केशव ।
-// स्थितधीः किम् प्रभाषेत किमासीत व्रजेत किम् ॥ ५४ ॥
-// ''', style: codeStyle)))),
-//     Obx(()=> Visibility(
-//       visible: choice.script.value == ScriptPreference.sahk,
-//       child: Text.rich(TextSpan(text: '''
-// arjuna uvAca -
-// sthitaprajJasya kA bhASA samAdhisthasya kezava |
-// sthitadhIH kim prabhASeta kimAsIta vrajeta kim || 54 ||
-// ''', style: codeStyle)))),
-//     Obx(() => Text.rich(TextSpan(children: [
-//       if (choice.isDevanagari()) TextSpan(text: 'अर्जुन उवाच ', style: codeStyle),
-//       if (choice.isSAHK()) TextSpan(text: '[arjuna uvAca] ', style: codeStyle),
-//       TextSpan(text: 'Arjuna said- '),
-//     ])))
-//   ];
-// }
 
 class ContentWidget extends StatelessWidget {
   final String mdFilename;

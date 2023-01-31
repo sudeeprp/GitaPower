@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 
 List<TextSpan> oneTextMaker(String content, String tag, String? elmclass) =>
     [TextSpan(text: content)];
-List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
+List<Widget> simpleTextRichMaker(
+    List<TextSpan> spans, SectionType sectionType) {
   if (spans.isEmpty) {
     return [];
   } else if (spans.length == 1) {
@@ -19,7 +20,7 @@ void main() {
   testWidgets('Renders a plain-text markdown line together',
       (WidgetTester tester) async {
     final widgetWithOneMD =
-        WidgetMaker(textRichMaker, oneTextMaker).parse('one two three');
+        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('one two three');
     expect(widgetWithOneMD.length, equals(1));
     await tester
         .pumpWidget(GetMaterialApp(home: Column(children: widgetWithOneMD)));
@@ -35,7 +36,8 @@ void main() {
     }
 
     final widgetsWithInlineCode =
-        WidgetMaker(textRichMaker, mdTextCollector).parse('inline `code`');
+        WidgetMaker(simpleTextRichMaker, mdTextCollector)
+            .parse('inline `code`');
     expect(widgetsWithInlineCode.length, equals(1));
     expect(mdTexts[0], equals('inline '));
     expect(mdTexts[1], equals('code'));
@@ -43,7 +45,7 @@ void main() {
   testWidgets('Multiline code is in separate widget',
       (WidgetTester tester) async {
     final widgetsWithMultilineCode =
-        WidgetMaker(textRichMaker, oneTextMaker).parse('''
+        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('''
 ## 2-54
 ```shloka-sa
 अर्जुन उवाच -
@@ -55,7 +57,8 @@ void main() {
   testWidgets('Single newline appears as whitespace',
       (WidgetTester tester) async {
     final widgetsForSingleNewline =
-        WidgetMaker(textRichMaker, oneTextMaker).parse('''
+        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('''
+
 To describe someone standing 
 [firm in wisdom](sthitaprajna_xlat)
 ''');
@@ -63,7 +66,7 @@ To describe someone standing
   });
   testWidgets('Double newline makes a new row', (WidgetTester tester) async {
     final widgetsForTwoLines =
-        WidgetMaker(textRichMaker, oneTextMaker).parse('''
+        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('''
 how does he behave?
 
 While describing this

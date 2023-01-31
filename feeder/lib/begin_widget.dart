@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget beginItem(String title, String about, Image image) {
+Widget beginItem(String title, String about, Image image, {Key? key}) {
   const itemPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 4);
   final titleText = Padding(
     padding: itemPadding,
@@ -20,7 +20,7 @@ Widget beginItem(String title, String about, Image image) {
       child: GestureDetector(
           onTap: () => Get.toNamed('/$title'),
           child: Row(children: [
-            Expanded(child: textContainer),
+            Expanded(key: key, child: textContainer),
             Expanded(child: Padding(padding: itemPadding, child: image)),
           ])));
 }

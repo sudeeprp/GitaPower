@@ -43,7 +43,8 @@ class ChaptersTOC extends GetxController {
   @override
   void onInit() async {
     final GitHubFetcher contentSource = Get.find();
-    chapters.addAll(notesJsonStrToChapters(await contentSource.compiledAsString('md_to_note_ids_compiled.json')));
+    chapters.addAll(notesJsonStrToChapters(
+        await contentSource.compiledAsString('md_to_note_ids_compiled.json')));
     chaptersLoaded.value = true;
     super.onInit();
   }

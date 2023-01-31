@@ -46,14 +46,6 @@ class Choices extends GetxController {
     });
     super.onInit();
   }
-
-  bool isDevanagari() {
-    return script.value == ScriptPreference.devanagari;
-  }
-
-  bool isSAHK() {
-    return script.value == ScriptPreference.sahk;
-  }
 }
 
 class TextSample extends StatelessWidget {

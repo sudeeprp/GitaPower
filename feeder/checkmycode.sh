@@ -23,6 +23,8 @@ else
 fi
 
 flutter pub run test_cov_console $exclusion
+sed -i 's/\\/\//g' coverage/lcov.info
+# run command on Ubuntu for html report: genhtml coverage/lcov.info -o coverage
 flutter pub run test_cov_console --pass=100 | grep -q PASS
 
 flutter pub run test_cov_console --csv $exclusion

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:askys/choice_selector.dart';
-import 'package:askys/choice_bindings.dart';
 import 'package:get/get.dart';
 
 bool containerIsSelected(Container c) {
@@ -13,7 +12,7 @@ bool containerIsSelected(Container c) {
 void main() {
   testWidgets('Shows initial default theme as Classic',
       (WidgetTester tester) async {
-    ChoiceBinding().dependencies();
+    Get.put(Choices());
     await tester.pumpWidget(const MaterialApp(home: ChoiceSelector()));
 
     final classicChoiceFinder = find.byKey(const Key('sample/Classic'));
@@ -37,6 +36,7 @@ void main() {
   testWidgets('Switches the selection based on the choice',
       (WidgetTester tester) async {
     final choices = Choices();
+    choices.script.value = ScriptPreference.devanagari;
     Get.put(choices);
     await tester.pumpWidget(const MaterialApp(home: ChoiceSelector()));
     expect(
@@ -53,9 +53,12 @@ void main() {
         containerIsSelected(
             tester.widget<Container>(find.byKey(const Key('sample/Light')))),
         true);
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+    expect(choices.script.value, equals(ScriptPreference.sahk));
     Get.delete<Choices>();
   });
-  testWidgets('Records the users selection', (WidgetTester tester) async {
+  testWidgets('Records the users theme', (WidgetTester tester) async {
     final choices = Choices();
     Get.put(choices);
     await tester.pumpWidget(const MaterialApp(home: ChoiceSelector()));

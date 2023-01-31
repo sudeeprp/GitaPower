@@ -9,6 +9,7 @@ class GitHubFetcher extends GetxController {
         'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/gita/$mdFilename');
     return md.data.toString();
   }
+
   Future<String> compiledAsString(String jsonFilename) async {
     final jsonContent = await dio.get(
         'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/compile/$jsonFilename');
