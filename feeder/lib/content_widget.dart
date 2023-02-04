@@ -9,8 +9,8 @@ import 'package:stack/stack.dart' as stack;
 enum SectionType { shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
 
 class WidgetMaker implements md.NodeVisitor {
-  final List<TextSpan> Function(String text, String tag, String? elmclass)
-      _inlineMaker;
+  final List<TextSpan> Function(
+      String text, String tag, String? elmclass, String? link) _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
   stack.Stack<md.Element> elementForCurrentText = stack.Stack();
   List<Widget> collectedWidgets = [];
@@ -55,23 +55,15 @@ class WidgetMaker implements md.NodeVisitor {
   void visitText(md.Text markdownText) {
     final element = elementForCurrentText.top();
     final processedText = _textForElement(markdownText.textContent, element);
-    collectedElements.addAll(
-        _inlineMaker(processedText, element.tag, element.attributes['class']));
-  }
-
-  String _removeLeadingNewline(String wsCleaned) {
-    if (wsCleaned[0] == "\n") {
-      return wsCleaned.substring(1);
-    } else {
-      return wsCleaned;
-    }
+    collectedElements.addAll(_inlineMaker(processedText, element.tag,
+        element.attributes['class'], element.attributes['href']));
   }
 
   String _textForElement(String inputText, md.Element element) {
     if (element.tag == 'code') {
       return inputText.trim();
     } else {
-      return _removeLeadingNewline(inputText).replaceAll(RegExp(r"\s+"), " ");
+      return inputText.replaceAll(RegExp(r"\s+"), " ");
     }
   }
 }
@@ -119,7 +111,8 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   }
 }
 
-List<TextSpan> formatMaker(String content, String tag, String? elmclass) {
+List<TextSpan> formatMaker(
+    String content, String tag, String? elmclass, String? link) {
   return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
 }
 
