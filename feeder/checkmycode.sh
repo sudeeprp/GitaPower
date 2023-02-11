@@ -6,7 +6,7 @@ set -e
 RED='\033[0;31m'
 NC='\033[0m'
 
-flutter format -l 100 .
+dart format -l 100 .
 flutter analyze
 flutter test --coverage
 

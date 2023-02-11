@@ -55,8 +55,8 @@ class TextSample extends StatelessWidget {
       Text(
         _themePick.name,
         style: TextStyle(
-            backgroundColor: _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
-            color: _themePick.flutterTheme.textTheme.bodyText2!.color),
+            backgroundColor: _themePick.flutterTheme.textTheme.bodyMedium!.backgroundColor,
+            color: _themePick.flutterTheme.textTheme.bodyMedium!.color),
         textScaleFactor: 1.5,
       ),
       Container(
@@ -80,7 +80,7 @@ class TextSample extends StatelessWidget {
                   ? BoxDecoration(border: Border.all(color: Colors.blueAccent))
                   : null,
               child: Container(
-                color: _themePick.flutterTheme.textTheme.bodyText2!.backgroundColor,
+                color: _themePick.flutterTheme.textTheme.bodyMedium!.backgroundColor,
                 margin: const EdgeInsets.all(3.0),
                 padding: const EdgeInsets.all(2.0),
                 child: _sampleTextContent(),
