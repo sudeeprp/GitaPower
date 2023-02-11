@@ -15,7 +15,7 @@ jobs:
       run: flutter pub get
     - name: format
       working-directory: ./feeder
-      run: flutter format --set-exit-if-changed .
+      run: flutter format -l 100 --set-exit-if-changed .
     - name: checkmycode
       working-directory: ./feeder
       run: bash checkmycode.sh
