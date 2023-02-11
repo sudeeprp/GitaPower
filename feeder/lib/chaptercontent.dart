@@ -19,8 +19,7 @@ class Chapter {
 
 List<Chapter> notesJsonStrToChapters(String notesJsonStr) {
   final List<dynamic> applNotesJson = jsonDecode(notesJsonStr);
-  final applNotes =
-      applNotesJson.map(((e) => e as Map<String, dynamic>)).toList();
+  final applNotes = applNotesJson.map(((e) => e as Map<String, dynamic>)).toList();
   List<int> chapterIndexes = [];
   for (var i = 0; i < applNotes.length; i++) {
     if (!applNotes[i].keys.first.startsWith(RegExp(r'[0-9]'))) {
@@ -29,11 +28,11 @@ List<Chapter> notesJsonStrToChapters(String notesJsonStr) {
   }
   List<Chapter> chapters = [];
   for (var i = 0; i < chapterIndexes.length - 1; i++) {
-    chapters.add(Chapter.fromApplNotesJson(
-        applNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
+    chapters.add(
+        Chapter.fromApplNotesJson(applNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
   }
-  chapters.add(Chapter.fromApplNotesJson(
-      applNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
+  chapters
+      .add(Chapter.fromApplNotesJson(applNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
   return chapters;
 }
 

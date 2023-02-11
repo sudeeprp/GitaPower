@@ -9,8 +9,8 @@ import 'package:stack/stack.dart' as stack;
 enum SectionType { shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
 
 class WidgetMaker implements md.NodeVisitor {
-  final List<TextSpan> Function(
-      String text, String tag, String? elmclass, String? link) _inlineMaker;
+  final List<TextSpan> Function(String text, String tag, String? elmclass, String? link)
+      _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
   stack.Stack<md.Element> elementForCurrentText = stack.Stack();
   List<Widget> collectedWidgets = [];
@@ -33,12 +33,31 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
+  SectionType _detectSectionType(md.Element element) {
+    final classToSectionType = {
+      'language-shloka-sa': SectionType.shlokaSA,
+      'language-shloka-sa-hk': SectionType.shlokaSAHK
+    };
+    final tagToSectionType = {
+      'h2': (element) => SectionType.shlokaNumber,
+      'pre': (element) => classToSectionType[element.children[0].attributes['class']],
+      'p': (element) =>
+          _startsWithDevanagari(element.textContent) ? SectionType.meaning : SectionType.commentary,
+    };
+    final tagConverter = tagToSectionType[element.tag];
+    if (tagConverter != null) {
+      return tagConverter(element)!;
+    } else {
+      return SectionType.commentary;
+    }
+  }
+
   @override
   void visitElementAfter(md.Element element) {
     const widgetSeparators = ['h2', 'p', 'pre'];
     if (widgetSeparators.contains(element.tag)) {
-      collectedWidgets.addAll(_widgetMaker(
-          collectedElements, SectionType.values[currentSectionIndex]));
+      final sectionType = _detectSectionType(element);
+      collectedWidgets.addAll(_widgetMaker(collectedElements, sectionType));
       collectedElements = [];
       _moveToNextSection();
     }
@@ -55,8 +74,8 @@ class WidgetMaker implements md.NodeVisitor {
   void visitText(md.Text markdownText) {
     final element = elementForCurrentText.top();
     final processedText = _textForElement(markdownText.textContent, element);
-    collectedElements.addAll(_inlineMaker(processedText, element.tag,
-        element.attributes['class'], element.attributes['href']));
+    collectedElements.addAll(_inlineMaker(
+        processedText, element.tag, element.attributes['class'], element.attributes['href']));
   }
 
   String _textForElement(String inputText, md.Element element) {
@@ -82,12 +101,9 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   List<TextSpan> visibleSpans = [];
   if (sectionType == SectionType.meaning) {
     if (scriptChoice == ScriptPreference.devanagari) {
-      visibleSpans =
-          spans.where((textSpan) => textSpan.text?[0] != '[').toList();
+      visibleSpans = spans.where((textSpan) => textSpan.text?[0] != '[').toList();
     } else if (scriptChoice == ScriptPreference.sahk) {
-      visibleSpans = spans
-          .where((textSpan) => !_startsWithDevanagari(textSpan.text))
-          .toList();
+      visibleSpans = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
     }
   } else {
     visibleSpans = spans;
@@ -111,8 +127,7 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   }
 }
 
-List<TextSpan> formatMaker(
-    String content, String tag, String? elmclass, String? link) {
+List<TextSpan> formatMaker(String content, String tag, String? elmclass, String? link) {
   return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
 }
 
@@ -129,8 +144,7 @@ bool _isVisible(SectionType sectionType) {
 }
 
 Widget _horizontalScroller(SectionType sectionType, Widget w) {
-  if (sectionType == SectionType.shlokaSAHK ||
-      sectionType == SectionType.shlokaSA) {
+  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
     return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
   } else {
     return w;
@@ -143,14 +157,9 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
         visible: _isVisible(sectionType),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          child: _horizontalScroller(
-              sectionType, _spansToText(spans, sectionType)),
+          child: _horizontalScroller(sectionType, _spansToText(spans, sectionType)),
         )))
   ];
-}
-
-List<Widget> samplemdToWidgets(String markdown, BuildContext context) {
-  return WidgetMaker(textRichMaker, formatMaker).parse(markdown);
 }
 
 class ContentWidget extends StatelessWidget {
@@ -165,13 +174,11 @@ class ContentWidget extends StatelessWidget {
     return Center(
         child: Obx(() => SingleChildScrollView(
             child: DefaultTextStyle(
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .apply(fontSizeFactor: 1.3),
+                style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: samplemdToWidgets(md.mdContent.value, context),
+                  children: WidgetMaker(textRichMaker, formatMaker).parse(md.mdContent.value),
                 )))));
   }
 }

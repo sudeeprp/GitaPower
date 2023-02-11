@@ -2,8 +2,7 @@ import 'package:askys/chaptercontent.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Decodes applnotes into chapters and shlokas',
-      (WidgetTester tester) async {
+  testWidgets('Decodes applnotes into chapters and shlokas', (WidgetTester tester) async {
     const notesJsonStr = '''[
 {"Chapter 1.md": []},
 {"1-20 to 1-23.md": ["applnote_15"]},

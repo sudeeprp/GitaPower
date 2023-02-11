@@ -17,22 +17,18 @@ void main() {
     final dio = Dio();
     final dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet(
-        'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/compile/md_to_note_ids_compiled.json',
+    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
         (server) => server.reply(200, compiledMDtoNoteIds));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('navigates to a shloka from the chapters toc',
-      (WidgetTester tester) async {
+  testWidgets('navigates to a shloka from the chapters toc', (WidgetTester tester) async {
     final mockToc = ChaptersTOC();
     mockToc.chaptersLoaded.value = false;
     Get.put(mockToc);
 
     await tester.pumpWidget(GetMaterialApp(
       home: const ChaptersWidget(),
-      getPages: [
-        GetPage(name: '/shloka', page: () => const Text('shloka reached'))
-      ],
+      getPages: [GetPage(name: '/shloka', page: () => const Text('shloka reached'))],
     ));
     await tester.pumpAndSettle();
     expect(find.byType(ListView), findsOneWidget);

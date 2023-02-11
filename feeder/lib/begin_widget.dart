@@ -31,12 +31,11 @@ class BeginWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return Column(children: [
-      beginItem('notes', 'Follow the conversation by themes',
-          Image.asset('images/begin-notes.png')),
-      beginItem('feed', 'Explore connections across chapters',
-          Image.asset('images/begin-feed3.png')),
-      beginItem('chapters', 'Start chapter by chapter',
-          Image.asset('images/begin-chapters.png')),
+      beginItem(
+          'notes', 'Follow the conversation by themes', Image.asset('images/begin-notes.png')),
+      beginItem(
+          'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
+      beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png')),
     ]);
   }
 }
