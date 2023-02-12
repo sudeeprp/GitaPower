@@ -3,9 +3,22 @@ import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choice_bindings.dart';
 import 'package:askys/content_widget.dart';
+import 'package:askys/begin_widget.dart';
+import 'package:askys/chapters_widget.dart';
 
 Widget makeMyHome() {
-  return GetMaterialApp(initialBinding: ChoiceBinding(), home: const Home());
+  return GetMaterialApp(
+      title: 'The Gita',
+      initialBinding: ChoiceBinding(),
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      home: const Home(),
+      getPages: [
+        GetPage(name: '/notes', page: () => Scaffold(body: ContentWidget('1-1.md'))),
+        GetPage(name: '/feed', page: () => ContentWidget('2-55.md')),
+        GetPage(name: '/chapters', page: () => const ChaptersWidget(key: Key('toc'))),
+        GetPage(name: '/shloka', page: () => Scaffold(body: ContentWidget(Get.arguments))),
+      ]);
 }
 
 class Home extends StatelessWidget {
@@ -23,7 +36,7 @@ class Home extends StatelessWidget {
               child: const Icon(Icons.settings, key: Key('home/settingsicon')))
         ],
       ),
-      body: const ContentWidget(),
+      body: const BeginWidget(),
     );
   }
 }

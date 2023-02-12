@@ -6,7 +6,7 @@ set -e
 RED='\033[0;31m'
 NC='\033[0m'
 
-flutter format .
+dart format -l 100 .
 flutter analyze
 flutter test --coverage
 
@@ -22,7 +22,11 @@ else
     exclusion="--exclude=$filesWithoutFuncs,generated_plugin_registrant.dart"
 fi
 
+echo "run command on Ubuntu for html report:"
+echo "genhtml coverage/lcov.info -o coverage"
+
 flutter pub run test_cov_console $exclusion
+sed -i 's/\\/\//g' coverage/lcov.info
 flutter pub run test_cov_console --pass=100 | grep -q PASS
 
 flutter pub run test_cov_console --csv $exclusion
