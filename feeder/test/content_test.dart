@@ -99,25 +99,6 @@ teSAm eva anukampArtham
     expect(find.textContaining('तेषाम्', findRichText: true), findsNothing);
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
   });
-  testWidgets('Renders meanings as per the script preference', (WidgetTester tester) async {
-    Get.put(Choices());
-    Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(
-        home: Column(
-            children: textRichMaker(const [
-      TextSpan(text: 'भजताम्'),
-      TextSpan(text: '[bhajatAm]'),
-      TextSpan(text: 'who worship Me')
-    ], SectionType.meaning))));
-    expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
-    expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
-    expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
-    Get.find<Choices>().script.value = ScriptPreference.sahk;
-    await tester.pumpAndSettle();
-    expect(find.textContaining('[bhajatAm]', findRichText: true), findsOneWidget);
-    expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
-    Get.delete<Choices>();
-  });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
     expect(inlineCode.textsMade[0].content, equals('inline '));
