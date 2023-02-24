@@ -4,7 +4,7 @@ import 'content_source.dart';
 
 class Chapter {
   Chapter(this.title, this.shokas);
-  factory Chapter.fromApplNotesJson(List<Map<String, dynamic>> chapterNotes) {
+  factory Chapter.fromChapterNotesJson(List<Map<String, dynamic>> chapterNotes) {
     return Chapter(
       chapterNotes[0].keys.first.replaceAll('.md', ''),
       chapterNotes
@@ -17,22 +17,22 @@ class Chapter {
   List<String> shokas;
 }
 
-List<Chapter> notesJsonStrToChapters(String notesJsonStr) {
-  final List<dynamic> applNotesJson = jsonDecode(notesJsonStr);
-  final applNotes = applNotesJson.map(((e) => e as Map<String, dynamic>)).toList();
+List<Chapter> notesJsonStrToChapters(String chapterNotesJsonStr) {
+  final List<dynamic> chapterNotesJson = jsonDecode(chapterNotesJsonStr);
+  final chapterNotes = chapterNotesJson.map(((e) => e as Map<String, dynamic>)).toList();
   List<int> chapterIndexes = [];
-  for (var i = 0; i < applNotes.length; i++) {
-    if (!applNotes[i].keys.first.startsWith(RegExp(r'[0-9]'))) {
+  for (var i = 0; i < chapterNotes.length; i++) {
+    if (!chapterNotes[i].keys.first.startsWith(RegExp(r'[0-9]'))) {
       chapterIndexes.add(i);
     }
   }
   List<Chapter> chapters = [];
   for (var i = 0; i < chapterIndexes.length - 1; i++) {
-    chapters.add(
-        Chapter.fromApplNotesJson(applNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
+    chapters.add(Chapter.fromChapterNotesJson(
+        chapterNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
   }
-  chapters
-      .add(Chapter.fromApplNotesJson(applNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
+  chapters.add(Chapter.fromChapterNotesJson(
+      chapterNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
   return chapters;
 }
 

@@ -40,30 +40,4 @@ void main() {
     expect(Get.currentRoute, '/shloka');
     expect(Get.arguments, '1-1.md');
   });
-
-  // testWidgets('Shows list of chapters after loading',
-  //     (WidgetTester tester) async {
-  //   final mockToc = ChaptersTOC();
-  //   mockToc.chaptersLoaded.value = true;
-  //   Get.put(mockToc);
-
-  //   await tester.pumpWidget(const GetMaterialApp(home: ChaptersWidget()));
-
-  //   expect(find.byType(ListView), findsOneWidget);
-  //   expect(find.byType(ExpansionTile), findsNWidgets(mockToc.chapters.length));
-  // });
-  // testWidgets('tapping a shloka navigates to the shloka',
-  //     (WidgetTester tester) async {
-  //   final mockToc = ChaptersTOC();
-  //   mockToc.chaptersLoaded.value = true;
-  //   Get.put(mockToc);
-
-  //   await tester.pumpWidget(const GetMaterialApp(home: ChaptersWidget()));
-
-  //   await tester.tap(find.byType(ListTile).at(0));
-  //   await tester.pump();
-
-  //   expect(Get.currentRoute, '/shloka');
-  //   expect(Get.arguments, '${mockToc.chapters[0].shokas[0]}.md');
-  // });
 }
