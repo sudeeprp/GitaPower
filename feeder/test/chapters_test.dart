@@ -22,9 +22,7 @@ void main() {
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('navigates to a shloka from the chapters toc', (WidgetTester tester) async {
-    final mockToc = ChaptersTOC();
-    mockToc.chaptersLoaded.value = false;
-    Get.put(mockToc);
+    Get.put(ChaptersTOC());
 
     await tester.pumpWidget(GetMaterialApp(
       home: const ChaptersWidget(),

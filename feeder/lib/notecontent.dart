@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:askys/content_source.dart';
+import 'package:get/get.dart';
 
 class Note {
   Note(this.noteId, this.noteContent, this.mdFilename);
@@ -39,4 +41,17 @@ List<Opener> compilationsToOpeners(String notesJsonStr) {
   }
   openers.add(Opener.fromNotesJson(notes.sublist(openerIndexes[openerIndexes.length - 1])));
   return openers;
+}
+
+class NotesTOC extends GetxController {
+  List<Opener> openerNotes = [];
+  final notesLoaded = false.obs;
+  @override
+  void onInit() async {
+    final GitHubFetcher contentSource = Get.find();
+    openerNotes
+        .addAll(compilationsToOpeners(await contentSource.compiledAsString('notes_compiled.json')));
+    notesLoaded.value = true;
+    super.onInit();
+  }
 }
