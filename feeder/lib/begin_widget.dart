@@ -32,7 +32,7 @@ class BeginWidget extends StatelessWidget {
   Widget build(context) {
     return Column(children: [
       beginItem(
-          'notestoc', 'Follow the conversation by themes', Image.asset('images/begin-notes.png')),
+          'notes', 'Follow the conversation by themes', Image.asset('images/begin-notes.png')),
       beginItem(
           'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
       beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png')),

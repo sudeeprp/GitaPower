@@ -42,9 +42,9 @@ void main() {
   });
   testWidgets('Navigates to journey notes from the home screen', (WidgetTester tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notestoc')));
+    await tester.tap(find.byKey(const Key('begin/notes')));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notestoc');
+    expect(Get.currentRoute, '/notes');
   });
   testWidgets('Navigates to a shloka number within three taps', (WidgetTester tester) async {
     await tester.pumpWidget(makeMyHome());
@@ -60,14 +60,14 @@ void main() {
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notestoc'))); // tap #1
+    await tester.tap(find.byKey(const Key('begin/notes'))); // tap #1
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notestoc');
+    expect(Get.currentRoute, '/notes');
     await tester.tap(find.text('Is there a different way?')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/note');
+    expect(Get.currentRoute, '/anote');
     expect(Get.arguments['mdFilename'], '1-1.md');
   });
 }
