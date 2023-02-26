@@ -1,3 +1,4 @@
+import 'package:askys/notecontent.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
@@ -10,5 +11,6 @@ class ChoiceBinding implements Bindings {
     Get.put(GitHubFetcher(Dio()));
     Get.put(Choices());
     Get.put(ChaptersTOC());
+    Get.put(NotesTOC());
   }
 }
