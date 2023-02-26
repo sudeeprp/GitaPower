@@ -132,7 +132,7 @@ class ChoiceSelector extends StatelessWidget {
           title: const Text('Preferences'),
         ),
         body: Column(children: const [
-          Text('Version: textspans'),
+          Text('Version: notes-widget'),
           ThemeSelector(key: Key('theme-selector')),
           ScriptSelector(),
         ]));
