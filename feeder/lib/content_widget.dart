@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:stack/stack.dart' as stack;
 
 enum SectionType { shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
 
@@ -12,7 +11,7 @@ class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(String text, String tag, String? elmclass, String? link)
       _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
-  stack.Stack<md.Element> elementForCurrentText = stack.Stack();
+  List<md.Element> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
   var currentSectionIndex = 0;
@@ -61,21 +60,26 @@ class WidgetMaker implements md.NodeVisitor {
       collectedElements = [];
       _moveToNextSection();
     }
-    elementForCurrentText.pop();
+    elementForCurrentText.removeAt(elementForCurrentText.length - 1);
   }
 
   @override
   bool visitElementBefore(md.Element element) {
-    elementForCurrentText.push(element);
+    elementForCurrentText.add(element);
     return true;
   }
 
   @override
   void visitText(md.Text markdownText) {
-    final element = elementForCurrentText.top();
+    final element = elementForCurrentText[elementForCurrentText.length - 1];
+    var tag = element.tag;
+    if (elementForCurrentText.length >= 2 &&
+        elementForCurrentText[elementForCurrentText.length - 2].tag == 'blockquote') {
+      tag = 'note';
+    }
     final processedText = _textForElement(markdownText.textContent, element);
-    collectedElements.addAll(_inlineMaker(
-        processedText, element.tag, element.attributes['class'], element.attributes['href']));
+    collectedElements.addAll(
+        _inlineMaker(processedText, tag, element.attributes['class'], element.attributes['href']));
   }
 
   String _textForElement(String inputText, md.Element element) {
@@ -127,8 +131,27 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   }
 }
 
-List<TextSpan> formatMaker(String content, String tag, String? elmclass, String? link) {
-  return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
+List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildContext context) {
+  List<TextSpan> formatMaker(String content, String tag, String? elmclass, String? link) {
+    if (tag == 'note') {
+      return [
+        TextSpan(children: [
+          WidgetSpan(
+              child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            child: Text(content),
+          ))
+        ])
+      ];
+    }
+    return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
+  }
+
+  return formatMaker;
 }
 
 bool _isVisible(SectionType sectionType) {
@@ -178,7 +201,8 @@ class ContentWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: WidgetMaker(textRichMaker, formatMaker).parse(md.mdContent.value),
+                  children: WidgetMaker(textRichMaker, makeFormatMaker(context))
+                      .parse(md.mdContent.value),
                 )))));
   }
 }

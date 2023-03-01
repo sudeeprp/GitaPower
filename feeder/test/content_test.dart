@@ -150,4 +150,11 @@ While describing this
 line after newline''');
     expect(leadingnl.textsMade[0].content, equals('line after newline'));
   });
+  test('recognizes a blockquote tag as a note', () {
+    final parsedNote = recordParseActions('''
+>Do it for Krishna
+''');
+    expect(parsedNote.textsMade[0].content, equals('Do it for Krishna'));
+    expect(parsedNote.textsMade[0].tag, equals('note'));
+  });
 }
