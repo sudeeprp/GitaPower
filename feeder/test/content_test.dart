@@ -68,6 +68,10 @@ void main() {
 ```shloka-sa-hk
 teSAm eva anukampArtham
 ```'''));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12.md', (server) => server.reply(200, '''
+Arjuna says to Krishna - how do we think of You?
+>The Lord's qualities cannot be understood
+'''));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (WidgetTester tester) async {
@@ -98,6 +102,17 @@ teSAm eva anukampArtham
     await tester.pumpAndSettle();
     expect(find.textContaining('तेषाम्', findRichText: true), findsNothing);
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
+    Get.delete<Choices>();
+  });
+  testWidgets('Renders notes in a distinct background', (tester) async {
+    Get.put(Choices());
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-12.md'))));
+    await tester.pumpAndSettle();
+    final noteWidgetContainer = tester.widget(find.ancestor(
+        of: find.textContaining('cannot be understood', findRichText: true),
+        matching: find.byType(Container))) as Container;
+    final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
+    expect(backgroundOpacity, isNot(0));
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
