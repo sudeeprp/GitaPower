@@ -143,7 +143,7 @@ List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildC
               borderRadius: BorderRadius.circular(8),
             ),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            child: Text(content),
+            child: Text(content, textScaleFactor: 0.8),
           ))
         ])
       ];
