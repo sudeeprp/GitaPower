@@ -58,7 +58,7 @@ android {
         release {
             keyAlias = "GitaHTML"
             keyPassword = "$System.env.JKS_PASSWORD"
-            storeFile file("./keystore-sudeep.jks")
+            storeFile file("./keystore.jks")
             storePassword = "$System.env.JKS_PASSWORD"
         }
     }

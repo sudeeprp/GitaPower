@@ -23,13 +23,15 @@ jobs:
 
     - name: setup key
       working-directory: ./feeder
-      run: echo "${{ secrets.KEY_JKS }}" > android/app/keystore-sudeep.jks
+      run: echo "${{ secrets.KEY_JKS }}" | base64 -d > android/app/keystore.jks
 
     - name: build release apk
       working-directory: ./feeder
       env: 
         JKS_PASSWORD: ${{ secrets.JKS_PASSWORD }}
-      run: flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ inputs.buildNumber }}
+      run: |
+        echo "Building ${GITHUB_REF##*/}"
+        flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ inputs.buildNumber }}
 
     - name: upload apk
       uses: actions/upload-artifact@v3
