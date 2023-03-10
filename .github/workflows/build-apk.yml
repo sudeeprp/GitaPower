@@ -1,12 +1,6 @@
 name: Flutter to apk
 
-on: 
-  workflow_dispatch:
-    inputs:
-      buildNumber:
-        description: 'Build number'
-        required: true
-        type: string
+on: workflow_dispatch
 
 jobs:
   build:
@@ -31,7 +25,7 @@ jobs:
         JKS_PASSWORD: ${{ secrets.JKS_PASSWORD }}
       run: |
         echo "Building ${GITHUB_REF##*/}"
-        flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ inputs.buildNumber }}
+        flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ github.run_number }}
 
     - name: upload apk
       uses: actions/upload-artifact@v3

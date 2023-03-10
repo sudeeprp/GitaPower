@@ -77,9 +77,14 @@ class WidgetMaker implements md.NodeVisitor {
         elementForCurrentText[elementForCurrentText.length - 2].tag == 'blockquote') {
       tag = 'note';
     }
-    final processedText = _textForElement(markdownText.textContent, element);
-    collectedElements.addAll(
-        _inlineMaker(processedText, tag, element.attributes['class'], element.attributes['href']));
+    if (_isAnchor(markdownText.textContent)) {
+      tag = 'anchor';
+      _addAnchor(collectedElements, markdownText.textContent);
+    } else {
+      final processedText = _textForElement(markdownText.textContent, element);
+      collectedElements.addAll(_inlineMaker(
+          processedText, tag, element.attributes['class'], element.attributes['href']));
+    }
   }
 
   String _textForElement(String inputText, md.Element element) {
@@ -89,6 +94,18 @@ class WidgetMaker implements md.NodeVisitor {
       return inputText.replaceAll(RegExp(r"\s+"), " ");
     }
   }
+
+  void _addAnchor(List<TextSpan> collectedElements, String anchorLine) {
+    final noteId = RegExp(r"'([\w]+)'").firstMatch(anchorLine)?.group(1);
+    if (noteId != null) {
+      collectedElements.add(
+          TextSpan(children: [WidgetSpan(child: SizedBox(key: Key(noteId), width: 0, height: 0))]));
+    }
+  }
+}
+
+bool _isAnchor(String inputText) {
+  return inputText.startsWith('<a name=');
 }
 
 bool _startsWithDevanagari(String? content) {
@@ -132,23 +149,13 @@ TextStyle? _styleFor(String tag, String? elmclass) {
 }
 
 List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildContext context) {
-  List<TextSpan> formatMaker(String content, String tag, String? elmclass, String? link) {
+  List<TextSpan> formatMaker(String contentText, String tag, String? elmclass, String? link) {
     if (tag == 'note') {
       return [
-        TextSpan(children: [
-          WidgetSpan(
-              child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            child: Text(content, textScaleFactor: 0.8),
-          ))
-        ])
+        TextSpan(children: [WidgetSpan(child: _buildNote(context, contentText))])
       ];
     }
-    return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
+    return [TextSpan(text: contentText, style: _styleFor(tag, elmclass))];
   }
 
   return formatMaker;
@@ -172,6 +179,17 @@ Widget _horizontalScroller(SectionType sectionType, Widget w) {
   } else {
     return w;
   }
+}
+
+Widget _buildNote(BuildContext context, String noteContent) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.background.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    child: Text(noteContent, textScaleFactor: 0.8),
+  );
 }
 
 List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {

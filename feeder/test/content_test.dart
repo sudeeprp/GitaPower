@@ -70,6 +70,8 @@ teSAm eva anukampArtham
 ```'''));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12.md', (server) => server.reply(200, '''
 Arjuna says to Krishna - how do we think of You?
+
+<a name='applnote_156'></a>
 >The Lord's qualities cannot be understood
 '''));
     Get.put(GitHubFetcher(dio));
@@ -104,7 +106,7 @@ Arjuna says to Krishna - how do we think of You?
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
     Get.delete<Choices>();
   });
-  testWidgets('Renders notes in a distinct background', (tester) async {
+  testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
     Get.put(Choices());
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-12.md'))));
     await tester.pumpAndSettle();
@@ -113,6 +115,8 @@ Arjuna says to Krishna - how do we think of You?
         matching: find.byType(Container))) as Container;
     final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
     expect(backgroundOpacity, isNot(0));
+    expect(find.textContaining('applnote_156'), findsNothing);
+    expect(find.byKey(const Key('applnote_156')), findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
