@@ -10,12 +10,15 @@ import 'package:askys/content_source.dart';
 const compiledMDtoNoteIds = '''
 [{"Back-to-Basics.md": ["applopener_1", "applnote_12"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}]
 ''';
-const sample_1_1 = '''
+final sample_1_1 = '''
 ## 1-1
 ```shloka-sa
 धृतराष्ट्र उवाच -
 धर्मक्षेत्रे
 ```
+${'one line\n' * 120}
+<a name='applnote_14'></a>
+> In our anxiety, we interpret anything that happens as a signal of doom.
 ''';
 
 const compiledNotes = '''
@@ -69,5 +72,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/anote');
     expect(Get.arguments['mdFilename'], '1-1.md');
+    expect(find.byKey(const Key('applnote_14')).hitTestable(), findsOneWidget);
   });
 }

@@ -14,6 +14,7 @@ class WidgetMaker implements md.NodeVisitor {
   List<md.Element> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
+  Map<String, Key> anchorKeys = {};
   var currentSectionIndex = 0;
   WidgetMaker(this._widgetMaker, this._inlineMaker);
 
@@ -79,7 +80,7 @@ class WidgetMaker implements md.NodeVisitor {
     }
     if (_isAnchor(markdownText.textContent)) {
       tag = 'anchor';
-      _addAnchor(collectedElements, markdownText.textContent);
+      _addAnchor(markdownText.textContent);
     } else {
       final processedText = _textForElement(markdownText.textContent, element);
       collectedElements.addAll(_inlineMaker(
@@ -95,11 +96,11 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  void _addAnchor(List<TextSpan> collectedElements, String anchorLine) {
+  void _addAnchor(String anchorLine) {
     final noteId = RegExp(r"'([\w]+)'").firstMatch(anchorLine)?.group(1);
     if (noteId != null) {
-      collectedElements.add(
-          TextSpan(children: [WidgetSpan(child: SizedBox(key: Key(noteId), width: 0, height: 0))]));
+      collectedElements.add(TextSpan(
+          children: [WidgetSpan(child: Image.asset('images/right-foot.png', key: Key(noteId)))]));
     }
   }
 }
@@ -205,7 +206,8 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
 
 class ContentWidget extends StatelessWidget {
   final String mdFilename;
-  ContentWidget(this.mdFilename, {Key? key}) : super(key: key) {
+  final String? initialAnchor;
+  ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 

@@ -61,14 +61,14 @@ void main() {
     dio.httpClientAdapter = dioAdapter;
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md',
         (server) => server.reply(200, '`भजताम्` `[bhajatAm]` who worship Me'));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11.md', (server) => server.reply(200, '''
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11-shloka.md', (server) => server.reply(200, '''
 ```shloka-sa
 तेषाम् एव अनुकम्पार्थम्
 ```
 ```shloka-sa-hk
 teSAm eva anukampArtham
 ```'''));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12.md', (server) => server.reply(200, '''
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12-anote.md', (server) => server.reply(200, '''
 Arjuna says to Krishna - how do we think of You?
 
 <a name='applnote_156'></a>
@@ -86,7 +86,7 @@ Arjuna says to Krishna - how do we think of You?
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-10.md'))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-10.md', null))));
     await tester.pumpAndSettle();
     expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
@@ -100,7 +100,8 @@ Arjuna says to Krishna - how do we think of You?
   testWidgets('Renders shloka as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.sahk;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-11.md'))));
+    await tester
+        .pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-11-shloka.md', null))));
     await tester.pumpAndSettle();
     expect(find.textContaining('तेषाम्', findRichText: true), findsNothing);
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
@@ -108,7 +109,8 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
     Get.put(Choices());
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-12.md'))));
+    await tester
+        .pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-12-anote.md', null))));
     await tester.pumpAndSettle();
     final noteWidgetContainer = tester.widget(find.ancestor(
         of: find.textContaining('cannot be understood', findRichText: true),
