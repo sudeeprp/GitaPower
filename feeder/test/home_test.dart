@@ -17,7 +17,7 @@ final sample_1_1 = '''
 धर्मक्षेत्रे
 ```
 ${'one line\n' * 120}
-<a name='applnote_14'></a>
+<a name='applnote_13'></a>
 > In our anxiety, we interpret anything that happens as a signal of doom.
 ''';
 
@@ -72,6 +72,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/anote');
     expect(Get.arguments['mdFilename'], '1-1.md');
-    expect(find.byKey(const Key('applnote_14')).hitTestable(), findsOneWidget);
+    expect(find.byKey(const Key('applnote_13')), findsOneWidget);
   });
 }

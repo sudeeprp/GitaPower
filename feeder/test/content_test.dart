@@ -50,7 +50,7 @@ ParseRecords recordParseActions(mdContent) {
     return [];
   }
 
-  WidgetMaker(widgetMaker, inlineMaker).parse(mdContent);
+  WidgetMaker(widgetMaker, inlineMaker, {}).parse(mdContent);
   return parseRecords;
 }
 
@@ -78,7 +78,7 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Renders a plain-text line', (WidgetTester tester) async {
     final widgetWithOneMD =
-        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
+        WidgetMaker(simpleTextRichMaker, oneTextMaker, {}).parse('work without being driven');
     expect(widgetWithOneMD.length, equals(1));
     await tester.pumpWidget(GetMaterialApp(home: Column(children: widgetWithOneMD)));
     expect(find.text('work without being driven'), findsOneWidget);
@@ -86,7 +86,7 @@ Arjuna says to Krishna - how do we think of You?
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-10.md', null))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
@@ -100,8 +100,7 @@ Arjuna says to Krishna - how do we think of You?
   testWidgets('Renders shloka as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.sahk;
-    await tester
-        .pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-11-shloka.md', null))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('तेषाम्', findRichText: true), findsNothing);
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
@@ -109,8 +108,8 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
     Get.put(Choices());
-    await tester
-        .pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-12-anote.md', null))));
+    final contentWidget = buildContent('10-12-anote.md');
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
     final noteWidgetContainer = tester.widget(find.ancestor(
         of: find.textContaining('cannot be understood', findRichText: true),
@@ -118,7 +117,7 @@ Arjuna says to Krishna - how do we think of You?
     final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
     expect(backgroundOpacity, isNot(0));
     expect(find.textContaining('applnote_156'), findsNothing);
-    expect(find.byKey(const Key('applnote_156')), findsOneWidget);
+    expect(find.byKey(contentWidget.collectedAnchorKeys['applnote_156']!), findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');

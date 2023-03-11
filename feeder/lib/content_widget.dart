@@ -14,9 +14,9 @@ class WidgetMaker implements md.NodeVisitor {
   List<md.Element> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
-  Map<String, Key> anchorKeys = {};
+  Map<String, GlobalKey> anchorKeys;
   var currentSectionIndex = 0;
-  WidgetMaker(this._widgetMaker, this._inlineMaker);
+  WidgetMaker(this._widgetMaker, this._inlineMaker, this.anchorKeys);
 
   List<Widget> parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
@@ -99,8 +99,13 @@ class WidgetMaker implements md.NodeVisitor {
   void _addAnchor(String anchorLine) {
     final noteId = RegExp(r"'([\w]+)'").firstMatch(anchorLine)?.group(1);
     if (noteId != null) {
-      collectedElements.add(TextSpan(
-          children: [WidgetSpan(child: Image.asset('images/right-foot.png', key: Key(noteId)))]));
+      final keyOfAnchor = GlobalKey(debugLabel: noteId);
+      collectedElements.add(TextSpan(children: [
+        WidgetSpan(
+            child: Container(
+                key: keyOfAnchor, child: Image.asset('images/right-foot.png', key: Key(noteId))))
+      ]));
+      anchorKeys[noteId] = keyOfAnchor;
     }
   }
 }
@@ -207,6 +212,7 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
 class ContentWidget extends StatelessWidget {
   final String mdFilename;
   final String? initialAnchor;
+  final Map<String, GlobalKey> collectedAnchorKeys = {};
   ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
@@ -214,6 +220,13 @@ class ContentWidget extends StatelessWidget {
   @override
   Widget build(context) {
     MDContent md = Get.find(tag: mdFilename);
+    // Future.delayed(const Duration(milliseconds: 250), () {
+    //   if (initialAnchor != null &&
+    //       collectedAnchorKeys.containsKey(initialAnchor) &&
+    //       collectedAnchorKeys[initialAnchor]!.currentContext != null) {
+    //     Scrollable.ensureVisible(collectedAnchorKeys[initialAnchor]!.currentContext!);
+    //   }
+    // });
     return Center(
         child: Obx(() => SingleChildScrollView(
             child: DefaultTextStyle(
@@ -221,8 +234,13 @@ class ContentWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: WidgetMaker(textRichMaker, makeFormatMaker(context))
-                      .parse(md.mdContent.value),
+                  children:
+                      WidgetMaker(textRichMaker, makeFormatMaker(context), collectedAnchorKeys)
+                          .parse(md.mdContent.value),
                 )))));
   }
+}
+
+ContentWidget buildContent(String mdFilename, {String? initialAnchor, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, key: key);
 }
