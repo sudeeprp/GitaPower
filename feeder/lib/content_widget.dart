@@ -209,17 +209,24 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   ];
 }
 
-class ContentWidget extends StatelessWidget {
-  final String mdFilename;
-  final String? initialAnchor;
-  final Map<String, GlobalKey> collectedAnchorKeys = {};
+class ContentWidget extends StatefulWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
+  final String mdFilename;
+  final String? initialAnchor;
+
+  @override
+  ContentMaker createState() => ContentMaker();
+}
+
+class ContentMaker extends State<ContentWidget> {
+  final Map<String, GlobalKey> collectedAnchorKeys = {};
+
   @override
   Widget build(context) {
-    MDContent md = Get.find(tag: mdFilename);
+    MDContent md = Get.find(tag: widget.mdFilename);
     // Future.delayed(const Duration(milliseconds: 250), () {
     //   if (initialAnchor != null &&
     //       collectedAnchorKeys.containsKey(initialAnchor) &&
@@ -228,16 +235,33 @@ class ContentWidget extends StatelessWidget {
     //   }
     // });
     return Center(
-        child: Obx(() => SingleChildScrollView(
+        child: SingleChildScrollView(
             child: DefaultTextStyle(
                 style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:
-                      WidgetMaker(textRichMaker, makeFormatMaker(context), collectedAnchorKeys)
-                          .parse(md.mdContent.value),
-                )))));
+                child: Obx(() {
+                  final widgetMaker =
+                      WidgetMaker(textRichMaker, makeFormatMaker(context), collectedAnchorKeys);
+                  final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    BuildContext? anchorContext;
+                    if (collectedAnchorKeys.containsKey(widget.initialAnchor)) {
+                      anchorContext = collectedAnchorKeys[widget.initialAnchor]?.currentContext;
+                    }
+                    if (anchorContext != null) {
+                      Scrollable.ensureVisible(anchorContext);
+                    }
+                  });
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widgetsMade,
+                  );
+                }))));
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }
 

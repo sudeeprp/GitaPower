@@ -72,6 +72,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/anote');
     expect(Get.arguments['mdFilename'], '1-1.md');
+    // To check that the note is present somewhere - self-test of this test
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
+    // Next, test the real requirement - seeing the note
+    expect(find.byKey(const Key('applnote_13')).hitTestable(), findsOneWidget);
   });
 }

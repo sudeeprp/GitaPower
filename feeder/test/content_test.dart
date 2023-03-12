@@ -117,7 +117,7 @@ Arjuna says to Krishna - how do we think of You?
     final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
     expect(backgroundOpacity, isNot(0));
     expect(find.textContaining('applnote_156'), findsNothing);
-    expect(find.byKey(contentWidget.collectedAnchorKeys['applnote_156']!), findsOneWidget);
+    expect(find.byKey(const Key('applnote_156')), findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
