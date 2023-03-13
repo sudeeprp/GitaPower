@@ -14,9 +14,9 @@ class WidgetMaker implements md.NodeVisitor {
   List<md.Element> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
-  Map<String, GlobalKey> anchorKeys;
+  Map<String, GlobalKey> anchorKeys = {};
   var currentSectionIndex = 0;
-  WidgetMaker(this._widgetMaker, this._inlineMaker, this.anchorKeys);
+  WidgetMaker(this._widgetMaker, this._inlineMaker);
 
   List<Widget> parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
@@ -216,7 +216,6 @@ class ContentWidget extends StatelessWidget {
 
   final String mdFilename;
   final String? initialAnchor;
-  final Map<String, GlobalKey> collectedAnchorKeys = {};
 
   @override
   Widget build(context) {
@@ -226,9 +225,9 @@ class ContentWidget extends StatelessWidget {
             child: DefaultTextStyle(
                 style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
                 child: Obx(() {
-                  final widgetMaker =
-                      WidgetMaker(textRichMaker, makeFormatMaker(context), collectedAnchorKeys);
+                  final widgetMaker = WidgetMaker(textRichMaker, makeFormatMaker(context));
                   final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                  final collectedAnchorKeys = widgetMaker.anchorKeys;
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     BuildContext? anchorContext;
                     if (collectedAnchorKeys.containsKey(initialAnchor)) {

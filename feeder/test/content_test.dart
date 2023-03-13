@@ -50,7 +50,7 @@ ParseRecords recordParseActions(mdContent) {
     return [];
   }
 
-  WidgetMaker(widgetMaker, inlineMaker, {}).parse(mdContent);
+  WidgetMaker(widgetMaker, inlineMaker).parse(mdContent);
   return parseRecords;
 }
 
@@ -78,7 +78,7 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Renders a plain-text line', (WidgetTester tester) async {
     final widgetWithOneMD =
-        WidgetMaker(simpleTextRichMaker, oneTextMaker, {}).parse('work without being driven');
+        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
     expect(widgetWithOneMD.length, equals(1));
     await tester.pumpWidget(GetMaterialApp(home: Column(children: widgetWithOneMD)));
     expect(find.text('work without being driven'), findsOneWidget);
