@@ -209,31 +209,18 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   ];
 }
 
-class ContentWidget extends StatefulWidget {
+class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
   final String mdFilename;
   final String? initialAnchor;
-
-  @override
-  ContentMaker createState() => ContentMaker();
-}
-
-class ContentMaker extends State<ContentWidget> {
   final Map<String, GlobalKey> collectedAnchorKeys = {};
 
   @override
   Widget build(context) {
-    MDContent md = Get.find(tag: widget.mdFilename);
-    // Future.delayed(const Duration(milliseconds: 250), () {
-    //   if (initialAnchor != null &&
-    //       collectedAnchorKeys.containsKey(initialAnchor) &&
-    //       collectedAnchorKeys[initialAnchor]!.currentContext != null) {
-    //     Scrollable.ensureVisible(collectedAnchorKeys[initialAnchor]!.currentContext!);
-    //   }
-    // });
+    MDContent md = Get.find(tag: mdFilename);
     return Center(
         child: SingleChildScrollView(
             child: DefaultTextStyle(
@@ -244,8 +231,8 @@ class ContentMaker extends State<ContentWidget> {
                   final widgetsMade = widgetMaker.parse(md.mdContent.value);
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     BuildContext? anchorContext;
-                    if (collectedAnchorKeys.containsKey(widget.initialAnchor)) {
-                      anchorContext = collectedAnchorKeys[widget.initialAnchor]?.currentContext;
+                    if (collectedAnchorKeys.containsKey(initialAnchor)) {
+                      anchorContext = collectedAnchorKeys[initialAnchor]?.currentContext;
                     }
                     if (anchorContext != null) {
                       Scrollable.ensureVisible(anchorContext);
@@ -257,11 +244,6 @@ class ContentMaker extends State<ContentWidget> {
                     children: widgetsMade,
                   );
                 }))));
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 }
 
