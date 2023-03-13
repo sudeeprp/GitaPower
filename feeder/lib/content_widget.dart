@@ -14,7 +14,7 @@ class WidgetMaker implements md.NodeVisitor {
   List<md.Element> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
-  Map<String, Key> anchorKeys = {};
+  Map<String, GlobalKey> anchorKeys = {};
   var currentSectionIndex = 0;
   WidgetMaker(this._widgetMaker, this._inlineMaker);
 
@@ -99,8 +99,13 @@ class WidgetMaker implements md.NodeVisitor {
   void _addAnchor(String anchorLine) {
     final noteId = RegExp(r"'([\w]+)'").firstMatch(anchorLine)?.group(1);
     if (noteId != null) {
-      collectedElements.add(TextSpan(
-          children: [WidgetSpan(child: Image.asset('images/right-foot.png', key: Key(noteId)))]));
+      final keyOfAnchor = GlobalKey(debugLabel: noteId);
+      collectedElements.add(TextSpan(children: [
+        WidgetSpan(
+            child: Container(
+                key: keyOfAnchor, child: Image.asset('images/right-foot.png', key: Key(noteId))))
+      ]));
+      anchorKeys[noteId] = keyOfAnchor;
     }
   }
 }
@@ -205,24 +210,42 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
 }
 
 class ContentWidget extends StatelessWidget {
-  final String mdFilename;
-  final String? initialAnchor;
   ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
+
+  final String mdFilename;
+  final String? initialAnchor;
 
   @override
   Widget build(context) {
     MDContent md = Get.find(tag: mdFilename);
     return Center(
-        child: Obx(() => SingleChildScrollView(
+        child: SingleChildScrollView(
             child: DefaultTextStyle(
                 style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: WidgetMaker(textRichMaker, makeFormatMaker(context))
-                      .parse(md.mdContent.value),
-                )))));
+                child: Obx(() {
+                  final widgetMaker = WidgetMaker(textRichMaker, makeFormatMaker(context));
+                  final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                  final collectedAnchorKeys = widgetMaker.anchorKeys;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    BuildContext? anchorContext;
+                    if (collectedAnchorKeys.containsKey(initialAnchor)) {
+                      anchorContext = collectedAnchorKeys[initialAnchor]?.currentContext;
+                    }
+                    if (anchorContext != null) {
+                      Scrollable.ensureVisible(anchorContext);
+                    }
+                  });
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widgetsMade,
+                  );
+                }))));
   }
+}
+
+ContentWidget buildContent(String mdFilename, {String? initialAnchor, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, key: key);
 }

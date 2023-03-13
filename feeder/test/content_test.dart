@@ -86,7 +86,7 @@ Arjuna says to Krishna - how do we think of You?
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-10.md', null))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
@@ -100,8 +100,7 @@ Arjuna says to Krishna - how do we think of You?
   testWidgets('Renders shloka as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.sahk;
-    await tester
-        .pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-11-shloka.md', null))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('तेषाम्', findRichText: true), findsNothing);
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
@@ -109,8 +108,8 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
     Get.put(Choices());
-    await tester
-        .pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-12-anote.md', null))));
+    final contentWidget = buildContent('10-12-anote.md');
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
     final noteWidgetContainer = tester.widget(find.ancestor(
         of: find.textContaining('cannot be understood', findRichText: true),
