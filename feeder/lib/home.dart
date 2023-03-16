@@ -16,11 +16,14 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => const Scaffold(body: NotesWidget())),
-        GetPage(name: '/feed', page: () => ContentWidget('2-55.md')),
+        GetPage(name: '/feed', page: () => buildContent('2-55.md')),
         GetPage(name: '/chapters', page: () => const ChaptersWidget(key: Key('toc'))),
-        GetPage(name: '/shloka', page: () => Scaffold(body: ContentWidget(Get.arguments))),
+        GetPage(name: '/shloka', page: () => Scaffold(body: buildContent(Get.arguments))),
         GetPage(
-            name: '/anote', page: () => Scaffold(body: ContentWidget(Get.arguments['mdFilename']))),
+            name: '/anote',
+            page: () => Scaffold(
+                body: buildContent(Get.arguments['mdFilename'],
+                    initialAnchor: Get.arguments['noteId']))),
       ]);
 }
 

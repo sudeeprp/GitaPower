@@ -18,7 +18,10 @@ class NotesWidget extends StatelessWidget {
                       .map((note) => ListTile(
                             title: Text(note.noteContent),
                             onTap: () {
-                              Get.toNamed('/anote', arguments: {'mdFilename': note.mdFilename});
+                              Get.toNamed('/anote', arguments: {
+                                'mdFilename': note.mdFilename,
+                                'noteId': note.noteId
+                              });
                             },
                           ))
                       .toList(),

@@ -36,5 +36,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/anote');
     expect(Get.arguments['mdFilename'], 'Back-to-Basics.md');
+    expect(Get.arguments['noteId'], 'applnote_2');
   });
 }

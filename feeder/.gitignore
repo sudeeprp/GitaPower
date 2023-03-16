@@ -2,6 +2,9 @@
 linux/
 windows/
 
+# key
+*.jks
+
 # Miscellaneous
 *.class
 *.log

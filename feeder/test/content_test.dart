@@ -61,13 +61,20 @@ void main() {
     dio.httpClientAdapter = dioAdapter;
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md',
         (server) => server.reply(200, '`भजताम्` `[bhajatAm]` who worship Me'));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11.md', (server) => server.reply(200, '''
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11-shloka.md', (server) => server.reply(200, '''
 ```shloka-sa
 तेषाम् एव अनुकम्पार्थम्
 ```
 ```shloka-sa-hk
 teSAm eva anukampArtham
 ```'''));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12-anote.md', (server) => server.reply(200, '''
+Arjuna says to Krishna - how do we think of You?
+
+<a name='satva_rajas_tamas'></a>
+<a name='applnote_156'></a>
+>The Lord's qualities cannot be understood
+'''));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (WidgetTester tester) async {
@@ -80,7 +87,7 @@ teSAm eva anukampArtham
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-10.md'))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
@@ -94,10 +101,25 @@ teSAm eva anukampArtham
   testWidgets('Renders shloka as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.sahk;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: ContentWidget('10-11.md'))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('तेषाम्', findRichText: true), findsNothing);
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
+    Get.delete<Choices>();
+  });
+  testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
+    Get.put(Choices());
+    final contentWidget = buildContent('10-12-anote.md');
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
+    await tester.pumpAndSettle();
+    final noteWidgetContainer = tester.widget(find.ancestor(
+        of: find.textContaining('cannot be understood', findRichText: true),
+        matching: find.byType(Container))) as Container;
+    final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
+    expect(backgroundOpacity, isNot(0));
+    expect(find.textContaining('applnote_156'), findsNothing);
+    expect(find.byKey(const Key('applnote_156')), findsOneWidget);
+    expect(find.byKey(const Key('satva_rajas_tamas')), findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
@@ -149,5 +171,12 @@ While describing this
 
 line after newline''');
     expect(leadingnl.textsMade[0].content, equals('line after newline'));
+  });
+  test('recognizes a blockquote tag as a note', () {
+    final parsedNote = recordParseActions('''
+>Do it for Krishna
+''');
+    expect(parsedNote.textsMade[0].content, equals('Do it for Krishna'));
+    expect(parsedNote.textsMade[0].tag, equals('note'));
   });
 }

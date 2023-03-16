@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:stack/stack.dart' as stack;
 
 enum SectionType { shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
 
@@ -12,9 +11,10 @@ class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(String text, String tag, String? elmclass, String? link)
       _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
-  stack.Stack<md.Element> elementForCurrentText = stack.Stack();
+  List<md.Element> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
+  Map<String, GlobalKey> anchorKeys = {};
   var currentSectionIndex = 0;
   WidgetMaker(this._widgetMaker, this._inlineMaker);
 
@@ -61,21 +61,31 @@ class WidgetMaker implements md.NodeVisitor {
       collectedElements = [];
       _moveToNextSection();
     }
-    elementForCurrentText.pop();
+    elementForCurrentText.removeAt(elementForCurrentText.length - 1);
   }
 
   @override
   bool visitElementBefore(md.Element element) {
-    elementForCurrentText.push(element);
+    elementForCurrentText.add(element);
     return true;
   }
 
   @override
   void visitText(md.Text markdownText) {
-    final element = elementForCurrentText.top();
-    final processedText = _textForElement(markdownText.textContent, element);
-    collectedElements.addAll(_inlineMaker(
-        processedText, element.tag, element.attributes['class'], element.attributes['href']));
+    final element = elementForCurrentText[elementForCurrentText.length - 1];
+    var tag = element.tag;
+    if (elementForCurrentText.length >= 2 &&
+        elementForCurrentText[elementForCurrentText.length - 2].tag == 'blockquote') {
+      tag = 'note';
+    }
+    if (_isAnchor(markdownText.textContent)) {
+      tag = 'anchor';
+      _addAnchors(markdownText.textContent);
+    } else {
+      final processedText = _textForElement(markdownText.textContent, element);
+      collectedElements.addAll(_inlineMaker(
+          processedText, tag, element.attributes['class'], element.attributes['href']));
+    }
   }
 
   String _textForElement(String inputText, md.Element element) {
@@ -85,6 +95,32 @@ class WidgetMaker implements md.NodeVisitor {
       return inputText.replaceAll(RegExp(r"\s+"), " ");
     }
   }
+
+  void _addAnchors(String anchorLine) {
+    final anchorMatches = RegExp(r"'([\w]+)'").allMatches(anchorLine);
+    for (final anchor in anchorMatches) {
+      final noteId = anchor.group(1);
+      if (noteId != null) {
+        final keyOfAnchor = GlobalKey(debugLabel: noteId);
+        collectedElements.add(TextSpan(children: [
+          WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
+        ]));
+        anchorKeys[noteId] = keyOfAnchor;
+      }
+    }
+  }
+
+  Widget _anchorWidget(String noteId) {
+    if (noteId.startsWith('appl')) {
+      return Image.asset('images/right-foot.png', key: Key(noteId));
+    } else {
+      return SizedBox(width: 1, height: 1, key: Key(noteId));
+    }
+  }
+}
+
+bool _isAnchor(String inputText) {
+  return inputText.startsWith('<a name=');
 }
 
 bool _startsWithDevanagari(String? content) {
@@ -127,8 +163,17 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   }
 }
 
-List<TextSpan> formatMaker(String content, String tag, String? elmclass, String? link) {
-  return [TextSpan(text: content, style: _styleFor(tag, elmclass))];
+List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildContext context) {
+  List<TextSpan> formatMaker(String contentText, String tag, String? elmclass, String? link) {
+    if (tag == 'note') {
+      return [
+        TextSpan(children: [WidgetSpan(child: _buildNote(context, contentText))])
+      ];
+    }
+    return [TextSpan(text: contentText, style: _styleFor(tag, elmclass))];
+  }
+
+  return formatMaker;
 }
 
 bool _isVisible(SectionType sectionType) {
@@ -151,6 +196,17 @@ Widget _horizontalScroller(SectionType sectionType, Widget w) {
   }
 }
 
+Widget _buildNote(BuildContext context, String noteContent) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.background.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    child: Text(noteContent, textScaleFactor: 0.8),
+  );
+}
+
 List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
   return [
     Obx(() => Visibility(
@@ -163,22 +219,42 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
 }
 
 class ContentWidget extends StatelessWidget {
-  final String mdFilename;
-  ContentWidget(this.mdFilename, {Key? key}) : super(key: key) {
+  ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
+
+  final String mdFilename;
+  final String? initialAnchor;
 
   @override
   Widget build(context) {
     MDContent md = Get.find(tag: mdFilename);
     return Center(
-        child: Obx(() => SingleChildScrollView(
+        child: SingleChildScrollView(
             child: DefaultTextStyle(
                 style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: WidgetMaker(textRichMaker, formatMaker).parse(md.mdContent.value),
-                )))));
+                child: Obx(() {
+                  final widgetMaker = WidgetMaker(textRichMaker, makeFormatMaker(context));
+                  final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                  final collectedAnchorKeys = widgetMaker.anchorKeys;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    BuildContext? anchorContext;
+                    if (collectedAnchorKeys.containsKey(initialAnchor)) {
+                      anchorContext = collectedAnchorKeys[initialAnchor]?.currentContext;
+                    }
+                    if (anchorContext != null) {
+                      Scrollable.ensureVisible(anchorContext);
+                    }
+                  });
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widgetsMade,
+                  );
+                }))));
   }
+}
+
+ContentWidget buildContent(String mdFilename, {String? initialAnchor, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, key: key);
 }

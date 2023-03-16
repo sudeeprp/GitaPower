@@ -15,9 +15,17 @@ jobs:
       working-directory: ./feeder
       run: flutter pub get
 
+    - name: setup key
+      working-directory: ./feeder
+      run: echo "${{ secrets.KEY_JKS }}" | base64 -d > android/app/keystore.jks
+
     - name: build release apk
       working-directory: ./feeder
-      run: flutter build apk --release
+      env: 
+        JKS_PASSWORD: ${{ secrets.JKS_PASSWORD }}
+      run: |
+        echo "Building ${GITHUB_REF##*/}"
+        flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ github.run_number }}
 
     - name: upload apk
       uses: actions/upload-artifact@v3
