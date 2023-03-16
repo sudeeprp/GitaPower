@@ -80,7 +80,7 @@ class WidgetMaker implements md.NodeVisitor {
     }
     if (_isAnchor(markdownText.textContent)) {
       tag = 'anchor';
-      _addAnchor(markdownText.textContent);
+      _addAnchors(markdownText.textContent);
     } else {
       final processedText = _textForElement(markdownText.textContent, element);
       collectedElements.addAll(_inlineMaker(
@@ -96,16 +96,25 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  void _addAnchor(String anchorLine) {
-    final noteId = RegExp(r"'([\w]+)'").firstMatch(anchorLine)?.group(1);
-    if (noteId != null) {
-      final keyOfAnchor = GlobalKey(debugLabel: noteId);
-      collectedElements.add(TextSpan(children: [
-        WidgetSpan(
-            child: Container(
-                key: keyOfAnchor, child: Image.asset('images/right-foot.png', key: Key(noteId))))
-      ]));
-      anchorKeys[noteId] = keyOfAnchor;
+  void _addAnchors(String anchorLine) {
+    final anchorMatches = RegExp(r"'([\w]+)'").allMatches(anchorLine);
+    for (final anchor in anchorMatches) {
+      final noteId = anchor.group(1);
+      if (noteId != null) {
+        final keyOfAnchor = GlobalKey(debugLabel: noteId);
+        collectedElements.add(TextSpan(children: [
+          WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
+        ]));
+        anchorKeys[noteId] = keyOfAnchor;
+      }
+    }
+  }
+
+  Widget _anchorWidget(String noteId) {
+    if (noteId.startsWith('appl')) {
+      return Image.asset('images/right-foot.png', key: Key(noteId));
+    } else {
+      return SizedBox(width: 1, height: 1, key: Key(noteId));
     }
   }
 }

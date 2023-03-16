@@ -71,6 +71,7 @@ teSAm eva anukampArtham
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12-anote.md', (server) => server.reply(200, '''
 Arjuna says to Krishna - how do we think of You?
 
+<a name='satva_rajas_tamas'></a>
 <a name='applnote_156'></a>
 >The Lord's qualities cannot be understood
 '''));
@@ -118,6 +119,7 @@ Arjuna says to Krishna - how do we think of You?
     expect(backgroundOpacity, isNot(0));
     expect(find.textContaining('applnote_156'), findsNothing);
     expect(find.byKey(const Key('applnote_156')), findsOneWidget);
+    expect(find.byKey(const Key('satva_rajas_tamas')), findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
