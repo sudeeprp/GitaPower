@@ -13,7 +13,7 @@ class Opener {
   Opener(this.noteId, this.openerContent, this.mdFilename);
   factory Opener.fromNotesJson(List<Map<String, dynamic>> notesJson) {
     final opener = Opener(notesJson[0]['note_id'], notesJson[0]['text'], notesJson[0]['file']);
-    for (var i = 1; i < notesJson.length; i++) {
+    for (var i = 0; i < notesJson.length; i++) {
       opener.notes.add(Note(notesJson[i]['note_id'], notesJson[i]['text'], notesJson[i]['file']));
     }
     return opener;

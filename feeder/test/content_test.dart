@@ -179,4 +179,11 @@ line after newline''');
     expect(parsedNote.textsMade[0].content, equals('Do it for Krishna'));
     expect(parsedNote.textsMade[0].tag, equals('note'));
   });
+  test('retains text adjascent to an anchor', () {
+    final parsedNote = recordParseActions('''
+<a name='four_types_of_worshippers'></a>
+These four categories of virtuous people
+''');
+    expect(parsedNote.textsMade[0].content, equals('These four categories of virtuous people'));
+  });
 }

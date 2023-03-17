@@ -81,23 +81,27 @@ class WidgetMaker implements md.NodeVisitor {
     if (_isAnchor(markdownText.textContent)) {
       tag = 'anchor';
       _addAnchors(markdownText.textContent);
-    } else {
-      final processedText = _textForElement(markdownText.textContent, element);
+    }
+    final processedText = _textForElement(markdownText.textContent, element);
+    if (processedText.isNotEmpty) {
       collectedElements.addAll(_inlineMaker(
           processedText, tag, element.attributes['class'], element.attributes['href']));
     }
   }
 
+  final _multipleSpaces = RegExp(r"\s+");
+  final _anchors = RegExp(r"<a name='([\w]+)'><\/a>\s*");
+
   String _textForElement(String inputText, md.Element element) {
     if (element.tag == 'code') {
       return inputText.trim();
     } else {
-      return inputText.replaceAll(RegExp(r"\s+"), " ");
+      return inputText.replaceAll(_multipleSpaces, " ").replaceAll(_anchors, "");
     }
   }
 
   void _addAnchors(String anchorLine) {
-    final anchorMatches = RegExp(r"'([\w]+)'").allMatches(anchorLine);
+    final anchorMatches = _anchors.allMatches(anchorLine);
     for (final anchor in anchorMatches) {
       final noteId = anchor.group(1);
       if (noteId != null) {

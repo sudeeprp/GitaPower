@@ -8,7 +8,7 @@ class Chapter {
     return Chapter(
       chapterNotes[0].keys.first.replaceAll('.md', ''),
       chapterNotes
-          .sublist(1, chapterNotes.length)
+          .sublist(0, chapterNotes.length)
           .map(((e) => e.keys.first.replaceAll('.md', '')))
           .toList(),
     );

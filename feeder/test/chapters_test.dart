@@ -37,5 +37,34 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka');
     expect(Get.arguments, '1-1.md');
+
+    Get.delete<ChaptersTOC>();
+  });
+  testWidgets('navigates to a chapter from the toc', (tester) async {
+    Get.put(ChaptersTOC());
+
+    await tester.pumpWidget(GetMaterialApp(
+      home: const ChaptersWidget(),
+      getPages: [GetPage(name: '/shloka', page: () => const Text('shloka reached'))],
+    ));
+    await tester.pumpAndSettle();
+    final chapterHeadFinder = find.text('Chapter 1');
+    final chapterHeadWidget = tester.firstWidget(chapterHeadFinder);
+    await tester.tap(chapterHeadFinder);
+    await tester.pumpAndSettle();
+    final chapterEntries = tester.widgetList(find.text('Chapter 1'));
+    expect(chapterEntries.length, equals(2)); // 2 = one parent + one child
+    Widget? chapterEntryWidget; // get the child
+    for (final entry in chapterEntries) {
+      if (entry != chapterHeadWidget) {
+        chapterEntryWidget = entry;
+        break;
+      }
+    }
+    expect(chapterEntryWidget, isNotNull);
+    await tester.tap(find.byWidget(chapterEntryWidget!));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shloka');
+    expect(Get.arguments, 'Chapter 1.md');
   });
 }

@@ -13,9 +13,12 @@ void main() {
     final openers = compilationsToOpeners(compiledNotesJsonStr);
     expect(openers.length, equals(2));
     expect(openers[0].noteId, equals('applopener_1'));
-    expect(openers[0].notes[0].noteId, equals('applnote_2'));
+    expect(openers[0].notes.length, equals(3));
+    expect(openers[0].notes[0].noteId, equals('applopener_1'));
+    expect(openers[0].notes[1].noteId, equals('applnote_2'));
     expect(openers[0].notes[1].mdFilename, equals('Back-to-Basics.md'));
     expect(openers[1].openerContent, equals('What am I doing?'));
-    expect(openers[1].notes[0].noteId, equals('applnote_7'));
+    expect(openers[1].notes[0].noteId, equals('applopener_6'));
+    expect(openers[1].notes[1].noteId, equals('applnote_7'));
   });
 }

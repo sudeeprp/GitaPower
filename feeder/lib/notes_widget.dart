@@ -16,7 +16,7 @@ class NotesWidget extends StatelessWidget {
                   controlAffinity: ListTileControlAffinity.leading,
                   children: opener.notes
                       .map((note) => ListTile(
-                            title: Text(note.noteContent),
+                            title: Text(note.noteContent, textScaleFactor: 0.8),
                             onTap: () {
                               Get.toNamed('/anote', arguments: {
                                 'mdFilename': note.mdFilename,
