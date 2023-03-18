@@ -167,6 +167,8 @@ TextStyle? _styleFor(String tag, String? elmclass) {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
     return GoogleFonts.workSans(height: 3);
+  } else if (tag == 'em') {
+    return const TextStyle(fontStyle: FontStyle.italic);
   } else {
     return const TextStyle(height: 1.5);
   }
