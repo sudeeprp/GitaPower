@@ -200,4 +200,18 @@ Lord Krishna described the way to realize the Self till Chapter 6.
     expect(chapterPage.widgetsMade[0].sectionType, equals(SectionType.chapterHeading));
     expect(chapterPage.widgetsMade[1].sectionType, equals(SectionType.commentary));
   });
+  test('explainer is separated from commentary', () {
+    final parsedExplainer = recordParseActions('''
+Arjuna asks- Going by the passage of time
+
+_Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or 
+`सत्य` `[satya]`
+ with 1,728,000 years_
+''');
+    expect(parsedExplainer.textsMade[1].content, startsWith('Yuga is a period'));
+    expect(parsedExplainer.textsMade[1].tag, equals('em'));
+    expect(parsedExplainer.textsMade[12].tag, equals('em'));
+    expect(parsedExplainer.textsMade[12].content, endsWith('years'));
+    expect(parsedExplainer.widgetsMade.length, equals(2));
+  });
 }
