@@ -14,8 +14,9 @@ void main() {
 ]''';
     final chapters = notesJsonStrToChapters(notesJsonStr);
     expect(chapters[0].title, equals('Chapter 1'));
-    expect(chapters[0].shokas.length, equals(3));
+    expect(chapters[0].shokas[0], equals('Chapter 1'));
+    expect(chapters[0].shokas.length, equals(4));
     expect(chapters[1].title, equals('Chapter 2'));
-    expect(chapters[1].shokas.length, equals(2));
+    expect(chapters[1].shokas.length, equals(3));
   });
 }
