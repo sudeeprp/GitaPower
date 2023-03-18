@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 
-enum SectionType { shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
+enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
 
 class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(String text, String tag, String? elmclass, String? link)
@@ -39,6 +39,7 @@ class WidgetMaker implements md.NodeVisitor {
       'language-shloka-sa-hk': SectionType.shlokaSAHK
     };
     final tagToSectionType = {
+      'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => SectionType.shlokaNumber,
       'pre': (element) => classToSectionType[element.children[0].attributes['class']],
       'p': (element) =>
@@ -54,7 +55,7 @@ class WidgetMaker implements md.NodeVisitor {
 
   @override
   void visitElementAfter(md.Element element) {
-    const widgetSeparators = ['h2', 'p', 'pre'];
+    const widgetSeparators = ['h1', 'h2', 'p', 'pre'];
     if (widgetSeparators.contains(element.tag)) {
       final sectionType = _detectSectionType(element);
       collectedWidgets.addAll(_widgetMaker(collectedElements, sectionType));
@@ -162,6 +163,10 @@ TextStyle? _styleFor(String tag, String? elmclass) {
     return const TextStyle(color: Colors.red, fontSize: 20);
   } else if (tag == 'code') {
     return GoogleFonts.robotoMono(color: Colors.red, fontSize: 16);
+  } else if (tag == 'h1') {
+    return GoogleFonts.rubik(height: 3);
+  } else if (tag == 'h2') {
+    return GoogleFonts.workSans(height: 3);
   } else {
     return const TextStyle(height: 1.5);
   }

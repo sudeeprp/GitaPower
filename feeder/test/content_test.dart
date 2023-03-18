@@ -186,4 +186,18 @@ These four categories of virtuous people
 ''');
     expect(parsedNote.textsMade[0].content, equals('These four categories of virtuous people'));
   });
+  test('chapter heading is in its own line', () {
+    final chapterPage = recordParseActions('''
+# Chapter 7
+
+Lord Krishna described the way to realize the Self till Chapter 6.
+''');
+    expect(chapterPage.textsMade[0].content, equals('Chapter 7'));
+    expect(chapterPage.textsMade[0].tag, equals('h1'));
+    expect(chapterPage.textsMade[1].content,
+        equals('Lord Krishna described the way to realize the Self till Chapter 6.'));
+    expect(chapterPage.widgetsMade.length, equals(2));
+    expect(chapterPage.widgetsMade[0].sectionType, equals(SectionType.chapterHeading));
+    expect(chapterPage.widgetsMade[1].sectionType, equals(SectionType.commentary));
+  });
 }
