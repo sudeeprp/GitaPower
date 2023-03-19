@@ -65,6 +65,6 @@ void main() {
     await tester.tap(find.byWidget(chapterEntryWidget!));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka');
-    expect(Get.arguments, 'Chapter 1.md');
+    expect(Get.arguments, 'Chapter_1.md');
   });
 }
