@@ -4,11 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Decodes applnotes into chapters and shlokas', (WidgetTester tester) async {
     const notesJsonStr = '''[
-{"Chapter 1.md": []},
-{"1-20 to 1-23.md": ["applnote_15"]},
-{"1-24 to 1-25.md": []},
-{"1-26 to 1-47.md": ["applnote_16"]},
-{"Chapter 2.md": []},
+{"Chapter_1.md": []},
+{"1-20_to_1-23.md": ["applnote_15"]},
+{"1-24_to_1-25.md": []},
+{"1-26_to_1-47.md": ["applnote_16"]},
+{"Chapter_2.md": []},
 {"2-1.md": ["applopener_17"]},
 {"2-2.md": ["applnote_18"]}
 ]''';
