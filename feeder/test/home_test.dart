@@ -40,19 +40,19 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Navigates to settings from the home screen', (WidgetTester tester) async {
+  testWidgets('Navigates to settings from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('home/settingsicon')));
     await tester.pumpAndSettle();
     expect(find.byType(ChoiceSelector), findsOneWidget);
   });
-  testWidgets('Navigates to journey notes from the home screen', (WidgetTester tester) async {
+  testWidgets('Navigates to journey notes from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/notes')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/notes');
   });
-  testWidgets('Navigates to a shloka number within three taps', (WidgetTester tester) async {
+  testWidgets('Navigates to a shloka number within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
     await tester.pumpAndSettle();

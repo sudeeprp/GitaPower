@@ -16,8 +16,9 @@ class Chapter {
   static String _filenameToTitle(String filename) {
     return filename.replaceAll('.md', '').replaceAll('_', ' ');
   }
+
   static String titleToFilename(String title) {
-    return title.replaceAll(' ', '_') + '.md';
+    return '${title.replaceAll(' ', '_')}.md';
   }
 
   String title;
