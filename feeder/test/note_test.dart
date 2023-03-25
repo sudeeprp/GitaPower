@@ -25,7 +25,10 @@ void main() {
     Get.put(NotesTOC());
     await tester.pumpWidget(GetMaterialApp(
       home: const NotesWidget(),
-      getPages: [GetPage(name: '/anote', page: () => const Text('note reached'))],
+      getPages: [
+        GetPage(
+            name: '/shloka/Back-to-Basics.md/applnote_2', page: () => const Text('note reached'))
+      ],
     ));
     await tester.pumpAndSettle();
     expect(find.byType(ListView), findsOneWidget);
@@ -34,8 +37,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('I am not my body, am I?'));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/anote');
-    expect(Get.arguments['mdFilename'], 'Back-to-Basics.md');
-    expect(Get.arguments['noteId'], 'applnote_2');
+    expect(Get.currentRoute, '/shloka/Back-to-Basics.md/applnote_2');
   });
 }

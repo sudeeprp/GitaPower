@@ -15,7 +15,7 @@ void main() {
     await tester.pumpWidget(GetMaterialApp(
         home: Column(children: [
           beginItem(
-              'chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png'),
+              'chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.jfif'),
               key: const Key('begin-to-tap'))
         ]),
         getPages: [
