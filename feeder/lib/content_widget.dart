@@ -185,7 +185,7 @@ void _navigateToLink(String? link) {
       noteId = linkParts[1];
     }
   }
-  Get.toNamed('/anote', arguments: {'mdFilename': mdFilename, 'noteId': noteId});
+  Get.toNamed('/shloka/$mdFilename/$noteId');
 }
 
 List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildContext context) {

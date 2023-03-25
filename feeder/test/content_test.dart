@@ -139,9 +139,14 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
   });
   testWidgets('Navigates a link in the commentary', (tester) async {
     Get.put(Choices());
+    const targetFilename = '10-11-shloka.md';
+    const targetNote = 'why-think';
     await tester.pumpWidget(GetMaterialApp(
       home: buildContent('10-12-anote.md'),
-      getPages: [GetPage(name: '/anote', page: () => const Text('anchor reached'))],
+      getPages: [
+        GetPage(
+            name: '/shloka/$targetFilename/$targetNote', page: () => const Text('anchor reached'))
+      ],
     ));
     await tester.pumpAndSettle();
     final linkFinder = find.textContaining('See here', findRichText: true);
@@ -149,9 +154,7 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     _fireOnTap(linkFinder, 'See here');
     await tester.tap(linkFinder);
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/anote');
-    expect(Get.arguments['mdFilename'], equals('10-11-shloka.md'));
-    expect(Get.arguments['noteId'], equals('why-think'));
+    expect(Get.currentRoute, '/shloka/$targetFilename/$targetNote');
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');

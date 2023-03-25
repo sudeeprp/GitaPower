@@ -61,8 +61,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('1-1')); // tap #3
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka');
-    expect(Get.arguments, '1-1.md');
+    expect(Get.currentRoute, '/shloka/1-1.md');
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
@@ -73,8 +72,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/anote');
-    expect(Get.arguments['mdFilename'], '1-1.md');
+    expect(Get.currentRoute, '/shloka/1-1.md/applnote_13');
     // To check that the note is present somewhere - self-test of this test
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
     // Next, test the real requirement - seeing the note

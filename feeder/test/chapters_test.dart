@@ -35,8 +35,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('1-1'));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka');
-    expect(Get.arguments, '1-1.md');
+    expect(Get.currentRoute, '/shloka/1-1.md');
 
     Get.delete<ChaptersTOC>();
   });
@@ -64,7 +63,6 @@ void main() {
     expect(chapterEntryWidget, isNotNull);
     await tester.tap(find.byWidget(chapterEntryWidget!));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka');
-    expect(Get.arguments, 'Chapter_1.md');
+    expect(Get.currentRoute, '/shloka/Chapter_1.md');
   });
 }

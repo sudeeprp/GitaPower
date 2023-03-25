@@ -17,10 +17,8 @@ class ChaptersWidget extends StatelessWidget {
                   children: chapter.shokas
                       .map((shlokaTitle) => ListTile(
                             title: Text(shlokaTitle),
-                            onTap: () {
-                              Get.toNamed('/shloka',
-                                  arguments: Chapter.titleToFilename(shlokaTitle));
-                            },
+                            onTap: () =>
+                                Get.toNamed('/shloka/${Chapter.titleToFilename(shlokaTitle)}'),
                           ))
                       .toList(),
                 ))
