@@ -34,8 +34,8 @@ class BeginWidget extends StatelessWidget {
       beginItem(
           'notes', 'Follow the conversation by themes', Image.asset('images/begin-notes.png')),
       beginItem(
-          'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
-      beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png')),
+          'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.jfif')),
+      beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.jfif')),
     ]);
   }
 }
