@@ -40,19 +40,19 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Navigates to settings from the home screen', (WidgetTester tester) async {
+  testWidgets('Navigates to settings from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('home/settingsicon')));
     await tester.pumpAndSettle();
     expect(find.byType(ChoiceSelector), findsOneWidget);
   });
-  testWidgets('Navigates to journey notes from the home screen', (WidgetTester tester) async {
+  testWidgets('Navigates to journey notes from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/notes')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/notes');
   });
-  testWidgets('Navigates to a shloka number within three taps', (WidgetTester tester) async {
+  testWidgets('Navigates to a shloka number within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
     await tester.pumpAndSettle();
@@ -61,8 +61,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('1-1')); // tap #3
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka');
-    expect(Get.arguments, '1-1.md');
+    expect(Get.currentRoute, '/shloka/1-1.md');
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
@@ -73,8 +72,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/anote');
-    expect(Get.arguments['mdFilename'], '1-1.md');
+    expect(Get.currentRoute, '/shloka/1-1.md/applnote_13');
     // To check that the note is present somewhere - self-test of this test
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
     // Next, test the real requirement - seeing the note

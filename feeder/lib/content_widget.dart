@@ -1,4 +1,5 @@
 import 'package:askys/mdcontent.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -168,10 +169,23 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   } else if (tag == 'h2') {
     return GoogleFonts.workSans(height: 3);
   } else if (tag == 'em') {
-    return GoogleFonts.bubblerOne(height: 1.2, fontStyle: FontStyle.italic);
+    return GoogleFonts.bubblerOne(height: 1.2);
   } else {
     return const TextStyle(height: 1.5);
   }
+}
+
+void _navigateToLink(String? link) {
+  String mdFilename = 'broken-link.md';
+  String noteId = '';
+  if (link != null) {
+    final linkParts = link.split('#');
+    mdFilename = linkParts[0];
+    if (linkParts.length > 1) {
+      noteId = linkParts[1];
+    }
+  }
+  Get.toNamed('/shloka/$mdFilename/$noteId');
 }
 
 List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildContext context) {
@@ -179,6 +193,15 @@ List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildC
     if (tag == 'note') {
       return [
         TextSpan(children: [WidgetSpan(child: _buildNote(context, contentText))])
+      ];
+    }
+    if (tag == 'a') {
+      return [
+        TextSpan(
+          text: contentText,
+          style: const TextStyle(color: Colors.blue),
+          recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(link),
+        )
       ];
     }
     return [TextSpan(text: contentText, style: _styleFor(tag, elmclass))];

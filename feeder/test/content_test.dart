@@ -1,7 +1,9 @@
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_source.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:askys/content_widget.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
@@ -54,6 +56,20 @@ ParseRecords recordParseActions(mdContent) {
   return parseRecords;
 }
 
+void _fireOnTap(Finder finder, String text) {
+  final Element element = finder.evaluate().single;
+  final paragraph = element.renderObject as RenderParagraph;
+  // The children are the individual TextSpans which have GestureRecognizers
+  paragraph.text.visitChildren((dynamic span) {
+    if (span.text == text) {
+      (span.recognizer as TapGestureRecognizer).onTap!();
+      return false; // stop iterating, we found the one.
+    } else {
+      return true; // continue iterating.
+    }
+  });
+}
+
 void main() {
   setUp(() {
     final dio = Dio();
@@ -69,7 +85,7 @@ void main() {
 teSAm eva anukampArtham
 ```'''));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-12-anote.md', (server) => server.reply(200, '''
-Arjuna says to Krishna - how do we think of You?
+Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-think)
 
 <a name='satva_rajas_tamas'></a>
 <a name='applnote_156'></a>
@@ -77,7 +93,7 @@ Arjuna says to Krishna - how do we think of You?
 '''));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Renders a plain-text line', (WidgetTester tester) async {
+  testWidgets('Renders a plain-text line', (tester) async {
     final widgetWithOneMD =
         WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
     expect(widgetWithOneMD.length, equals(1));
@@ -120,6 +136,25 @@ Arjuna says to Krishna - how do we think of You?
     expect(find.textContaining('applnote_156'), findsNothing);
     expect(find.byKey(const Key('applnote_156')), findsOneWidget);
     expect(find.byKey(const Key('satva_rajas_tamas')), findsOneWidget);
+  });
+  testWidgets('Navigates a link in the commentary', (tester) async {
+    Get.put(Choices());
+    const targetFilename = '10-11-shloka.md';
+    const targetNote = 'why-think';
+    await tester.pumpWidget(GetMaterialApp(
+      home: buildContent('10-12-anote.md'),
+      getPages: [
+        GetPage(
+            name: '/shloka/$targetFilename/$targetNote', page: () => const Text('anchor reached'))
+      ],
+    ));
+    await tester.pumpAndSettle();
+    final linkFinder = find.textContaining('See here', findRichText: true);
+    expect(linkFinder, findsOneWidget);
+    _fireOnTap(linkFinder, 'See here');
+    await tester.tap(linkFinder);
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shloka/$targetFilename/$targetNote');
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');

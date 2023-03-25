@@ -6,13 +6,21 @@ class Chapter {
   Chapter(this.title, this.shokas);
   factory Chapter.fromChapterNotesJson(List<Map<String, dynamic>> chapterNotes) {
     return Chapter(
-      chapterNotes[0].keys.first.replaceAll('.md', ''),
+      _filenameToTitle(chapterNotes[0].keys.first),
       chapterNotes
           .sublist(0, chapterNotes.length)
-          .map(((e) => e.keys.first.replaceAll('.md', '')))
+          .map(((e) => _filenameToTitle(e.keys.first)))
           .toList(),
     );
   }
+  static String _filenameToTitle(String filename) {
+    return filename.replaceAll('.md', '').replaceAll('_', ' ');
+  }
+
+  static String titleToFilename(String title) {
+    return '${title.replaceAll(' ', '_')}.md';
+  }
+
   String title;
   List<String> shokas;
 }
