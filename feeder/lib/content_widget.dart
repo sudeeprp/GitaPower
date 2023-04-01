@@ -6,13 +6,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 
-enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary }
+enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary, note }
+
+class TextElement {
+  TextElement(this.mdElement, this.sectionType, this.isSectionTop);
+  final md.Element mdElement;
+  final SectionType sectionType;
+  final bool isSectionTop;
+}
 
 class WidgetMaker implements md.NodeVisitor {
-  final List<TextSpan> Function(String text, String tag, String? elmclass, String? link)
+  final List<TextSpan> Function(
+          String text, SectionType sectionType, String tag, String? elmclass, String? link)
       _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
-  List<md.Element> elementForCurrentText = [];
+  List<TextElement> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
   Map<String, GlobalKey> anchorKeys = {};
@@ -45,6 +53,7 @@ class WidgetMaker implements md.NodeVisitor {
       'pre': (element) => classToSectionType[element.children[0].attributes['class']],
       'p': (element) =>
           _startsWithDevanagari(element.textContent) ? SectionType.meaning : SectionType.commentary,
+      'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
     if (tagConverter != null) {
@@ -56,10 +65,9 @@ class WidgetMaker implements md.NodeVisitor {
 
   @override
   void visitElementAfter(md.Element element) {
-    const widgetSeparators = ['h1', 'h2', 'p', 'pre'];
-    if (widgetSeparators.contains(element.tag)) {
-      final sectionType = _detectSectionType(element);
-      collectedWidgets.addAll(_widgetMaker(collectedElements, sectionType));
+    if (elementForCurrentText.last.isSectionTop) {
+      collectedWidgets
+          .addAll(_widgetMaker(collectedElements, elementForCurrentText.last.sectionType));
       collectedElements = [];
       _moveToNextSection();
     }
@@ -68,26 +76,33 @@ class WidgetMaker implements md.NodeVisitor {
 
   @override
   bool visitElementBefore(md.Element element) {
-    elementForCurrentText.add(element);
+    const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
+    if (widgetSeparators.contains(element.tag)) {
+      final sectionType = _detectSectionType(element);
+      elementForCurrentText.add(TextElement(element, sectionType, true));
+    } else {
+      final sectionType = elementForCurrentText.last.sectionType;
+      elementForCurrentText.add(TextElement(element, sectionType, false));
+    }
     return true;
   }
 
   @override
   void visitText(md.Text markdownText) {
-    final element = elementForCurrentText[elementForCurrentText.length - 1];
-    var tag = element.tag;
+    final element = elementForCurrentText.last;
+    var tag = element.mdElement.tag;
     if (elementForCurrentText.length >= 2 &&
-        elementForCurrentText[elementForCurrentText.length - 2].tag == 'blockquote') {
+        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag == 'blockquote') {
       tag = 'note';
     }
     if (_isAnchor(markdownText.textContent)) {
       tag = 'anchor';
       _addAnchors(markdownText.textContent);
     }
-    final processedText = _textForElement(markdownText.textContent, element);
+    final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      collectedElements.addAll(_inlineMaker(
-          processedText, tag, element.attributes['class'], element.attributes['href']));
+      collectedElements.addAll(_inlineMaker(processedText, element.sectionType, tag,
+          element.mdElement.attributes['class'], element.mdElement.attributes['href']));
     }
   }
 
@@ -137,16 +152,30 @@ bool _startsWithDevanagari(String? content) {
   }
 }
 
+List<TextSpan> _renderMeaning(
+    List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
+  List<TextSpan> spansToRender = [];
+  if (meaningMode == MeaningMode.expanded) {
+    if (scriptChoice == ScriptPreference.devanagari) {
+      spansToRender = spans.where((textSpan) => textSpan.text?[0] != '[').toList();
+    } else if (scriptChoice == ScriptPreference.sahk) {
+      spansToRender = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
+    }
+  } else {
+    spansToRender = spans
+        .where((textSpan) => textSpan.text?[0] != '[' && !_startsWithDevanagari(textSpan.text))
+        .toList();
+  }
+  return spansToRender;
+}
+
 Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   Choices choice = Get.find();
   final scriptChoice = choice.script.value;
+  final meaningMode = choice.meaningMode.value;
   List<TextSpan> visibleSpans = [];
   if (sectionType == SectionType.meaning) {
-    if (scriptChoice == ScriptPreference.devanagari) {
-      visibleSpans = spans.where((textSpan) => textSpan.text?[0] != '[').toList();
-    } else if (scriptChoice == ScriptPreference.sahk) {
-      visibleSpans = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
-    }
+    visibleSpans = _renderMeaning(spans, meaningMode, scriptChoice);
   } else {
     visibleSpans = spans;
   }
@@ -175,6 +204,18 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   }
 }
 
+GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
+  if (sectionType == SectionType.meaning) {
+    return TapGestureRecognizer()
+      ..onTap = () {
+        final Choices choice = Get.find();
+        choice.meaningMode.value = MeaningMode.expanded;
+      };
+  } else {
+    return null;
+  }
+}
+
 void _navigateToLink(String? link) {
   String mdFilename = 'broken-link.md';
   String noteId = '';
@@ -188,8 +229,10 @@ void _navigateToLink(String? link) {
   Get.toNamed('/shloka/$mdFilename/$noteId');
 }
 
-List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildContext context) {
-  List<TextSpan> formatMaker(String contentText, String tag, String? elmclass, String? link) {
+List<TextSpan> Function(String, SectionType, String, String?, String?) makeFormatMaker(
+    BuildContext context) {
+  List<TextSpan> formatMaker(
+      String contentText, SectionType sectionType, String tag, String? elmclass, String? link) {
     if (tag == 'note') {
       return [
         TextSpan(children: [WidgetSpan(child: _buildNote(context, contentText))])
@@ -204,7 +247,12 @@ List<TextSpan> Function(String, String, String?, String?) makeFormatMaker(BuildC
         )
       ];
     }
-    return [TextSpan(text: contentText, style: _styleFor(tag, elmclass))];
+    return [
+      TextSpan(
+          text: contentText,
+          style: _styleFor(tag, elmclass),
+          recognizer: _actionFor(sectionType, tag))
+    ];
   }
 
   return formatMaker;

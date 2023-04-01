@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
-List<TextSpan> oneTextMaker(String content, String tag, String? elmclass, String? link) =>
+List<TextSpan> oneTextMaker(
+        String content, SectionType sectionType, String tag, String? elmclass, String? link) =>
     [TextSpan(text: content)];
 List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) {
   if (spans.isEmpty) {
@@ -22,8 +23,9 @@ List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) 
 }
 
 class TextMade {
-  TextMade(this.content, this.tag, this.elmclass, this.link);
+  TextMade(this.content, this.sectionType, this.tag, this.elmclass, this.link);
   String? content;
+  SectionType sectionType;
   String? tag;
   String? elmclass;
   String? link;
@@ -42,8 +44,9 @@ class ParseRecords {
 
 ParseRecords recordParseActions(mdContent) {
   var parseRecords = ParseRecords();
-  List<TextSpan> inlineMaker(String content, String tag, String? elmclass, String? link) {
-    parseRecords.textsMade.add(TextMade(content, tag, elmclass, link));
+  List<TextSpan> inlineMaker(
+      String content, SectionType sectionType, String tag, String? elmclass, String? link) {
+    parseRecords.textsMade.add(TextMade(content, sectionType, tag, elmclass, link));
     return [];
   }
 
@@ -75,7 +78,7 @@ void main() {
     final dio = Dio();
     final dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md',
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10-meaning.md',
         (server) => server.reply(200, '`भजताम्` `[bhajatAm]` who worship Me'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11-shloka.md', (server) => server.reply(200, '''
 ```shloka-sa
@@ -103,9 +106,22 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10.md'))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
-    expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
+
+    // to start with, the shloka needs to be read continuously without the source in-between
+    final meaningFinder = find.textContaining('who worship Me', findRichText: true);
+    expect(meaningFinder, findsOneWidget);
+    expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
+    expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
+
+    // after tapping, the source gets visible.
+    // final t = (meaningFinder.evaluate().single.widget);
+    // await tester.tap(find.byWidget(t));
+    // await tester.pumpAndSettle();
+    // (t as RichText).text.visitChildren()
+    _fireOnTap(meaningFinder, ' who worship Me');
+    await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
     Get.find<Choices>().script.value = ScriptPreference.sahk;
