@@ -209,7 +209,11 @@ GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
     return TapGestureRecognizer()
       ..onTap = () {
         final Choices choice = Get.find();
-        choice.meaningMode.value = MeaningMode.expanded;
+        if (choice.meaningMode.value == MeaningMode.short) {
+          choice.meaningMode.value = MeaningMode.expanded;
+        } else {
+          choice.meaningMode.value = MeaningMode.short;
+        }
       };
   } else {
     return null;
@@ -270,7 +274,7 @@ bool _isVisible(SectionType sectionType) {
   return true;
 }
 
-Widget _horizontalScroller(SectionType sectionType, Widget w) {
+Widget _horizontalScrollForShloka(SectionType sectionType, Widget w) {
   if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
     return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
   } else {
@@ -295,7 +299,7 @@ List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
         visible: _isVisible(sectionType),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          child: _horizontalScroller(sectionType, _spansToText(spans, sectionType)),
+          child: _horizontalScrollForShloka(sectionType, _spansToText(spans, sectionType)),
         )))
   ];
 }

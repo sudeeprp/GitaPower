@@ -115,12 +115,7 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
 
-    // after tapping, the source gets visible.
-    // final t = (meaningFinder.evaluate().single.widget);
-    // await tester.tap(find.byWidget(t));
-    // await tester.pumpAndSettle();
-    // (t as RichText).text.visitChildren()
-    _fireOnTap(meaningFinder, ' who worship Me');
+    _fireOnTap(meaningFinder, ' who worship Me'); // tap to expand with the source
     await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
@@ -128,6 +123,10 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     await tester.pumpAndSettle();
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
+    _fireOnTap(meaningFinder, ' who worship Me'); // tap again for the short meaning
+    await tester.pumpAndSettle();
+    expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
+    expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
     Get.delete<Choices>();
   });
   testWidgets('Renders shloka as per script preference', (tester) async {
