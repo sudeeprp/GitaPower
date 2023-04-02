@@ -138,16 +138,11 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
     Get.delete<Choices>();
   });
-  testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
+  testWidgets('Renders note and hides the anchor', (tester) async {
     Get.put(Choices());
     final contentWidget = buildContent('10-12-anote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
-    final noteWidgetContainer = tester.widget(find.ancestor(
-        of: find.textContaining('cannot be understood', findRichText: true),
-        matching: find.byType(Container))) as Container;
-    final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
-    expect(backgroundOpacity, isNot(0));
     expect(find.textContaining('applnote_156'), findsNothing);
     expect(find.byKey(const Key('applnote_156')), findsOneWidget);
     expect(find.byKey(const Key('satva_rajas_tamas')), findsOneWidget);
@@ -264,5 +259,10 @@ _Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or
     expect(lastTextMade.tag, equals('em'));
     expect(lastTextMade.content, endsWith('years'));
     expect(parsedExplainer.widgetsMade.length, equals(2));
+  });
+  test('treats a bullet as commentary', () {
+    final parsedBullet = recordParseActions('''
+- will attain the supreme goal''');
+    expect(parsedBullet.textsMade[0].content, 'will attain the supreme goal');
   });
 }

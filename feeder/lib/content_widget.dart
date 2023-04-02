@@ -81,7 +81,9 @@ class WidgetMaker implements md.NodeVisitor {
       final sectionType = _detectSectionType(element);
       elementForCurrentText.add(TextElement(element, sectionType, true));
     } else {
-      final sectionType = elementForCurrentText.last.sectionType;
+      final sectionType = elementForCurrentText.isNotEmpty
+          ? elementForCurrentText.last.sectionType
+          : SectionType.commentary;
       elementForCurrentText.add(TextElement(element, sectionType, false));
     }
     return true;
@@ -322,11 +324,12 @@ class ContentWidget extends StatelessWidget {
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       return [
         Obx(() => Visibility(
-            visible: _isVisible(sectionType),
-            child: _sectionContainer(context, sectionType, _spansToText(spans, sectionType)),
+              visible: _isVisible(sectionType),
+              child: _sectionContainer(context, sectionType, _spansToText(spans, sectionType)),
             ))
       ];
     }
+
     MDContent md = Get.find(tag: mdFilename);
     return Center(
         child: SingleChildScrollView(
