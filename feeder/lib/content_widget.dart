@@ -293,15 +293,20 @@ Widget _buildNote(BuildContext context, String noteContent) {
   );
 }
 
-List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
-  return [
-    Obx(() => Visibility(
-        visible: _isVisible(sectionType),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          child: _horizontalScrollForShloka(sectionType, _spansToText(spans, sectionType)),
-        )))
-  ];
+BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
+  if (sectionType == SectionType.meaning) {
+    return const BoxDecoration(border: Border(bottom: BorderSide()));
+  } else {
+    return null;
+  }
+}
+
+Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
+  return Container(
+    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+    decoration: _sectionDecoration(context, sectionType),
+    child: _horizontalScrollForShloka(sectionType, content),
+  );
 }
 
 class ContentWidget extends StatelessWidget {
@@ -314,6 +319,14 @@ class ContentWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
+    List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
+      return [
+        Obx(() => Visibility(
+            visible: _isVisible(sectionType),
+            child: _sectionContainer(context, sectionType, _spansToText(spans, sectionType)),
+            ))
+      ];
+    }
     MDContent md = Get.find(tag: mdFilename);
     return Center(
         child: SingleChildScrollView(
