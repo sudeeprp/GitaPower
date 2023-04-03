@@ -20,6 +20,7 @@ class WidgetMaker implements md.NodeVisitor {
           String text, SectionType sectionType, String tag, String? elmclass, String? link)
       _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
+  SectionType? _previousSectionType;
   List<TextElement> elementForCurrentText = [];
   List<Widget> collectedWidgets = [];
   List<TextSpan> collectedElements = [];
@@ -51,8 +52,9 @@ class WidgetMaker implements md.NodeVisitor {
       'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => SectionType.shlokaNumber,
       'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-      'p': (element) =>
-          _startsWithDevanagari(element.textContent) ? SectionType.meaning : SectionType.commentary,
+      'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
+          ? SectionType.meaning
+          : SectionType.commentary,
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -69,6 +71,7 @@ class WidgetMaker implements md.NodeVisitor {
       collectedWidgets
           .addAll(_widgetMaker(collectedElements, elementForCurrentText.last.sectionType));
       collectedElements = [];
+      _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
     elementForCurrentText.removeAt(elementForCurrentText.length - 1);
@@ -139,6 +142,11 @@ class WidgetMaker implements md.NodeVisitor {
     } else {
       return SizedBox(width: 1, height: 1, key: Key(noteId));
     }
+  }
+
+  bool _inMidstOfCommentary() {
+    return _previousSectionType == SectionType.commentary ||
+        _previousSectionType == SectionType.note;
   }
 }
 

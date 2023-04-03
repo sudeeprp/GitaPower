@@ -265,4 +265,12 @@ _Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or
 - will attain the supreme goal''');
     expect(parsedBullet.textsMade[0].content, 'will attain the supreme goal');
   });
+  test('treats devanagari in a commentary as commentary itself', () {
+    final parsedDevanagariComment = recordParseActions('''
+There are many statements in the scriptures
+
+`श्वेताश्वतर उपनिशद्` `[zvetAzvatara upanizad]` , 4-6
+ illustrates that the Lord is distinct''');
+    expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
+  });
 }
