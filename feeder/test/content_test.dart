@@ -9,9 +9,7 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
-List<TextSpan> oneTextMaker(
-        String content, SectionType sectionType, String tag, String? elmclass, String? link) =>
-    [TextSpan(text: content)];
+List<TextSpan> oneTextMaker(MatterForInline inlineMatter) => [TextSpan(text: inlineMatter.text)];
 List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) {
   if (spans.isEmpty) {
     return [];
@@ -44,9 +42,9 @@ class ParseRecords {
 
 ParseRecords recordParseActions(mdContent) {
   var parseRecords = ParseRecords();
-  List<TextSpan> inlineMaker(
-      String content, SectionType sectionType, String tag, String? elmclass, String? link) {
-    parseRecords.textsMade.add(TextMade(content, sectionType, tag, elmclass, link));
+  List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
+    parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType,
+        inlineMatter.tag, inlineMatter.elmclass, inlineMatter.link));
     return [];
   }
 
@@ -64,7 +62,7 @@ void _fireOnTap(Finder finder, String text) {
   final paragraph = element.renderObject as RenderParagraph;
   // The children are the individual TextSpans which have GestureRecognizers
   paragraph.text.visitChildren((dynamic span) {
-    if (span.text == text) {
+    if (span.text.contains(text)) {
       (span.recognizer as TapGestureRecognizer).onTap!();
       return false; // stop iterating, we found the one.
     } else {
@@ -78,8 +76,10 @@ void main() {
     final dio = Dio();
     final dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10-meaning.md',
-        (server) => server.reply(200, '`भजताम्` `[bhajatAm]` who worship Me'));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/10-10-meaning.md',
+        (server) => server.reply(200,
+            '`भजताम्` `[bhajatAm]` who worship Me `सतत युक्तानाम्` `[satata yuktAnAm]` to be with Me always'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11-shloka.md', (server) => server.reply(200, '''
 ```shloka-sa
 तेषाम् एव अनुकम्पार्थम्
@@ -110,12 +110,13 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     await tester.pumpAndSettle();
 
     // to start with, the shloka needs to be read continuously without the source in-between
-    final meaningFinder = find.textContaining('who worship Me', findRichText: true);
-    expect(meaningFinder, findsOneWidget);
+    final continFinder =
+        find.textContaining('who worship Me to be with Me always', findRichText: true);
+    expect(continFinder, findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
 
-    _fireOnTap(meaningFinder, ' who worship Me'); // tap to expand with the source
+    _fireOnTap(continFinder, 'who worship Me'); // tap to expand with the source
     await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
@@ -123,7 +124,9 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     await tester.pumpAndSettle();
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
-    _fireOnTap(meaningFinder, ' who worship Me'); // tap again for the short meaning
+
+    final meaningFinder = find.textContaining('who worship Me', findRichText: true);
+    _fireOnTap(meaningFinder, 'who worship Me'); // tap again for the short meaning
     await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
@@ -229,7 +232,8 @@ line after newline''');
 <a name='four_types_of_worshippers'></a>
 These four categories of virtuous people
 ''');
-    expect(parsedNote.textsMade[0].content, equals('These four categories of virtuous people'));
+    expect(parsedNote.textsMade[0].content, equals('four_types_of_worshippers'));
+    expect(parsedNote.textsMade[1].content, equals('These four categories of virtuous people'));
   });
   test('chapter heading is in its own line', () {
     final chapterPage = recordParseActions('''
@@ -260,10 +264,10 @@ _Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or
     expect(lastTextMade.content, endsWith('years'));
     expect(parsedExplainer.widgetsMade.length, equals(2));
   });
-  test('treats a bullet as commentary', () {
+  test('ignores bullets', () {
     final parsedBullet = recordParseActions('''
 - will attain the supreme goal''');
-    expect(parsedBullet.textsMade[0].content, 'will attain the supreme goal');
+    expect(parsedBullet.textsMade, isEmpty);
   });
   test('treats devanagari in a commentary as commentary itself', () {
     final parsedDevanagariComment = recordParseActions('''

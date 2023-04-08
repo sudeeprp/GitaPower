@@ -8,24 +8,33 @@ import 'package:markdown/markdown.dart' as md;
 
 enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary, note }
 
-class TextElement {
-  TextElement(this.mdElement, this.sectionType, this.isSectionTop);
+final _multipleSpaces = RegExp(r"\s+");
+final _anchors = RegExp(r"<a name='([\w]+)'><\/a>\s*");
+
+class CurrentTextElement {
+  CurrentTextElement(this.mdElement, this.sectionType, this.isSectionTop);
   final md.Element mdElement;
   final SectionType sectionType;
   final bool isSectionTop;
 }
 
+class MatterForInline {
+  MatterForInline(this.text, this.sectionType, this.tag, this.elmclass, this.link);
+  final String text;
+  SectionType sectionType;
+  String tag;
+  String? elmclass;
+  String? link;
+}
+
 class WidgetMaker implements md.NodeVisitor {
-  final List<TextSpan> Function(
-          String text, SectionType sectionType, String tag, String? elmclass, String? link)
-      _inlineMaker;
+  final List<TextSpan> Function(MatterForInline matterForInline) _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
   SectionType? _previousSectionType;
-  List<TextElement> elementForCurrentText = [];
+  List<CurrentTextElement> elementForCurrentText = [];
+  List<String> noteIdsInPage = [];
   List<Widget> collectedWidgets = [];
-  List<TextSpan> collectedElements = [];
-  Map<String, GlobalKey> anchorKeys = {};
-  var currentSectionIndex = 0;
+  List<MatterForInline> collectedInlines = [];
   WidgetMaker(this._widgetMaker, this._inlineMaker);
 
   List<Widget> parse(String markdownContent) {
@@ -38,9 +47,7 @@ class WidgetMaker implements md.NodeVisitor {
   }
 
   void _moveToNextSection() {
-    if (currentSectionIndex < SectionType.values.length - 1) {
-      currentSectionIndex++;
-    }
+    collectedInlines = [];
   }
 
   SectionType _detectSectionType(md.Element element) {
@@ -65,12 +72,19 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
+  List<TextSpan> _collectedElements() {
+    List<TextSpan> collectedElements = [];
+    for (final inlineMatter in collectedInlines) {
+      collectedElements.addAll(_inlineMaker(inlineMatter));
+    }
+    return collectedElements;
+  }
+
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
       collectedWidgets
-          .addAll(_widgetMaker(collectedElements, elementForCurrentText.last.sectionType));
-      collectedElements = [];
+          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -82,12 +96,12 @@ class WidgetMaker implements md.NodeVisitor {
     const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
     if (widgetSeparators.contains(element.tag)) {
       final sectionType = _detectSectionType(element);
-      elementForCurrentText.add(TextElement(element, sectionType, true));
+      elementForCurrentText.add(CurrentTextElement(element, sectionType, true));
     } else {
       final sectionType = elementForCurrentText.isNotEmpty
           ? elementForCurrentText.last.sectionType
           : SectionType.commentary;
-      elementForCurrentText.add(TextElement(element, sectionType, false));
+      elementForCurrentText.add(CurrentTextElement(element, sectionType, false));
     }
     return true;
   }
@@ -95,24 +109,30 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitText(md.Text markdownText) {
     final element = elementForCurrentText.last;
+    final elmclass = element.mdElement.attributes['class'];
+    final link = element.mdElement.attributes['href'];
     var tag = element.mdElement.tag;
     if (elementForCurrentText.length >= 2 &&
         elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag == 'blockquote') {
       tag = 'note';
     }
-    if (_isAnchor(markdownText.textContent)) {
+    if (_hasAnchor(markdownText.textContent)) {
       tag = 'anchor';
-      _addAnchors(markdownText.textContent);
+      final anchorMatches = _anchors.allMatches(markdownText.textContent);
+      for (final anchor in anchorMatches) {
+        final noteId = anchor.group(1);
+        if (noteId != null) {
+          noteIdsInPage.add(noteId);
+          collectedInlines.add(MatterForInline(noteId, element.sectionType, tag, elmclass, link));
+        }
+      }
     }
     final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      collectedElements.addAll(_inlineMaker(processedText, element.sectionType, tag,
-          element.mdElement.attributes['class'], element.mdElement.attributes['href']));
+      final inlineMatter = MatterForInline(processedText, element.sectionType, tag, elmclass, link);
+      collectedInlines.add(inlineMatter);
     }
   }
-
-  final _multipleSpaces = RegExp(r"\s+");
-  final _anchors = RegExp(r"<a name='([\w]+)'><\/a>\s*");
 
   String _textForElement(String inputText, md.Element element) {
     if (element.tag == 'code') {
@@ -122,35 +142,13 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  void _addAnchors(String anchorLine) {
-    final anchorMatches = _anchors.allMatches(anchorLine);
-    for (final anchor in anchorMatches) {
-      final noteId = anchor.group(1);
-      if (noteId != null) {
-        final keyOfAnchor = GlobalKey(debugLabel: noteId);
-        collectedElements.add(TextSpan(children: [
-          WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
-        ]));
-        anchorKeys[noteId] = keyOfAnchor;
-      }
-    }
-  }
-
-  Widget _anchorWidget(String noteId) {
-    if (noteId.startsWith('appl')) {
-      return Image.asset('images/right-foot.png', key: Key(noteId));
-    } else {
-      return SizedBox(width: 1, height: 1, key: Key(noteId));
-    }
-  }
-
   bool _inMidstOfCommentary() {
     return _previousSectionType == SectionType.commentary ||
         _previousSectionType == SectionType.note;
   }
 }
 
-bool _isAnchor(String inputText) {
+bool _hasAnchor(String inputText) {
   return inputText.startsWith('<a name=');
 }
 
@@ -162,18 +160,22 @@ bool _startsWithDevanagari(String? content) {
   }
 }
 
+bool _isSAHK(String? content) {
+  return content != null && content.isNotEmpty && content[0] == '[';
+}
+
 List<TextSpan> _renderMeaning(
     List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
   List<TextSpan> spansToRender = [];
   if (meaningMode == MeaningMode.expanded) {
     if (scriptChoice == ScriptPreference.devanagari) {
-      spansToRender = spans.where((textSpan) => textSpan.text?[0] != '[').toList();
+      spansToRender = spans.where((textSpan) => !_isSAHK(textSpan.text)).toList();
     } else if (scriptChoice == ScriptPreference.sahk) {
       spansToRender = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
     }
   } else {
     spansToRender = spans
-        .where((textSpan) => textSpan.text?[0] != '[' && !_startsWithDevanagari(textSpan.text))
+        .where((textSpan) => !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
         .toList();
   }
   return spansToRender;
@@ -243,33 +245,22 @@ void _navigateToLink(String? link) {
   Get.toNamed('/shloka/$mdFilename/$noteId');
 }
 
-List<TextSpan> Function(String, SectionType, String, String?, String?) makeFormatMaker(
-    BuildContext context) {
-  List<TextSpan> formatMaker(
-      String contentText, SectionType sectionType, String tag, String? elmclass, String? link) {
-    if (tag == 'note') {
-      return [
-        TextSpan(children: [WidgetSpan(child: _buildNote(context, contentText))])
-      ];
-    }
-    if (tag == 'a') {
-      return [
-        TextSpan(
-          text: contentText,
-          style: const TextStyle(color: Colors.blue),
-          recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(link),
-        )
-      ];
-    }
-    return [
-      TextSpan(
-          text: contentText,
-          style: _styleFor(tag, elmclass),
-          recognizer: _actionFor(sectionType, tag))
-    ];
-  }
+List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
+  final keyOfAnchor = GlobalKey(debugLabel: noteId);
+  anchorKeys[noteId] = keyOfAnchor;
+  return [
+    TextSpan(children: [
+      WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
+    ])
+  ];
+}
 
-  return formatMaker;
+Widget _anchorWidget(String noteId) {
+  if (noteId.startsWith('appl')) {
+    return Image.asset('images/right-foot.png', key: Key(noteId));
+  } else {
+    return SizedBox(width: 1, height: 1, key: Key(noteId));
+  }
 }
 
 bool _isVisible(SectionType sectionType) {
@@ -311,6 +302,17 @@ BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType)
   }
 }
 
+String _tuneContentForDisplay(MatterForInline inlineMatter) {
+  String contentForDisplay = inlineMatter.text;
+  if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
+    final Choices choice = Get.find();
+    if (choice.meaningMode.value == MeaningMode.short) {
+      contentForDisplay = inlineMatter.text.trimLeft();
+    }
+  }
+  return contentForDisplay;
+}
+
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -329,6 +331,7 @@ class ContentWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
+    Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       return [
         Obx(() => Visibility(
@@ -338,19 +341,45 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
+    List<TextSpan> formatMaker(MatterForInline inlineMatter) {
+      if (inlineMatter.tag == 'note') {
+        return [
+          TextSpan(children: [WidgetSpan(child: _buildNote(context, inlineMatter.text))])
+        ];
+      }
+      if (inlineMatter.tag == 'anchor') {
+        return _anchorSpan(inlineMatter.text, anchorKeys);
+      }
+      if (inlineMatter.tag == 'a') {
+        return [
+          TextSpan(
+            text: inlineMatter.text,
+            style: const TextStyle(color: Colors.blue),
+            recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
+          )
+        ];
+      }
+      var textContent = _tuneContentForDisplay(inlineMatter);
+      return [
+        TextSpan(
+            text: textContent,
+            style: _styleFor(inlineMatter.tag, inlineMatter.elmclass),
+            recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
+      ];
+    }
+
     MDContent md = Get.find(tag: mdFilename);
     return Center(
         child: SingleChildScrollView(
             child: DefaultTextStyle(
                 style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
                 child: Obx(() {
-                  final widgetMaker = WidgetMaker(textRichMaker, makeFormatMaker(context));
+                  final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                   final widgetsMade = widgetMaker.parse(md.mdContent.value);
-                  final collectedAnchorKeys = widgetMaker.anchorKeys;
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     BuildContext? anchorContext;
-                    if (collectedAnchorKeys.containsKey(initialAnchor)) {
-                      anchorContext = collectedAnchorKeys[initialAnchor]?.currentContext;
+                    if (anchorKeys.containsKey(initialAnchor)) {
+                      anchorContext = anchorKeys[initialAnchor]?.currentContext;
                     }
                     if (anchorContext != null) {
                       Scrollable.ensureVisible(anchorContext);
