@@ -9,8 +9,7 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
-List<TextSpan> oneTextMaker(String content, String tag, String? elmclass, String? link) =>
-    [TextSpan(text: content)];
+List<TextSpan> oneTextMaker(MatterForInline inlineMatter) => [TextSpan(text: inlineMatter.text)];
 List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) {
   if (spans.isEmpty) {
     return [];
@@ -22,8 +21,9 @@ List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) 
 }
 
 class TextMade {
-  TextMade(this.content, this.tag, this.elmclass, this.link);
+  TextMade(this.content, this.sectionType, this.tag, this.elmclass, this.link);
   String? content;
+  SectionType sectionType;
   String? tag;
   String? elmclass;
   String? link;
@@ -42,8 +42,9 @@ class ParseRecords {
 
 ParseRecords recordParseActions(mdContent) {
   var parseRecords = ParseRecords();
-  List<TextSpan> inlineMaker(String content, String tag, String? elmclass, String? link) {
-    parseRecords.textsMade.add(TextMade(content, tag, elmclass, link));
+  List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
+    parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType,
+        inlineMatter.tag, inlineMatter.elmclass, inlineMatter.link));
     return [];
   }
 
@@ -61,7 +62,7 @@ void _fireOnTap(Finder finder, String text) {
   final paragraph = element.renderObject as RenderParagraph;
   // The children are the individual TextSpans which have GestureRecognizers
   paragraph.text.visitChildren((dynamic span) {
-    if (span.text == text) {
+    if (span.text.contains(text)) {
       (span.recognizer as TapGestureRecognizer).onTap!();
       return false; // stop iterating, we found the one.
     } else {
@@ -75,8 +76,10 @@ void main() {
     final dio = Dio();
     final dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md',
-        (server) => server.reply(200, '`भजताम्` `[bhajatAm]` who worship Me'));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/10-10-meaning.md',
+        (server) => server.reply(200,
+            '`भजताम्` `[bhajatAm]` who worship Me `सतत युक्तानाम्` `[satata yuktAnAm]` to be with Me always'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-11-shloka.md', (server) => server.reply(200, '''
 ```shloka-sa
 तेषाम् एव अनुकम्पार्थम्
@@ -103,15 +106,30 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10.md'))));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
-    expect(find.textContaining('who worship Me', findRichText: true), findsOneWidget);
+
+    // to start with, the shloka needs to be read continuously without the source in-between
+    final continFinder =
+        find.textContaining('who worship Me to be with Me always', findRichText: true);
+    expect(continFinder, findsOneWidget);
+    expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
+    expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
+
+    _fireOnTap(continFinder, 'who worship Me'); // tap to expand with the source
+    await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
     Get.find<Choices>().script.value = ScriptPreference.sahk;
     await tester.pumpAndSettle();
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
+
+    final meaningFinder = find.textContaining('who worship Me', findRichText: true);
+    _fireOnTap(meaningFinder, 'who worship Me'); // tap again for the short meaning
+    await tester.pumpAndSettle();
+    expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
+    expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
     Get.delete<Choices>();
   });
   testWidgets('Renders shloka as per script preference', (tester) async {
@@ -123,16 +141,11 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     expect(find.textContaining('teSAm', findRichText: true), findsOneWidget);
     Get.delete<Choices>();
   });
-  testWidgets('Renders notes in a distinct background and hides the anchor', (tester) async {
+  testWidgets('Renders note and hides the anchor', (tester) async {
     Get.put(Choices());
     final contentWidget = buildContent('10-12-anote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
-    final noteWidgetContainer = tester.widget(find.ancestor(
-        of: find.textContaining('cannot be understood', findRichText: true),
-        matching: find.byType(Container))) as Container;
-    final backgroundOpacity = (noteWidgetContainer.decoration as BoxDecoration).color?.opacity;
-    expect(backgroundOpacity, isNot(0));
     expect(find.textContaining('applnote_156'), findsNothing);
     expect(find.byKey(const Key('applnote_156')), findsOneWidget);
     expect(find.byKey(const Key('satva_rajas_tamas')), findsOneWidget);
@@ -219,7 +232,8 @@ line after newline''');
 <a name='four_types_of_worshippers'></a>
 These four categories of virtuous people
 ''');
-    expect(parsedNote.textsMade[0].content, equals('These four categories of virtuous people'));
+    expect(parsedNote.textsMade[0].content, equals('four_types_of_worshippers'));
+    expect(parsedNote.textsMade[1].content, equals('These four categories of virtuous people'));
   });
   test('chapter heading is in its own line', () {
     final chapterPage = recordParseActions('''
@@ -249,5 +263,18 @@ _Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or
     expect(lastTextMade.tag, equals('em'));
     expect(lastTextMade.content, endsWith('years'));
     expect(parsedExplainer.widgetsMade.length, equals(2));
+  });
+  test('ignores bullets', () {
+    final parsedBullet = recordParseActions('''
+- will attain the supreme goal''');
+    expect(parsedBullet.textsMade, isEmpty);
+  });
+  test('treats devanagari in a commentary as commentary itself', () {
+    final parsedDevanagariComment = recordParseActions('''
+There are many statements in the scriptures
+
+`श्वेताश्वतर उपनिशद्` `[zvetAzvatara upanizad]` , 4-6
+ illustrates that the Lord is distinct''');
+    expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
   });
 }

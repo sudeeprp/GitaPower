@@ -30,6 +30,11 @@ final appearanceChoices = {
 };
 const defaultAppearance = ReadingTheme.classic;
 
+enum MeaningMode {
+  short,
+  expanded,
+}
+
 enum ScriptPreference {
   devanagari,
   sahk,
@@ -38,6 +43,7 @@ enum ScriptPreference {
 class Choices extends GetxController {
   var theme = defaultAppearance.obs;
   var script = ScriptPreference.devanagari.obs;
+  var meaningMode = MeaningMode.short.obs;
   @override
   void onInit() {
     theme.listen((themeValue) {
