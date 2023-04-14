@@ -6,6 +6,7 @@ import 'package:askys/choice_bindings.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/begin_widget.dart';
 import 'package:askys/chapters_widget.dart';
+import 'package:askys/feed_widget.dart';
 
 Widget makeMyHome() {
   return GetMaterialApp(
@@ -16,7 +17,7 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => const Scaffold(body: NotesWidget())),
-        GetPage(name: '/feed', page: () => buildContent('2-55.md')),
+        GetPage(name: '/feed', page: () => buildFeed(['2-70.md', '2-70.md', '2-70.md'])),
         GetPage(name: '/chapters', page: () => const ChaptersWidget(key: Key('toc'))),
         GetPage(
             name: '/shloka/:mdFilename',

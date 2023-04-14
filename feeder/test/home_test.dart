@@ -23,7 +23,12 @@ ${'one line\n' * 120}
 <a name='applnote_13'></a>
 > In our anxiety, we interpret anything that happens as a signal of doom.
 ''';
+const sample_2_70 = '''
+## 2-70
 
+```shloka-sa
+आपूर्यमाणम्
+```''';
 const compiledNotes = '''
 [{"note_id": "applopener_11", "text": "Is there a different way?", "file": "1-1.md"}, {"note_id": "applnote_13", "text": "We often doubt", "file": "1-1.md"}]
 ''';
@@ -38,6 +43,7 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
         (server) => server.reply(200, compiledNotes));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/2-70.md', (server) => server.reply(200, sample_2_70));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Navigates to settings from the home screen', (tester) async {
@@ -77,5 +83,11 @@ void main() {
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
     // Next, test the real requirement - seeing the note
     expect(find.byKey(const Key('applnote_13')).hitTestable(), findsOneWidget);
+  });
+  testWidgets('Shows feed with one tap', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.tap(find.byKey(const Key('begin/feed')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/feed');
   });
 }
