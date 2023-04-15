@@ -22,7 +22,7 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.mdPath}/18-4.md', (svr) => svr.reply(200, '`भजताम्`'));
     dioAdapter.onGet(
         '${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json', (svr) => svr.reply(200, '''
-[{"Back-to-Basics.md": ["applopener_1"]}, {"Chapter 1.md": []}, {"2-4.md": ["applnote_13"]}, {"10-10.md": [], {"18-4.md": []}]
+[{"Back-to-Basics.md": ["applopener_1"]}, {"Chapter 1.md": []}, {"2-4.md": ["applnote_13"]}, {"10-10.md": []}, {"18-4.md": []}]
 '''));
     Get.put(GitHubFetcher(dio));
   });

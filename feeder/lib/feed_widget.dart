@@ -29,8 +29,8 @@ Future<List<String>> allShlokaMDs() async {
   final mdFilenames = mdToNoteIdsJson.map(((e) {
     final mdToNote = e as Map<String, dynamic>;
     return mdToNote.keys.first;
-  })).toList();
-  return mdFilenames;
+  }));
+  return mdFilenames.where((filename)=> filename.startsWith(RegExp(r'[0-9]'))).toList();
 }
 
 List<String> threeShlokas() {
