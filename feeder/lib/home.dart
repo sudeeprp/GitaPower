@@ -17,7 +17,9 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => const Scaffold(body: NotesWidget())),
-        GetPage(name: '/feed', page: () => buildFeed(['2-70.md', '2-70.md', '2-70.md'])),
+        GetPage(
+            name: '/feed',
+            page: () => Scaffold(body: buildFeed(['2-70.md', '2-70.md', '2-70.md']))),
         GetPage(name: '/chapters', page: () => const ChaptersWidget(key: Key('toc'))),
         GetPage(
             name: '/shloka/:mdFilename',
