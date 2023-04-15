@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'package:askys/content_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'content_source.dart';
 
 class FeedWidget extends StatelessWidget {
   const FeedWidget(this.mdFilenames, {super.key});
@@ -16,4 +20,19 @@ class FeedWidget extends StatelessWidget {
 
 FeedWidget buildFeed(List<String> mdFilenames) {
   return FeedWidget(mdFilenames);
+}
+
+Future<List<String>> allShlokaMDs() async {
+  final GitHubFetcher contentSource = Get.find();
+  final mdToNoteIdsStr = await contentSource.compiledAsString('md_to_note_ids_compiled.json');
+  final List<dynamic> mdToNoteIdsJson = jsonDecode(mdToNoteIdsStr);
+  final mdFilenames = mdToNoteIdsJson.map(((e) {
+    final mdToNote = e as Map<String, dynamic>;
+    return mdToNote.keys.first;
+  })).toList();
+  return mdFilenames;
+}
+
+List<String> threeShlokas() {
+  return [];
 }
