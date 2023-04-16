@@ -94,6 +94,10 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
 <a name='applnote_156'></a>
 >The Lord's qualities cannot be understood
 '''));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/6-41-anchor.md', (server) => server.reply(200, '''
+<a name='greatness_of_yoga'></a>
+A person diverts from the path of realizing the Self due to some desires.
+'''));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (tester) async {
@@ -149,6 +153,16 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     expect(find.textContaining('applnote_156'), findsNothing);
     expect(find.byKey(const Key('applnote_156')), findsOneWidget);
     expect(find.byKey(const Key('satva_rajas_tamas')), findsOneWidget);
+    expect(find.textContaining('cannot be understood'), findsOneWidget);
+    Get.delete<Choices>();
+  });
+  testWidgets('Shows commentary following an anchor', (tester) async {
+    Get.put(Choices());
+    final contentWidget = buildContent('6-41-anchor.md');
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('greatness_of_yoga'), findsNothing);
+    expect(find.textContaining('due to some desires'), findsOneWidget);
   });
   testWidgets('Navigates a link in the commentary', (tester) async {
     Get.put(Choices());

@@ -117,13 +117,13 @@ class WidgetMaker implements md.NodeVisitor {
       tag = 'note';
     }
     if (_hasAnchor(markdownText.textContent)) {
-      tag = 'anchor';
       final anchorMatches = _anchors.allMatches(markdownText.textContent);
       for (final anchor in anchorMatches) {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          collectedInlines.add(MatterForInline(noteId, element.sectionType, tag, elmclass, link));
+          collectedInlines
+              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
         }
       }
     }

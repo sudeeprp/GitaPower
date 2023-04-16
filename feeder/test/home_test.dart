@@ -8,7 +8,7 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:askys/content_source.dart';
 
 const compiledMDtoNoteIds = '''
-[{"Back-to-Basics.md": ["applopener_1", "applnote_12"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}]
+[{"Back-to-Basics.md": ["applopener_1", "applnote_12"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
 ''';
 final sample_1_1 = '''
 # Chapter 1
@@ -23,7 +23,7 @@ ${'one line\n' * 120}
 <a name='applnote_13'></a>
 > In our anxiety, we interpret anything that happens as a signal of doom.
 ''';
-const sample_2_70 = '''
+const sampleShloka = '''
 ## 2-70
 
 ```shloka-sa
@@ -43,7 +43,10 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
         (server) => server.reply(200, compiledNotes));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/2-70.md', (server) => server.reply(200, sample_2_70));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Navigates to settings from the home screen', (tester) async {
