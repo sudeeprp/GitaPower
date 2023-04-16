@@ -1,0 +1,15 @@
+# Documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: "pub"
+    directory: "/feeder"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    # Workflow files in default location `.github/workflows`
+    directory: "/"
+    schedule:
+      interval: "weekly"
