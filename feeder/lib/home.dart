@@ -1,5 +1,6 @@
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choice_bindings.dart';
@@ -7,6 +8,11 @@ import 'package:askys/content_widget.dart';
 import 'package:askys/begin_widget.dart';
 import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
+
+Widget scaffoldWithoutTopbar(Widget body) {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  return Scaffold(body: body);
+}
 
 Widget makeMyHome() {
   return GetMaterialApp(
@@ -17,7 +23,7 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => const Scaffold(body: NotesWidget())),
-        GetPage(name: '/feed', page: () => Scaffold(body: buildFeed())),
+        GetPage(name: '/feed', page: () => scaffoldWithoutTopbar(buildFeed())),
         GetPage(name: '/chapters', page: () => const ChaptersWidget(key: Key('toc'))),
         GetPage(
             name: '/shloka/:mdFilename',

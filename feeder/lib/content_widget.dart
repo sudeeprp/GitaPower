@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 
+import 'chaptercontent.dart';
+
 enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary, note }
 
 final _multipleSpaces = RegExp(r"\s+");
@@ -333,6 +335,9 @@ class ContentWidget extends StatelessWidget {
   Widget build(context) {
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
+      if (sectionType == SectionType.shlokaNumber) {
+        return []; // Shloka number is now on the top-right
+      }
       return [
         Obx(() => Visibility(
               visible: _isVisible(sectionType),
@@ -369,28 +374,37 @@ class ContentWidget extends StatelessWidget {
     }
 
     MDContent md = Get.find(tag: mdFilename);
-    return Center(
-        child: SingleChildScrollView(
-            child: DefaultTextStyle(
-                style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
-                child: Obx(() {
-                  final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
-                  final widgetsMade = widgetMaker.parse(md.mdContent.value);
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    BuildContext? anchorContext;
-                    if (anchorKeys.containsKey(initialAnchor)) {
-                      anchorContext = anchorKeys[initialAnchor]?.currentContext;
-                    }
-                    if (anchorContext != null) {
-                      Scrollable.ensureVisible(anchorContext);
-                    }
-                  });
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: widgetsMade,
-                  );
-                }))));
+    return Stack(children: [
+      Center(
+          child: SingleChildScrollView(
+              child: DefaultTextStyle(
+                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+                  child: Obx(() {
+                    final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
+                    final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      BuildContext? anchorContext;
+                      if (anchorKeys.containsKey(initialAnchor)) {
+                        anchorContext = anchorKeys[initialAnchor]?.currentContext;
+                      }
+                      if (anchorContext != null) {
+                        Scrollable.ensureVisible(anchorContext);
+                      }
+                    });
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widgetsMade,
+                    );
+                  })))),
+      Positioned(
+          top: 0,
+          right: 0,
+          child: Text(
+            Chapter.filenameToTitle(mdFilename),
+            style: const TextStyle(color: Colors.brown),
+          )),
+    ]);
   }
 }
 

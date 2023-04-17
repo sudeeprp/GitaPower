@@ -59,6 +59,8 @@ void main() {
 
     final feedMDs = createRandomFeed(['2-4.md', '3-5.md', '10-10.md', '18-4.md', '18-50.md']);
     expect(feedMDs.length, equals(3));
+    // ignore: avoid_print
+    print(feedMDs);
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
   });
