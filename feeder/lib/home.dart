@@ -1,6 +1,5 @@
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choice_bindings.dart';
@@ -9,9 +8,8 @@ import 'package:askys/begin_widget.dart';
 import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 
-Widget scaffoldWithoutTopbar(Widget body) {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-  return Scaffold(body: body);
+Widget screenify(Widget body) {
+  return Scaffold(body: SafeArea(child: body));
 }
 
 Widget makeMyHome() {
@@ -22,17 +20,16 @@ Widget makeMyHome() {
       darkTheme: ThemeData(brightness: Brightness.dark),
       home: const Home(),
       getPages: [
-        GetPage(name: '/notes', page: () => const Scaffold(body: NotesWidget())),
-        GetPage(name: '/feed', page: () => scaffoldWithoutTopbar(buildFeed())),
-        GetPage(name: '/chapters', page: () => const ChaptersWidget(key: Key('toc'))),
+        GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
+        GetPage(name: '/feed', page: () => screenify(buildFeed())),
+        GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
         GetPage(
             name: '/shloka/:mdFilename',
-            page: () => Scaffold(body: buildContent(Get.parameters['mdFilename']!))),
+            page: () => screenify(buildContent(Get.parameters['mdFilename']!))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
-            page: () => Scaffold(
-                body: buildContent(Get.parameters['mdFilename']!,
-                    initialAnchor: Get.parameters['noteId']))),
+            page: () => screenify(buildContent(Get.parameters['mdFilename']!,
+                initialAnchor: Get.parameters['noteId']))),
       ]);
 }
 

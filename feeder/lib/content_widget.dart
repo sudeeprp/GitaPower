@@ -378,7 +378,7 @@ class ContentWidget extends StatelessWidget {
       Center(
           child: SingleChildScrollView(
               child: DefaultTextStyle(
-                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.2),
                   child: Obx(() {
                     final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                     final widgetsMade = widgetMaker.parse(md.mdContent.value);
