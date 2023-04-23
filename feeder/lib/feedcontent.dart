@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:get/get.dart';
@@ -7,12 +6,8 @@ import 'content_source.dart';
 
 Future<List<String>> allShlokaMDs() async {
   final GitHubFetcher contentSource = Get.find();
-  final mdToNoteIdsStr = await contentSource.compiledAsString('md_to_note_ids_compiled.json');
-  final List<dynamic> mdToNoteIdsJson = jsonDecode(mdToNoteIdsStr);
-  final mdFilenames = mdToNoteIdsJson.map(((e) {
-    final mdToNote = e as Map<String, dynamic>;
-    return mdToNote.keys.first;
-  }));
+  final mdToNotes = await contentSource.mdToNoteIds();
+  final mdFilenames = mdToNotes.map((e) => e.keys.first);
   return mdFilenames.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
 }
 
