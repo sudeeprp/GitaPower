@@ -73,10 +73,4 @@ void main() {
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
   });
-  // test('picks three shlokas', () async {
-  //   final shlokas = await threeShlokas();
-  //   expect(shlokas[0], '2-4.md');
-  //   expect(shlokas[1], '10-10.md');
-  //   expect(shlokas[2], '18-4.md');
-  // });
 }
