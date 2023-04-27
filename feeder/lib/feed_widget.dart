@@ -14,14 +14,20 @@ class FeedWidget extends StatelessWidget {
       if (feedContent.feedPicked.value) {
         return Column(
             children: feedContent.threeShlokas
-                .map((filename) =>
-                    Expanded(child: Container(
+                .map((filename) => Expanded(
+                        child: Container(
                       decoration: BoxDecoration(
-                        border: const Border(bottom: BorderSide(color: Colors.black)),
-                        boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), spreadRadius: 5, blurRadius: 7, offset: const Offset(0, -5))]
-                      ),
+                          border: const Border(bottom: BorderSide(color: Colors.black)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, -5))
+                          ]),
                       child: buildContentWithNote(filename, key: Key('feed/${count++}')),
-                    ))).toList());
+                    )))
+                .toList());
       } else {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
