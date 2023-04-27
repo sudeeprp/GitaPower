@@ -15,8 +15,13 @@ class FeedWidget extends StatelessWidget {
         return Column(
             children: feedContent.threeShlokas
                 .map((filename) =>
-                    Expanded(child: buildContent(filename, key: Key('feed/${count++}'))))
-                .toList());
+                    Expanded(child: Container(
+                      decoration: BoxDecoration(
+                        border: const Border(bottom: BorderSide(color: Colors.black)),
+                        boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), spreadRadius: 5, blurRadius: 7, offset: const Offset(0, -5))]
+                      ),
+                      child: buildContentWithNote(filename, key: Key('feed/${count++}')),
+                    ))).toList());
       } else {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,

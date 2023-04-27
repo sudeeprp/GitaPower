@@ -299,7 +299,7 @@ Widget _buildNote(BuildContext context, String noteContent) {
 
 BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
   if (sectionType == SectionType.meaning) {
-    return const BoxDecoration(border: Border(bottom: BorderSide()));
+    return const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey)));
   } else {
     return null;
   }
@@ -376,6 +376,12 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
+    void insertContentNode(List<Widget> contentWidgets) {
+      if (contentNote != null) {
+        contentWidgets.insert(0, _buildNote(context, contentNote!));
+      }
+    }
+
     MDContent md = Get.find(tag: mdFilename);
     return Stack(children: [
       Center(
@@ -385,7 +391,7 @@ class ContentWidget extends StatelessWidget {
                   child: Obx(() {
                     final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                     final widgetsMade = widgetMaker.parse(md.mdContent.value);
-                    _insertContentNode(widgetsMade);
+                    insertContentNode(widgetsMade);
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       BuildContext? anchorContext;
                       if (anchorKeys.containsKey(initialAnchor)) {
@@ -409,12 +415,6 @@ class ContentWidget extends StatelessWidget {
             style: const TextStyle(color: Colors.brown),
           )),
     ]);
-  }
-
-  void _insertContentNode(List<Widget> contentWidgets) {
-    if (contentNote != null) {
-      contentWidgets.insert(0, Text(contentNote!));
-    }
   }
 }
 

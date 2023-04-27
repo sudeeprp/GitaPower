@@ -28,7 +28,7 @@ Widget makeMyHome() {
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
-            page: () => screenify(buildContent(Get.parameters['mdFilename']!,
+            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!,
                 initialAnchor: Get.parameters['noteId']))),
       ]);
 }
