@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 
+import 'chaptercontent.dart';
+import 'notecontent.dart';
+
 enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary, note }
 
 final _multipleSpaces = RegExp(r"\s+");
@@ -117,13 +120,13 @@ class WidgetMaker implements md.NodeVisitor {
       tag = 'note';
     }
     if (_hasAnchor(markdownText.textContent)) {
-      tag = 'anchor';
       final anchorMatches = _anchors.allMatches(markdownText.textContent);
       for (final anchor in anchorMatches) {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          collectedInlines.add(MatterForInline(noteId, element.sectionType, tag, elmclass, link));
+          collectedInlines
+              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
         }
       }
     }
@@ -296,7 +299,7 @@ Widget _buildNote(BuildContext context, String noteContent) {
 
 BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
   if (sectionType == SectionType.meaning) {
-    return const BoxDecoration(border: Border(bottom: BorderSide()));
+    return const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey)));
   } else {
     return null;
   }
@@ -322,17 +325,22 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
+  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, {Key? key})
+      : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
   final String mdFilename;
   final String? initialAnchor;
+  final String? contentNote;
 
   @override
   Widget build(context) {
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
+      if (sectionType == SectionType.shlokaNumber) {
+        return []; // Shloka number is now on the top-right
+      }
       return [
         Obx(() => Visibility(
               visible: _isVisible(sectionType),
@@ -368,32 +376,55 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
+    void insertContentNode(List<Widget> contentWidgets) {
+      if (contentNote != null) {
+        contentWidgets.insert(0, _buildNote(context, contentNote!));
+      }
+    }
+
     MDContent md = Get.find(tag: mdFilename);
-    return Center(
-        child: SingleChildScrollView(
-            child: DefaultTextStyle(
-                style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
-                child: Obx(() {
-                  final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
-                  final widgetsMade = widgetMaker.parse(md.mdContent.value);
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    BuildContext? anchorContext;
-                    if (anchorKeys.containsKey(initialAnchor)) {
-                      anchorContext = anchorKeys[initialAnchor]?.currentContext;
-                    }
-                    if (anchorContext != null) {
-                      Scrollable.ensureVisible(anchorContext);
-                    }
-                  });
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: widgetsMade,
-                  );
-                }))));
+    return Stack(children: [
+      Center(
+          child: SingleChildScrollView(
+              child: DefaultTextStyle(
+                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+                  child: Obx(() {
+                    final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
+                    final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                    insertContentNode(widgetsMade);
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      BuildContext? anchorContext;
+                      if (anchorKeys.containsKey(initialAnchor)) {
+                        anchorContext = anchorKeys[initialAnchor]?.currentContext;
+                      }
+                      if (anchorContext != null) {
+                        Scrollable.ensureVisible(anchorContext);
+                      }
+                    });
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widgetsMade,
+                    );
+                  })))),
+      Positioned(
+          top: 0,
+          right: 0,
+          child: Text(
+            Chapter.filenameToTitle(mdFilename),
+            style: const TextStyle(color: Colors.brown),
+          )),
+    ]);
   }
 }
 
-ContentWidget buildContent(String mdFilename, {String? initialAnchor, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, key: key);
+ContentWidget buildContent(String mdFilename,
+    {String? initialAnchor, String? contentNote, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, key: key);
+}
+
+ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
+  final ContentNotes contentNotes = Get.find();
+  return buildContent(mdFilename,
+      initialAnchor: initialAnchor, contentNote: contentNotes.noteForMD(mdFilename), key: key);
 }
