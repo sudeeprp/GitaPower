@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('converts applnotes into chapters and shlokas', (WidgetTester tester) async {
-    const List<Map<String, List<String>>> notesJsonStr = [
+    const List<Map<String, List<String>>> mdToNoteIds = [
       {"Chapter_1.md": []},
       {
         "1-20_to_1-23.md": ["applnote_15"]
@@ -20,7 +20,7 @@ void main() {
         "2-2.md": ["applnote_18"]
       }
     ];
-    final chapters = mdNotesToChapters(notesJsonStr);
+    final chapters = mdNotesToChapters(mdToNoteIds);
     expect(chapters[0].title, equals('Chapter 1'));
     expect(chapters[0].shokas[0], equals('Chapter 1'));
     expect(chapters[0].shokas.length, equals(4));

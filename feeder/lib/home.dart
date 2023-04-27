@@ -25,7 +25,7 @@ Widget makeMyHome() {
         GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
         GetPage(
             name: '/shloka/:mdFilename',
-            page: () => screenify(buildContent(Get.parameters['mdFilename']!))),
+            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
             page: () => screenify(buildContent(Get.parameters['mdFilename']!,

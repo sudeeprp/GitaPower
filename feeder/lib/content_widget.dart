@@ -7,6 +7,7 @@ import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 
 import 'chaptercontent.dart';
+import 'notecontent.dart';
 
 enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary, note }
 
@@ -324,12 +325,14 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, {Key? key}) : super(key: key) {
+  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, {Key? key})
+      : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
   final String mdFilename;
   final String? initialAnchor;
+  final String? contentNote;
 
   @override
   Widget build(context) {
@@ -378,10 +381,11 @@ class ContentWidget extends StatelessWidget {
       Center(
           child: SingleChildScrollView(
               child: DefaultTextStyle(
-                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.2),
+                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
                   child: Obx(() {
                     final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                     final widgetsMade = widgetMaker.parse(md.mdContent.value);
+                    _insertContentNode(widgetsMade);
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       BuildContext? anchorContext;
                       if (anchorKeys.containsKey(initialAnchor)) {
@@ -406,8 +410,21 @@ class ContentWidget extends StatelessWidget {
           )),
     ]);
   }
+
+  void _insertContentNode(List<Widget> contentWidgets) {
+    if (contentNote != null) {
+      contentWidgets.insert(0, Text(contentNote!));
+    }
+  }
 }
 
-ContentWidget buildContent(String mdFilename, {String? initialAnchor, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, key: key);
+ContentWidget buildContent(String mdFilename,
+    {String? initialAnchor, String? contentNote, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, key: key);
+}
+
+ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
+  final ContentNotes contentNotes = Get.find();
+  return buildContent(mdFilename,
+      initialAnchor: initialAnchor, contentNote: contentNotes.noteForMD(mdFilename), key: key);
 }

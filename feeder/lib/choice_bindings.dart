@@ -13,6 +13,7 @@ class ChoiceBinding implements Bindings {
     Get.put(Choices());
     Get.put(ChaptersTOC());
     Get.put(NotesTOC());
+    Get.put(ContentNotes());
     Get.put(FeedContent());
   }
 }

@@ -33,10 +33,8 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
   randomFeed.sort((a, b) {
     final aRef = mdFilenameToShlokaNumber(a);
     final bRef = mdFilenameToShlokaNumber(b);
-    return aRef.chapterNumber * 1000 +
-        aRef.shlokaNumber -
-        bRef.chapterNumber * 1000 +
-        bRef.shlokaNumber;
+    return (aRef.chapterNumber * 1000 + aRef.shlokaNumber) -
+        (bRef.chapterNumber * 1000 + bRef.shlokaNumber);
   });
   return randomFeed;
 }

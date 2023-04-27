@@ -51,3 +51,38 @@ class NotesTOC extends GetxController {
     super.onInit();
   }
 }
+
+Map<String, String?> mapMdsToTheirNotes(
+    List<Map<String, List<String>>> mdToNoteIds, List<Map<String, String>> notesCompiled) {
+  Map<String, String?> mdsToInitialNote = {};
+  String? lastNote;
+  for (int i = 0; i < mdToNoteIds.length; i++) {
+    final mdFilename = mdToNoteIds[i].keys.first;
+    mdsToInitialNote[mdFilename] = lastNote;
+    final noteIdsInMD = mdToNoteIds[i][mdFilename];
+    if (noteIdsInMD != null && noteIdsInMD.isNotEmpty) {
+      String lastNoteId = noteIdsInMD.last;
+      final noteEntry = notesCompiled.where((note) => note['note_id'] == lastNoteId);
+      if (noteEntry.isNotEmpty) {
+        lastNote = noteEntry.first['text'];
+      }
+    }
+  }
+  return mdsToInitialNote;
+}
+
+class ContentNotes extends GetxController {
+  Map<String, String?> mdsToInitialNote = {};
+  @override
+  void onInit() async {
+    final GitHubFetcher contentSource = Get.find();
+    final notesCompiled = await contentSource.notesCompiled();
+    final mdToNoteIds = await contentSource.mdToNoteIds();
+    mdsToInitialNote = mapMdsToTheirNotes(mdToNoteIds, notesCompiled);
+    super.onInit();
+  }
+
+  String? noteForMD(String mdFilename) {
+    return mdsToInitialNote[mdFilename];
+  }
+}
