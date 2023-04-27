@@ -2,19 +2,6 @@ import 'package:askys/notecontent.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // setUp(() {
-  //   const mdToNoteIdsStr = '''[{"3-1.md": ["applnote_33"]}, {"3-2.md": []}]''';
-  //   const notesCompiledStr =
-  //       '''[{"note_id": "applnote_33", "text": "sample note", "file": "3-1.md"}]''';
-  //   final dio = Dio();
-  //   final dioAdapter = DioAdapter(dio: dio);
-  //   dio.httpClientAdapter = dioAdapter;
-  //   dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
-  //       (server) => server.reply(200, mdToNoteIdsStr));
-  //   dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
-  //       (server) => server.reply(200, notesCompiledStr));
-  //   Get.put(GitHubFetcher(dio));
-  // });
   testWidgets('Decodes compiled notes and filenames into notes TOC', (WidgetTester tester) async {
     const List<Map<String, String>> compiledNotes = [
       {"note_id": "applopener_1", "text": "Who am I?", "file": "Back-to-Basics.md"},
@@ -59,10 +46,4 @@ void main() {
     expect(mdsToInitialNotes['2-11.md'], equals(null));
     expect(mdsToInitialNotes['2-12.md'], equals('I am not my body'));
   });
-  // test('retrieves the mapping from content source', () {
-  //   Get.put(ContentNotes());
-  //   ContentNotes contentNotes = Get.find();
-  //   expect(contentNotes.noteForMD('3-2.md'), equals('sample note'));
-  //   Get.delete<ContentNotes>();
-  // });
 }
