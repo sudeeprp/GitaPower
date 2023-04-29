@@ -240,6 +240,7 @@ line after newline''');
 ''');
     expect(parsedNote.textsMade[0].content, equals('Do it for Krishna'));
     expect(parsedNote.textsMade[0].tag, equals('note'));
+    expect(parsedNote.widgetsMade.length, equals(1));
   });
   test('retains text adjascent to an anchor', () {
     final parsedNote = recordParseActions('''
@@ -290,5 +291,11 @@ There are many statements in the scriptures
 `श्वेताश्वतर उपनिशद्` `[zvetAzvatara upanizad]` , 4-6
  illustrates that the Lord is distinct''');
     expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
+  });
+  test('renders hyperlink in a note', () {
+    final parsedHyperInNote =
+        recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
+    expect(parsedHyperInNote.textsMade[1].content, equals('devotion'));
+    expect(parsedHyperInNote.widgetsMade.length, equals(1));
   });
 }

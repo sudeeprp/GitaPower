@@ -96,8 +96,7 @@ class WidgetMaker implements md.NodeVisitor {
 
   @override
   bool visitElementBefore(md.Element element) {
-    const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
-    if (widgetSeparators.contains(element.tag)) {
+    if (_isSeparate(element.tag)) {
       final sectionType = _detectSectionType(element);
       elementForCurrentText.add(CurrentTextElement(element, sectionType, true));
     } else {
@@ -135,6 +134,12 @@ class WidgetMaker implements md.NodeVisitor {
       final inlineMatter = MatterForInline(processedText, element.sectionType, tag, elmclass, link);
       collectedInlines.add(inlineMatter);
     }
+  }
+
+  bool _isSeparate(elementTag) {
+    const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
+    return widgetSeparators.contains(elementTag) &&
+        (elementForCurrentText.isEmpty || elementForCurrentText.last.mdElement.tag != 'blockquote');
   }
 
   String _textForElement(String inputText, md.Element element) {
@@ -286,14 +291,14 @@ Widget _horizontalScrollForShloka(SectionType sectionType, Widget w) {
   }
 }
 
-Widget _buildNote(BuildContext context, String noteContent) {
+Widget _buildNote(BuildContext context, Widget content) {
   return Container(
     decoration: BoxDecoration(
       color: Theme.of(context).colorScheme.background.withOpacity(0.1),
       borderRadius: BorderRadius.circular(8),
     ),
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-    child: Text(noteContent, textScaleFactor: 0.8),
+    child: content,
   );
 }
 
@@ -317,6 +322,9 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 }
 
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
+  if (sectionType == SectionType.note) {
+    return _buildNote(context, content);
+  }
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
     decoration: _sectionDecoration(context, sectionType),
@@ -350,11 +358,6 @@ class ContentWidget extends StatelessWidget {
     }
 
     List<TextSpan> formatMaker(MatterForInline inlineMatter) {
-      if (inlineMatter.tag == 'note') {
-        return [
-          TextSpan(children: [WidgetSpan(child: _buildNote(context, inlineMatter.text))])
-        ];
-      }
       if (inlineMatter.tag == 'anchor') {
         return _anchorSpan(inlineMatter.text, anchorKeys);
       }
@@ -378,7 +381,7 @@ class ContentWidget extends StatelessWidget {
 
     void insertContentNode(List<Widget> contentWidgets) {
       if (contentNote != null) {
-        contentWidgets.insert(0, _buildNote(context, contentNote!));
+        contentWidgets.insert(0, _buildNote(context, Text.rich(TextSpan(text: contentNote!))));
       }
     }
 
