@@ -381,7 +381,8 @@ class ContentWidget extends StatelessWidget {
 
     void insertContentNode(List<Widget> contentWidgets) {
       if (contentNote != null) {
-        contentWidgets.insert(0, _buildNote(context, Text.rich(TextSpan(text: contentNote!))));
+        contentWidgets.insert(
+            0, _buildNote(context, Text.rich(TextSpan(text: toPlainText(contentNote!)))));
       }
     }
 

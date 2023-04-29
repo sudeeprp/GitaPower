@@ -46,4 +46,9 @@ void main() {
     expect(mdsToInitialNotes['2-11.md'], equals(null));
     expect(mdsToInitialNotes['2-12.md'], equals('I am not my body'));
   });
+  test('loses links when translated to plain text', () {
+    expect(
+        toPlainText('Practice [devotion](b.md#bhakti) always'), equals('Practice devotion always'));
+    expect(toPlainText('What am I?'), equals('What am I?'));
+  });
 }

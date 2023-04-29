@@ -86,3 +86,9 @@ class ContentNotes extends GetxController {
     return mdsToInitialNote[mdFilename];
   }
 }
+
+final _mdlinkWithTextCapture = RegExp(r'\[([^\[]+)\](\(.*\))');
+
+String toPlainText(String noteContent) {
+  return noteContent.replaceAllMapped(_mdlinkWithTextCapture, (match) => match.group(1)!);
+}
