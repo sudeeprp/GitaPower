@@ -9,7 +9,16 @@ import 'package:markdown/markdown.dart' as md;
 import 'chaptercontent.dart';
 import 'notecontent.dart';
 
-enum SectionType { chapterHeading, shlokaNumber, shlokaSA, shlokaSAHK, meaning, commentary, note }
+enum SectionType {
+  chapterHeading,
+  topicHead,
+  shlokaNumber,
+  shlokaSA,
+  shlokaSAHK,
+  meaning,
+  commentary,
+  note
+}
 
 final _multipleSpaces = RegExp(r"\s+");
 final _anchors = RegExp(r"<a name='([\w]+)'><\/a>\s*");
@@ -60,7 +69,7 @@ class WidgetMaker implements md.NodeVisitor {
     };
     final tagToSectionType = {
       'h1': (element) => SectionType.chapterHeading,
-      'h2': (element) => SectionType.shlokaNumber,
+      'h2': (element) => _headingType(element.textContent),
       'pre': (element) => classToSectionType[element.children[0].attributes['class']],
       'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
           ? SectionType.meaning
@@ -168,6 +177,13 @@ bool _startsWithDevanagari(String? content) {
   }
 }
 
+SectionType _headingType(String? content) {
+  if (content != null && RegExp('^[0-9]').hasMatch(content)) {
+    return SectionType.shlokaNumber;
+  }
+  return SectionType.topicHead;
+}
+
 bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
@@ -218,7 +234,7 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   } else if (tag == 'h2') {
     return GoogleFonts.workSans(height: 3);
   } else if (tag == 'em') {
-    return GoogleFonts.bubblerOne(height: 1.2);
+    return GoogleFonts.bubblerOne(height: 1.2, fontSize: 16);
   } else if (tag == 'note') {
     return const TextStyle(fontSize: 14);
   } else {
@@ -350,6 +366,15 @@ class ContentWidget extends StatelessWidget {
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
         return []; // Shloka number is now on the top-right
+      }
+      if (sectionType == SectionType.topicHead) {
+        return [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
+            child: Text.rich(TextSpan(children: spans), style: const TextStyle(color: Colors.red)),
+          )
+        ];
       }
       return [
         Obx(() => Visibility(

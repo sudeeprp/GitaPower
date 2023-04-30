@@ -76,6 +76,11 @@ void main() {
     final dio = Dio();
     final dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/Back-to-Basics.md', (server) => server.reply(200, '''
+## योग [yOga] - To associate, gain and realize
+
+Yoga is about realization
+'''));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/10-10-meaning.md',
         (server) => server.reply(200,
@@ -193,6 +198,12 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle();
     expect(find.textContaining('such resolve is sattva'), findsOneWidget);
   });
+  testWidgets('shows second level headings in intro-basics', (tester) async {
+    Get.put(Choices());
+    await tester.pumpWidget(GetMaterialApp(home: buildContent('Back-to-Basics.md')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('योग [yOga]'), findsOneWidget);
+  });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
     expect(inlineCode.textsMade[0].content, equals('inline '));
@@ -302,10 +313,19 @@ There are many statements in the scriptures
  illustrates that the Lord is distinct''');
     expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
   });
-  test('renders hyperlink in a note', () {
+  test('converts hyperlink in a note to text', () {
     final parsedHyperInNote =
         recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
     expect(parsedHyperInNote.textsMade[1].content, equals('devotion'));
     expect(parsedHyperInNote.widgetsMade.length, equals(1));
+  });
+  test('marks subheadings in back-to-basics', () {
+    final parsedBasics = recordParseActions('''
+## आत्म [Atma] - The Self
+
+As the Lord Himself states, it isn't possible to describe the Self.
+''');
+    expect(parsedBasics.textsMade[0].content, equals('आत्म [Atma] - The Self'));
+    expect(parsedBasics.widgetsMade[0].sectionType, equals(SectionType.topicHead));
   });
 }
