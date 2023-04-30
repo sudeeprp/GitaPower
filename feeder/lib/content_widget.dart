@@ -220,7 +220,7 @@ TextStyle? _styleFor(String tag, String? elmclass) {
   } else if (tag == 'em') {
     return GoogleFonts.bubblerOne(height: 1.2);
   } else if (tag == 'note') {
-    return const TextStyle(fontSize: 15);
+    return const TextStyle(fontSize: 14);
   } else {
     return const TextStyle(height: 1.5);
   }
