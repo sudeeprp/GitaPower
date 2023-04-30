@@ -191,8 +191,7 @@ A person diverts from the path of realizing the Self due to some desires.
     Get.put(Choices());
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
-    final hyperW = find.textContaining('such resolve is sattva');
-    expect(hyperW, findsOneWidget);
+    expect(find.textContaining('such resolve is sattva'), findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
