@@ -219,6 +219,8 @@ TextStyle? _styleFor(String tag, String? elmclass) {
     return GoogleFonts.workSans(height: 3);
   } else if (tag == 'em') {
     return GoogleFonts.bubblerOne(height: 1.2);
+  } else if (tag == 'note') {
+    return const TextStyle(fontSize: 15);
   } else {
     return const TextStyle(height: 1.5);
   }
@@ -367,7 +369,8 @@ class ContentWidget extends StatelessWidget {
             text: inlineMatter.text,
             style: const TextStyle(color: Colors.blue),
             recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
-          )
+          ),
+          const TextSpan(text: ' ')
         ];
       }
       var textContent = _tuneContentForDisplay(inlineMatter);
@@ -379,10 +382,14 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
-    void insertContentNode(List<Widget> contentWidgets) {
+    void insertContentNote(List<Widget> contentWidgets) {
       if (contentNote != null) {
         contentWidgets.insert(
-            0, _buildNote(context, Text.rich(TextSpan(text: toPlainText(contentNote!)))));
+            0,
+            _buildNote(
+                context,
+                Text.rich(TextSpan(text: toPlainText(contentNote!)),
+                    style: _styleFor('note', null))));
       }
     }
 
@@ -395,7 +402,7 @@ class ContentWidget extends StatelessWidget {
                   child: Obx(() {
                     final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                     final widgetsMade = widgetMaker.parse(md.mdContent.value);
-                    insertContentNode(widgetsMade);
+                    insertContentNote(widgetsMade);
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       BuildContext? anchorContext;
                       if (anchorKeys.containsKey(initialAnchor)) {
