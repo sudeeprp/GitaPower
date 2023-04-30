@@ -98,6 +98,10 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
 <a name='greatness_of_yoga'></a>
 A person diverts from the path of realizing the Self due to some desires.
 '''));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/18-33-meaning-hyper.md',
+        (server) => server.reply(200,
+            '`सा धृतिः` `[sA dhRtiH]` - such [resolve](18-29.md#intellect_and_resolve) `सात्विकी` `[sAtvikI]` is sattva'));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (tester) async {
@@ -182,6 +186,13 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.tap(linkFinder);
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/$targetFilename/$targetNote');
+  });
+  testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
+    Get.put(Choices());
+    await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
+    await tester.pumpAndSettle();
+    final hyperW = find.textContaining('such resolve is sattva');
+    expect(hyperW, findsOneWidget);
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
