@@ -98,6 +98,10 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
 <a name='greatness_of_yoga'></a>
 A person diverts from the path of realizing the Self due to some desires.
 '''));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/18-33-meaning-hyper.md',
+        (server) => server.reply(200,
+            '`सा धृतिः` `[sA dhRtiH]` - such [resolve](18-29.md#intellect_and_resolve) `सात्विकी` `[sAtvikI]` is sattva'));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (tester) async {
@@ -183,6 +187,12 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/$targetFilename/$targetNote');
   });
+  testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
+    Get.put(Choices());
+    await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('such resolve is sattva'), findsOneWidget);
+  });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
     expect(inlineCode.textsMade[0].content, equals('inline '));
@@ -240,6 +250,7 @@ line after newline''');
 ''');
     expect(parsedNote.textsMade[0].content, equals('Do it for Krishna'));
     expect(parsedNote.textsMade[0].tag, equals('note'));
+    expect(parsedNote.widgetsMade.length, equals(1));
   });
   test('retains text adjascent to an anchor', () {
     final parsedNote = recordParseActions('''
@@ -290,5 +301,11 @@ There are many statements in the scriptures
 `श्वेताश्वतर उपनिशद्` `[zvetAzvatara upanizad]` , 4-6
  illustrates that the Lord is distinct''');
     expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
+  });
+  test('renders hyperlink in a note', () {
+    final parsedHyperInNote =
+        recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
+    expect(parsedHyperInNote.textsMade[1].content, equals('devotion'));
+    expect(parsedHyperInNote.widgetsMade.length, equals(1));
   });
 }
