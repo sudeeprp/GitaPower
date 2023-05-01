@@ -301,8 +301,10 @@ bool _isVisible(SectionType sectionType) {
   return true;
 }
 
-Widget _horizontalScrollForShloka(SectionType sectionType, Widget w) {
-  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
+Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
+  if (sectionType == SectionType.shlokaSAHK ||
+      sectionType == SectionType.shlokaSA ||
+      sectionType == SectionType.topicHead) {
     return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
   } else {
     return w;
@@ -346,7 +348,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
     decoration: _sectionDecoration(context, sectionType),
-    child: _horizontalScrollForShloka(sectionType, content),
+    child: _horizontalScrollForOneLiners(sectionType, content),
   );
 }
 
