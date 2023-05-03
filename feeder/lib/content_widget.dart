@@ -302,9 +302,7 @@ bool _isVisible(SectionType sectionType) {
 }
 
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
-  if (sectionType == SectionType.shlokaSAHK ||
-      sectionType == SectionType.shlokaSA ||
-      sectionType == SectionType.topicHead) {
+  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
     return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
   } else {
     return w;
@@ -374,7 +372,10 @@ class ContentWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
-            child: Text.rich(TextSpan(children: spans), style: const TextStyle(color: Colors.red)),
+            child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text.rich(TextSpan(children: spans),
+                    style: const TextStyle(color: Colors.red))),
           )
         ];
       }
