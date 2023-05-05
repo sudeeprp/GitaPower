@@ -9,7 +9,21 @@ import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 
 Widget screenify(Widget body) {
-  return Scaffold(body: SafeArea(child: body));
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  return Scaffold(
+    key: scaffoldKey,
+    endDrawer: SafeArea(
+        child: Drawer(child: Column(children: const [ThemeSelector(), ScriptSelector()]))),
+    body: SafeArea(child: Stack(children: [
+      body,
+      Positioned(
+          bottom: 0,
+          right: 0,
+          child: GestureDetector(
+              onTap: () => scaffoldKey.currentState?.openEndDrawer(),
+              child: const Icon(key: Key('home/settingsicon'), Icons.settings))),
+    ]),
+  ));
 }
 
 Widget makeMyHome() {
@@ -38,17 +52,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(Icons.account_circle_rounded),
-        title: const Text("Under implementation"),
-        actions: [
-          GestureDetector(
-              onTap: () => Get.to(() => const ChoiceSelector()),
-              child: const Icon(Icons.settings, key: Key('home/settingsicon')))
-        ],
-      ),
-      body: const BeginWidget(),
-    );
+    return screenify(const BeginWidget());
   }
 }

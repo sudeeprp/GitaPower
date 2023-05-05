@@ -53,7 +53,7 @@ void main() {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('home/settingsicon')));
     await tester.pumpAndSettle();
-    expect(find.byType(ChoiceSelector), findsOneWidget);
+    expect(find.byType(ThemeSelector), findsOneWidget);
   });
   testWidgets('Navigates to journey notes from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
