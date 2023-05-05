@@ -11,19 +11,20 @@ import 'package:askys/feed_widget.dart';
 Widget screenify(Widget body) {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   return Scaffold(
-    key: scaffoldKey,
-    endDrawer: SafeArea(
-        child: Drawer(child: Column(children: const [ThemeSelector(), ScriptSelector()]))),
-    body: SafeArea(child: Stack(children: [
-      body,
-      Positioned(
-          bottom: 0,
-          right: 0,
-          child: GestureDetector(
-              onTap: () => scaffoldKey.currentState?.openEndDrawer(),
-              child: const Icon(key: Key('home/settingsicon'), Icons.settings))),
-    ]),
-  ));
+      key: scaffoldKey,
+      endDrawer: SafeArea(
+          child: Drawer(child: Column(children: const [ThemeSelector(), ScriptSelector()]))),
+      body: SafeArea(
+        child: Stack(children: [
+          body,
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                  onTap: () => scaffoldKey.currentState?.openEndDrawer(),
+                  child: const Icon(key: Key('home/settingsicon'), Icons.settings))),
+        ]),
+      ));
 }
 
 Widget makeMyHome() {
