@@ -41,13 +41,13 @@ class ThemeSelector extends StatelessWidget {
   Widget build(context) {
     final Choices choice = Get.find();
     return Row(children: [
-      const Text('Dark'),
+      const Text('Light'),
       Obx(() => Switch(
           value: choice.theme.value == ReadingTheme.dark,
           onChanged: (bool newValue) {
             choice.theme.value = newValue ? ReadingTheme.dark : ReadingTheme.light;
           })),
-      const Text('Light'),
+      const Text('Dark'),
     ]);
   }
 }

@@ -204,6 +204,28 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle();
     expect(find.textContaining('योग [yOga]'), findsOneWidget);
   });
+  testWidgets('swiping left takes you to the next shloka', (tester) async {
+    Get.put(Choices());
+    final shlokaContent = buildContent('10-11-shloka.md',
+        prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
+    await tester.pumpWidget(GetMaterialApp(
+      home: shlokaContent,
+      getPages: [
+        GetPage(name: '/shloka/10-10-meaning.md', page: () => const Text('swiped to 10-10')),
+        GetPage(name: '/shloka/10-11-shloka.md', page: () => shlokaContent),
+        GetPage(name: '/shloka/10-12-anote.md', page: () => const Text('swiped to 10-12')),
+      ],
+    ));
+    await tester.pumpAndSettle();
+    await tester.fling(find.byKey(const Key('shloka-current')), const Offset(-200, 0), 800);
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shloka/10-12-anote.md');
+    Get.toNamed('/shloka/10-11-shloka.md');
+    await tester.pumpAndSettle();
+    await tester.fling(find.byKey(const Key('shloka-current')), const Offset(300, 0), 800);
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shloka/10-10-meaning.md');
+  });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
     expect(inlineCode.textsMade[0].content, equals('inline '));
