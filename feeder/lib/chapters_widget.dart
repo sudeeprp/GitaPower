@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/chaptercontent.dart';
+import 'package:askys/shloka_headers.dart' as shlokas;
 
 class ChaptersWidget extends StatelessWidget {
   const ChaptersWidget({super.key});
@@ -14,13 +15,13 @@ class ChaptersWidget extends StatelessWidget {
             .map((chapter) => ExpansionTile(
                   title: Text(chapter.title),
                   controlAffinity: ListTileControlAffinity.leading,
-                  children: chapter.shokas
-                      .map((shlokaTitle) => ListTile(
-                            title: Text(shlokaTitle),
-                            onTap: () =>
-                                Get.toNamed('/shloka/${Chapter.titleToFilename(shlokaTitle)}'),
-                          ))
-                      .toList(),
+                  children: chapter.shokas.map((shlokaTitleText) {
+                    final mdFilename = Chapter.titleToFilename(shlokaTitleText);
+                    return ListTile(
+                      title: _formShlokaTitle(shlokaTitleText, mdFilename),
+                      onTap: () => Get.toNamed('/shloka/$mdFilename'),
+                    );
+                  }).toList(),
                 ))
             .toList();
         return Scaffold(body: ListView(children: tocListElements));
@@ -31,5 +32,14 @@ class ChaptersWidget extends StatelessWidget {
         );
       }
     });
+  }
+
+  Widget _formShlokaTitle(String shlokaTitleText, String mdFilename) {
+    final titleWidgets = [Text(shlokaTitleText)];
+    final headerText = shlokas.headers[mdFilename];
+    if (headerText != null) {
+      titleWidgets.add(Text(headerText, style: const TextStyle(color: Colors.red)));
+    }
+    return Column(children: titleWidgets);
   }
 }

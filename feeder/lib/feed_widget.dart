@@ -24,7 +24,8 @@ class FeedWidget extends StatelessWidget {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, -5))
-                          ]),
+                          ],
+                          color: Theme.of(context).cardColor),
                       child: buildContentWithNote(filename, key: Key('feed/${count++}')),
                     )))
                 .toList());

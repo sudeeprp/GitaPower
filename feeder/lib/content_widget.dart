@@ -446,9 +446,9 @@ class ContentWidget extends StatelessWidget {
                     return GestureDetector(
                         onHorizontalDragEnd: (details) {
                           if (details.velocity.pixelsPerSecond.dx < 0 && nextmd != null) {
-                            Get.toNamed('/shloka/$nextmd');
+                            Get.offNamed('/shloka/$nextmd');
                           } else if (details.velocity.pixelsPerSecond.dx > 0 && prevmd != null) {
-                            Get.toNamed('/shloka/$prevmd');
+                            Get.offNamed('/shloka/$prevmd');
                           }
                         },
                         child: Column(
