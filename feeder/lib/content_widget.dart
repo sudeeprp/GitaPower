@@ -283,7 +283,7 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
 
 Widget _anchorWidget(String noteId) {
   if (noteId.startsWith('appl')) {
-    return Image.asset('images/right-foot.png', key: Key(noteId));
+    return Image.asset('images/one-step.png', key: Key(noteId));
   } else {
     return SizedBox(width: 1, height: 1, key: Key(noteId));
   }

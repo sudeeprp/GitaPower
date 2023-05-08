@@ -13,7 +13,7 @@ class ChaptersWidget extends StatelessWidget {
       if (toc.chaptersLoaded.value) {
         List<ExpansionTile> tocListElements = toc.chapters
             .map((chapter) => ExpansionTile(
-                  title: Text(chapter.title),
+                  title: _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)),
                   controlAffinity: ListTileControlAffinity.leading,
                   children: chapter.shokas.map((shlokaTitleText) {
                     final mdFilename = Chapter.titleToFilename(shlokaTitleText);
@@ -41,5 +41,17 @@ class ChaptersWidget extends StatelessWidget {
       titleWidgets.add(Text(headerText, style: TextStyle(color: Colors.deepOrange.shade900)));
     }
     return Column(children: titleWidgets);
+  }
+
+  Widget _formChapterTitle(String chapterHeading, String mdFilename) {
+    final titleWidgets = [
+      Align(alignment: Alignment.centerLeft, child: Text(chapterHeading)),
+      Expanded(child: Image.asset('images/bothfeet.png')),
+    ];
+    final headerText = shlokas.headers[mdFilename];
+    if (headerText != null) {
+      titleWidgets.add(Align(alignment: Alignment.centerRight, child: Text(headerText)));
+    }
+    return Row(children: titleWidgets);
   }
 }
