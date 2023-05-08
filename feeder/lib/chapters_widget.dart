@@ -38,7 +38,7 @@ class ChaptersWidget extends StatelessWidget {
     final titleWidgets = [Text(shlokaTitleText)];
     final headerText = shlokas.headers[mdFilename];
     if (headerText != null) {
-      titleWidgets.add(Text(headerText, style: const TextStyle(color: Colors.red)));
+      titleWidgets.add(Text(headerText, style: TextStyle(color: Colors.deepOrange.shade900)));
     }
     return Column(children: titleWidgets);
   }
