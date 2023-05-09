@@ -38,7 +38,7 @@ class ChaptersWidget extends StatelessWidget {
     final titleWidgets = [Text(shlokaTitleText)];
     final headerText = shlokas.headers[mdFilename];
     if (headerText != null) {
-      titleWidgets.add(Text(headerText, style: TextStyle(color: Colors.deepOrange.shade900)));
+      titleWidgets.add(Text(headerText, style: const TextStyle(color: Color(0xFF800000))));
     }
     return Column(children: titleWidgets);
   }
@@ -46,7 +46,7 @@ class ChaptersWidget extends StatelessWidget {
   Widget _formChapterTitle(String chapterHeading, String mdFilename) {
     final titleWidgets = [
       Align(alignment: Alignment.centerLeft, child: Text(chapterHeading)),
-      Expanded(child: Image.asset('images/bothfeet.png')),
+      Expanded(child: Image.asset('images/bothfeet.png', width: 15, height: 15)),
     ];
     final headerText = shlokas.headers[mdFilename];
     if (headerText != null) {
