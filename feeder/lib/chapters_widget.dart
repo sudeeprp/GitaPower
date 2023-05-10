@@ -1,3 +1,4 @@
+import 'package:askys/choice_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/chaptercontent.dart';
@@ -38,7 +39,7 @@ class ChaptersWidget extends StatelessWidget {
     final titleWidgets = [Text(shlokaTitleText)];
     final headerText = shlokas.headers[mdFilename];
     if (headerText != null) {
-      titleWidgets.add(Text(headerText, style: const TextStyle(color: Color(0xFF800000))));
+      titleWidgets.add(Text(headerText, style: TextStyle(color: Get.find<Choices>().codeColor)));
     }
     return Column(children: titleWidgets);
   }

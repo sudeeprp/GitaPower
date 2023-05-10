@@ -226,9 +226,9 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
 
 TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
-    return const TextStyle(color: Color(0xFF800000), fontSize: 20);
+    return TextStyle(color: Get.find<Choices>().codeColor, fontSize: 20);
   } else if (tag == 'code') {
-    return GoogleFonts.robotoMono(color: const Color(0xFF800000), fontSize: 16);
+    return GoogleFonts.robotoMono(color: Get.find<Choices>().codeColor, fontSize: 16);
   } else if (tag == 'h1') {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
@@ -365,6 +365,7 @@ class ContentWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
+    final choices = Get.find<Choices>();
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
@@ -378,7 +379,7 @@ class ContentWidget extends StatelessWidget {
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text.rich(TextSpan(children: spans),
-                    style: const TextStyle(color: Color(0xFF800000)))),
+                    style: TextStyle(color: choices.codeColor))),
           )
         ];
       }
