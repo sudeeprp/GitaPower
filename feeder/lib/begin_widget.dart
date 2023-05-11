@@ -20,7 +20,9 @@ Widget beginItem(String title, String about, Image image, {Key? key}) {
           onTap: () => Get.toNamed('/$title'),
           child: Row(children: [
             Expanded(key: key, child: textContainer),
-            Expanded(child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
+            Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
           ])));
 }
 
