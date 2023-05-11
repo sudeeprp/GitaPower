@@ -226,9 +226,9 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
 
 TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
-    return TextStyle(color: Get.find<Choices>().codeColor, fontSize: 20);
+    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize: 20);
   } else if (tag == 'code') {
-    return GoogleFonts.robotoMono(color: Get.find<Choices>().codeColor, fontSize: 16);
+    return GoogleFonts.robotoMono(color: Get.find<Choices>().codeColor.value, fontSize: 16);
   } else if (tag == 'h1') {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
@@ -378,8 +378,8 @@ class ContentWidget extends StatelessWidget {
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Text.rich(TextSpan(children: spans),
-                    style: TextStyle(color: choices.codeColor))),
+                child: Obx(() => Text.rich(TextSpan(children: spans),
+                    style: TextStyle(color: choices.codeColor.value)))),
           )
         ];
       }

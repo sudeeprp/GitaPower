@@ -21,7 +21,7 @@ class Choices extends GetxController {
   static const codeColorForLight = Color(0xFF800000);
   static final codeColorForDark = Colors.deepOrange.shade900.withOpacity(0.9);
   var theme = ReadingTheme.light.obs;
-  var codeColor = codeColorForLight;
+  var codeColor = Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
   final appearanceChoices = {
@@ -32,7 +32,7 @@ class Choices extends GetxController {
   void onInit() {
     theme.listen((themeValue) {
       Get.changeTheme(appearanceChoices[themeValue]!);
-      codeColor = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
+      codeColor.value = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
     });
     super.onInit();
   }

@@ -8,10 +8,11 @@ import 'package:askys/begin_widget.dart';
 import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 
-Widget screenify(Widget body) {
+Widget screenify(Widget body, {AppBar? appBar}) {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   return Scaffold(
       key: scaffoldKey,
+      appBar: appBar,
       endDrawer: SafeArea(
           child: Drawer(child: Column(children: const [ThemeSelector(), ScriptSelector()]))),
       body: SafeArea(
@@ -53,6 +54,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return screenify(const BeginWidget());
+    return screenify(const BeginWidget(),
+        appBar: AppBar(
+            leading: Image.asset('images/sunidhi-krishna.png'),
+            title: const Text("Krishna's Gita")));
   }
 }
