@@ -13,8 +13,8 @@ Widget screenify(Widget body, {AppBar? appBar}) {
   return Scaffold(
       key: scaffoldKey,
       appBar: appBar,
-      endDrawer: SafeArea(
-          child: Drawer(child: Column(children: const [ThemeSelector(), ScriptSelector()]))),
+      endDrawer: const SafeArea(
+          child: Drawer(child: Column(children: [ThemeSelector(), ScriptSelector()]))),
       body: SafeArea(
         child: Stack(children: [
           body,

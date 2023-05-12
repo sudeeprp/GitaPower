@@ -30,9 +30,9 @@ class FeedWidget extends StatelessWidget {
                     )))
                 .toList());
       } else {
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [CircularProgressIndicator()],
+          children: [CircularProgressIndicator()],
         );
       }
     });

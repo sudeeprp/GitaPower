@@ -24,9 +24,9 @@ class NotesWidget extends StatelessWidget {
             .toList();
         return Scaffold(body: ListView(children: openerElements));
       } else {
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [CircularProgressIndicator()],
+          children: [CircularProgressIndicator()],
         );
       }
     });

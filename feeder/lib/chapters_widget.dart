@@ -29,9 +29,9 @@ class ChaptersWidget extends StatelessWidget {
             .toList();
         return Scaffold(body: ListView(children: tocListElements));
       } else {
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [CircularProgressIndicator()],
+          children: [CircularProgressIndicator()],
         );
       }
     });
