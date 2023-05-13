@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Widget beginItem(String title, String about, Image image, {Key? key}) {
-  const itemPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 4);
   final titleText = Padding(
-    padding: itemPadding,
+    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     child: Text.rich(
         key: Key('begin/$title'),
         TextSpan(children: [
@@ -21,7 +20,9 @@ Widget beginItem(String title, String about, Image image, {Key? key}) {
           onTap: () => Get.toNamed('/$title'),
           child: Row(children: [
             Expanded(key: key, child: textContainer),
-            Expanded(child: Padding(padding: itemPadding, child: image)),
+            Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
           ])));
 }
 
@@ -34,8 +35,8 @@ class BeginWidget extends StatelessWidget {
       beginItem(
           'notes', 'Follow the conversation by themes', Image.asset('images/begin-notes.png')),
       beginItem(
-          'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.jfif')),
-      beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.jfif')),
+          'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
+      beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png')),
     ]);
   }
 }

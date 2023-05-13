@@ -226,9 +226,9 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
 
 TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
-    return const TextStyle(color: Colors.red, fontSize: 20);
+    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize: 20);
   } else if (tag == 'code') {
-    return GoogleFonts.robotoMono(color: Colors.red, fontSize: 16);
+    return GoogleFonts.robotoMono(color: Get.find<Choices>().codeColor.value, fontSize: 16);
   } else if (tag == 'h1') {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
@@ -283,7 +283,7 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
 
 Widget _anchorWidget(String noteId) {
   if (noteId.startsWith('appl')) {
-    return Image.asset('images/right-foot.png', key: Key(noteId));
+    return Image.asset('images/one-step.png', key: Key(noteId));
   } else {
     return SizedBox(width: 1, height: 1, key: Key(noteId));
   }
@@ -351,7 +351,8 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, {Key? key})
+  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
+      {Key? key})
       : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
@@ -359,9 +360,12 @@ class ContentWidget extends StatelessWidget {
   final String mdFilename;
   final String? initialAnchor;
   final String? contentNote;
+  final String? nextmd;
+  final String? prevmd;
 
   @override
   Widget build(context) {
+    final choices = Get.find<Choices>();
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
@@ -374,8 +378,8 @@ class ContentWidget extends StatelessWidget {
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Text.rich(TextSpan(children: spans),
-                    style: const TextStyle(color: Colors.red))),
+                child: Obx(() => Text.rich(TextSpan(children: spans),
+                    style: TextStyle(color: choices.codeColor.value)))),
           )
         ];
       }
@@ -440,11 +444,19 @@ class ContentWidget extends StatelessWidget {
                         Scrollable.ensureVisible(anchorContext);
                       }
                     });
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widgetsMade,
-                    );
+                    return GestureDetector(
+                        onHorizontalDragEnd: (details) {
+                          if (details.velocity.pixelsPerSecond.dx < 0 && nextmd != null) {
+                            Get.offNamed('/shloka/$nextmd');
+                          } else if (details.velocity.pixelsPerSecond.dx > 0 && prevmd != null) {
+                            Get.offNamed('/shloka/$prevmd');
+                          }
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: widgetsMade,
+                        ));
                   })))),
       Positioned(
           top: 0,
@@ -458,12 +470,16 @@ class ContentWidget extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor, String? contentNote, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, key: key);
+    {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
 }
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
   return buildContent(mdFilename,
-      initialAnchor: initialAnchor, contentNote: contentNotes.noteForMD(mdFilename), key: key);
+      initialAnchor: initialAnchor,
+      contentNote: contentNotes.noteForMD(mdFilename),
+      prevmd: contentNotes.prevmd(mdFilename),
+      nextmd: contentNotes.nextmd(mdFilename),
+      key: key);
 }

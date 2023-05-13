@@ -24,14 +24,15 @@ class FeedWidget extends StatelessWidget {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, -5))
-                          ]),
+                          ],
+                          color: Theme.of(context).cardColor),
                       child: buildContentWithNote(filename, key: Key('feed/${count++}')),
                     )))
                 .toList());
       } else {
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [CircularProgressIndicator()],
+          children: [CircularProgressIndicator()],
         );
       }
     });

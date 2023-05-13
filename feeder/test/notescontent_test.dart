@@ -1,7 +1,21 @@
+import 'package:askys/content_source.dart';
 import 'package:askys/notecontent.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 void main() {
+  setUp(() {
+    final dio = Dio();
+    final dioAdapter = DioAdapter(dio: dio);
+    dio.httpClientAdapter = dioAdapter;
+    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
+        (server) => server.reply(200, '[{"1-1.md": []}, {"1-2.md": []}]'));
+    dioAdapter.onGet(
+        '${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(200, '[]'));
+    Get.put(GitHubFetcher(dio));
+  });
   testWidgets('Decodes compiled notes and filenames into notes TOC', (WidgetTester tester) async {
     const List<Map<String, String>> compiledNotes = [
       {"note_id": "applopener_1", "text": "Who am I?", "file": "Back-to-Basics.md"},
@@ -50,5 +64,14 @@ void main() {
     expect(
         toPlainText('Practice [devotion](b.md#bhakti) always'), equals('Practice devotion always'));
     expect(toPlainText('What am I?'), equals('What am I?'));
+  });
+  testWidgets('tells the next and previous md files of a given md', (tester) async {
+    final contentNotes = ContentNotes();
+    Get.put(contentNotes);
+    await tester.pumpAndSettle();
+    expect(contentNotes.nextmd('1-1.md'), equals('1-2.md'));
+    expect(contentNotes.nextmd('1-2.md'), equals(null));
+    expect(contentNotes.prevmd('1-2.md'), equals('1-1.md'));
+    expect(contentNotes.prevmd('1-1.md'), equals(null));
   });
 }

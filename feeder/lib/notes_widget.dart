@@ -12,11 +12,11 @@ class NotesWidget extends StatelessWidget {
       if (notesToc.notesLoaded.value) {
         List<ExpansionTile> openerElements = notesToc.openerNotes
             .map((opener) => ExpansionTile(
-                  title: Text(opener.openerContent),
+                  title: _buildOpener(opener.openerContent),
                   controlAffinity: ListTileControlAffinity.leading,
                   children: opener.notes
                       .map((note) => ListTile(
-                            title: Text(toPlainText(note.noteContent), textScaleFactor: 0.9),
+                            title: _buildNote(note),
                             onTap: () => Get.toNamed('/shloka/${note.mdFilename}/${note.noteId}'),
                           ))
                       .toList(),
@@ -24,11 +24,32 @@ class NotesWidget extends StatelessWidget {
             .toList();
         return Scaffold(body: ListView(children: openerElements));
       } else {
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [CircularProgressIndicator()],
+          children: [CircularProgressIndicator()],
         );
       }
     });
+  }
+
+  Widget _buildOpener(String openerText) {
+    return Row(children: [
+      Image.asset('images/bothfeet.png'),
+      Expanded(child: Padding(padding: const EdgeInsets.only(left: 8), child: Text(openerText)))
+    ]);
+  }
+
+  Widget _buildNote(Note note) {
+    const rights = ['0', '2', '4', '6', '8'];
+    final image = rights.contains(note.noteId[note.noteId.length - 1])
+        ? Image.asset('images/right-foot.png')
+        : Image.asset('images/left-foot.png');
+    return Row(children: [
+      image,
+      Expanded(
+          child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(toPlainText(note.noteContent), textScaleFactor: 0.9))),
+    ]);
   }
 }

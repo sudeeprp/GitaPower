@@ -1,3 +1,5 @@
+tools/source-clone-for-gen
+tools/consts.dart
 # Till we need these builds
 linux/
 windows/
