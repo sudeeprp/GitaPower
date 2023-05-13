@@ -44,15 +44,21 @@ class ThemeSelector extends StatelessWidget {
   @override
   Widget build(context) {
     final Choices choice = Get.find();
-    return Row(children: [
-      const Text('Light'),
-      Obx(() => Switch(
-          value: choice.theme.value == ReadingTheme.dark,
-          onChanged: (bool newValue) {
-            choice.theme.value = newValue ? ReadingTheme.dark : ReadingTheme.light;
-          })),
-      const Text('Dark'),
-    ]);
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 25),
+        child: Column(children: [
+          const Text('Theme', textScaleFactor: 2.5),
+          Row(children: [
+            const Expanded(child: Text('Light', textAlign: TextAlign.right, textScaleFactor: 2)),
+            Expanded(
+                child: Obx(() => Switch(
+                    value: choice.theme.value == ReadingTheme.dark,
+                    onChanged: (bool newValue) {
+                      choice.theme.value = newValue ? ReadingTheme.dark : ReadingTheme.light;
+                    }))),
+            const Expanded(child: Text('Dark', textAlign: TextAlign.left, textScaleFactor: 2)),
+          ]),
+        ]));
   }
 }
 
@@ -62,14 +68,21 @@ class ScriptSelector extends StatelessWidget {
   @override
   Widget build(context) {
     Choices choice = Get.find();
-    return Row(children: [
-      const Text('bhakti'),
-      Obx(() => Switch(
-          value: choice.script.value == ScriptPreference.devanagari,
-          onChanged: (bool newValue) {
-            choice.script.value = newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
-          })),
-      const Text('भक्ति'),
-    ]);
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 25),
+        child: Column(children: [
+          const Text('Devanagari', textScaleFactor: 2.5),
+          Row(children: [
+            const Expanded(child: Text('bhakti', textAlign: TextAlign.right, textScaleFactor: 2)),
+            Expanded(
+                child: Obx(() => Switch(
+                    value: choice.script.value == ScriptPreference.devanagari,
+                    onChanged: (bool newValue) {
+                      choice.script.value =
+                          newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
+                    }))),
+            const Expanded(child: Text('भक्ति', textAlign: TextAlign.left, textScaleFactor: 2)),
+          ]),
+        ]));
   }
 }

@@ -1,4 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:askys/home.dart';
 
-void main() => runApp(makeMyHome());
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'firebase_options.dart';
+
+Future<FirebaseApp> initFirebase() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final firebaseApp = await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  return firebaseApp;
+}
+
+void main() async {
+  await initFirebase();
+  runApp(makeMyHome());
+}

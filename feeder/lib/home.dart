@@ -14,7 +14,10 @@ Widget screenify(Widget body, {AppBar? appBar}) {
       key: scaffoldKey,
       appBar: appBar,
       endDrawer: const SafeArea(
-          child: Drawer(child: Column(children: [ThemeSelector(), ScriptSelector()]))),
+          child: Drawer(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [ThemeSelector(), ScriptSelector()]))),
       body: SafeArea(
         child: Stack(children: [
           body,
