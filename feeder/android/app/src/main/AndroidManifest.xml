@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.askys">
+    package="com.gita.sudeep.gitahtml">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="askys"
+        android:label="Krishna's Gita"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

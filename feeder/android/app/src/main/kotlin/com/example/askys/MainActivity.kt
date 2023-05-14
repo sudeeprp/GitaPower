@@ -1,4 +1,4 @@
-package com.example.askys
+package com.gita.sudeep.gitahtml
 
 import io.flutter.embedding.android.FlutterActivity
 
