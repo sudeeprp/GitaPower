@@ -20,8 +20,8 @@ enum ScriptPreference {
 class Choices extends GetxController {
   static const codeColorForLight = Color(0xFF800000);
   static final codeColorForDark = Colors.deepOrange.shade900.withOpacity(0.9);
-  var theme = ReadingTheme.light.obs;
-  var codeColor = Rx<Color>(codeColorForLight);
+  var theme = Get.isDarkMode ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
+  var codeColor = Get.isDarkMode ? Rx<Color>(codeColorForDark) : Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
   final appearanceChoices = {
