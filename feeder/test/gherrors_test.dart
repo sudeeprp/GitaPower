@@ -17,8 +17,7 @@ void main() {
         '${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(401, {}));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Shows error in fetching content, on non-200 result from content-source',
-      (tester) async {
+  testWidgets('Shows content even on non-200 result from content-source', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/notes')));
     await tester.pumpAndSettle();

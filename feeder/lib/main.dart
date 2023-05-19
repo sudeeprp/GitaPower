@@ -14,7 +14,7 @@ Future<FirebaseApp> initFirebase() async {
 
 void main() async {
   ErrorWidget.builder = (FlutterErrorDetails details) {
-      return ErrorWidget(details.exception);
+    return ErrorWidget(details.exception);
   };
   await initFirebase();
   runApp(makeMyHome());

@@ -12,7 +12,7 @@ flutter test --coverage
 
 echo
 filesWithoutFuncs=$(grep -rLE "\)\s*{" ./lib | sed 's/^.\///g' | tr '\n' , | sed 's/,$//g')
-exclusion="--exclude=$filesWithoutFuncs,generated_plugin_registrant.dart,firebase_options.dart"
+exclusion="--exclude=$filesWithoutFuncs,main.dart,generated_plugin_registrant.dart,firebase_options.dart"
 
 echo "run command on Ubuntu for html report:"
 echo "genhtml coverage/lcov.info -o coverage"

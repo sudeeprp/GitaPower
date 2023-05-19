@@ -19,6 +19,10 @@ jobs:
       working-directory: ./feeder
       run: echo "${{ secrets.KEY_JKS }}" | base64 -d > android/app/keystore.jks
 
+    - name: setup offline content
+      working-directory: ./feeder
+      run: bash gita-begin-offline.sh
+
     - name: build release apk
       working-directory: ./feeder
       env: 
