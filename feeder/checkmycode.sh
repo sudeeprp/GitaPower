@@ -6,6 +6,8 @@ set -e
 RED='\033[0;31m'
 NC='\033[0m'
 
+bash gita-begin-offline.sh
+
 dart format -l 100 .
 flutter analyze
 flutter test --coverage
