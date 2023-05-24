@@ -1,5 +1,8 @@
 tools/source-clone-for-gen
 tools/consts.dart
+gita-begin/compile
+gita-begin/gita
+
 # Till we need these builds
 linux/
 windows/

@@ -460,10 +460,10 @@ class ContentWidget extends StatelessWidget {
                   })))),
       Positioned(
           top: 0,
-          right: 0,
+          right: 2,
           child: Text(
             Chapter.filenameToTitle(mdFilename),
-            style: const TextStyle(color: Colors.brown),
+            style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
           )),
     ]);
   }

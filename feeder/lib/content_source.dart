@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -6,11 +7,13 @@ import 'package:get/get.dart';
 class GitHubFetcher extends GetxController {
   final Dio dio;
   GitHubFetcher(this.dio);
-
-  static const mdPath = 'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/gita';
+  static const baseUrl = 'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main';
+  static const compileFolder = 'compile';
+  static const mdFolder = 'gita';
+  static const compiledPath = '$baseUrl/$compileFolder';
+  static const mdPath = '$baseUrl/$mdFolder';
   Future<String> mdString(String mdFilename) async {
-    final md = await dio.get('$mdPath/$mdFilename');
-    return md.data.toString();
+    return await _getRawContent(mdFolder, mdFilename);
   }
 
   Future<List<Map<String, List<String>>>> mdToNoteIds() async {
@@ -33,10 +36,16 @@ class GitHubFetcher extends GetxController {
     return notes;
   }
 
-  static const compiledPath =
-      'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main/compile';
   Future<String> _compiledAsString(String jsonFilename) async {
-    final jsonContent = await dio.get('$compiledPath/$jsonFilename');
-    return jsonContent.data.toString();
+    return await _getRawContent(compileFolder, jsonFilename);
+  }
+
+  Future<String> _getRawContent(String foldername, String filename) async {
+    try {
+      final content = await dio.get('$baseUrl/$foldername/$filename');
+      return content.data.toString();
+    } on DioError {
+      return await rootBundle.loadString('gita-begin/$foldername/$filename');
+    }
   }
 }
