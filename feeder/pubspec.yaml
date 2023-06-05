@@ -28,7 +28,7 @@ dependencies:
   stack: ^0.2.1
   google_fonts: ^4.0.5
   cupertino_icons: ^1.0.5
-  firebase_crashlytics: ^3.3.1
+  firebase_crashlytics: ^3.3.2
   firebase_core: ^2.13.0
 
 dev_dependencies:
