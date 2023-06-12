@@ -22,7 +22,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-  dio: ^5.0.3
+  dio: ^5.2.1
   card_settings: ^3.5.0
   markdown: ^7.0.2
   stack: ^0.2.1
