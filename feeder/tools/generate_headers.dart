@@ -3,10 +3,21 @@ import 'dart:io';
 import 'package:markdown/markdown.dart' as md;
 
 Map<String, List<String>> shlokaHeaderMap = {};
+Map<String, List<String>> meaningHeaderMap = {};
+
+enum HeaderSectionType {
+  begin,
+  shlokaSA,
+  shlokaSAHK,
+  meaning,
+  other
+}
 
 class HeaderMaker implements md.NodeVisitor {
   HeaderMaker(this.mdFilename);
   final String mdFilename;
+  HeaderSectionType _prevSectionType = HeaderSectionType.begin;
+  HeaderSectionType _presentSectionType = HeaderSectionType.other;
 
   void parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
@@ -21,10 +32,11 @@ class HeaderMaker implements md.NodeVisitor {
 
   @override
   bool visitElementBefore(md.Element element) {
-    elmclass(element) => element.children[0].attributes['class'];
-    if (element.tag == 'pre' && elmclass(element) == 'language-shloka-sa') {
-      return true;
-    } else if (element.tag == 'code') {
+    if (_isSeparate(element.tag)) {
+      _prevSectionType = _presentSectionType;
+      _presentSectionType = _detectSectionType(element, _prevSectionType);
+    }
+    if (_presentSectionType == HeaderSectionType.shlokaSA || _presentSectionType == HeaderSectionType.meaning) {
       return true;
     }
     return false;
@@ -32,8 +44,47 @@ class HeaderMaker implements md.NodeVisitor {
 
   @override
   void visitText(md.Text markdownText) {
-    shlokaHeaderMap[mdFilename]!.add(markdownText.textContent.trim());
+    if (_presentSectionType == HeaderSectionType.shlokaSA) {
+      shlokaHeaderMap[mdFilename]!.add(markdownText.textContent.trim());
+    } else if (_presentSectionType == HeaderSectionType.meaning && _isMeaningSentence(markdownText.textContent)) {
+      meaningHeaderMap[mdFilename]!.add(markdownText.textContent);
+    }
   }
+}
+
+bool _startsWithDevanagari(String? content) {
+  if (content == null) {
+    return false;
+  } else {
+    return RegExp('^[\u0900-\u097F]+').hasMatch(content);
+  }
+}
+
+bool _isMeaningSentence(String text) {
+  return !_startsWithDevanagari(text) && !text.startsWith('[');
+}
+
+HeaderSectionType _detectSectionType(md.Element element, HeaderSectionType prevSectionType) {
+  final classToSectionType = {
+    'language-shloka-sa': HeaderSectionType.shlokaSA,
+    'language-shloka-sa-hk': HeaderSectionType.shlokaSAHK
+  };
+  final tagToSectionType = {
+    'pre': (element) => classToSectionType[element.children[0].attributes['class']],
+    'p': (element) => _startsWithDevanagari(element.textContent) && prevSectionType != HeaderSectionType.other
+        ? HeaderSectionType.meaning
+        : HeaderSectionType.other,
+  };
+  final tagConverter = tagToSectionType[element.tag];
+  if (tagConverter != null) {
+    return tagConverter(element)!;
+  }
+  return HeaderSectionType.other;
+}
+
+bool _isSeparate(elementTag) {
+  const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
+  return widgetSeparators.contains(elementTag);
 }
 
 void fillHeaderMap() {
@@ -45,6 +96,7 @@ void fillHeaderMap() {
     // ignore: avoid_print
     print('processing $mdFilename');
     shlokaHeaderMap[mdFilename] = [];
+    meaningHeaderMap[mdFilename] = [];
     HeaderMaker(mdFilename)
         .parse(File('./source-clone-for-gen/gita/$mdFilename').readAsStringSync());
   }
@@ -54,12 +106,20 @@ String concatShlokas(List<String> headers) {
   return headers.join('\n');
 }
 
+String concatMeanings(List<String> meanings) {
+  return meanings.join(' ').replaceAll(RegExp((r'\s+')), ' ').trim();
+}
+
+String shlokaHeaders(String mdFilename) {
+  return "{'shloka': '''${concatShlokas(shlokaHeaderMap[mdFilename]!)}''', 'meaning': '''${concatMeanings(meaningHeaderMap[mdFilename]!)}'''}";
+}
+
 void writeConstants() {
   final constsFile = File('./consts.dart');
   constsFile.writeAsStringSync('const headers = {');
   for (var mdFilename in shlokaHeaderMap.keys) {
     constsFile.writeAsStringSync(
-        "'$mdFilename': '''${concatShlokas(shlokaHeaderMap[mdFilename]!)}''', ",
+        "'$mdFilename': ${shlokaHeaders(mdFilename)},\n",
         mode: FileMode.append);
   }
   constsFile.writeAsStringSync('};', mode: FileMode.append);
