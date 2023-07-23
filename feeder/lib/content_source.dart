@@ -44,7 +44,7 @@ class GitHubFetcher extends GetxController {
     try {
       final content = await dio.get('$baseUrl/$foldername/$filename');
       return content.data.toString();
-    } on DioError {
+    } on DioException {
       return await rootBundle.loadString('gita-begin/$foldername/$filename');
     }
   }
