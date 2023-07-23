@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/chaptercontent.dart';
 import 'package:askys/shloka_headers.dart' as shlokas;
+import 'package:askys/chapter_headers.dart' as chapters;
 
 class ChaptersWidget extends StatelessWidget {
   const ChaptersWidget({super.key});
@@ -39,7 +40,7 @@ class ChaptersWidget extends StatelessWidget {
 
   Widget _formShlokaTitle(String shlokaTitleText, String mdFilename, Color codeColor) {
     final titleWidgets = [Text(shlokaTitleText)];
-    final headerText = shlokas.headers[mdFilename];
+    final headerText = shlokas.headers[mdFilename]?['shloka'];
     if (headerText != null) {
       titleWidgets.add(Text(headerText, style: TextStyle(color: codeColor)));
     }
@@ -51,7 +52,7 @@ class ChaptersWidget extends StatelessWidget {
       Align(alignment: Alignment.centerLeft, child: Text(chapterHeading)),
       Expanded(child: Image.asset('images/bothfeet.png', width: 15, height: 15)),
     ];
-    final headerText = shlokas.headers[mdFilename];
+    final headerText = chapters.headers[mdFilename];
     if (headerText != null) {
       titleWidgets.add(Align(alignment: Alignment.centerRight, child: Text(headerText)));
     }

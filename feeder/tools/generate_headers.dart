@@ -5,13 +5,7 @@ import 'package:markdown/markdown.dart' as md;
 Map<String, List<String>> shlokaHeaderMap = {};
 Map<String, List<String>> meaningHeaderMap = {};
 
-enum HeaderSectionType {
-  begin,
-  shlokaSA,
-  shlokaSAHK,
-  meaning,
-  other
-}
+enum HeaderSectionType { begin, shlokaSA, shlokaSAHK, meaning, other }
 
 class HeaderMaker implements md.NodeVisitor {
   HeaderMaker(this.mdFilename);
@@ -36,7 +30,8 @@ class HeaderMaker implements md.NodeVisitor {
       _prevSectionType = _presentSectionType;
       _presentSectionType = _detectSectionType(element, _prevSectionType);
     }
-    if (_presentSectionType == HeaderSectionType.shlokaSA || _presentSectionType == HeaderSectionType.meaning) {
+    if (_presentSectionType == HeaderSectionType.shlokaSA ||
+        _presentSectionType == HeaderSectionType.meaning) {
       return true;
     }
     return false;
@@ -46,7 +41,8 @@ class HeaderMaker implements md.NodeVisitor {
   void visitText(md.Text markdownText) {
     if (_presentSectionType == HeaderSectionType.shlokaSA) {
       shlokaHeaderMap[mdFilename]!.add(markdownText.textContent.trim());
-    } else if (_presentSectionType == HeaderSectionType.meaning && _isMeaningSentence(markdownText.textContent)) {
+    } else if (_presentSectionType == HeaderSectionType.meaning &&
+        _isMeaningSentence(markdownText.textContent)) {
       meaningHeaderMap[mdFilename]!.add(markdownText.textContent);
     }
   }
@@ -71,9 +67,10 @@ HeaderSectionType _detectSectionType(md.Element element, HeaderSectionType prevS
   };
   final tagToSectionType = {
     'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-    'p': (element) => _startsWithDevanagari(element.textContent) && prevSectionType != HeaderSectionType.other
-        ? HeaderSectionType.meaning
-        : HeaderSectionType.other,
+    'p': (element) =>
+        _startsWithDevanagari(element.textContent) && prevSectionType != HeaderSectionType.other
+            ? HeaderSectionType.meaning
+            : HeaderSectionType.other,
   };
   final tagConverter = tagToSectionType[element.tag];
   if (tagConverter != null) {
@@ -118,8 +115,7 @@ void writeConstants() {
   final constsFile = File('./consts.dart');
   constsFile.writeAsStringSync('const headers = {');
   for (var mdFilename in shlokaHeaderMap.keys) {
-    constsFile.writeAsStringSync(
-        "'$mdFilename': ${shlokaHeaders(mdFilename)},\n",
+    constsFile.writeAsStringSync("'$mdFilename': ${shlokaHeaders(mdFilename)},\n",
         mode: FileMode.append);
   }
   constsFile.writeAsStringSync('};', mode: FileMode.append);
