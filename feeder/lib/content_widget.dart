@@ -322,7 +322,7 @@ Widget _buildNote(BuildContext context, Widget content) {
 
 BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
   if (sectionType == SectionType.meaning) {
-    return const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey)));
+    return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
   } else {
     return null;
   }
