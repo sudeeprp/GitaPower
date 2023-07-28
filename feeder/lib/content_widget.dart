@@ -343,11 +343,10 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+  return Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: Container(
     decoration: _sectionDecoration(context, sectionType),
     child: _horizontalScrollForOneLiners(sectionType, content),
-  );
+  ));
 }
 
 class ContentWidget extends StatelessWidget {
