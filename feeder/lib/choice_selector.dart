@@ -17,6 +17,8 @@ enum ScriptPreference {
   sahk,
 }
 
+enum HeadPreference { shloka, meaning }
+
 class Choices extends GetxController {
   static const codeColorForLight = Color(0xFF800000);
   static final codeColorForDark = Colors.deepOrange.shade900.withOpacity(0.9);
@@ -24,6 +26,7 @@ class Choices extends GetxController {
   var codeColor = Get.isDarkMode ? Rx<Color>(codeColorForDark) : Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
+  var headPreference = HeadPreference.shloka.obs;
   final appearanceChoices = {
     ReadingTheme.dark: ThemeData.dark(),
     ReadingTheme.light: ThemeData.light(),
@@ -82,6 +85,31 @@ class ScriptSelector extends StatelessWidget {
                           newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
                     }))),
             const Expanded(child: Text('भक्ति', textAlign: TextAlign.left, textScaleFactor: 2)),
+          ]),
+        ]));
+  }
+}
+
+class HeaderSelector extends StatelessWidget {
+  const HeaderSelector({super.key});
+
+  @override
+  Widget build(context) {
+    Choices choice = Get.find();
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 25),
+        child: Column(children: [
+          const Text('Header', textScaleFactor: 2.5),
+          Row(children: [
+            const Expanded(child: Text('shloka', textAlign: TextAlign.right, textScaleFactor: 2)),
+            Expanded(
+                child: Obx(() => Switch(
+                    value: choice.headPreference.value == HeadPreference.shloka,
+                    onChanged: (bool newValue) {
+                      choice.headPreference.value =
+                          newValue ? HeadPreference.shloka : HeadPreference.meaning;
+                    }))),
+            const Expanded(child: Text('meaning', textAlign: TextAlign.left, textScaleFactor: 2)),
           ]),
         ]));
   }

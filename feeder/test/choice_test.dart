@@ -25,4 +25,14 @@ void main() {
     expect(choices.script.value, isNot(initialScript));
     Get.delete<Choices>();
   });
+  testWidgets('header selector switches header preference', (tester) async {
+    final choices = Choices();
+    Get.put(choices);
+    final initialHeaderPref = choices.headPreference.value;
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: HeaderSelector())));
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    expect(choices.headPreference, isNot(initialHeaderPref));
+    Get.delete<Choices>();
+  });
 }
