@@ -293,10 +293,11 @@ bool _isVisible(SectionType sectionType) {
   Choices choice = Get.find();
   // Assignment to a local variable is needed. Otherwise GetX throws an error when "return true" doesn't access any observable.
   final scriptChoice = choice.script.value;
+  final headPreference = choice.headPreference.value;
   if (sectionType == SectionType.shlokaSA) {
-    return scriptChoice == ScriptPreference.devanagari;
+    return scriptChoice == ScriptPreference.devanagari && headPreference == HeadPreference.shloka;
   } else if (sectionType == SectionType.shlokaSAHK) {
-    return scriptChoice == ScriptPreference.sahk;
+    return scriptChoice == ScriptPreference.sahk && headPreference == HeadPreference.shloka;
   }
   return true;
 }
@@ -343,10 +344,12 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
-  return Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: Container(
-    decoration: _sectionDecoration(context, sectionType),
-    child: _horizontalScrollForOneLiners(sectionType, content),
-  ));
+  return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      child: Container(
+        decoration: _sectionDecoration(context, sectionType),
+        child: _horizontalScrollForOneLiners(sectionType, content),
+      ));
 }
 
 class ContentWidget extends StatelessWidget {
