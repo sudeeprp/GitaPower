@@ -443,7 +443,7 @@ class ContentWidget extends StatelessWidget {
                         anchorContext = anchorKeys[initialAnchor]?.currentContext;
                       }
                       if (anchorContext != null) {
-                        Scrollable.ensureVisible(anchorContext);
+                        Scrollable.ensureVisible(anchorContext, alignment: 0.3);
                       }
                     });
                     return GestureDetector(
