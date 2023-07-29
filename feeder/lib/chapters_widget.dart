@@ -14,6 +14,7 @@ class ChaptersWidget extends StatelessWidget {
     return Obx(() {
       final Choices choices = Get.find();
       final codeColor = choices.codeColor.value;
+      final headPreference = choices.headPreference.value;
       if (toc.chaptersLoaded.value) {
         List<ExpansionTile> tocListElements = toc.chapters
             .map((chapter) => ExpansionTile(
@@ -22,7 +23,8 @@ class ChaptersWidget extends StatelessWidget {
                   children: chapter.shokas.map((shlokaTitleText) {
                     final mdFilename = Chapter.titleToFilename(shlokaTitleText);
                     return ListTile(
-                      title: _formShlokaTitle(shlokaTitleText, mdFilename, codeColor),
+                      title:
+                          _formShlokaTitle(shlokaTitleText, mdFilename, headPreference, codeColor),
                       onTap: () => Get.toNamed('/shloka/$mdFilename'),
                     );
                   }).toList(),
@@ -38,9 +40,15 @@ class ChaptersWidget extends StatelessWidget {
     });
   }
 
-  Widget _formShlokaTitle(String shlokaTitleText, String mdFilename, Color codeColor) {
+  Widget _formShlokaTitle(
+      String shlokaTitleText, String mdFilename, HeadPreference headPreference, Color codeColor) {
     final titleWidgets = [Text(shlokaTitleText)];
-    final headerText = shlokas.headers[mdFilename]?['shloka'];
+    String? headerText;
+    if (headPreference == HeadPreference.shloka) {
+      headerText = shlokas.headers[mdFilename]?['shloka'];
+    } else {
+      headerText = shlokas.headers[mdFilename]?['meaning'];
+    }
     if (headerText != null) {
       titleWidgets.add(Text(headerText, style: TextStyle(color: codeColor)));
     }

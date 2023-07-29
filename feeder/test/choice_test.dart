@@ -9,7 +9,7 @@ void main() {
     final choices = Choices();
     Get.put(choices);
     final initialTheme = choices.theme.value;
-    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: ThemeSelector())));
+    await tester.pumpWidget(MaterialApp(home: Scaffold(body: themeSelector())));
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
     expect(choices.theme.value, isNot(initialTheme));
@@ -19,10 +19,20 @@ void main() {
     final choices = Choices();
     Get.put(choices);
     final initialScript = choices.script.value;
-    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: ScriptSelector())));
+    await tester.pumpWidget(MaterialApp(home: Scaffold(body: scriptSelector())));
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
     expect(choices.script.value, isNot(initialScript));
+    Get.delete<Choices>();
+  });
+  testWidgets('header selector switches header preference', (tester) async {
+    final choices = Choices();
+    Get.put(choices);
+    final initialHeaderPref = choices.headPreference.value;
+    await tester.pumpWidget(MaterialApp(home: Scaffold(body: headerSelector())));
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    expect(choices.headPreference, isNot(initialHeaderPref));
     Get.delete<Choices>();
   });
 }
