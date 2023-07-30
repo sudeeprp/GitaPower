@@ -1,11 +1,11 @@
 import 'package:askys/notes_widget.dart';
+import 'package:askys/varchas_widgets/chapters_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choice_bindings.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/begin_widget.dart';
-import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 
 Widget screenify(Widget body, {AppBar? appBar}) {
@@ -41,7 +41,7 @@ Widget makeMyHome() {
       getPages: [
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
         GetPage(name: '/feed', page: () => screenify(buildFeed())),
-        GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
+        GetPage(name: '/chapters', page: () => screenify(const ChaptersWidgetTest(key: Key('toc')))),
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
