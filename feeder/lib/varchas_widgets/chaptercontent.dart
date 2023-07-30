@@ -33,6 +33,6 @@ class ChapterContentTest extends StatelessWidget{
     if (headerText != null) {
       titleWidgets.add(Text(headerText, style: TextStyle(color: codeColor)));
     }
-    return Column(children: [...titleWidgets, const SizedBox(height: 16,)]);
+    return Column(children: [...titleWidgets, const SizedBox(height: 16,)] );
   }
 }
