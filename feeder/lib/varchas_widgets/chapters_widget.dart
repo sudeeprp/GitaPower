@@ -11,22 +11,25 @@ class ChaptersWidgetTest extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final ChaptersTOC toc = Get.find();
-    return Obx(() {
-      
-      if (toc.chaptersLoaded.value) {
-    return ListView.builder(itemCount: toc.chapters.length,itemBuilder: (context, index) => ListTile(
-      title:  _formChapterTitle(toc.chapters[index].title, Chapter.titleToFilename(toc.chapters[index].title,),index),
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChapterContentTest(chapter: toc.chapters[index], title: toc.chapters[index].title),));
-      },
-    ),);}
-    else {
-        return const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [CircularProgressIndicator()],
-        );
-      }
-    });
+    return Scaffold(
+      appBar: AppBar(title: const Text("Chapters"),),
+      body: Obx(() {
+        
+        if (toc.chaptersLoaded.value) {
+      return ListView.builder(itemCount: toc.chapters.length,itemBuilder: (context, index) => ListTile(
+        title:  _formChapterTitle(toc.chapters[index].title, Chapter.titleToFilename(toc.chapters[index].title,),index),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChapterContentTest(chapter: toc.chapters[index], title: toc.chapters[index].title),));
+        },
+      ),);}
+      else {
+          return const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [CircularProgressIndicator()],
+          );
+        }
+      }),
+    );
   }
   
 
