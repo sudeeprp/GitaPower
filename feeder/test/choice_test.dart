@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:askys/choice_selector.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 
 void main() {
   testWidgets('theme selector switches the theme', (tester) async {
@@ -34,5 +36,28 @@ void main() {
     await tester.pumpAndSettle();
     expect(choices.headPreference, isNot(initialHeaderPref));
     Get.delete<Choices>();
+  });
+  testWidgets('initializes defaults when nothing was stored', (tester) async {
+    final choices = Choices();
+    expect(choices.theme.value, equals(ReadingTheme.light));
+    expect(choices.script.value, equals(ScriptPreference.devanagari));
+    expect(choices.meaningMode.value, equals(MeaningMode.short));
+    expect(choices.headPreference.value, equals(HeadPreference.shloka));
+  });
+  testWidgets('initializes from stored values', (tester) async {
+    final Map<String, Object> values = <String, Object>{
+      'theme': EnumToString.convertToString(ReadingTheme.dark),
+      'script': EnumToString.convertToString(ScriptPreference.sahk),
+      'meaning': EnumToString.convertToString(MeaningMode.expanded),
+      'head': EnumToString.convertToString(HeadPreference.meaning),
+    };
+    SharedPreferences.setMockInitialValues(values);
+    Get.put(Choices());
+    final Choices choices = Get.find();
+    await tester.pumpAndSettle();
+    expect(choices.theme.value, equals(ReadingTheme.dark));
+    expect(choices.script.value, equals(ScriptPreference.sahk));
+    expect(choices.meaningMode.value, equals(MeaningMode.expanded));
+    expect(choices.headPreference.value, equals(HeadPreference.meaning));
   });
 }

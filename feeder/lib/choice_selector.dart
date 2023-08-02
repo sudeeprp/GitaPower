@@ -1,5 +1,7 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum ReadingTheme { dark, light }
 
@@ -8,6 +10,16 @@ enum MeaningMode { short, expanded }
 enum ScriptPreference { devanagari, sahk }
 
 enum HeadPreference { shloka, meaning }
+
+T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
+  try {
+    if (storedValue != null) {
+      final storedEnumd = EnumToString.fromString(enumValues, storedValue);
+      return storedEnumd ?? defaultValue;
+    }
+  } finally {}
+  return defaultValue;
+}
 
 class Choices extends GetxController {
   static const codeColorForLight = Color(0xFF800000);
@@ -22,11 +34,25 @@ class Choices extends GetxController {
     ReadingTheme.light: ThemeData.light(),
   };
   @override
-  void onInit() {
+  void onInit() async {
     theme.listen((themeValue) {
       Get.changeTheme(appearanceChoices[themeValue]!);
       codeColor.value = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
     });
+    try {
+      final storedPreferences = await SharedPreferences.getInstance();
+      theme.value =
+          _fromStored(ReadingTheme.values, storedPreferences.getString('theme'), theme.value);
+      script.value =
+          _fromStored(ScriptPreference.values, storedPreferences.getString('script'), script.value);
+      meaningMode.value = _fromStored(
+          MeaningMode.values, storedPreferences.getString('meaning'), meaningMode.value);
+      headPreference.value = _fromStored(
+          HeadPreference.values, storedPreferences.getString('head'), headPreference.value);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
     super.onInit();
   }
 }

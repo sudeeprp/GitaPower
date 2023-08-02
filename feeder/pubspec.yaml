@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.5
   firebase_crashlytics: ^3.3.4
   firebase_core: ^2.13.0
+  shared_preferences:
+  enum_to_string:
 
 dev_dependencies:
   flutter_test:
