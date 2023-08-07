@@ -1,14 +1,15 @@
 import 'package:askys/mdcontent.dart';
+import 'package:askys/varchas_controllers/font_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
-
 import 'chaptercontent.dart';
 import 'notecontent.dart';
-
+var showElipses=false;
+final FontController fontController = Get.put(FontController());
 enum SectionType {
   chapterHeading,
   topicHead,
@@ -41,6 +42,7 @@ class MatterForInline {
 }
 
 class WidgetMaker implements md.NodeVisitor {
+  
   final List<TextSpan> Function(MatterForInline matterForInline) _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
   SectionType? _previousSectionType;
@@ -52,7 +54,7 @@ class WidgetMaker implements md.NodeVisitor {
 
   List<Widget> parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
-    // print(lines);
+
     if(lines[0].contains("Chapter")){
       lines.remove(lines[0]);
     }
@@ -208,7 +210,11 @@ List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode,
   if (meaningMode == MeaningMode.expanded) {
     if (scriptChoice == ScriptPreference.devanagari) {
       spansToRender =
-          spans.where((textSpan) => !_isSAHK(textSpan.text)).toList();
+          spans.where((textSpan) {
+            print(textSpan);
+            return !_isSAHK(textSpan.text);
+          }).toList();
+
     } else if (scriptChoice == ScriptPreference.sahk) {
       spansToRender = spans
           .where((textSpan) => !_startsWithDevanagari(textSpan.text))
@@ -236,31 +242,33 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   if (visibleSpans.isEmpty) {
     return const Text('');
   } else if (visibleSpans.length == 1) {
-    return Text.rich(visibleSpans[0]);
+
+    return Text.rich(visibleSpans[0],style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value));
   } else {
+    // print(visibleSpans);
     return Text.rich(
-      TextSpan(children: visibleSpans),
-      style: const TextStyle(fontSize: 18),
+      TextSpan(children: visibleSpans,style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value),),
+      
     );
   }
 }
 
 TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
-    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize: 20);
+    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize:  fontController.fontSize.value,height: fontController.currentFontHeight.value);
   } else if (tag == 'code') {
     return GoogleFonts.robotoMono(
-        color: Get.find<Choices>().codeColor.value, fontSize: 16);
+        color: Get.find<Choices>().codeColor.value, fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value);
   } else if (tag == 'h1') {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
     return GoogleFonts.workSans(height: 3);
   } else if (tag == 'em') {
-    return GoogleFonts.bubblerOne(height: 1.2, fontSize: 16);
+    return GoogleFonts.bubblerOne(height: fontController.currentFontHeight.value, fontSize: fontController.fontSize.value,);
   } else if (tag == 'note') {
-    return const TextStyle(fontSize: 14);
+    return TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value);
   } else {
-    return const TextStyle(height: 1.5);
+    return TextStyle(height: fontController.currentFontHeight.value);
   }
 }
 
@@ -295,7 +303,7 @@ void _navigateToLink(String? link) {
 
 List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
   final keyOfAnchor = GlobalKey(debugLabel: noteId);
-  anchorKeys[noteId] = keyOfAnchor;
+  anchorKeys[noteId] = keyOfAnchor;    
   return [
     TextSpan(children: [
       WidgetSpan(
@@ -306,7 +314,7 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
 
 Widget _anchorWidget(String noteId) {
   if (noteId.startsWith('appl')) {
-    return Image.asset('images/one-step.png', key: Key(noteId));
+    return Center(child: Image.asset('images/one-step.png', key: Key(noteId)));
   } else {
     return SizedBox(width: 1, height: 1, key: Key(noteId));
   }
@@ -327,34 +335,22 @@ bool _isVisible(SectionType sectionType) {
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
   if (sectionType == SectionType.shlokaSAHK ||
       sectionType == SectionType.shlokaSA) {
-    return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
+      showElipses = true;
+    return w;
   } else {
+    showElipses = false;
     return w;
   }
 }
 
 Widget _buildNote(BuildContext context, Widget content) {
-  // print(content);
   return Container(
-    // decoration: BoxDecoration(
-    //   color: Theme.of(context).colorScheme.background.withOpacity(0.1),
-    //   borderRadius: BorderRadius.circular(8),
-    // ),
     padding: const EdgeInsets.only(top: 8, bottom: 16, left: 12, right: 12),
     alignment: Alignment.center,
     child: content,
   );
 }
 
-BoxDecoration? _sectionDecoration(
-    BuildContext context, SectionType sectionType) {
-  if (sectionType == SectionType.meaning) {
-    return const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey)));
-  } else {
-    return null;
-  }
-}
 
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
   String contentForDisplay = inlineMatter.text;
@@ -373,44 +369,27 @@ Widget _sectionContainer(
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
-  // return Container(
-  //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-  //   decoration: _sectionDecoration(context, sectionType),
-  //   child: _horizontalScrollForOneLiners(sectionType, content),
-  // );
-  return Padding(
+  return !showElipses?Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     child: Center(
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.1),
-              offset: const Offset(-6.0, -6.0),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              offset: const Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-        ),
-        child: Card(
-          color: Theme.of(context).colorScheme.background,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: _horizontalScrollForOneLiners(sectionType, content),
-          ),
+      child: SizedBox(
+        width: double.infinity,
+          child: _horizontalScrollForOneLiners(sectionType, content),
         ),
       ),
-    ),
+  ):
+  Padding(
+    padding: const EdgeInsets.fromLTRB(16,0,16,8),
+    child: Center(
+      child: SizedBox(
+        width: double.infinity,
+          child: _horizontalScrollForOneLiners(sectionType, content),
+        ),
+      ),
   );
 }
 
-class ContentWidget extends StatelessWidget {
+class ContentWidget extends StatefulWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote,
       this.prevmd, this.nextmd,
       {Key? key})
@@ -423,7 +402,92 @@ class ContentWidget extends StatelessWidget {
   final String? contentNote;
   final String? nextmd;
   final String? prevmd;
+  
+  @override
+  State<ContentWidget> createState() => _ContentWidgetState();
+}
 
+class _ContentWidgetState extends State<ContentWidget> {
+   void _formatFont() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) {
+        return SizedBox(
+          height: 200,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Row(
+                  children: [
+                    Text("Font size",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,)),
+                    Spacer(),
+                    Text("Font family",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))
+                  ],
+                ),
+                Row(
+                  children: [
+                    OutlinedButton(onPressed: (){fontController.increaseFontSize();}, child: Image.asset('images/icons8-increase-font-24.png',color: Theme.of(context).colorScheme.onSurface)),
+                    OutlinedButton(onPressed: (){fontController.decreaseFontSize();}, child: Image.asset('images/icons8-decrease-font-24.png',color: Theme.of(context).colorScheme.onSurface)),
+                    Expanded(child: OutlinedButton(onPressed: _fontPicker, child:Text(fontController.currentFont.value,style: TextStyle(color: Theme.of(context).colorScheme.onSurface,)))),
+                  ],
+                ),
+                const Text("Line Spacing",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    OutlinedButton(onPressed: (){fontController.updateFontHeight('more');}, child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Image.asset('images/line_spacing_more.png',color: Theme.of(context).colorScheme.onSurface,height: 40,),
+                    )),
+                    OutlinedButton(onPressed: (){fontController.updateFontHeight('default');}, child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Image.asset('images/line_spacing_default.png',color: Theme.of(context).colorScheme.onSurface,height: 40),
+                    )),
+                    OutlinedButton(onPressed: (){fontController.updateFontHeight('less');}, child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Image.asset('images/line_spacing_less.png',color: Theme.of(context).colorScheme.onSurface,height: 40),
+                    )),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },);
+  }
+  void _fontPicker() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) {
+        return SizedBox(
+          height: 200,
+          child: ListView(children: [
+            Stack(
+              children: [
+              IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(Icons.arrow_back),alignment: Alignment.centerLeft),
+              const Center(child: Padding(
+                padding: EdgeInsets.only(top:14.0),
+                child: Text("Font Family",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+              )),
+
+            ],),
+            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Roboto');Navigator.pop(context);}, child: Text('Roboto',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
+            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Open Sans');Navigator.pop(context);}, child: Text('Open Sans',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
+            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Montserrat');Navigator.pop(context);}, child: Text('Montserrat',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
+            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Lato');Navigator.pop(context);}, child: Text('Lato',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
+          ],),
+        );
+      },);
+  }
   @override
   Widget build(context) {
     final choices = Get.find<Choices>();
@@ -448,8 +512,43 @@ class ContentWidget extends StatelessWidget {
       return [
         Obx(() => Visibility(
               visible: _isVisible(sectionType),
-              child: _sectionContainer(
-                  context, sectionType, _spansToText(spans, sectionType)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Container(
+                  decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                color: Colors.white.withOpacity(0.1),
+                offset: const Offset(-6.0, -6.0),
+                blurRadius: 16.0,
+                          ),
+                          BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                offset: const Offset(6.0, 6.0),
+                blurRadius: 16.0,
+                          ),
+                        ],
+                      ),
+                  child: Card(
+                  color: Theme.of(context).colorScheme.background,
+                  shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    child: !showElipses?_sectionContainer(
+                        context, sectionType, _spansToText(spans, sectionType))
+                        :Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.more_horiz_outlined,size: 20,),],),
+                            ),                        
+                            _sectionContainer(
+                        context, sectionType, _spansToText(spans, sectionType)),
+                        const SizedBox(height: 8,),    
+                          ],
+                        )
+                  ),
+                ),
+              ),
             ))
       ];
     }
@@ -470,7 +569,6 @@ class ContentWidget extends StatelessWidget {
         ];
       }
       var textContent = _tuneContentForDisplay(inlineMatter);
-      // print(textContent.contains("Chapter"));
       return [
         TextSpan(
             text: textContent,
@@ -480,24 +578,26 @@ class ContentWidget extends StatelessWidget {
     }
 
     void insertContentNote(List<Widget> contentWidgets) {
-      if (contentNote != null) {
-        //print(contentNote );
+      if (widget.contentNote != null) {
+    
         contentWidgets.insert(
             0,
             _buildNote(
                 context,
                 Text.rich(
-                  TextSpan(text: toPlainText(contentNote!)),
-                  // style: _styleFor('note', null)
+                  TextSpan(text: toPlainText(widget.contentNote!)),
                   style: const TextStyle(fontSize: 24),
                 )));
       }
     }
 
-    MDContent md = Get.find(tag: mdFilename);
+    MDContent md = Get.find(tag: widget.mdFilename);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Chapter.filenameToTitle(mdFilename)),
+        title: Text(Chapter.filenameToTitle(widget.mdFilename)),
+        actions: [
+          IconButton(onPressed: _formatFont, icon: Image.asset('images/icons8-font-size-24.png',color: Theme.of(context).colorScheme.onSurface,))
+        ],
       ),
       body: Stack(children: [
         Center(
@@ -511,8 +611,8 @@ class ContentWidget extends StatelessWidget {
                 insertContentNote(widgetsMade);
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   BuildContext? anchorContext;
-                  if (anchorKeys.containsKey(initialAnchor)) {
-                    anchorContext = anchorKeys[initialAnchor]?.currentContext;
+                  if (anchorKeys.containsKey(widget.initialAnchor)) {
+                    anchorContext = anchorKeys[widget.initialAnchor]?.currentContext;
                   }
                   if (anchorContext != null) {
                     Scrollable.ensureVisible(anchorContext);
@@ -521,11 +621,11 @@ class ContentWidget extends StatelessWidget {
                 return GestureDetector(
                     onHorizontalDragEnd: (details) {
                       if (details.velocity.pixelsPerSecond.dx < 0 &&
-                          nextmd != null) {
-                        Get.offNamed('/shloka/$nextmd');
+                          widget.nextmd != null) {
+                        Get.offNamed('/shloka/${widget.nextmd}');
                       } else if (details.velocity.pixelsPerSecond.dx > 0 &&
-                          prevmd != null) {
-                        Get.offNamed('/shloka/$prevmd');
+                          widget.prevmd != null) {
+                        Get.offNamed('/shloka/${widget.prevmd}');
                       }
                     },
                     child: Column(
@@ -535,13 +635,6 @@ class ContentWidget extends StatelessWidget {
                     ));
               }))
         ])),
-        // Positioned(
-        //     top: 0,
-        //     right: 2,
-        //     child: Text(
-        //       Chapter.filenameToTitle(mdFilename),
-        //       style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
-        //     )),
       ]),
     );
   }

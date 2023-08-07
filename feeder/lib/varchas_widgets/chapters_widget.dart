@@ -1,3 +1,4 @@
+
 import 'package:askys/chaptercontent.dart';
 import 'package:askys/varchas_widgets/chaptercontent.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:askys/chapter_headers.dart' as chapters;
 class ChaptersWidgetTest extends StatelessWidget{
 
   const ChaptersWidgetTest({super.key});
-
   @override
   Widget build(BuildContext context) {
     final ChaptersTOC toc = Get.find();
@@ -19,7 +19,7 @@ class ChaptersWidgetTest extends StatelessWidget{
       return ListView.builder(itemCount: toc.chapters.length,itemBuilder: (context, index) => ListTile(
         title:  _formChapterTitle(toc.chapters[index].title, Chapter.titleToFilename(toc.chapters[index].title,),index),
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChapterContentTest(chapter: toc.chapters[index], title: toc.chapters[index].title),));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChapterContentTest(chapter: toc.chapters[index], title: toc.chapters[index].title), ));
         },
       ),);}
       else {
