@@ -211,7 +211,6 @@ List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode,
     if (scriptChoice == ScriptPreference.devanagari) {
       spansToRender =
           spans.where((textSpan) {
-            print(textSpan);
             return !_isSAHK(textSpan.text);
           }).toList();
 
@@ -243,11 +242,11 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
     return const Text('');
   } else if (visibleSpans.length == 1) {
 
-    return Text.rich(visibleSpans[0],style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value));
+    return Text.rich(visibleSpans[0],style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value,),textAlign: TextAlign.justify,);
   } else {
     // print(visibleSpans);
     return Text.rich(
-      TextSpan(children: visibleSpans,style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value),),
+      TextSpan(children: visibleSpans,style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value)),textAlign: TextAlign.justify,
       
     );
   }
@@ -255,10 +254,10 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
 
 TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
-    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize:  fontController.fontSize.value,height: fontController.currentFontHeight.value);
+    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize:  fontController.fontSize.value,height: fontController.currentFontHeight.value,);
   } else if (tag == 'code') {
     return GoogleFonts.robotoMono(
-        color: Get.find<Choices>().codeColor.value, fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value);
+        color: Get.find<Choices>().codeColor.value, fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value,);
   } else if (tag == 'h1') {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
