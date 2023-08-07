@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 class FontController extends GetxController{
   final fontSize = 18.0.obs;
-  final currentFontTheme = GoogleFonts.robotoTextTheme().obs;
-  final fontFamilies = {'Roboto': GoogleFonts.robotoTextTheme(), 'Open Sans':GoogleFonts.openSansTextTheme(), 'Montserrat':GoogleFonts.montserratTextTheme(),'Lato':GoogleFonts.latoTextTheme()};
+  final currentFontTheme = GoogleFonts.roboto().fontFamily.obs;
+  final fontFamilies = {'Roboto': GoogleFonts.roboto().fontFamily, 'Open Sans':GoogleFonts.openSans().fontFamily, 'Montserrat':GoogleFonts.montserrat().fontFamily,'Lato':GoogleFonts.lato().fontFamily};
   final currentFont = 'Roboto'.obs;
   final fontHeights = {'default': 1.5,'more':2.0,'less':1.1};
   final currentFontHeight = 1.5.obs;

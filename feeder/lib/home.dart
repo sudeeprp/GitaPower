@@ -38,8 +38,8 @@ Widget makeMyHome() {
   return Obx(() =>  GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
-      theme: ThemeData(brightness: Brightness.light, textTheme: fontController.currentFontTheme.value)  ,
-      darkTheme: ThemeData(brightness: Brightness.dark),
+      theme: ThemeData(brightness: Brightness.light, fontFamily: fontController.currentFontTheme.value)  ,
+      darkTheme: ThemeData(brightness: Brightness.dark, fontFamily: fontController.currentFontTheme.value),
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),

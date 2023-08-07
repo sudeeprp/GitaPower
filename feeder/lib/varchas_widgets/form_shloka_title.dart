@@ -83,14 +83,15 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
                       : Obx(() =>  Padding(
                           padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                           child: widget.currentLang == "eng" 
-                              ? Text(shlokas.headers[testHeaders]!["meaning"]!.replaceAll(". ", ".\n\n").replaceAll("? ", "?").replaceAll("?", "? "),style: TextStyle(fontSize: widget.fontSize,height: fontcontroller.currentFontHeight.value),
+                              ? Text(shlokas.headers[testHeaders]!["meaning"]!.replaceAll(". ", ".\n\n").replaceAll("? ", "?").replaceAll("?", "? "),textAlign: TextAlign.justify,style: TextStyle(fontSize: widget.fontSize,height: fontcontroller.currentFontHeight.value),
                                   )
                               : SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
                                     headerText,
+                                    textAlign: TextAlign.justify,                            
                                     style: TextStyle(
-                                        color: widget.codeColor, fontSize: fontcontroller.fontSize.value,height: fontcontroller.currentFontHeight.value),
+                                        color: widget.codeColor, fontSize: fontcontroller.fontSize.value,height: fontcontroller.currentFontHeight.value,),
                                   ),
                               ),
                         ),
