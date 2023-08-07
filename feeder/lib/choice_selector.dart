@@ -11,7 +11,7 @@ enum HeadPreference { shloka, meaning }
 
 class Choices extends GetxController {
   static const codeColorForLight = Color(0xFF800000);
-  static final codeColorForDark = Colors.deepOrange.shade900.withOpacity(0.9);
+  static final codeColorForDark = const Color.fromARGB(255, 236, 118, 82).withOpacity(0.9);
   var theme = Get.isDarkMode ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
   var codeColor = Get.isDarkMode ? Rx<Color>(codeColorForDark) : Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;

@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.5
   firebase_crashlytics: ^3.3.4
   firebase_core: ^2.13.0
+  flutter_neumorphic: ^3.2.0
+  glassmorphism: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -43,8 +45,8 @@ flutter:
   uses-material-design: true
   assets:
     - images/
-    - gita-begin/compile/
-    - gita-begin/gita/
+    # - gita-begin/compile/
+    # - gita-begin/gita/
 
 flutter_icons:
   android: "launcher_icon"
