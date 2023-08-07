@@ -9,7 +9,7 @@ import 'package:askys/chaptercontent.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 const compiledMDtoNoteIds = '''
-[{"Back-to-Basics.md": ["applopener_1", "applnote_12"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}]
+[{"Back-to-Basics.md": ["applopener_1", "applnote_12"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]},  {"Chapter_2.md": []}, {"2-1_to_2-3.md": []}]
 ''';
 
 void main() {
@@ -38,7 +38,7 @@ void main() {
     await tester.tap(find.text('1-1'));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/1-1.md');
-
+    Get.delete<Choices>();
     Get.delete<ChaptersTOC>();
   });
   testWidgets('navigates to a chapter from the toc', (tester) async {
@@ -67,5 +67,22 @@ void main() {
     await tester.tap(find.byWidget(chapterEntryWidget!));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/Chapter_1.md');
+    Get.delete<Choices>();
+    Get.delete<ChaptersTOC>();
+  });
+  testWidgets('goes by choice to show sloka or widget', (tester) async {
+    Get.put(ChaptersTOC());
+    var choices = Choices();
+    Get.put(choices);
+
+    await tester.pumpWidget(const GetMaterialApp(home: ChaptersWidget()));
+    await tester.pumpAndSettle();
+    final chapterHeadFinder = find.text('Chapter 2');
+    await tester.tap(chapterHeadFinder);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('तम् तथा कृपयाविष्टम्'), findsOneWidget);
+    choices.headPreference.value = HeadPreference.meaning;
+    await tester.pumpAndSettle();
+    expect(find.textContaining('overcome with pity'), findsOneWidget);
   });
 }

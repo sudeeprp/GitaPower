@@ -323,10 +323,11 @@ bool _isVisible(SectionType sectionType) {
   Choices choice = Get.find();
   // Assignment to a local variable is needed. Otherwise GetX throws an error when "return true" doesn't access any observable.
   final scriptChoice = choice.script.value;
+  final headPreference = choice.headPreference.value;
   if (sectionType == SectionType.shlokaSA) {
-    return scriptChoice == ScriptPreference.devanagari;
+    return scriptChoice == ScriptPreference.devanagari && headPreference == HeadPreference.shloka;
   } else if (sectionType == SectionType.shlokaSAHK) {
-    return scriptChoice == ScriptPreference.sahk;
+    return scriptChoice == ScriptPreference.sahk && headPreference == HeadPreference.shloka;
   }
   return true;
 }
@@ -351,6 +352,15 @@ Widget _buildNote(BuildContext context, Widget content) {
 }
 
 
+BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
+  if (sectionType == SectionType.meaning) {
+    return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
+  } else {
+    return null;
+  }
+}
+
+
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
   String contentForDisplay = inlineMatter.text;
   if (inlineMatter.sectionType == SectionType.meaning &&
@@ -368,6 +378,7 @@ Widget _sectionContainer(
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
+
   return !showElipses?Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     child: Center(
@@ -386,6 +397,14 @@ Widget _sectionContainer(
         ),
       ),
   );
+
+  return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      child: Container(
+        decoration: _sectionDecoration(context, sectionType),
+        child: _horizontalScrollForOneLiners(sectionType, content),
+      ));
+
 }
 
 class ContentWidget extends StatefulWidget {
@@ -626,6 +645,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                           widget.prevmd != null) {
                         Get.offNamed('/shloka/${widget.prevmd}');
                       }
+
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -636,6 +656,34 @@ class _ContentWidgetState extends State<ContentWidget> {
         ])),
       ]),
     );
+
+                      if (anchorContext != null) {
+                        Scrollable.ensureVisible(anchorContext, alignment: 0.3);
+                      }
+                    });
+                    return GestureDetector(
+                        onHorizontalDragEnd: (details) {
+                          if (details.velocity.pixelsPerSecond.dx < 0 && nextmd != null) {
+                            Get.offNamed('/shloka/$nextmd');
+                          } else if (details.velocity.pixelsPerSecond.dx > 0 && prevmd != null) {
+                            Get.offNamed('/shloka/$prevmd');
+                          }
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: widgetsMade,
+                        ));
+                  })))),
+      Positioned(
+          top: 0,
+          right: 2,
+          child: Text(
+            Chapter.filenameToTitle(mdFilename),
+            style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
+          )),
+    ]);
+
   }
 }
 
