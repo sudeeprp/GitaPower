@@ -8,8 +8,10 @@ import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'chaptercontent.dart';
 import 'notecontent.dart';
-var showElipses=false;
+
+var showElipses = false;
 final FontController fontController = Get.put(FontController());
+
 enum SectionType {
   chapterHeading,
   topicHead,
@@ -32,8 +34,7 @@ class CurrentTextElement {
 }
 
 class MatterForInline {
-  MatterForInline(
-      this.text, this.sectionType, this.tag, this.elmclass, this.link);
+  MatterForInline(this.text, this.sectionType, this.tag, this.elmclass, this.link);
   final String text;
   SectionType sectionType;
   String tag;
@@ -42,7 +43,6 @@ class MatterForInline {
 }
 
 class WidgetMaker implements md.NodeVisitor {
-  
   final List<TextSpan> Function(MatterForInline matterForInline) _inlineMaker;
   final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
   SectionType? _previousSectionType;
@@ -55,7 +55,7 @@ class WidgetMaker implements md.NodeVisitor {
   List<Widget> parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
 
-    if(lines[0].contains("Chapter")){
+    if (lines[0].contains("Chapter")) {
       lines.remove(lines[0]);
     }
     md.Document document = md.Document(encodeHtml: false);
@@ -77,12 +77,10 @@ class WidgetMaker implements md.NodeVisitor {
     final tagToSectionType = {
       'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => _headingType(element.textContent),
-      'pre': (element) =>
-          classToSectionType[element.children[0].attributes['class']],
-      'p': (element) =>
-          _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
-              ? SectionType.meaning
-              : SectionType.commentary,
+      'pre': (element) => classToSectionType[element.children[0].attributes['class']],
+      'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
+          ? SectionType.meaning
+          : SectionType.commentary,
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -104,8 +102,8 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets.addAll(_widgetMaker(
-          _collectedElements(), elementForCurrentText.last.sectionType));
+      collectedWidgets
+          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -121,8 +119,7 @@ class WidgetMaker implements md.NodeVisitor {
       final sectionType = elementForCurrentText.isNotEmpty
           ? elementForCurrentText.last.sectionType
           : SectionType.commentary;
-      elementForCurrentText
-          .add(CurrentTextElement(element, sectionType, false));
+      elementForCurrentText.add(CurrentTextElement(element, sectionType, false));
     }
     return true;
   }
@@ -134,8 +131,7 @@ class WidgetMaker implements md.NodeVisitor {
     final link = element.mdElement.attributes['href'];
     var tag = element.mdElement.tag;
     if (elementForCurrentText.length >= 2 &&
-        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag ==
-            'blockquote') {
+        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag == 'blockquote') {
       tag = 'note';
     }
     if (_hasAnchor(markdownText.textContent)) {
@@ -144,16 +140,14 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          collectedInlines.add(MatterForInline(
-              noteId, element.sectionType, 'anchor', elmclass, link));
+          collectedInlines
+              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
         }
       }
     }
-    final processedText =
-        _textForElement(markdownText.textContent, element.mdElement);
+    final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      final inlineMatter = MatterForInline(
-          processedText, element.sectionType, tag, elmclass, link);
+      final inlineMatter = MatterForInline(processedText, element.sectionType, tag, elmclass, link);
       collectedInlines.add(inlineMatter);
     }
   }
@@ -161,17 +155,14 @@ class WidgetMaker implements md.NodeVisitor {
   bool _isSeparate(elementTag) {
     const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
     return widgetSeparators.contains(elementTag) &&
-        (elementForCurrentText.isEmpty ||
-            elementForCurrentText.last.mdElement.tag != 'blockquote');
+        (elementForCurrentText.isEmpty || elementForCurrentText.last.mdElement.tag != 'blockquote');
   }
 
   String _textForElement(String inputText, md.Element element) {
     if (element.tag == 'code') {
       return inputText.trim();
     } else {
-      return inputText
-          .replaceAll(_multipleSpaces, " ")
-          .replaceAll(_anchors, "");
+      return inputText.replaceAll(_multipleSpaces, " ").replaceAll(_anchors, "");
     }
   }
 
@@ -204,25 +195,20 @@ bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
 
-List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode,
-    ScriptPreference scriptChoice) {
+List<TextSpan> _renderMeaning(
+    List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
   List<TextSpan> spansToRender = [];
   if (meaningMode == MeaningMode.expanded) {
     if (scriptChoice == ScriptPreference.devanagari) {
-      spansToRender =
-          spans.where((textSpan) {
-            return !_isSAHK(textSpan.text);
-          }).toList();
-
+      spansToRender = spans.where((textSpan) {
+        return !_isSAHK(textSpan.text);
+      }).toList();
     } else if (scriptChoice == ScriptPreference.sahk) {
-      spansToRender = spans
-          .where((textSpan) => !_startsWithDevanagari(textSpan.text))
-          .toList();
+      spansToRender = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
     }
   } else {
     spansToRender = spans
-        .where((textSpan) =>
-            !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
+        .where((textSpan) => !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
         .toList();
   }
   return spansToRender;
@@ -241,31 +227,51 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   if (visibleSpans.isEmpty) {
     return const Text('');
   } else if (visibleSpans.length == 1) {
-
-    return Text.rich(visibleSpans[0],style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value,),textAlign: TextAlign.justify,);
-  } else {
-    // print(visibleSpans);
     return Text.rich(
-      TextSpan(children: visibleSpans,style: TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value)),textAlign: TextAlign.justify,
-      
+      visibleSpans[0],
+      style: TextStyle(
+        fontSize: fontController.fontSize.value,
+        height: fontController.currentFontHeight.value,
+      ),
+      textAlign: TextAlign.justify,
+    );
+  } else {
+    return Text.rich(
+      TextSpan(
+          children: visibleSpans,
+          style: TextStyle(
+              fontSize: fontController.fontSize.value,
+              height: fontController.currentFontHeight.value)),
+      textAlign: TextAlign.justify,
     );
   }
 }
 
 TextStyle? _styleFor(String tag, String? elmclass) {
   if (elmclass == 'language-shloka-sa') {
-    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize:  fontController.fontSize.value,height: fontController.currentFontHeight.value,);
+    return TextStyle(
+      color: Get.find<Choices>().codeColor.value,
+      fontSize: fontController.fontSize.value,
+      height: fontController.currentFontHeight.value,
+    );
   } else if (tag == 'code') {
     return GoogleFonts.robotoMono(
-        color: Get.find<Choices>().codeColor.value, fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value,);
+      color: Get.find<Choices>().codeColor.value,
+      fontSize: fontController.fontSize.value,
+      height: fontController.currentFontHeight.value,
+    );
   } else if (tag == 'h1') {
     return GoogleFonts.rubik(height: 3);
   } else if (tag == 'h2') {
     return GoogleFonts.workSans(height: 3);
   } else if (tag == 'em') {
-    return GoogleFonts.bubblerOne(height: fontController.currentFontHeight.value, fontSize: fontController.fontSize.value,);
+    return GoogleFonts.bubblerOne(
+      height: fontController.currentFontHeight.value,
+      fontSize: fontController.fontSize.value,
+    );
   } else if (tag == 'note') {
-    return TextStyle(fontSize: fontController.fontSize.value,height: fontController.currentFontHeight.value);
+    return TextStyle(
+        fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value);
   } else {
     return TextStyle(height: fontController.currentFontHeight.value);
   }
@@ -302,11 +308,10 @@ void _navigateToLink(String? link) {
 
 List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
   final keyOfAnchor = GlobalKey(debugLabel: noteId);
-  anchorKeys[noteId] = keyOfAnchor;    
+  anchorKeys[noteId] = keyOfAnchor;
   return [
     TextSpan(children: [
-      WidgetSpan(
-          child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
+      WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
     ])
   ];
 }
@@ -333,9 +338,8 @@ bool _isVisible(SectionType sectionType) {
 }
 
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
-  if (sectionType == SectionType.shlokaSAHK ||
-      sectionType == SectionType.shlokaSA) {
-      showElipses = true;
+  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
+    showElipses = true;
     return w;
   } else {
     showElipses = false;
@@ -351,20 +355,9 @@ Widget _buildNote(BuildContext context, Widget content) {
   );
 }
 
-
-BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
-  if (sectionType == SectionType.meaning) {
-    return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
-  } else {
-    return null;
-  }
-}
-
-
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
   String contentForDisplay = inlineMatter.text;
-  if (inlineMatter.sectionType == SectionType.meaning &&
-      inlineMatter.tag != 'code') {
+  if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
     final Choices choice = Get.find();
     if (choice.meaningMode.value == MeaningMode.short) {
       contentForDisplay = inlineMatter.text.trimLeft();
@@ -373,43 +366,34 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
-Widget _sectionContainer(
-    BuildContext context, SectionType sectionType, Widget content) {
+Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
 
-  return !showElipses?Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: Center(
-      child: SizedBox(
-        width: double.infinity,
-          child: _horizontalScrollForOneLiners(sectionType, content),
-        ),
-      ),
-  ):
-  Padding(
-    padding: const EdgeInsets.fromLTRB(16,0,16,8),
-    child: Center(
-      child: SizedBox(
-        width: double.infinity,
-          child: _horizontalScrollForOneLiners(sectionType, content),
-        ),
-      ),
-  );
-
-  return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      child: Container(
-        decoration: _sectionDecoration(context, sectionType),
-        child: _horizontalScrollForOneLiners(sectionType, content),
-      ));
-
+  return !showElipses
+      ? Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              child: _horizontalScrollForOneLiners(sectionType, content),
+            ),
+          ),
+        )
+      : Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              child: _horizontalScrollForOneLiners(sectionType, content),
+            ),
+          ),
+        );
 }
 
 class ContentWidget extends StatefulWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote,
-      this.prevmd, this.nextmd,
+  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
       {Key? key})
       : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
@@ -420,18 +404,19 @@ class ContentWidget extends StatefulWidget {
   final String? contentNote;
   final String? nextmd;
   final String? prevmd;
-  
+
   @override
   State<ContentWidget> createState() => _ContentWidgetState();
 }
 
 class _ContentWidgetState extends State<ContentWidget> {
-   void _formatFont() {
+  void _formatFont() {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       builder: (ctx) {
         return SizedBox(
           height: 200,
@@ -443,69 +428,178 @@ class _ContentWidgetState extends State<ContentWidget> {
               children: [
                 const Row(
                   children: [
-                    Text("Font size",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,)),
+                    Text("Font size",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        )),
                     Spacer(),
-                    Text("Font family",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))
+                    Text("Font family", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
                   ],
                 ),
                 Row(
                   children: [
-                    OutlinedButton(onPressed: (){fontController.increaseFontSize();}, child: Image.asset('images/icons8-increase-font-24.png',color: Theme.of(context).colorScheme.onSurface)),
-                    OutlinedButton(onPressed: (){fontController.decreaseFontSize();}, child: Image.asset('images/icons8-decrease-font-24.png',color: Theme.of(context).colorScheme.onSurface)),
-                    Expanded(child: OutlinedButton(onPressed: _fontPicker, child:Text(fontController.currentFont.value,style: TextStyle(color: Theme.of(context).colorScheme.onSurface,)))),
+                    OutlinedButton(
+                        onPressed: () {
+                          fontController.increaseFontSize();
+                        },
+                        child: Image.asset('images/icons8-increase-font-24.png',
+                            color: Theme.of(context).colorScheme.onSurface)),
+                    OutlinedButton(
+                        onPressed: () {
+                          fontController.decreaseFontSize();
+                        },
+                        child: Image.asset('images/icons8-decrease-font-24.png',
+                            color: Theme.of(context).colorScheme.onSurface)),
+                    Expanded(
+                        child: OutlinedButton(
+                            onPressed: _fontPicker,
+                            child: Text(fontController.currentFont.value,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                )))),
                   ],
                 ),
-                const Text("Line Spacing",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                const Text("Line Spacing",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    OutlinedButton(onPressed: (){fontController.updateFontHeight('more');}, child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Image.asset('images/line_spacing_more.png',color: Theme.of(context).colorScheme.onSurface,height: 40,),
-                    )),
-                    OutlinedButton(onPressed: (){fontController.updateFontHeight('default');}, child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Image.asset('images/line_spacing_default.png',color: Theme.of(context).colorScheme.onSurface,height: 40),
-                    )),
-                    OutlinedButton(onPressed: (){fontController.updateFontHeight('less');}, child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Image.asset('images/line_spacing_less.png',color: Theme.of(context).colorScheme.onSurface,height: 40),
-                    )),
+                    OutlinedButton(
+                        onPressed: () {
+                          fontController.updateFontHeight('more');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Image.asset(
+                            'images/line_spacing_more.png',
+                            color: Theme.of(context).colorScheme.onSurface,
+                            height: 40,
+                          ),
+                        )),
+                    OutlinedButton(
+                        onPressed: () {
+                          fontController.updateFontHeight('default');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Image.asset('images/line_spacing_default.png',
+                              color: Theme.of(context).colorScheme.onSurface, height: 40),
+                        )),
+                    OutlinedButton(
+                        onPressed: () {
+                          fontController.updateFontHeight('less');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Image.asset('images/line_spacing_less.png',
+                              color: Theme.of(context).colorScheme.onSurface, height: 40),
+                        )),
                   ],
                 ),
               ],
             ),
           ),
         );
-      },);
+      },
+    );
   }
+
   void _fontPicker() {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       builder: (ctx) {
         return SizedBox(
           height: 200,
-          child: ListView(children: [
-            Stack(
-              children: [
-              IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(Icons.arrow_back),alignment: Alignment.centerLeft),
-              const Center(child: Padding(
-                padding: EdgeInsets.only(top:14.0),
-                child: Text("Font Family",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
-              )),
-
-            ],),
-            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Roboto');Navigator.pop(context);}, child: Text('Roboto',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
-            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Open Sans');Navigator.pop(context);}, child: Text('Open Sans',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
-            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Montserrat');Navigator.pop(context);}, child: Text('Montserrat',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
-            SizedBox(height: 35,child: TextButton(onPressed: (){fontController.updateFontFamily('Lato');Navigator.pop(context);}, child: Text('Lato',style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),),),),
-          ],),
+          child: ListView(
+            children: [
+              Stack(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                      alignment: Alignment.centerLeft),
+                  const Center(
+                      child: Padding(
+                    padding: EdgeInsets.only(top: 14.0),
+                    child: Text("Font Family",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  )),
+                ],
+              ),
+              SizedBox(
+                height: 35,
+                child: TextButton(
+                  onPressed: () {
+                    fontController.updateFontFamily('Roboto');
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Roboto',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 35,
+                child: TextButton(
+                  onPressed: () {
+                    fontController.updateFontFamily('Open Sans');
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Open Sans',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 35,
+                child: TextButton(
+                  onPressed: () {
+                    fontController.updateFontFamily('Montserrat');
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Montserrat',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 35,
+                child: TextButton(
+                  onPressed: () {
+                    fontController.updateFontFamily('Lato');
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Lato',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
-      },);
+      },
+    );
   }
+
   @override
   Widget build(context) {
     final choices = Get.find<Choices>();
@@ -518,8 +612,7 @@ class _ContentWidgetState extends State<ContentWidget> {
         return [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            decoration: const BoxDecoration(
-                border: Border(top: BorderSide(color: Colors.grey))),
+            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Obx(() => Text.rich(TextSpan(children: spans),
@@ -534,37 +627,46 @@ class _ContentWidgetState extends State<ContentWidget> {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Container(
                   decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                color: Colors.white.withOpacity(0.1),
-                offset: const Offset(-6.0, -6.0),
-                blurRadius: 16.0,
-                          ),
-                          BoxShadow(
-                color: Colors.black.withOpacity(0.4),
-                offset: const Offset(6.0, 6.0),
-                blurRadius: 16.0,
-                          ),
-                        ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.1),
+                        offset: const Offset(-6.0, -6.0),
+                        blurRadius: 16.0,
                       ),
-                  child: Card(
-                  color: Theme.of(context).colorScheme.background,
-                  shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                    child: !showElipses?_sectionContainer(
-                        context, sectionType, _spansToText(spans, sectionType))
-                        :Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 8),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.more_horiz_outlined,size: 20,),],),
-                            ),                        
-                            _sectionContainer(
-                        context, sectionType, _spansToText(spans, sectionType)),
-                        const SizedBox(height: 8,),    
-                          ],
-                        )
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        offset: const Offset(6.0, 6.0),
+                        blurRadius: 16.0,
+                      ),
+                    ],
                   ),
+                  child: Card(
+                      color: Theme.of(context).colorScheme.background,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      child: !showElipses
+                          ? _sectionContainer(
+                              context, sectionType, _spansToText(spans, sectionType))
+                          : Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 8),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Icon(
+                                        Icons.more_horiz_outlined,
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                _sectionContainer(
+                                    context, sectionType, _spansToText(spans, sectionType)),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                              ],
+                            )),
                 ),
               ),
             ))
@@ -580,8 +682,7 @@ class _ContentWidgetState extends State<ContentWidget> {
           TextSpan(
             text: inlineMatter.text,
             style: const TextStyle(color: Colors.blue),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () => _navigateToLink(inlineMatter.link),
+            recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
           ),
           const TextSpan(text: ' ')
         ];
@@ -597,7 +698,6 @@ class _ContentWidgetState extends State<ContentWidget> {
 
     void insertContentNote(List<Widget> contentWidgets) {
       if (widget.contentNote != null) {
-    
         contentWidgets.insert(
             0,
             _buildNote(
@@ -614,15 +714,19 @@ class _ContentWidgetState extends State<ContentWidget> {
       appBar: AppBar(
         title: Text(Chapter.filenameToTitle(widget.mdFilename)),
         actions: [
-          IconButton(onPressed: _formatFont, icon: Image.asset('images/icons8-font-size-24.png',color: Theme.of(context).colorScheme.onSurface,))
+          IconButton(
+              onPressed: _formatFont,
+              icon: Image.asset(
+                'images/icons8-font-size-24.png',
+                color: Theme.of(context).colorScheme.onSurface,
+              ))
         ],
       ),
       body: Stack(children: [
         Center(
             child: ListView(children: [
           DefaultTextStyle(
-              style:
-                  DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
               child: Obx(() {
                 final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                 final widgetsMade = widgetMaker.parse(md.mdContent.value);
@@ -638,14 +742,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                 });
                 return GestureDetector(
                     onHorizontalDragEnd: (details) {
-                      if (details.velocity.pixelsPerSecond.dx < 0 &&
-                          widget.nextmd != null) {
+                      if (details.velocity.pixelsPerSecond.dx < 0 && widget.nextmd != null) {
                         Get.offNamed('/shloka/${widget.nextmd}');
-                      } else if (details.velocity.pixelsPerSecond.dx > 0 &&
-                          widget.prevmd != null) {
+                      } else if (details.velocity.pixelsPerSecond.dx > 0 && widget.prevmd != null) {
                         Get.offNamed('/shloka/${widget.prevmd}');
                       }
-
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -656,49 +757,15 @@ class _ContentWidgetState extends State<ContentWidget> {
         ])),
       ]),
     );
-
-                      if (anchorContext != null) {
-                        Scrollable.ensureVisible(anchorContext, alignment: 0.3);
-                      }
-                    });
-                    return GestureDetector(
-                        onHorizontalDragEnd: (details) {
-                          if (details.velocity.pixelsPerSecond.dx < 0 && nextmd != null) {
-                            Get.offNamed('/shloka/$nextmd');
-                          } else if (details.velocity.pixelsPerSecond.dx > 0 && prevmd != null) {
-                            Get.offNamed('/shloka/$prevmd');
-                          }
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: widgetsMade,
-                        ));
-                  })))),
-      Positioned(
-          top: 0,
-          right: 2,
-          child: Text(
-            Chapter.filenameToTitle(mdFilename),
-            style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
-          )),
-    ]);
-
   }
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor,
-    String? contentNote,
-    String? prevmd,
-    String? nextmd,
-    Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
-      key: key);
+    {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
 }
 
-ContentWidget buildContentWithNote(String mdFilename,
-    {String? initialAnchor, Key? key}) {
+ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
   return buildContent(mdFilename,
       initialAnchor: initialAnchor,

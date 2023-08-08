@@ -19,4 +19,3 @@ void main() async {
   await initFirebase();
   runApp(makeMyHome());
 }
-  

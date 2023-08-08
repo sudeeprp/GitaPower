@@ -35,24 +35,28 @@ Widget screenify(Widget body, {AppBar? appBar}) {
 
 Widget makeMyHome() {
   final FontController fontController = Get.put(FontController());
-  return Obx(() =>  GetMaterialApp(
-      title: 'The Gita',
-      initialBinding: ChoiceBinding(),
-      theme: ThemeData(brightness: Brightness.light, fontFamily: fontController.currentFontTheme.value)  ,
-      darkTheme: ThemeData(brightness: Brightness.dark, fontFamily: fontController.currentFontTheme.value),
-      home: const Home(),
-      getPages: [
-        GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
-        GetPage(name: '/feed', page: () => screenify(buildFeed())),
-        GetPage(name: '/chapters', page: () => screenify(const ChaptersWidgetTest(key: Key('toc')))),
-        GetPage(
-            name: '/shloka/:mdFilename',
-            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
-        GetPage(
-            name: '/shloka/:mdFilename/:noteId',
-            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!,
-                initialAnchor: Get.parameters['noteId']))),
-      ]));
+  return Obx(() => GetMaterialApp(
+          title: 'The Gita',
+          initialBinding: ChoiceBinding(),
+          theme: ThemeData(
+              brightness: Brightness.light, fontFamily: fontController.currentFontTheme.value),
+          darkTheme: ThemeData(
+              brightness: Brightness.dark, fontFamily: fontController.currentFontTheme.value),
+          home: const Home(),
+          getPages: [
+            GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
+            GetPage(name: '/feed', page: () => screenify(buildFeed())),
+            GetPage(
+                name: '/chapters',
+                page: () => screenify(const ChaptersWidgetTest(key: Key('toc')))),
+            GetPage(
+                name: '/shloka/:mdFilename',
+                page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
+            GetPage(
+                name: '/shloka/:mdFilename/:noteId',
+                page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!,
+                    initialAnchor: Get.parameters['noteId']))),
+          ]));
 }
 
 class Home extends StatelessWidget {
