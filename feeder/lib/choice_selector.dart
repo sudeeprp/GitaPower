@@ -5,11 +5,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum ReadingTheme { dark, light }
 
-enum MeaningMode { short, expanded }
-
 enum ScriptPreference { devanagari, sahk }
 
+enum MeaningMode { short, expanded }
+
 enum HeadPreference { shloka, meaning }
+
+Future<void> storePreferences(ReadingTheme theme, ScriptPreference script, MeaningMode meaningMode,
+    HeadPreference headPreference) async {
+  final storedPreferences = await SharedPreferences.getInstance();
+  storedPreferences.setString('theme', EnumToString.convertToString(theme));
+  storedPreferences.setString('script', EnumToString.convertToString(script));
+  storedPreferences.setString('meaning', EnumToString.convertToString(meaningMode));
+  storedPreferences.setString('head', EnumToString.convertToString(headPreference));
+}
 
 T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
   try {
@@ -33,12 +42,20 @@ class Choices extends GetxController {
     ReadingTheme.dark: ThemeData.dark(),
     ReadingTheme.light: ThemeData.light(),
   };
+  Future<void> storeAllPreferences() async {
+    await storePreferences(theme.value, script.value, meaningMode.value, headPreference.value);
+  }
+
   @override
   void onInit() async {
     theme.listen((themeValue) {
       Get.changeTheme(appearanceChoices[themeValue]!);
       codeColor.value = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
+      storeAllPreferences();
     });
+    script.listen((_) => storeAllPreferences());
+    meaningMode.listen((_) => storeAllPreferences());
+    headPreference.listen((_) => storeAllPreferences());
     try {
       final storedPreferences = await SharedPreferences.getInstance();
       theme.value =

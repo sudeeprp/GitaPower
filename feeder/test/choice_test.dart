@@ -59,5 +59,30 @@ void main() {
     expect(choices.script.value, equals(ScriptPreference.sahk));
     expect(choices.meaningMode.value, equals(MeaningMode.expanded));
     expect(choices.headPreference.value, equals(HeadPreference.meaning));
+    Get.delete<Choices>();
+  });
+  testWidgets('persists preferences', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    await storePreferences(
+        ReadingTheme.light, ScriptPreference.sahk, MeaningMode.short, HeadPreference.shloka);
+    expect(
+        preferences.getString('theme'), equals(EnumToString.convertToString(ReadingTheme.light)));
+    expect(preferences.getString('script'),
+        equals(EnumToString.convertToString(ScriptPreference.sahk)));
+    expect(
+        preferences.getString('meaning'), equals(EnumToString.convertToString(MeaningMode.short)));
+    expect(
+        preferences.getString('head'), equals(EnumToString.convertToString(HeadPreference.shloka)));
+  });
+  testWidgets('persists preferences when changed', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    Get.put(Choices());
+    await tester.pumpWidget(MaterialApp(home: Scaffold(body: headerSelector())));
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    expect(preferences.getString('head'), isNotNull);
+    Get.delete<Choices>();
   });
 }
