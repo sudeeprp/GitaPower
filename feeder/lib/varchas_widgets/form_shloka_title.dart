@@ -4,7 +4,6 @@ import 'package:askys/shloka_headers.dart' as shlokas;
 import 'package:get/get.dart';
 
 class FormShlokaTitle extends StatefulWidget {
-  
   const FormShlokaTitle(
       this.shlokaTitleText, this.mdFilename, this.codeColor, this.currentLang, this.fontSize,
       {super.key});
@@ -22,7 +21,6 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
   final FontController fontcontroller = Get.put(FontController());
   @override
   Widget build(BuildContext context) {
-
     String testHeaders = widget.shlokaTitleText.replaceAll(" ", "_");
     testHeaders = "$testHeaders.md";
     final titleWidgets = [];
@@ -48,8 +46,7 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
             ),
             child: Card(
               color: Theme.of(context).colorScheme.background,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: Column(
                 children: [
                   Padding(
@@ -61,9 +58,11 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
                           padding: const EdgeInsets.only(left: 14.0),
                           child: Text(
                             headerText != ""
-                                ? widget.shlokaTitleText.replaceAll("second", "2nd").replaceAll("first", "1st")
+                                ? widget.shlokaTitleText
+                                    .replaceAll("second", "2nd")
+                                    .replaceAll("first", "1st")
                                 : "Introduction",
-                            style: TextStyle(fontSize: fontcontroller.fontSize.value+5),
+                            style: TextStyle(fontSize: fontcontroller.fontSize.value + 5),
                           ),
                         ),
                         const Spacer(),
@@ -75,27 +74,39 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
                       ],
                     ),
                   ),
-                  
                   headerText == ""
                       ? const SizedBox(
                           height: 16,
                         )
-                      : Obx(() =>  Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                          child: widget.currentLang == "eng" 
-                              ? Text(shlokas.headers[testHeaders]!["meaning"]!.replaceAll(". ", ".\n\n").replaceAll("? ", "?").replaceAll("?", "? "),textAlign: TextAlign.justify,style: TextStyle(fontSize: widget.fontSize,height: fontcontroller.currentFontHeight.value),
-                                  )
-                              : SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                    headerText,
-                                    textAlign: TextAlign.justify,                            
+                      : Obx(
+                          () => Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                            child: widget.currentLang == "eng"
+                                ? Text(
+                                    shlokas.headers[testHeaders]!["meaning"]!
+                                        .replaceAll(". ", ".\n\n")
+                                        .replaceAll("? ", "?")
+                                        .replaceAll("?", "? "),
+                                    textAlign: TextAlign.justify,
                                     style: TextStyle(
-                                        color: widget.codeColor, fontSize: fontcontroller.fontSize.value,height: fontcontroller.currentFontHeight.value,),
+                                        fontSize: widget.fontSize,
+                                        height: fontcontroller.currentFontHeight.value),
+                                  )
+                                : SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Text(
+                                      headerText,
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        color: widget.codeColor,
+                                        fontSize: fontcontroller.fontSize.value,
+                                        height: fontcontroller.currentFontHeight.value,
+                                      ),
+                                    ),
                                   ),
-                              ),
-                        ),
-              )],
+                          ),
+                        )
+                ],
               ),
             ),
           ),
@@ -105,5 +116,3 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
     return Column(children: [...titleWidgets]);
   }
 }
-
-  

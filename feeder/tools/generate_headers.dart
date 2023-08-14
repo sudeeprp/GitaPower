@@ -108,7 +108,6 @@ String concatMeanings(List<String> meanings) {
 }
 
 String shlokaHeaders(String mdFilename) {
-  print(meaningHeaderMap[mdFilename]!);
   return "{'shloka': '''${concatShlokas(shlokaHeaderMap[mdFilename]!)}''', 'meaning': '''${concatMeanings(meaningHeaderMap[mdFilename]!)}'''}";
 }
 
