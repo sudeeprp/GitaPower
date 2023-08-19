@@ -410,6 +410,24 @@ class ContentWidget extends StatefulWidget {
 }
 
 class _ContentWidgetState extends State<ContentWidget> {
+  final _scrollController = ScrollController();
+  bool isAtEdge = true;
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      if(_scrollController.position.atEdge){
+        setState(() {
+          isAtEdge = true;
+        });
+      }
+      else{
+        setState(() {
+          isAtEdge = false;
+        });
+      }
+     });
+    super.initState();
+  }
   void _formatFont() {
     showModalBottomSheet(
       useSafeArea: true,
@@ -603,6 +621,7 @@ class _ContentWidgetState extends State<ContentWidget> {
   @override
   Widget build(context) {
     final choices = Get.find<Choices>();
+    
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
@@ -710,6 +729,9 @@ class _ContentWidgetState extends State<ContentWidget> {
     }
 
     MDContent md = Get.find(tag: widget.mdFilename);
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Chapter.filenameToTitle(widget.mdFilename)),
@@ -724,7 +746,7 @@ class _ContentWidgetState extends State<ContentWidget> {
       ),
       body: Stack(children: [
         Center(
-            child: ListView(children: [
+            child: ListView(controller: _scrollController,children: [
           DefaultTextStyle(
               style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
               child: Obx(() {
@@ -755,6 +777,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                     ));
               }))
         ])),
+        Visibility(visible: isAtEdge && widget.prevmd !=null,child: Align(alignment: Alignment.centerLeft, child: FloatingActionButton(onPressed: (){Get.offNamed('/shloka/${widget.prevmd}');},heroTag: 'backBtn',mini: true,child: const Icon(Icons.navigate_before),))),
+        Visibility(visible: isAtEdge && widget.nextmd !=null,child: Align(alignment: Alignment.centerRight, child: FloatingActionButton(onPressed: (){Get.offNamed('/shloka/${widget.nextmd}');},heroTag: 'forwardBtn',mini: true,child: const Icon(Icons.navigate_next),))),
       ]),
     );
   }

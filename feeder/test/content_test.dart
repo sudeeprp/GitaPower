@@ -204,7 +204,7 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle();
     expect(find.textContaining('योग [yOga]'), findsOneWidget);
   });
-  testWidgets('swiping left takes you to the next shloka', (tester) async {
+  testWidgets('Clicking on buttons to take you to prev and next shloka', (tester) async {
     Get.put(Choices());
     final shlokaContent = buildContent('10-11-shloka.md',
         prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
@@ -217,14 +217,15 @@ A person diverts from the path of realizing the Self due to some desires.
       ],
     ));
     await tester.pumpAndSettle();
-    await tester.fling(find.byKey(const Key('shloka-current')), const Offset(-200, 0), 800);
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka/10-12-anote.md');
-    Get.toNamed('/shloka/10-11-shloka.md');
-    await tester.pumpAndSettle();
-    await tester.fling(find.byKey(const Key('shloka-current')), const Offset(300, 0), 800);
+    expect(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before),findsOneWidget);
+    await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-10-meaning.md');
+    Get.toNamed('/shloka/10-11-shloka.md');
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_next));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shloka/10-12-anote.md');
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
