@@ -34,7 +34,8 @@ class CurrentTextElement {
 }
 
 class MatterForInline {
-  MatterForInline(this.text, this.sectionType, this.tag, this.elmclass, this.link);
+  MatterForInline(
+      this.text, this.sectionType, this.tag, this.elmclass, this.link);
   final String text;
   SectionType sectionType;
   String tag;
@@ -77,10 +78,12 @@ class WidgetMaker implements md.NodeVisitor {
     final tagToSectionType = {
       'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => _headingType(element.textContent),
-      'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-      'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
-          ? SectionType.meaning
-          : SectionType.commentary,
+      'pre': (element) =>
+          classToSectionType[element.children[0].attributes['class']],
+      'p': (element) =>
+          _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
+              ? SectionType.meaning
+              : SectionType.commentary,
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -102,8 +105,8 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets
-          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
+      collectedWidgets.addAll(_widgetMaker(
+          _collectedElements(), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -119,7 +122,8 @@ class WidgetMaker implements md.NodeVisitor {
       final sectionType = elementForCurrentText.isNotEmpty
           ? elementForCurrentText.last.sectionType
           : SectionType.commentary;
-      elementForCurrentText.add(CurrentTextElement(element, sectionType, false));
+      elementForCurrentText
+          .add(CurrentTextElement(element, sectionType, false));
     }
     return true;
   }
@@ -131,7 +135,8 @@ class WidgetMaker implements md.NodeVisitor {
     final link = element.mdElement.attributes['href'];
     var tag = element.mdElement.tag;
     if (elementForCurrentText.length >= 2 &&
-        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag == 'blockquote') {
+        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag ==
+            'blockquote') {
       tag = 'note';
     }
     if (_hasAnchor(markdownText.textContent)) {
@@ -140,14 +145,16 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          collectedInlines
-              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
+          collectedInlines.add(MatterForInline(
+              noteId, element.sectionType, 'anchor', elmclass, link));
         }
       }
     }
-    final processedText = _textForElement(markdownText.textContent, element.mdElement);
+    final processedText =
+        _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      final inlineMatter = MatterForInline(processedText, element.sectionType, tag, elmclass, link);
+      final inlineMatter = MatterForInline(
+          processedText, element.sectionType, tag, elmclass, link);
       collectedInlines.add(inlineMatter);
     }
   }
@@ -155,14 +162,17 @@ class WidgetMaker implements md.NodeVisitor {
   bool _isSeparate(elementTag) {
     const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
     return widgetSeparators.contains(elementTag) &&
-        (elementForCurrentText.isEmpty || elementForCurrentText.last.mdElement.tag != 'blockquote');
+        (elementForCurrentText.isEmpty ||
+            elementForCurrentText.last.mdElement.tag != 'blockquote');
   }
 
   String _textForElement(String inputText, md.Element element) {
     if (element.tag == 'code') {
       return inputText.trim();
     } else {
-      return inputText.replaceAll(_multipleSpaces, " ").replaceAll(_anchors, "");
+      return inputText
+          .replaceAll(_multipleSpaces, " ")
+          .replaceAll(_anchors, "");
     }
   }
 
@@ -195,8 +205,8 @@ bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
 
-List<TextSpan> _renderMeaning(
-    List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
+List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode,
+    ScriptPreference scriptChoice) {
   List<TextSpan> spansToRender = [];
   if (meaningMode == MeaningMode.expanded) {
     if (scriptChoice == ScriptPreference.devanagari) {
@@ -204,11 +214,14 @@ List<TextSpan> _renderMeaning(
         return !_isSAHK(textSpan.text);
       }).toList();
     } else if (scriptChoice == ScriptPreference.sahk) {
-      spansToRender = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
+      spansToRender = spans
+          .where((textSpan) => !_startsWithDevanagari(textSpan.text))
+          .toList();
     }
   } else {
     spansToRender = spans
-        .where((textSpan) => !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
+        .where((textSpan) =>
+            !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
         .toList();
   }
   return spansToRender;
@@ -271,7 +284,8 @@ TextStyle? _styleFor(String tag, String? elmclass) {
     );
   } else if (tag == 'note') {
     return TextStyle(
-        fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value);
+        fontSize: fontController.fontSize.value,
+        height: fontController.currentFontHeight.value);
   } else {
     return TextStyle(height: fontController.currentFontHeight.value);
   }
@@ -311,7 +325,8 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
   anchorKeys[noteId] = keyOfAnchor;
   return [
     TextSpan(children: [
-      WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
+      WidgetSpan(
+          child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
     ])
   ];
 }
@@ -330,15 +345,18 @@ bool _isVisible(SectionType sectionType) {
   final scriptChoice = choice.script.value;
   final headPreference = choice.headPreference.value;
   if (sectionType == SectionType.shlokaSA) {
-    return scriptChoice == ScriptPreference.devanagari && headPreference == HeadPreference.shloka;
+    return scriptChoice == ScriptPreference.devanagari &&
+        headPreference == HeadPreference.shloka;
   } else if (sectionType == SectionType.shlokaSAHK) {
-    return scriptChoice == ScriptPreference.sahk && headPreference == HeadPreference.shloka;
+    return scriptChoice == ScriptPreference.sahk &&
+        headPreference == HeadPreference.shloka;
   }
   return true;
 }
 
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
-  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
+  if (sectionType == SectionType.shlokaSAHK ||
+      sectionType == SectionType.shlokaSA) {
     showElipses = true;
     return w;
   } else {
@@ -357,7 +375,8 @@ Widget _buildNote(BuildContext context, Widget content) {
 
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
   String contentForDisplay = inlineMatter.text;
-  if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
+  if (inlineMatter.sectionType == SectionType.meaning &&
+      inlineMatter.tag != 'code') {
     final Choices choice = Get.find();
     if (choice.meaningMode.value == MeaningMode.short) {
       contentForDisplay = inlineMatter.text.trimLeft();
@@ -366,7 +385,8 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
-Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
+Widget _sectionContainer(
+    BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
@@ -393,7 +413,8 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatefulWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
+  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote,
+      this.prevmd, this.nextmd,
       {Key? key})
       : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
@@ -410,6 +431,24 @@ class ContentWidget extends StatefulWidget {
 }
 
 class _ContentWidgetState extends State<ContentWidget> {
+  final _scrollController = ScrollController();
+  bool isAtEdge = true;
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge) {
+        setState(() {
+          isAtEdge = true;
+        });
+      } else {
+        setState(() {
+          isAtEdge = false;
+        });
+      }
+    });
+    super.initState();
+  }
+
   void _formatFont() {
     showModalBottomSheet(
       useSafeArea: true,
@@ -434,7 +473,9 @@ class _ContentWidgetState extends State<ContentWidget> {
                           fontSize: 15,
                         )),
                     Spacer(),
-                    Text("Font family", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
+                    Text("Font family",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15))
                   ],
                 ),
                 Row(
@@ -456,12 +497,14 @@ class _ContentWidgetState extends State<ContentWidget> {
                             onPressed: _fontPicker,
                             child: Text(fontController.currentFont.value,
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
                                 )))),
                   ],
                 ),
                 const Text("Line Spacing",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -484,7 +527,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6),
                           child: Image.asset('images/line_spacing_default.png',
-                              color: Theme.of(context).colorScheme.onSurface, height: 40),
+                              color: Theme.of(context).colorScheme.onSurface,
+                              height: 40),
                         )),
                     OutlinedButton(
                         onPressed: () {
@@ -493,7 +537,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6),
                           child: Image.asset('images/line_spacing_less.png',
-                              color: Theme.of(context).colorScheme.onSurface, height: 40),
+                              color: Theme.of(context).colorScheme.onSurface,
+                              height: 40),
                         )),
                   ],
                 ),
@@ -529,7 +574,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                       child: Padding(
                     padding: EdgeInsets.only(top: 14.0),
                     child: Text("Font Family",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15)),
                   )),
                 ],
               ),
@@ -603,6 +649,7 @@ class _ContentWidgetState extends State<ContentWidget> {
   @override
   Widget build(context) {
     final choices = Get.find<Choices>();
+
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
@@ -612,7 +659,8 @@ class _ContentWidgetState extends State<ContentWidget> {
         return [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
+            decoration: const BoxDecoration(
+                border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Obx(() => Text.rich(TextSpan(children: spans),
@@ -624,7 +672,8 @@ class _ContentWidgetState extends State<ContentWidget> {
         Obx(() => Visibility(
               visible: _isVisible(sectionType),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Container(
                   decoration: BoxDecoration(
                     boxShadow: [
@@ -642,10 +691,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                   ),
                   child: Card(
                       color: Theme.of(context).colorScheme.background,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
                       child: !showElipses
-                          ? _sectionContainer(
-                              context, sectionType, _spansToText(spans, sectionType))
+                          ? _sectionContainer(context, sectionType,
+                              _spansToText(spans, sectionType))
                           : Column(
                               children: [
                                 const Padding(
@@ -660,8 +710,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                                     ],
                                   ),
                                 ),
-                                _sectionContainer(
-                                    context, sectionType, _spansToText(spans, sectionType)),
+                                _sectionContainer(context, sectionType,
+                                    _spansToText(spans, sectionType)),
                                 const SizedBox(
                                   height: 8,
                                 ),
@@ -682,7 +732,8 @@ class _ContentWidgetState extends State<ContentWidget> {
           TextSpan(
             text: inlineMatter.text,
             style: const TextStyle(color: Colors.blue),
-            recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => _navigateToLink(inlineMatter.link),
           ),
           const TextSpan(text: ' ')
         ];
@@ -710,6 +761,7 @@ class _ContentWidgetState extends State<ContentWidget> {
     }
 
     MDContent md = Get.find(tag: widget.mdFilename);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Chapter.filenameToTitle(widget.mdFilename)),
@@ -724,9 +776,10 @@ class _ContentWidgetState extends State<ContentWidget> {
       ),
       body: Stack(children: [
         Center(
-            child: ListView(children: [
+            child: ListView(controller: _scrollController, children: [
           DefaultTextStyle(
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+              style:
+                  DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
               child: Obx(() {
                 final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                 final widgetsMade = widgetMaker.parse(md.mdContent.value);
@@ -734,38 +787,61 @@ class _ContentWidgetState extends State<ContentWidget> {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   BuildContext? anchorContext;
                   if (anchorKeys.containsKey(widget.initialAnchor)) {
-                    anchorContext = anchorKeys[widget.initialAnchor]?.currentContext;
+                    anchorContext =
+                        anchorKeys[widget.initialAnchor]?.currentContext;
                   }
                   if (anchorContext != null) {
                     Scrollable.ensureVisible(anchorContext);
                   }
                 });
-                return GestureDetector(
-                    onHorizontalDragEnd: (details) {
-                      if (details.velocity.pixelsPerSecond.dx < 0 && widget.nextmd != null) {
-                        Get.offNamed('/shloka/${widget.nextmd}');
-                      } else if (details.velocity.pixelsPerSecond.dx > 0 && widget.prevmd != null) {
-                        Get.offNamed('/shloka/${widget.prevmd}');
-                      }
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widgetsMade,
-                    ));
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: widgetsMade,
+                );
               }))
         ])),
+        Visibility(
+            visible: isAtEdge && widget.prevmd != null,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    Get.offNamed('/shloka/${widget.prevmd}');
+                  },
+                  heroTag: 'backBtn',
+                  mini: true,
+                  child: const Icon(Icons.navigate_before),
+                ))),
+        Visibility(
+            visible: isAtEdge && widget.nextmd != null,
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    Get.offNamed('/shloka/${widget.nextmd}');
+                  },
+                  heroTag: 'forwardBtn',
+                  mini: true,
+                  child: const Icon(Icons.navigate_next),
+                ))),
       ]),
     );
   }
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
+    {String? initialAnchor,
+    String? contentNote,
+    String? prevmd,
+    String? nextmd,
+    Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
+      key: key);
 }
 
-ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
+ContentWidget buildContentWithNote(String mdFilename,
+    {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
   return buildContent(mdFilename,
       initialAnchor: initialAnchor,
