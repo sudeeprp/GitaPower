@@ -20,7 +20,8 @@ enum SectionType {
   shlokaSAHK,
   meaning,
   commentary,
-  note
+  note,
+  appl
 }
 
 final _multipleSpaces = RegExp(r"\s+");
@@ -83,7 +84,9 @@ class WidgetMaker implements md.NodeVisitor {
       'p': (element) =>
           _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
               ? SectionType.meaning
-              : SectionType.commentary,
+              : element.textContent.contains('applnote')
+                  ? SectionType.appl
+                  : SectionType.commentary,
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -227,7 +230,8 @@ List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode,
   return spansToRender;
 }
 
-Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
+Text _spansToText(
+    List<TextSpan> spans, SectionType sectionType, BuildContext context) {
   Choices choice = Get.find();
   final scriptChoice = choice.script.value;
   final meaningMode = choice.meaningMode.value;
@@ -240,14 +244,30 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   if (visibleSpans.isEmpty) {
     return const Text('');
   } else if (visibleSpans.length == 1) {
-    return Text.rich(
-      visibleSpans[0],
-      style: TextStyle(
-        fontSize: fontController.fontSize.value,
-        height: fontController.currentFontHeight.value,
-      ),
-      textAlign: TextAlign.justify,
-    );
+    return sectionType == SectionType.note
+        ? Text.rich(
+            visibleSpans[0],
+            style: TextStyle(
+              fontSize: fontController.fontSize.value,
+              height: fontController.currentFontHeight.value,
+              fontStyle: FontStyle.italic,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withOpacity(0.8)
+                  .withRed(140)
+                  .withAlpha(150),
+            ),
+            textAlign: TextAlign.justify,
+          )
+        : Text.rich(
+            visibleSpans[0],
+            style: TextStyle(
+              fontSize: fontController.fontSize.value,
+              height: fontController.currentFontHeight.value,
+            ),
+            textAlign: TextAlign.justify,
+          );
   } else {
     return Text.rich(
       TextSpan(
@@ -671,54 +691,166 @@ class _ContentWidgetState extends State<ContentWidget> {
       return [
         Obx(() => Visibility(
               visible: _isVisible(sectionType),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.1),
-                        offset: const Offset(-6.0, -6.0),
-                        blurRadius: 16.0,
-                      ),
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.4),
-                        offset: const Offset(6.0, 6.0),
-                        blurRadius: 16.0,
-                      ),
-                    ],
-                  ),
-                  child: Card(
-                      color: Theme.of(context).colorScheme.background,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      child: !showElipses
-                          ? _sectionContainer(context, sectionType,
-                              _spansToText(spans, sectionType))
-                          : Column(
+              child: sectionType == SectionType.appl
+                  ? const SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      child: sectionType == SectionType.note
+                          ? Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(right: 8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.more_horiz_outlined,
-                                        size: 20,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white.withOpacity(0.1),
+                                        offset: const Offset(-6.0, -6.0),
+                                        blurRadius: 16.0,
+                                      ),
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.4),
+                                        offset: const Offset(6.0, 6.0),
+                                        blurRadius: 16.0,
                                       ),
                                     ],
                                   ),
+                                  child: Card(
+                                      color: sectionType == SectionType.note
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .background
+                                              .withOpacity(0.8)
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
+                                      child: !showElipses
+                                          ? sectionType == SectionType.note
+                                              ? Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0),
+                                                      child: Image.asset(
+                                                          'images/one-step.png'),
+                                                    ),
+                                                    Expanded(
+                                                      child: _sectionContainer(
+                                                          context,
+                                                          sectionType,
+                                                          _spansToText(
+                                                              spans,
+                                                              sectionType,
+                                                              context)),
+                                                    )
+                                                  ],
+                                                )
+                                              : _sectionContainer(
+                                                  context,
+                                                  sectionType,
+                                                  _spansToText(spans,
+                                                      sectionType, context))
+                                          : Column(
+                                              children: [
+                                                const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(right: 8),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .more_horiz_outlined,
+                                                        size: 20,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                _sectionContainer(
+                                                    context,
+                                                    sectionType,
+                                                    _spansToText(spans,
+                                                        sectionType, context)),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+                                              ],
+                                            )),
                                 ),
-                                _sectionContainer(context, sectionType,
-                                    _spansToText(spans, sectionType)),
-                                const SizedBox(
-                                  height: 8,
-                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16.0),
+                                  child: Center(
+                                      child: Text(
+                                    "Commentary",
+                                    style: TextStyle(fontSize: 24),
+                                  )),
+                                )
                               ],
-                            )),
-                ),
-              ),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.1),
+                                    offset: const Offset(-6.0, -6.0),
+                                    blurRadius: 16.0,
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.4),
+                                    offset: const Offset(6.0, 6.0),
+                                    blurRadius: 16.0,
+                                  ),
+                                ],
+                              ),
+                              child: Card(
+                                  color: sectionType == SectionType.note
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .background
+                                          .withOpacity(0.8)
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: !showElipses
+                                      ? _sectionContainer(
+                                          context,
+                                          sectionType,
+                                          _spansToText(
+                                              spans, sectionType, context))
+                                      : Column(
+                                          children: [
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 8),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Icon(
+                                                    Icons.more_horiz_outlined,
+                                                    size: 20,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            _sectionContainer(
+                                                context,
+                                                sectionType,
+                                                _spansToText(spans, sectionType,
+                                                    context)),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                          ],
+                                        )),
+                            ),
+                    ),
             ))
       ];
     }
