@@ -8,6 +8,7 @@ import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'chaptercontent.dart';
 import 'notecontent.dart';
+import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 var showElipses = false;
 final FontController fontController = Get.put(FontController());
@@ -385,9 +386,12 @@ Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
   }
 }
 
-Widget _buildNote(BuildContext context, Widget content) {
+Widget _buildNote(BuildContext context, Widget content,SectionType? sectionType) {
   return Container(
-    padding: const EdgeInsets.only(top: 8, bottom: 16, left: 12, right: 12),
+    
+    padding:const EdgeInsets.only(top: 8, bottom: 16, left: 12, right: 12)
+
+    ,
     alignment: Alignment.center,
     child: content,
   );
@@ -408,12 +412,12 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 Widget _sectionContainer(
     BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
-    return _buildNote(context, content);
+    return _buildNote(context, content,sectionType);
   }
 
   return !showElipses
       ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: sectionType == SectionType.commentary? const EdgeInsets.all(8) : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Center(
             child: SizedBox(
               width: double.infinity,
@@ -697,8 +701,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 16),
                       child: sectionType == SectionType.note
-                          ? Column(
-                              children: [
+                          ?
                                 Container(
                                   decoration: BoxDecoration(
                                     boxShadow: [
@@ -780,18 +783,20 @@ class _ContentWidgetState extends State<ContentWidget> {
                                                 ),
                                               ],
                                             )),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 16.0),
-                                  child: Center(
-                                      child: Text(
-                                    "Commentary",
-                                    style: TextStyle(fontSize: 24),
-                                  )),
                                 )
-                              ],
-                            )
-                          : Container(
+                            
+                          : sectionType==SectionType.commentary? 
+                          Stack(
+                                children: [
+                                  Positioned(top: 0,child: CircleAvatar(radius: 23,child: Image.asset('images/Ramanujacharya.png'))),
+                                  ChatBubble(clipper: ChatBubbleClipper1(type: BubbleType.receiverBubble),margin: EdgeInsets.only(top:50),backGroundColor: Theme.of(context).colorScheme.background,child: _sectionContainer(
+                                                  context,
+                                                  sectionType,
+                                                  _spansToText(spans,
+                                                      sectionType, context)),)
+                                ]
+                              )
+                          :Container(
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -888,7 +893,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                 Text.rich(
                   TextSpan(text: toPlainText(widget.contentNote!)),
                   style: const TextStyle(fontSize: 24),
-                )));
+                ),null));
       }
     }
 
