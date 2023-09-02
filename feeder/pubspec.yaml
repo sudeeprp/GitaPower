@@ -27,7 +27,7 @@ dependencies:
   markdown: ^7.1.1
   stack: ^0.2.1
   google_fonts: ^5.1.0
-  cupertino_icons: ^1.0.5
+  cupertino_icons: ^1.0.6
   firebase_crashlytics: ^3.3.5
   firebase_core: ^2.13.0
   shared_preferences:
