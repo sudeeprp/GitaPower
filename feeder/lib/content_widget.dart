@@ -448,11 +448,13 @@ class ContentWidget extends StatelessWidget {
                 Scrollable.ensureVisible(anchorContext, alignment: 0.3);
               }
             });
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widgetsMade,
-            );
+            return GestureDetector(
+                onTap: Get.find<ContentActions>(tag: mdFilename).showForAWhile,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: widgetsMade,
+                ));
           }),
         ),
       )),
