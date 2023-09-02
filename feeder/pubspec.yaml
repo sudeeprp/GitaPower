@@ -29,7 +29,7 @@ dependencies:
   google_fonts: ^5.1.0
   cupertino_icons: ^1.0.5
   firebase_crashlytics: ^3.3.4
-  firebase_core: ^2.13.0
+  firebase_core: ^2.15.1
   shared_preferences:
   enum_to_string:
 
