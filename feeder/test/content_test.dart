@@ -1,4 +1,5 @@
 import 'package:askys/choice_selector.dart';
+import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -216,6 +217,9 @@ A person diverts from the path of realizing the Self due to some desires.
         GetPage(name: '/shloka/10-12-anote.md', page: () => const Text('swiped to 10-12')),
       ],
     ));
+
+    ContentActions contentActions = Get.find(tag: '10-11-shloka.md');
+    contentActions.showForAWhile();
     await tester.pumpAndSettle();
     expect(find.widgetWithIcon(FloatingActionButton, Icons.navigate_next), findsOneWidget);
     await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_next));
@@ -226,6 +230,13 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-10-meaning.md');
+  });
+  testWidgets('hides page-browse buttons after a while', (tester) async {
+    final contentActions = ContentActions();
+    contentActions.actionsVisible.value = true;
+    contentActions.hideAfterAWhile(1);
+    await tester.pumpAndSettle(const Duration(seconds: 1, milliseconds: 500));
+    expect(contentActions.actionsVisible.value, equals(false));
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');

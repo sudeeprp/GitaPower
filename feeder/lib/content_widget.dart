@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:askys/mdcontent.dart';
+import 'package:askys/content_actions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -359,6 +358,7 @@ class ContentWidget extends StatelessWidget {
       {Key? key})
       : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
+    Get.put(ContentActions(), tag: mdFilename);
   }
 
   final String mdFilename;
@@ -457,7 +457,7 @@ class ContentWidget extends StatelessWidget {
         ),
       )),
       shlokaTitle(mdFilename, context),
-      ...navigationButtons(context, nextmd, prevmd),
+      ...navigationButtons(context, mdFilename, nextmd, prevmd),
     ]);
   }
 }
@@ -472,35 +472,6 @@ Widget shlokaTitle(String mdFilename, BuildContext context) {
       ));
 }
 
-List<Widget> navigationButtons(BuildContext context, String? nextmd, String? prevmd) {
-  return [
-    Visibility(
-        visible: nextmd != null,
-        child: Align(
-            alignment: Alignment.centerRight,
-            child: FloatingActionButton(
-              onPressed: () => Get.offNamed('/shloka/$nextmd'),
-              heroTag:
-                  'nextBtn${String.fromCharCodes(List.generate(5, (index) => Random().nextInt(33) + 89))}',
-              mini: true,
-              backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.5),
-              child: const Icon(Icons.navigate_next),
-            ))),
-    Visibility(
-        visible: prevmd != null,
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: FloatingActionButton(
-              onPressed: () => Get.offNamed('/shloka/$prevmd'),
-              heroTag:
-                  'prevBtn${String.fromCharCodes(List.generate(5, (index) => Random().nextInt(33) + 89))}',
-              mini: true,
-              backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.5),
-              child: const Icon(Icons.navigate_before),
-            ))),
-  ];
-}
-
 ContentWidget buildContent(String mdFilename,
     {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
   return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
@@ -508,10 +479,13 @@ ContentWidget buildContent(String mdFilename,
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
-  return buildContent(mdFilename,
+  var contentWidget = buildContent(mdFilename,
       initialAnchor: initialAnchor,
       contentNote: contentNotes.noteForMD(mdFilename),
       prevmd: contentNotes.prevmd(mdFilename),
       nextmd: contentNotes.nextmd(mdFilename),
       key: key);
+  var contentActions = Get.find<ContentActions>(tag: mdFilename);
+  contentActions.showForAWhile();
+  return contentWidget;
 }

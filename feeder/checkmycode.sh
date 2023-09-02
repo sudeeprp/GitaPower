@@ -6,11 +6,16 @@ set -e
 RED='\033[0;31m'
 NC='\033[0m'
 
-bash gita-begin-offline.sh
+if [[ -d gita-begin/gita ]] && [[ -d gita-begin/compile ]]
+then
+  echo "Skipping Gita clone, since directories already exist"
+else
+  bash gita-begin-offline.sh
+fi
 
 dart format -l 100 .
 flutter analyze
-flutter test --coverage
+flutter test --dart-define=actionHideInSecs=0 --coverage
 
 echo
 filesWithoutFuncs=$(grep -rLE "\)\s*{" ./lib | sed 's/^.\///g' | tr '\n' , | sed 's/,$//g')
