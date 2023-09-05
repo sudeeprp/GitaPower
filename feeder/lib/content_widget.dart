@@ -358,7 +358,6 @@ class ContentWidget extends StatelessWidget {
       {Key? key})
       : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
-    Get.put(ContentActions(), tag: mdFilename);
   }
 
   final String mdFilename;
@@ -449,7 +448,7 @@ class ContentWidget extends StatelessWidget {
               }
             });
             return GestureDetector(
-                onTap: Get.find<ContentActions>(tag: mdFilename).showForAWhile,
+                onTap: Get.find<ContentActions>().showForAWhile,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -487,7 +486,7 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
       prevmd: contentNotes.prevmd(mdFilename),
       nextmd: contentNotes.nextmd(mdFilename),
       key: key);
-  var contentActions = Get.find<ContentActions>(tag: mdFilename);
+  var contentActions = Get.find<ContentActions>();
   contentActions.showForAWhile();
   return contentWidget;
 }

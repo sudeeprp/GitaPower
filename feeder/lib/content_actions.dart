@@ -20,7 +20,7 @@ class ContentActions extends GetxController {
 
 List<Widget> navigationButtons(
     BuildContext context, String thismd, String? nextmd, String? prevmd) {
-  final ContentActions contentActions = Get.find(tag: thismd);
+  final ContentActions contentActions = Get.find();
   Widget makeNavigator(Alignment alignment, String? targetMdFilename, IconData icon) =>
       Obx(() => Visibility(
           visible: contentActions.actionsVisible.value == true && targetMdFilename != null,

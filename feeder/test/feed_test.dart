@@ -1,4 +1,5 @@
 import 'package:askys/choice_selector.dart';
+import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/feedcontent.dart';
@@ -34,6 +35,7 @@ void main() {
   testWidgets('shows three shlokas', (tester) async {
     Get.put(FeedContent());
     Get.put(ContentNotes());
+    Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feed/1')), findsOneWidget);

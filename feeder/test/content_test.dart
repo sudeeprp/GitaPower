@@ -119,6 +119,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
@@ -148,6 +149,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Renders shloka as per script preference', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     Get.find<Choices>().script.value = ScriptPreference.sahk;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
@@ -157,6 +159,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Renders note and hides the anchor', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     final contentWidget = buildContent('10-12-anote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -168,6 +171,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Shows commentary following an anchor', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     final contentWidget = buildContent('6-41-anchor.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -176,6 +180,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Navigates a link in the commentary', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     const targetFilename = '10-11-shloka.md';
     const targetNote = 'why-think';
     await tester.pumpWidget(GetMaterialApp(
@@ -195,18 +200,21 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('such resolve is sattva'), findsOneWidget);
   });
   testWidgets('shows second level headings in intro-basics', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: buildContent('Back-to-Basics.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('योग [yOga]'), findsOneWidget);
   });
   testWidgets('page-browse by clicking next and previous buttons', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     final shlokaContent = buildContent('10-11-shloka.md',
         prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
     await tester.pumpWidget(GetMaterialApp(
@@ -218,7 +226,7 @@ A person diverts from the path of realizing the Self due to some desires.
       ],
     ));
 
-    ContentActions contentActions = Get.find(tag: '10-11-shloka.md');
+    ContentActions contentActions = Get.find();
     contentActions.showForAWhile();
     await tester.pumpAndSettle();
     expect(find.widgetWithIcon(FloatingActionButton, Icons.navigate_next), findsOneWidget);
