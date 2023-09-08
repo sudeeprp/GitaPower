@@ -698,7 +698,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                   ? const SizedBox()
                   : Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
+                          horizontal: 16, vertical: 16 ),
                       child: sectionType == SectionType.note
                           ? Container(
                               decoration: BoxDecoration(
