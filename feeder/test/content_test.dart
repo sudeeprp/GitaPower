@@ -217,7 +217,7 @@ A person diverts from the path of realizing the Self due to some desires.
       ],
     ));
     await tester.pumpAndSettle();
-    expect(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before),findsOneWidget);
+    expect(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before), findsOneWidget);
     await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-10-meaning.md');
