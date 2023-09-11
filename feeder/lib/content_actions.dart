@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ContentActions extends GetxController {
   var actionsVisible = false.obs;
+  Timer? runningTimer;
 
   void showForAWhile() {
     actionsVisible.value = true;
@@ -12,8 +14,11 @@ class ContentActions extends GetxController {
   }
 
   void hideAfterAWhile(int actionHideInSecs) {
+    if (runningTimer != null) {
+      runningTimer?.cancel();
+    }
     if (actionHideInSecs > 0) {
-      Future.delayed(Duration(seconds: actionHideInSecs), () => actionsVisible.value = false);
+      runningTimer = Timer(Duration(seconds: actionHideInSecs), () => actionsVisible.value = false);
     }
   }
 }

@@ -246,6 +246,17 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle(const Duration(seconds: 1, milliseconds: 500));
     expect(contentActions.actionsVisible.value, equals(false));
   });
+  testWidgets('multiple hide requests dont hide prematurely', (tester) async {
+    final contentActions = ContentActions();
+    contentActions.actionsVisible.value = true;
+    contentActions.hideAfterAWhile(1);
+    await tester.pumpAndSettle(const Duration(milliseconds: 500));
+    contentActions.hideAfterAWhile(1); // hide once more before the previous one hides
+    await tester.pumpAndSettle(const Duration(milliseconds: 700)); // still within the second hide
+    expect(contentActions.actionsVisible.value, equals(true));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+    expect(contentActions.actionsVisible.value, equals(false));
+  });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
     expect(inlineCode.textsMade[0].content, equals('inline '));
