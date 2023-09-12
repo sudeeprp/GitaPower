@@ -1,4 +1,5 @@
 import 'package:askys/mdcontent.dart';
+import 'package:askys/content_actions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -431,44 +432,45 @@ class ContentWidget extends StatelessWidget {
     return Stack(children: [
       Center(
           child: SingleChildScrollView(
-              child: DefaultTextStyle(
-                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
-                  child: Obx(() {
-                    final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
-                    final widgetsMade = widgetMaker.parse(md.mdContent.value);
-                    insertContentNote(widgetsMade);
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      BuildContext? anchorContext;
-                      if (anchorKeys.containsKey(initialAnchor)) {
-                        anchorContext = anchorKeys[initialAnchor]?.currentContext;
-                      }
-                      if (anchorContext != null) {
-                        Scrollable.ensureVisible(anchorContext, alignment: 0.3);
-                      }
-                    });
-                    return GestureDetector(
-                        onHorizontalDragEnd: (details) {
-                          if (details.velocity.pixelsPerSecond.dx < 0 && nextmd != null) {
-                            Get.offNamed('/shloka/$nextmd');
-                          } else if (details.velocity.pixelsPerSecond.dx > 0 && prevmd != null) {
-                            Get.offNamed('/shloka/$prevmd');
-                          }
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: widgetsMade,
-                        ));
-                  })))),
-      Positioned(
-          top: 0,
-          right: 2,
-          child: Text(
-            Chapter.filenameToTitle(mdFilename),
-            style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
-          )),
+        child: DefaultTextStyle(
+          style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+          child: Obx(() {
+            final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
+            final widgetsMade = widgetMaker.parse(md.mdContent.value);
+            insertContentNote(widgetsMade);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              BuildContext? anchorContext;
+              if (anchorKeys.containsKey(initialAnchor)) {
+                anchorContext = anchorKeys[initialAnchor]?.currentContext;
+              }
+              if (anchorContext != null) {
+                Scrollable.ensureVisible(anchorContext, alignment: 0.3);
+              }
+            });
+            return GestureDetector(
+                onTap: Get.find<ContentActions>().showForAWhile,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: widgetsMade,
+                ));
+          }),
+        ),
+      )),
+      shlokaTitle(mdFilename, context),
+      ...navigationButtons(context, mdFilename, nextmd, prevmd),
     ]);
   }
+}
+
+Widget shlokaTitle(String mdFilename, BuildContext context) {
+  return Positioned(
+      top: 0,
+      right: 2,
+      child: Text(
+        Chapter.filenameToTitle(mdFilename),
+        style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
+      ));
 }
 
 ContentWidget buildContent(String mdFilename,
@@ -478,10 +480,13 @@ ContentWidget buildContent(String mdFilename,
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
-  return buildContent(mdFilename,
+  var contentWidget = buildContent(mdFilename,
       initialAnchor: initialAnchor,
       contentNote: contentNotes.noteForMD(mdFilename),
       prevmd: contentNotes.prevmd(mdFilename),
       nextmd: contentNotes.nextmd(mdFilename),
       key: key);
+  var contentActions = Get.find<ContentActions>();
+  contentActions.showForAWhile();
+  return contentWidget;
 }

@@ -1,4 +1,5 @@
 import 'package:askys/choice_selector.dart';
+import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -118,6 +119,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Renders content with meanings as per script preference', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
@@ -147,6 +149,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Renders shloka as per script preference', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     Get.find<Choices>().script.value = ScriptPreference.sahk;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
@@ -156,6 +159,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Renders note and hides the anchor', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     final contentWidget = buildContent('10-12-anote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -167,6 +171,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Shows commentary following an anchor', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     final contentWidget = buildContent('6-41-anchor.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -175,6 +180,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('Navigates a link in the commentary', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     const targetFilename = '10-11-shloka.md';
     const targetNote = 'why-think';
     await tester.pumpWidget(GetMaterialApp(
@@ -194,18 +200,21 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('such resolve is sattva'), findsOneWidget);
   });
   testWidgets('shows second level headings in intro-basics', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: buildContent('Back-to-Basics.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('योग [yOga]'), findsOneWidget);
   });
-  testWidgets('swiping left takes you to the next shloka', (tester) async {
+  testWidgets('page-browse by clicking next and previous buttons', (tester) async {
     Get.put(Choices());
+    Get.put(ContentActions());
     final shlokaContent = buildContent('10-11-shloka.md',
         prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
     await tester.pumpWidget(GetMaterialApp(
@@ -216,15 +225,37 @@ A person diverts from the path of realizing the Self due to some desires.
         GetPage(name: '/shloka/10-12-anote.md', page: () => const Text('swiped to 10-12')),
       ],
     ));
+
+    ContentActions contentActions = Get.find();
+    contentActions.showForAWhile();
     await tester.pumpAndSettle();
-    await tester.fling(find.byKey(const Key('shloka-current')), const Offset(-200, 0), 800);
+    expect(find.widgetWithIcon(FloatingActionButton, Icons.navigate_next), findsOneWidget);
+    await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_next));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-12-anote.md');
     Get.toNamed('/shloka/10-11-shloka.md');
     await tester.pumpAndSettle();
-    await tester.fling(find.byKey(const Key('shloka-current')), const Offset(300, 0), 800);
+    await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-10-meaning.md');
+  });
+  testWidgets('hides page-browse buttons after a while', (tester) async {
+    final contentActions = ContentActions();
+    contentActions.actionsVisible.value = true;
+    contentActions.hideAfterAWhile(1);
+    await tester.pumpAndSettle(const Duration(seconds: 1, milliseconds: 500));
+    expect(contentActions.actionsVisible.value, equals(false));
+  });
+  testWidgets('multiple hide requests dont hide prematurely', (tester) async {
+    final contentActions = ContentActions();
+    contentActions.actionsVisible.value = true;
+    contentActions.hideAfterAWhile(1);
+    await tester.pumpAndSettle(const Duration(milliseconds: 500));
+    contentActions.hideAfterAWhile(1); // hide once more before the previous one hides
+    await tester.pumpAndSettle(const Duration(milliseconds: 700)); // still within the second hide
+    expect(contentActions.actionsVisible.value, equals(true));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+    expect(contentActions.actionsVisible.value, equals(false));
   });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');

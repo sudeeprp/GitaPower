@@ -5,6 +5,7 @@ import 'package:askys/choice_selector.dart';
 import 'package:askys/chaptercontent.dart';
 import 'content_source.dart';
 import 'feedcontent.dart';
+import 'content_actions.dart';
 
 class ChoiceBinding implements Bindings {
   @override
@@ -17,5 +18,6 @@ class ChoiceBinding implements Bindings {
     Get.put(NotesTOC());
     Get.put(ContentNotes());
     Get.put(FeedContent());
+    Get.put(ContentActions());
   }
 }
