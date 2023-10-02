@@ -12,6 +12,15 @@ class ChaptersWidgetTest extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chapters"),
+        actions: [
+           IconButton(
+                onPressed: () {
+                  Get.changeThemeMode(
+                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                  );
+                },
+                icon: const Icon(Icons.brightness_6))
+        ],
       ),
       body: Obx(() {
         if (toc.chaptersLoaded.value) {

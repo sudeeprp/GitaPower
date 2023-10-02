@@ -69,7 +69,7 @@ class _FormShlokaTitleState extends State<FormShlokaTitle> {
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           size: 20,
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSecondaryContainer,
                         ),
                       ],
                     ),

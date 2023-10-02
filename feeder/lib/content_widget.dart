@@ -240,10 +240,10 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType, BuildContext co
               fontStyle: FontStyle.italic,
               color: Theme.of(context)
                   .colorScheme
-                  .onSurface
+                  .onBackground
                   .withOpacity(0.8)
-                  .withRed(140)
-                  .withAlpha(150),
+              
+  
             ),
             textAlign: TextAlign.justify,
           )
@@ -267,16 +267,16 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType, BuildContext co
   }
 }
 
-TextStyle? _styleFor(String tag, String? elmclass) {
+TextStyle? _styleFor(String tag, String? elmclass, BuildContext context) {
   if (elmclass == 'language-shloka-sa') {
     return TextStyle(
-      color: Get.find<Choices>().codeColor.value,
+      color: Theme.of(context).colorScheme.onSecondary,
       fontSize: fontController.fontSize.value,
       height: fontController.currentFontHeight.value,
     );
   } else if (tag == 'code') {
     return GoogleFonts.robotoMono(
-      color: Get.find<Choices>().codeColor.value,
+      color: Theme.of(context).colorScheme.onSecondary,
       fontSize: fontController.fontSize.value,
       height: fontController.currentFontHeight.value,
     );
@@ -642,7 +642,6 @@ class _ContentWidgetState extends State<ContentWidget> {
 
   @override
   Widget build(context) {
-    final choices = Get.find<Choices>();
 
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
@@ -657,7 +656,7 @@ class _ContentWidgetState extends State<ContentWidget> {
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Obx(() => Text.rich(TextSpan(children: spans),
-                    style: TextStyle(color: choices.codeColor.value)))),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSecondary)))),
           )
         ];
       }
@@ -815,7 +814,7 @@ class _ContentWidgetState extends State<ContentWidget> {
       return [
         TextSpan(
             text: textContent,
-            style: _styleFor(inlineMatter.tag, inlineMatter.elmclass),
+            style: _styleFor(inlineMatter.tag, inlineMatter.elmclass,context),
             recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
       ];
     }
@@ -838,13 +837,20 @@ class _ContentWidgetState extends State<ContentWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(Chapter.filenameToTitle(widget.mdFilename)),
-        actions: [
+        actions: [ IconButton(
+                onPressed: () {
+                  Get.changeThemeMode(
+                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                  );
+                },
+                icon: const Icon(Icons.brightness_6)),
           IconButton(
               onPressed: _formatFont,
               icon: Image.asset(
                 'images/icons8-font-size-24.png',
-                color: Theme.of(context).colorScheme.onSurface,
-              ))
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              )),
+          
         ],
       ),
       body: Stack(children: [
@@ -882,7 +888,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                   },
                   heroTag: 'backBtn',
                   mini: true,
-                  child: const Icon(Icons.navigate_before),
+                  child: Icon(Icons.navigate_before,color: Theme.of(context).colorScheme.onSecondaryContainer,),
                 ))),
         Visibility(
             visible: isAtEdge && widget.nextmd != null,
@@ -894,7 +900,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                   },
                   heroTag: 'forwardBtn',
                   mini: true,
-                  child: const Icon(Icons.navigate_next),
+                  child: Icon(Icons.navigate_next,color: Theme.of(context).colorScheme.onSecondaryContainer),
                 ))),
       ]),
     );

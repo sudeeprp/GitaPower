@@ -1,5 +1,4 @@
 import 'package:askys/chaptercontent.dart';
-import 'package:askys/choice_selector.dart';
 import 'package:askys/varchas_controllers/font_controller.dart';
 import 'package:askys/varchas_widgets/form_shloka_title.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class _ChapterContentTestState extends State<ChapterContentTest> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: const Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back,),
                       alignment: Alignment.centerLeft),
                   const Center(
                       child: Padding(
@@ -247,11 +246,18 @@ class _ChapterContentTestState extends State<ChapterContentTest> {
         appBar: AppBar(
           title: Text(widget.title),
           actions: [
+             IconButton(
+                onPressed: () {
+                  Get.changeThemeMode(
+                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                  );
+                },
+                icon: const Icon(Icons.brightness_6)),
             IconButton(
                 onPressed: _formatFont,
                 icon: Image.asset(
                   'images/icons8-font-size-24.png',
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ))
           ],
         ),
@@ -259,10 +265,8 @@ class _ChapterContentTestState extends State<ChapterContentTest> {
             itemCount: widget.chapter.shokas.length,
             itemBuilder: (ctx, index) {
               final mdFilename = Chapter.titleToFilename(widget.chapter.shokas[index]);
-              final Choices choices = Get.find();
-              final codeColor = choices.codeColor.value;
               return Obx(() => ListTile(
-                    title: FormShlokaTitle(widget.chapter.shokas[index], mdFilename, codeColor,
+                    title: FormShlokaTitle(widget.chapter.shokas[index], mdFilename, Theme.of(context).colorScheme.onSecondary,
                         _currentLang, fontController.fontSize.value),
                     onTap: () => Get.toNamed('/shloka/$mdFilename'),
                   ));
