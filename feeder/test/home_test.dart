@@ -79,7 +79,7 @@ void main() {
     await tester.tap(find.text('Is there a different way?')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(const Duration(milliseconds: 300));
     expect(Get.currentRoute, '/shloka/1-1.md/applnote_13');
     // To check that the note is present somewhere - self-test of this test
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
