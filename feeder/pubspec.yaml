@@ -30,7 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_crashlytics: ^3.3.5
   firebase_core: ^2.21.0
-  shared_preferences: 2.2.1
+  shared_preferences: 2.2.2
   enum_to_string:
 
 dev_dependencies:
