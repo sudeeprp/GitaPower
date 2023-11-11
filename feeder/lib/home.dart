@@ -1,3 +1,4 @@
+import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,6 +43,9 @@ Widget makeMyHome() {
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
         GetPage(name: '/feed', page: () => screenify(buildFeed())),
         GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
+        GetPage(
+            name: '/shlokaheaders/:chapter',
+            page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
