@@ -355,8 +355,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 
 class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
-      {Key? key})
-      : super(key: key) {
+      {super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
