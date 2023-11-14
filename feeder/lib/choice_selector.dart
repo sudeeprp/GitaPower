@@ -32,7 +32,7 @@ T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
 
 class Choices extends GetxController {
   static const codeColorForLight = Color(0xFF800000);
-  static final codeColorForDark = Colors.deepOrange.shade900.withOpacity(0.9);
+  static const codeColorForDark = Color.fromARGB(255, 236, 118, 82);
   var theme = Get.isDarkMode ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
   var codeColor = Get.isDarkMode ? Rx<Color>(codeColorForDark) : Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;

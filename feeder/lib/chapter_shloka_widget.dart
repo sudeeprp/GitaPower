@@ -28,7 +28,7 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
 }
 
 Widget? _formShlokaTitle(
-    String mdFilename, HeadPreference headPreference, Color codeColor) {
+    String mdFilename, HeadPreference headPreference, Color codeColor, BuildContext context) {
   const headerContents = {
     HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
     HeadPreference.meaning: {
@@ -45,13 +45,14 @@ Widget? _formShlokaTitle(
   if (headerText != null) {
     return Card(
       elevation: 10,
+      color: context.theme.scaffoldBackgroundColor, // Color(0xFF000000),
       child: SingleChildScrollView(
-        scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
-        child: textPadding(Text(
-          headerText,
-          style: TextStyle(color: codeColor, height: 1.5),
-          textScaleFactor: headerContents[headPreference]!['textScaleFactor'] as double,
-        ))),
+          scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
+          child: textPadding(Text(
+            headerText,
+            style: TextStyle(color: codeColor, height: 1.5),
+            textScaleFactor: headerContents[headPreference]!['textScaleFactor'] as double,
+          ))),
     );
   }
   return null;
@@ -75,10 +76,8 @@ class ChapterShlokaWidget extends StatelessWidget {
         final mdFilename = chapter.shlokaTitleToFilename(shlokaTitleText);
         return ListTile(
           title: Text(shlokaTitleText),
-          subtitle: _formShlokaTitle(mdFilename, headPreference, codeColor),
+          subtitle: _formShlokaTitle(mdFilename, headPreference, codeColor, context),
           minVerticalPadding: 16,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16))) ,
           onTap: () => Get.toNamed('/shloka/$mdFilename'),
         );
       }).toList();

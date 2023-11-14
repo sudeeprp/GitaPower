@@ -22,26 +22,6 @@ void main() {
         (server) => server.reply(200, compiledMDtoNoteIds));
     Get.put(GitHubFetcher(dio));
   });
-  // << remove this? inter-screen transfer would need replication of home
-  // testWidgets('navigates to a shloka from the chapters toc', (WidgetTester tester) async {
-  //   Get.put(ChaptersTOC());
-  //   Get.put(Choices());
-
-  //   await tester.pumpWidget(GetMaterialApp(
-  //     home: const ChaptersWidget(),
-  //     getPages: [GetPage(name: '/shloka', page: () => const Text('shloka reached'))],
-  //   ));
-  //   await tester.pumpAndSettle();
-  //   expect(find.byType(ListView), findsOneWidget);
-
-  //   await tester.tap(find.text('Chapter 1'));
-  //   await tester.pumpAndSettle();
-  //   await tester.tap(find.text('1-1'));
-  //   await tester.pumpAndSettle();
-  //   expect(Get.currentRoute, '/shloka/1-1.md');
-  //   Get.delete<Choices>();
-  //   Get.delete<ChaptersTOC>();
-  // });
   testWidgets('navigates to a chapter from the toc', (tester) async {
     Get.put(ChaptersTOC());
     Get.put(Choices());
@@ -60,20 +40,4 @@ void main() {
     Get.delete<Choices>();
     Get.delete<ChaptersTOC>();
   });
-  // << remove this test... inter-screen switching is handled
-  // testWidgets('goes by choice to show sloka or widget', (tester) async {
-  //   Get.put(ChaptersTOC());
-  //   var choices = Choices();
-  //   Get.put(choices);
-
-  //   await tester.pumpWidget(const GetMaterialApp(home: ChaptersWidget()));
-  //   await tester.pumpAndSettle();
-  //   final chapterHeadFinder = find.text('Chapter 2');
-  //   await tester.tap(chapterHeadFinder);
-  //   await tester.pumpAndSettle();
-  //   expect(find.textContaining('तम् तथा कृपयाविष्टम्'), findsOneWidget);
-  //   choices.headPreference.value = HeadPreference.meaning;
-  //   await tester.pumpAndSettle();
-  //   expect(find.textContaining('overcome with pity'), findsOneWidget);
-  // });
 }
