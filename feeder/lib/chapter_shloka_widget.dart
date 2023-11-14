@@ -28,19 +28,15 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
 }
 
 Widget? _formShlokaTitle(
-    String shlokaTitleText, String mdFilename, HeadPreference headPreference, Color codeColor) {
-  final List<Widget> titleWidgets = [Text(shlokaTitleText, textScaleFactor: 1.2)];
-  String? headerText;
+    String mdFilename, HeadPreference headPreference, Color codeColor) {
   const headerContents = {
-    HeadPreference.shloka: {
-      'scrollDirection': Axis.horizontal,
-      'textScaleFactor': 1.5,
-    },
+    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
     HeadPreference.meaning: {
       'scrollDirection': Axis.vertical,
       'textScaleFactor': 1.2,
     },
   };
+  String? headerText;
   if (headPreference == HeadPreference.shloka) {
     headerText = shlokas.headers[mdFilename]?['shloka'];
   } else {
@@ -49,7 +45,6 @@ Widget? _formShlokaTitle(
   if (headerText != null) {
     return Card(
       elevation: 10,
-      // margin: const EdgeInsets.symmetric(horizontal: 2),
       child: SingleChildScrollView(
         scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
         child: textPadding(Text(
@@ -60,38 +55,12 @@ Widget? _formShlokaTitle(
     );
   }
   return null;
-  // return Column(crossAxisAlignment: CrossAxisAlignment.start, children: titleWidgets);
-  // return Card(
-  //   elevation: 10,
-  //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: titleWidgets));
 }
 
 Widget textPadding(Widget textChild) {
   return Padding(padding: const EdgeInsets.symmetric(horizontal: 3), child: textChild);
 }
 
-Widget addBorder(Widget child) {
-  return Padding(
-      padding: const EdgeInsets.only(top: 6, bottom: 6, left: 0, right: 0),
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.1),
-              offset: const Offset(-4.0, -4.0),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              offset: const Offset(4.0, 4.0),
-              blurRadius: 16.0,
-            ),
-          ],
-        ),
-        child: child,
-      ),
-  );
-}
 class ChapterShlokaWidget extends StatelessWidget {
   final Chapter chapter;
   const ChapterShlokaWidget(this.chapter, {super.key});
@@ -106,9 +75,7 @@ class ChapterShlokaWidget extends StatelessWidget {
         final mdFilename = chapter.shlokaTitleToFilename(shlokaTitleText);
         return ListTile(
           title: Text(shlokaTitleText),
-          subtitle: _formShlokaTitle(shlokaTitleText, mdFilename, headPreference, codeColor),
-          // contentPadding: const EdgeInsets.symmetric(vertical: 16),
-          // visualDensity: const VisualDensity(vertical: 3),
+          subtitle: _formShlokaTitle(mdFilename, headPreference, codeColor),
           minVerticalPadding: 16,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16))) ,
