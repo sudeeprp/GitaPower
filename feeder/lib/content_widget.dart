@@ -36,7 +36,8 @@ class CurrentTextElement {
 }
 
 class MatterForInline {
-  MatterForInline(this.text, this.sectionType, this.tag, this.elmclass, this.link);
+  MatterForInline(
+      this.text, this.sectionType, this.tag, this.elmclass, this.link);
   final String text;
   SectionType sectionType;
   String tag;
@@ -79,12 +80,14 @@ class WidgetMaker implements md.NodeVisitor {
     final tagToSectionType = {
       'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => _headingType(element.textContent),
-      'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-      'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
-          ? SectionType.meaning
-          : element.textContent.contains('applnote')
-              ? SectionType.appl
-              : SectionType.commentary,
+      'pre': (element) =>
+          classToSectionType[element.children[0].attributes['class']],
+      'p': (element) =>
+          _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
+              ? SectionType.meaning
+              : element.textContent.contains('applnote')
+                  ? SectionType.appl
+                  : SectionType.commentary,
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -106,8 +109,8 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets
-          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
+      collectedWidgets.addAll(_widgetMaker(
+          _collectedElements(), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -123,7 +126,8 @@ class WidgetMaker implements md.NodeVisitor {
       final sectionType = elementForCurrentText.isNotEmpty
           ? elementForCurrentText.last.sectionType
           : SectionType.commentary;
-      elementForCurrentText.add(CurrentTextElement(element, sectionType, false));
+      elementForCurrentText
+          .add(CurrentTextElement(element, sectionType, false));
     }
     return true;
   }
@@ -135,7 +139,8 @@ class WidgetMaker implements md.NodeVisitor {
     final link = element.mdElement.attributes['href'];
     var tag = element.mdElement.tag;
     if (elementForCurrentText.length >= 2 &&
-        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag == 'blockquote') {
+        elementForCurrentText[elementForCurrentText.length - 2].mdElement.tag ==
+            'blockquote') {
       tag = 'note';
     }
     if (_hasAnchor(markdownText.textContent)) {
@@ -144,14 +149,16 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          collectedInlines
-              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
+          collectedInlines.add(MatterForInline(
+              noteId, element.sectionType, 'anchor', elmclass, link));
         }
       }
     }
-    final processedText = _textForElement(markdownText.textContent, element.mdElement);
+    final processedText =
+        _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      final inlineMatter = MatterForInline(processedText, element.sectionType, tag, elmclass, link);
+      final inlineMatter = MatterForInline(
+          processedText, element.sectionType, tag, elmclass, link);
       collectedInlines.add(inlineMatter);
     }
   }
@@ -159,14 +166,17 @@ class WidgetMaker implements md.NodeVisitor {
   bool _isSeparate(elementTag) {
     const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
     return widgetSeparators.contains(elementTag) &&
-        (elementForCurrentText.isEmpty || elementForCurrentText.last.mdElement.tag != 'blockquote');
+        (elementForCurrentText.isEmpty ||
+            elementForCurrentText.last.mdElement.tag != 'blockquote');
   }
 
   String _textForElement(String inputText, md.Element element) {
     if (element.tag == 'code') {
       return inputText.trim();
     } else {
-      return inputText.replaceAll(_multipleSpaces, " ").replaceAll(_anchors, "");
+      return inputText
+          .replaceAll(_multipleSpaces, " ")
+          .replaceAll(_anchors, "");
     }
   }
 
@@ -199,8 +209,8 @@ bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
 
-List<TextSpan> _renderMeaning(
-    List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
+List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode,
+    ScriptPreference scriptChoice) {
   List<TextSpan> spansToRender = [];
   if (meaningMode == MeaningMode.expanded) {
     if (scriptChoice == ScriptPreference.devanagari) {
@@ -208,17 +218,21 @@ List<TextSpan> _renderMeaning(
         return !_isSAHK(textSpan.text);
       }).toList();
     } else if (scriptChoice == ScriptPreference.sahk) {
-      spansToRender = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
+      spansToRender = spans
+          .where((textSpan) => !_startsWithDevanagari(textSpan.text))
+          .toList();
     }
   } else {
     spansToRender = spans
-        .where((textSpan) => !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
+        .where((textSpan) =>
+            !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text))
         .toList();
   }
   return spansToRender;
 }
 
-Text _spansToText(List<TextSpan> spans, SectionType sectionType, BuildContext context) {
+Text _spansToText(
+    List<TextSpan> spans, SectionType sectionType, BuildContext context) {
   Choices choice = Get.find();
   final scriptChoice = choice.script.value;
   final meaningMode = choice.meaningMode.value;
@@ -235,16 +249,13 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType, BuildContext co
         ? Text.rich(
             visibleSpans[0],
             style: TextStyle(
-              fontSize: fontController.fontSize.value,
-              height: fontController.currentFontHeight.value,
-              fontStyle: FontStyle.italic,
-              color: Theme.of(context)
-                  .colorScheme
-                  .onBackground
-                  .withOpacity(0.8)
-              
-  
-            ),
+                fontSize: fontController.fontSize.value,
+                height: fontController.currentFontHeight.value,
+                fontStyle: FontStyle.italic,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onBackground
+                    .withOpacity(0.8)),
             textAlign: TextAlign.justify,
           )
         : Text.rich(
@@ -291,7 +302,8 @@ TextStyle? _styleFor(String tag, String? elmclass, BuildContext context) {
     );
   } else if (tag == 'note') {
     return TextStyle(
-        fontSize: fontController.fontSize.value, height: fontController.currentFontHeight.value);
+        fontSize: fontController.fontSize.value,
+        height: fontController.currentFontHeight.value);
   } else {
     return TextStyle(height: fontController.currentFontHeight.value);
   }
@@ -331,7 +343,8 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
   anchorKeys[noteId] = keyOfAnchor;
   return [
     TextSpan(children: [
-      WidgetSpan(child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
+      WidgetSpan(
+          child: Container(key: keyOfAnchor, child: _anchorWidget(noteId))),
     ])
   ];
 }
@@ -350,15 +363,18 @@ bool _isVisible(SectionType sectionType) {
   final scriptChoice = choice.script.value;
   final headPreference = choice.headPreference.value;
   if (sectionType == SectionType.shlokaSA) {
-    return scriptChoice == ScriptPreference.devanagari && headPreference == HeadPreference.shloka;
+    return scriptChoice == ScriptPreference.devanagari &&
+        headPreference == HeadPreference.shloka;
   } else if (sectionType == SectionType.shlokaSAHK) {
-    return scriptChoice == ScriptPreference.sahk && headPreference == HeadPreference.shloka;
+    return scriptChoice == ScriptPreference.sahk &&
+        headPreference == HeadPreference.shloka;
   }
   return true;
 }
 
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
-  if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
+  if (sectionType == SectionType.shlokaSAHK ||
+      sectionType == SectionType.shlokaSA) {
     showElipses = true;
     return w;
   } else {
@@ -377,7 +393,8 @@ Widget _buildNote(BuildContext context, Widget content) {
 
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
   String contentForDisplay = inlineMatter.text;
-  if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
+  if (inlineMatter.sectionType == SectionType.meaning &&
+      inlineMatter.tag != 'code') {
     final Choices choice = Get.find();
     if (choice.meaningMode.value == MeaningMode.short) {
       contentForDisplay = inlineMatter.text.trimLeft();
@@ -386,7 +403,8 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
-Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
+Widget _sectionContainer(
+    BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   }
@@ -414,8 +432,10 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
         );
 }
 
+
 class ContentWidget extends StatefulWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
+  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote,
+      this.prevmd, this.nextmd,
       {Key? key})
       : super(key: key) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
@@ -434,8 +454,14 @@ class ContentWidget extends StatefulWidget {
 class _ContentWidgetState extends State<ContentWidget> {
   final _scrollController = ScrollController();
   bool isAtEdge = true;
+  final Choices choice = Get.find();
+  List<bool> _selectedDevanagari= [];
+  
+  List<bool> _selectedHeader = [];
   @override
   void initState() {
+  _selectedDevanagari = <bool>[choice.script.value==ScriptPreference.devanagari, choice.script.value==ScriptPreference.sahk];
+  _selectedHeader = <bool>[choice.headPreference.value==HeadPreference.shloka,choice.headPreference.value==HeadPreference.meaning];
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge) {
         setState(() {
@@ -449,7 +475,7 @@ class _ContentWidgetState extends State<ContentWidget> {
     });
     super.initState();
   }
-
+  
   void _formatFont() {
     showModalBottomSheet(
       useSafeArea: true,
@@ -458,89 +484,183 @@ class _ContentWidgetState extends State<ContentWidget> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       builder: (ctx) {
-        return SizedBox(
-          height: 200,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Row(
-                  children: [
-                    Text("Font size",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        )),
-                    Spacer(),
-                    Text("Font family", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
-                  ],
-                ),
-                Row(
-                  children: [
-                    OutlinedButton(
-                        onPressed: () {
-                          fontController.increaseFontSize();
-                        },
-                        child: Image.asset('images/icons8-increase-font-24.png',
-                            color: Theme.of(context).colorScheme.onSurface)),
-                    OutlinedButton(
-                        onPressed: () {
-                          fontController.decreaseFontSize();
-                        },
-                        child: Image.asset('images/icons8-decrease-font-24.png',
-                            color: Theme.of(context).colorScheme.onSurface)),
-                    Expanded(
-                        child: OutlinedButton(
-                            onPressed: _fontPicker,
-                            child: Text(fontController.currentFont.value,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                )))),
-                  ],
-                ),
-                const Text("Line Spacing",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    OutlinedButton(
-                        onPressed: () {
-                          fontController.updateFontHeight('more');
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Image.asset(
-                            'images/line_spacing_more.png',
-                            color: Theme.of(context).colorScheme.onSurface,
-                            height: 40,
-                          ),
-                        )),
-                    OutlinedButton(
-                        onPressed: () {
-                          fontController.updateFontHeight('default');
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Image.asset('images/line_spacing_default.png',
-                              color: Theme.of(context).colorScheme.onSurface, height: 40),
-                        )),
-                    OutlinedButton(
-                        onPressed: () {
-                          fontController.updateFontHeight('less');
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Image.asset('images/line_spacing_less.png',
-                              color: Theme.of(context).colorScheme.onSurface, height: 40),
-                        )),
-                  ],
-                ),
-              ],
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState){return SizedBox(
+            height: 400,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Row(
+                    children: [
+                      Text("Font size",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          )),
+                      Spacer(),
+                      Text("Font family",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      OutlinedButton(
+                          onPressed: () {
+                            fontController.increaseFontSize();
+                          },
+                          child: Image.asset('images/icons8-increase-font-24.png',
+                              color: Theme.of(context).colorScheme.onSurface)),
+                      OutlinedButton(
+                          onPressed: () {
+                            fontController.decreaseFontSize();
+                          },
+                          child: Image.asset('images/icons8-decrease-font-24.png',
+                              color: Theme.of(context).colorScheme.onSurface)),
+                      Expanded(
+                          child: OutlinedButton(
+                              onPressed: _fontPicker,
+                              child: Text(fontController.currentFont.value,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                  )))),
+                    ],
+                  ),
+                  const Text("Line Spacing",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      OutlinedButton(
+                          onPressed: () {
+                            fontController.updateFontHeight('more');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Image.asset(
+                              'images/line_spacing_more.png',
+                              color: Theme.of(context).colorScheme.onSurface,
+                              height: 40,
+                            ),
+                          )),
+                      OutlinedButton(
+                          onPressed: () {
+                            fontController.updateFontHeight('default');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Image.asset('images/line_spacing_default.png',
+                                color: Theme.of(context).colorScheme.onSurface,
+                                height: 40),
+                          )),
+                      OutlinedButton(
+                          onPressed: () {
+                            fontController.updateFontHeight('less');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Image.asset('images/line_spacing_less.png',
+                                color: Theme.of(context).colorScheme.onSurface,
+                                height: 40),
+                          )),
+                    ],
+                  ),
+                  const Text("Devanagiri",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      
+                      Expanded(
+                        child: LayoutBuilder(
+                          builder: (context,constraints) {
+                            return ToggleButtons(
+                              constraints: BoxConstraints.expand(width: constraints.maxWidth/2-3),
+                              borderRadius: BorderRadius.circular(4),
+                                onPressed: (int index) {
+                                  setState(() {
+                                    for (int i = 0; i < _selectedDevanagari.length; i++) {
+                                      _selectedDevanagari[i] = i == index;
+                                    }
+                                    
+                                    if(_selectedDevanagari[0]==true)
+                                      {print("Bhakthi");
+                                      choice.script.value=ScriptPreference.devanagari;
+                                      }
+                                    else
+                                      {print("भक्ति");
+                                      choice.script.value=ScriptPreference.sahk;
+                                      }
+                                  });
+                                },
+                                selectedBorderColor: Theme.of(context).colorScheme.onSurface,
+                                selectedColor: Colors.white,
+                                fillColor: Theme.of(context).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
+                                isSelected: _selectedDevanagari,
+                                children: 
+                                const [Text("Bhakti"),Text("भक्ति")]
+                                );
+                          }
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const Text("Header",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      
+                      Expanded(
+                        child: LayoutBuilder(
+                          builder: (context,constraints) {
+                            return ToggleButtons(
+                              constraints: BoxConstraints.expand(width: constraints.maxWidth/2-3),
+                              borderRadius: BorderRadius.circular(4),
+                                onPressed: (int index) {
+                                  setState(() {
+                                    for (int i = 0; i < _selectedHeader.length; i++) {
+                                      _selectedHeader[i] = i == index;
+                                    }
+                                    if(_selectedHeader[0]==true)
+                                      {print("Shloka");
+                                      choice.headPreference.value = HeadPreference.shloka;
+                                      }
+                                    else
+                                      {print("Meaning");
+                                      
+                                      choice.headPreference.value = HeadPreference.meaning;
+                                      }
+                                      
+                                  });
+                                },
+                                selectedBorderColor: Theme.of(context).colorScheme.onSurface,
+                                selectedColor: Colors.white,
+                                fillColor: Theme.of(context).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
+                                isSelected: _selectedHeader,
+                                children: 
+                                const [Text("Shloka"),Text("Meaning")]
+                                );
+                          }
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
+          );
+      });
       },
     );
   }
@@ -569,7 +689,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                       child: Padding(
                     padding: EdgeInsets.only(top: 14.0),
                     child: Text("Font Family",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15)),
                   )),
                 ],
               ),
@@ -642,7 +763,6 @@ class _ContentWidgetState extends State<ContentWidget> {
 
   @override
   Widget build(context) {
-
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
@@ -652,11 +772,13 @@ class _ContentWidgetState extends State<ContentWidget> {
         return [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
+            decoration: const BoxDecoration(
+                border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Obx(() => Text.rich(TextSpan(children: spans),
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSecondary)))),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary)))),
           )
         ];
       }
@@ -666,7 +788,8 @@ class _ContentWidgetState extends State<ContentWidget> {
               child: sectionType == SectionType.appl
                   ? const SizedBox()
                   : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
                       child: sectionType == SectionType.note
                           ? Container(
                               decoration: BoxDecoration(
@@ -685,8 +808,13 @@ class _ContentWidgetState extends State<ContentWidget> {
                               ),
                               child: Card(
                                   color: sectionType == SectionType.note
-                                      ? Theme.of(context).colorScheme.background.withOpacity(0.8)
-                                      : Theme.of(context).colorScheme.background,
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .background
+                                          .withOpacity(0.8)
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16)),
                                   child: !showElipses
@@ -694,23 +822,36 @@ class _ContentWidgetState extends State<ContentWidget> {
                                           ? Row(
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(left: 8.0),
-                                                  child: Image.asset('images/one-step.png'),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Image.asset(
+                                                      'images/one-step.png'),
                                                 ),
                                                 Expanded(
-                                                  child: _sectionContainer(context, sectionType,
-                                                      _spansToText(spans, sectionType, context)),
+                                                  child: _sectionContainer(
+                                                      context,
+                                                      sectionType,
+                                                      _spansToText(
+                                                          spans,
+                                                          sectionType,
+                                                          context)),
                                                 )
                                               ],
                                             )
-                                          : _sectionContainer(context, sectionType,
-                                              _spansToText(spans, sectionType, context))
+                                          : _sectionContainer(
+                                              context,
+                                              sectionType,
+                                              _spansToText(
+                                                  spans, sectionType, context))
                                       : Column(
                                           children: [
                                             const Padding(
-                                              padding: EdgeInsets.only(right: 8),
+                                              padding:
+                                                  EdgeInsets.only(right: 8),
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
                                                 children: [
                                                   Icon(
                                                     Icons.more_horiz_outlined,
@@ -719,8 +860,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                                                 ],
                                               ),
                                             ),
-                                            _sectionContainer(context, sectionType,
-                                                _spansToText(spans, sectionType, context)),
+                                            _sectionContainer(
+                                                context,
+                                                sectionType,
+                                                _spansToText(spans, sectionType,
+                                                    context)),
                                             const SizedBox(
                                               height: 8,
                                             ),
@@ -733,13 +877,20 @@ class _ContentWidgetState extends State<ContentWidget> {
                                       top: 0,
                                       child: CircleAvatar(
                                           radius: 23,
-                                          child: Image.asset('images/Ramanujacharya.png'))),
+                                          child: Image.asset(
+                                              'images/Ramanujacharya.png'))),
                                   ChatBubble(
-                                    clipper: ChatBubbleClipper1(type: BubbleType.receiverBubble),
+                                    clipper: ChatBubbleClipper1(
+                                        type: BubbleType.receiverBubble),
                                     margin: const EdgeInsets.only(top: 50),
-                                    backGroundColor: Theme.of(context).colorScheme.background,
-                                    child: _sectionContainer(context, sectionType,
-                                        _spansToText(spans, sectionType, context)),
+                                    backGroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    child: _sectionContainer(
+                                        context,
+                                        sectionType,
+                                        _spansToText(
+                                            spans, sectionType, context)),
                                   )
                                 ])
                               : Container(
@@ -763,28 +914,40 @@ class _ContentWidgetState extends State<ContentWidget> {
                                               .colorScheme
                                               .background
                                               .withOpacity(0.8)
-                                          : Theme.of(context).colorScheme.background,
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(16)),
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
                                       child: !showElipses
-                                          ? _sectionContainer(context, sectionType,
-                                              _spansToText(spans, sectionType, context))
+                                          ? _sectionContainer(
+                                              context,
+                                              sectionType,
+                                              _spansToText(
+                                                  spans, sectionType, context))
                                           : Column(
                                               children: [
                                                 const Padding(
-                                                  padding: EdgeInsets.only(right: 8),
+                                                  padding:
+                                                      EdgeInsets.only(right: 8),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
                                                     children: [
                                                       Icon(
-                                                        Icons.more_horiz_outlined,
+                                                        Icons
+                                                            .more_horiz_outlined,
                                                         size: 20,
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-                                                _sectionContainer(context, sectionType,
-                                                    _spansToText(spans, sectionType, context)),
+                                                _sectionContainer(
+                                                    context,
+                                                    sectionType,
+                                                    _spansToText(spans,
+                                                        sectionType, context)),
                                                 const SizedBox(
                                                   height: 8,
                                                 ),
@@ -805,7 +968,8 @@ class _ContentWidgetState extends State<ContentWidget> {
           TextSpan(
             text: inlineMatter.text,
             style: const TextStyle(color: Colors.blue),
-            recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => _navigateToLink(inlineMatter.link),
           ),
           const TextSpan(text: ' ')
         ];
@@ -814,7 +978,7 @@ class _ContentWidgetState extends State<ContentWidget> {
       return [
         TextSpan(
             text: textContent,
-            style: _styleFor(inlineMatter.tag, inlineMatter.elmclass,context),
+            style: _styleFor(inlineMatter.tag, inlineMatter.elmclass, context),
             recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
       ];
     }
@@ -837,27 +1001,28 @@ class _ContentWidgetState extends State<ContentWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(Chapter.filenameToTitle(widget.mdFilename)),
-        actions: [ IconButton(
-                onPressed: () {
-                  Get.changeThemeMode(
-                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
-                  );
-                },
-                icon: const Icon(Icons.brightness_6)),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.changeThemeMode(
+                  Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                );
+              },
+              icon: const Icon(Icons.brightness_6)),
           IconButton(
               onPressed: _formatFont,
               icon: Image.asset(
                 'images/icons8-font-size-24.png',
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               )),
-          
         ],
       ),
       body: Stack(children: [
         Center(
             child: ListView(controller: _scrollController, children: [
           DefaultTextStyle(
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
+              style:
+                  DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
               child: Obx(() {
                 final widgetMaker = WidgetMaker(textRichMaker, formatMaker);
                 final widgetsMade = widgetMaker.parse(md.mdContent.value);
@@ -865,7 +1030,8 @@ class _ContentWidgetState extends State<ContentWidget> {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   BuildContext? anchorContext;
                   if (anchorKeys.containsKey(widget.initialAnchor)) {
-                    anchorContext = anchorKeys[widget.initialAnchor]?.currentContext;
+                    anchorContext =
+                        anchorKeys[widget.initialAnchor]?.currentContext;
                   }
                   if (anchorContext != null) {
                     Scrollable.ensureVisible(anchorContext);
@@ -888,7 +1054,10 @@ class _ContentWidgetState extends State<ContentWidget> {
                   },
                   heroTag: 'backBtn',
                   mini: true,
-                  child: Icon(Icons.navigate_before,color: Theme.of(context).colorScheme.onSecondaryContainer,),
+                  child: Icon(
+                    Icons.navigate_before,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                  ),
                 ))),
         Visibility(
             visible: isAtEdge && widget.nextmd != null,
@@ -900,7 +1069,9 @@ class _ContentWidgetState extends State<ContentWidget> {
                   },
                   heroTag: 'forwardBtn',
                   mini: true,
-                  child: Icon(Icons.navigate_next,color: Theme.of(context).colorScheme.onSecondaryContainer),
+                  child: Icon(Icons.navigate_next,
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
                 ))),
       ]),
     );
@@ -908,11 +1079,17 @@ class _ContentWidgetState extends State<ContentWidget> {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
+    {String? initialAnchor,
+    String? contentNote,
+    String? prevmd,
+    String? nextmd,
+    Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
+      key: key);
 }
 
-ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
+ContentWidget buildContentWithNote(String mdFilename,
+    {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
   return buildContent(mdFilename,
       initialAnchor: initialAnchor,

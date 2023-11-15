@@ -27,13 +27,6 @@ Widget screenify(Widget body, {AppBar? appBar}) {
       body: SafeArea(
         child: Stack(children: [
           body,
-          Positioned(
-              bottom: 0,
-              right: 0,
-              child: GestureDetector(
-                  onTap: () => scaffoldKey.currentState?.openEndDrawer(),
-                  child: const Icon(
-                      key: Key('home/settingsicon'), Icons.settings))),
         ]),
       ));
 }
