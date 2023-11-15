@@ -590,11 +590,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                                     }
                                     
                                     if(_selectedDevanagari[0]==true)
-                                      {print("Bhakthi");
+                                      {
                                       choice.script.value=ScriptPreference.devanagari;
                                       }
                                     else
-                                      {print("भक्ति");
+                                      {
                                       choice.script.value=ScriptPreference.sahk;
                                       }
                                   });
@@ -605,7 +605,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                                 color: Theme.of(context).colorScheme.onSurface,
                                 isSelected: _selectedDevanagari,
                                 children: 
-                                const [Text("Bhakti"),Text("भक्ति")]
+                                const [Text("भक्ति"),Text("Bhakti")]
                                 );
                           }
                         ),
@@ -632,11 +632,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                                       _selectedHeader[i] = i == index;
                                     }
                                     if(_selectedHeader[0]==true)
-                                      {print("Shloka");
+                                      {
                                       choice.headPreference.value = HeadPreference.shloka;
                                       }
                                     else
-                                      {print("Meaning");
+                                      {
                                       
                                       choice.headPreference.value = HeadPreference.meaning;
                                       }
