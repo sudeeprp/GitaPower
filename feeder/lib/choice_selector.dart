@@ -78,11 +78,15 @@ Widget _makeSelector(String title, String leftChoice, String rightChoice, Widget
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 25),
     child: Column(children: [
-      Text(title, textScaleFactor: 2.5),
+      Text(title, textScaler: const TextScaler.linear(1.8)),
       Row(children: [
-        Expanded(child: Text(leftChoice, textAlign: TextAlign.right, textScaleFactor: 1.8)),
+        Expanded(
+            child: Text(leftChoice,
+                textAlign: TextAlign.right, textScaler: const TextScaler.linear(1.3))),
         Expanded(child: child),
-        Expanded(child: Text(rightChoice, textAlign: TextAlign.left, textScaleFactor: 1.8)),
+        Expanded(
+            child: Text(rightChoice,
+                textAlign: TextAlign.left, textScaler: const TextScaler.linear(1.3))),
       ]),
     ]),
   );

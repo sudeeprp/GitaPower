@@ -51,7 +51,8 @@ Widget? _formShlokaTitle(
           child: textPadding(Text(
             headerText,
             style: TextStyle(color: codeColor, height: 1.5),
-            textScaleFactor: headerContents[headPreference]!['textScaleFactor'] as double,
+            textScaler:
+                TextScaler.linear(headerContents[headPreference]!['textScaleFactor'] as double),
           ))),
     );
   }
