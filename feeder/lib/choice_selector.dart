@@ -39,8 +39,8 @@ class Choices extends GetxController {
   var meaningMode = MeaningMode.short.obs;
   var headPreference = HeadPreference.shloka.obs;
   final appearanceChoices = {
-    ReadingTheme.dark: ThemeData.dark(),
-    ReadingTheme.light: ThemeData.light(),
+    ReadingTheme.dark: ThemeMode.dark,
+    ReadingTheme.light: ThemeMode.light,
   };
   Future<void> storeAllPreferences() async {
     await storePreferences(theme.value, script.value, meaningMode.value, headPreference.value);
@@ -49,7 +49,7 @@ class Choices extends GetxController {
   @override
   void onInit() async {
     theme.listen((themeValue) {
-      Get.changeTheme(appearanceChoices[themeValue]!);
+      Get.changeThemeMode(appearanceChoices[themeValue]!);
       codeColor.value = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
       storeAllPreferences();
     });

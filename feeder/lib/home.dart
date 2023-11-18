@@ -13,8 +13,15 @@ Widget makeMyHome() {
   return GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
-      theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
+      theme: ThemeData.light().copyWith(
+        cardColor: const Color(0xFFFFFFFF),
+        textTheme: const TextTheme(labelMedium: TextStyle(color: Color(0xFF800000), height: 1.5)),
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        cardColor: const Color(0xFF000000),
+        textTheme: const TextTheme(
+            labelMedium: TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5)),
+      ),
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),

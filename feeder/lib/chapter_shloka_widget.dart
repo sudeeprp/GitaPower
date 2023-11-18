@@ -45,7 +45,7 @@ Widget? _formShlokaTitle(
   if (headerText != null) {
     return Card(
       elevation: 10,
-      color: context.theme.scaffoldBackgroundColor,
+      color: Theme.of(context).cardColor,
       child: SingleChildScrollView(
           scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
           child: textPadding(Text(
