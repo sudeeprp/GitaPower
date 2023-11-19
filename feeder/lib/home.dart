@@ -15,7 +15,7 @@ Widget makeMyHome() {
       initialBinding: ChoiceBinding(),
       theme: ThemeData.light().copyWith(
         cardColor: const Color(0xFFFFFFFF),
-        textTheme: const TextTheme(labelMedium: TextStyle(color: Color(0xFF800000), height: 1.5)),
+        // textTheme: const TextTheme(labelMedium: TextStyle(color: Color(0xFF800000), height: 1.5)),
       ),
       darkTheme: ThemeData.dark().copyWith(
         cardColor: const Color(0xFF000000),
