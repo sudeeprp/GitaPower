@@ -225,24 +225,6 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   }
 }
 
-TextStyle? _styleFor(String tag, String? elmclass) {
-  if (elmclass == 'language-shloka-sa') {
-    return TextStyle(color: Get.find<Choices>().codeColor.value, fontSize: 20);
-  } else if (tag == 'code') {
-    return GoogleFonts.robotoMono(color: Get.find<Choices>().codeColor.value, fontSize: 16);
-  } else if (tag == 'h1') {
-    return GoogleFonts.rubik(height: 3);
-  } else if (tag == 'h2') {
-    return GoogleFonts.workSans(height: 3);
-  } else if (tag == 'em') {
-    return GoogleFonts.bubblerOne(height: 1.2, fontSize: 16);
-  } else if (tag == 'note') {
-    return const TextStyle(fontSize: 14);
-  } else {
-    return const TextStyle(height: 1.5);
-  }
-}
-
 GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
   if (sectionType == SectionType.meaning) {
     return TapGestureRecognizer()
@@ -367,7 +349,6 @@ class ContentWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final choices = Get.find<Choices>();
     Map<String, GlobalKey> anchorKeys = {};
     List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
@@ -380,8 +361,8 @@ class ContentWidget extends StatelessWidget {
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Obx(() => Text.rich(TextSpan(children: spans),
-                    style: TextStyle(color: choices.codeColor.value)))),
+                child: Text.rich(TextSpan(children: spans),
+                    style: Theme.of(context).textTheme.labelMedium)),
           )
         ];
       }
@@ -391,6 +372,25 @@ class ContentWidget extends StatelessWidget {
               child: _sectionContainer(context, sectionType, _spansToText(spans, sectionType)),
             ))
       ];
+    }
+
+    TextStyle? styleFor(String tag, String? elmclass) {
+      if (elmclass == 'language-shloka-sa') {
+        return Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 18);
+      } else if (tag == 'code') {
+        return GoogleFonts.robotoMono(
+            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 16);
+      } else if (tag == 'h1') {
+        return GoogleFonts.rubik(height: 3);
+      } else if (tag == 'h2') {
+        return GoogleFonts.workSans(height: 3);
+      } else if (tag == 'em') {
+        return GoogleFonts.bubblerOne(height: 1.2, fontSize: 16);
+      } else if (tag == 'note') {
+        return const TextStyle(fontSize: 14);
+      } else {
+        return const TextStyle(height: 1.5);
+      }
     }
 
     List<TextSpan> formatMaker(MatterForInline inlineMatter) {
@@ -411,7 +411,7 @@ class ContentWidget extends StatelessWidget {
       return [
         TextSpan(
             text: textContent,
-            style: _styleFor(inlineMatter.tag, inlineMatter.elmclass),
+            style: styleFor(inlineMatter.tag, inlineMatter.elmclass),
             recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
       ];
     }
@@ -423,7 +423,7 @@ class ContentWidget extends StatelessWidget {
             _buildNote(
                 context,
                 Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                    style: _styleFor('note', null))));
+                    style: styleFor('note', null))));
       }
     }
 

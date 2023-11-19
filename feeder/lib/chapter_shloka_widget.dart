@@ -27,10 +27,9 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
   return foundChapter;
 }
 
-Widget? _formShlokaTitle(
-    String mdFilename, HeadPreference headPreference, Color codeColor, BuildContext context) {
+Widget? _formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
   const headerContents = {
-    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.3},
+    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.4},
     HeadPreference.meaning: {
       'scrollDirection': Axis.vertical,
       'textScaleFactor': 1.2,
@@ -50,7 +49,7 @@ Widget? _formShlokaTitle(
           scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
           child: textPadding(Text(
             headerText,
-            style: TextStyle(color: codeColor, height: 1.5),
+            style: Theme.of(context).textTheme.labelMedium,
             textScaler:
                 TextScaler.linear(headerContents[headPreference]!['textScaleFactor'] as double),
           ))),
@@ -71,13 +70,12 @@ class ChapterShlokaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final Choices choices = Get.find();
-      final codeColor = choices.codeColor.value;
       final headPreference = choices.headPreference.value;
       final shlokaWidgets = chapter.shokas.map((shlokaTitleText) {
         final mdFilename = chapter.shlokaTitleToFilename(shlokaTitleText);
         return ListTile(
           title: Text(shlokaTitleText),
-          subtitle: _formShlokaTitle(mdFilename, headPreference, codeColor, context),
+          subtitle: _formShlokaTitle(mdFilename, headPreference, context),
           minVerticalPadding: 16,
           onTap: () => Get.toNamed('/shloka/$mdFilename'),
         );

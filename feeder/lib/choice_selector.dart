@@ -31,10 +31,7 @@ T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
 }
 
 class Choices extends GetxController {
-  static const codeColorForLight = Color(0xFF800000);
-  static const codeColorForDark = Color.fromARGB(255, 236, 118, 82);
   var theme = Get.isDarkMode ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
-  var codeColor = Get.isDarkMode ? Rx<Color>(codeColorForDark) : Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
   var headPreference = HeadPreference.shloka.obs;
@@ -50,7 +47,6 @@ class Choices extends GetxController {
   void onInit() async {
     theme.listen((themeValue) {
       Get.changeThemeMode(appearanceChoices[themeValue]!);
-      codeColor.value = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
       storeAllPreferences();
     });
     script.listen((_) => storeAllPreferences());
