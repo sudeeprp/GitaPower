@@ -9,19 +9,30 @@ import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/screenify.dart';
 
+ThemeData lightTheme() {
+  final defaultLightTheme = ThemeData.light();
+  const codeTextLight = TextStyle(color: Color(0xFF800000), height: 1.5);
+  return defaultLightTheme.copyWith(
+        cardColor: const Color(0xFFFFFFFF),
+        textTheme: defaultLightTheme.textTheme.copyWith(labelMedium: codeTextLight)
+      );
+}
+
+ThemeData darkTheme() {
+  final defaultDarkTheme = ThemeData.dark();
+  const codeTextDark = TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5);
+  return defaultDarkTheme.copyWith(
+        cardColor: const Color(0xFF000000),
+        textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
+      );
+}
+
 Widget makeMyHome() {
   return GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
-      theme: ThemeData.light().copyWith(
-        cardColor: const Color(0xFFFFFFFF),
-        // textTheme: const TextTheme(labelMedium: TextStyle(color: Color(0xFF800000), height: 1.5)),
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        cardColor: const Color(0xFF000000),
-        textTheme: const TextTheme(
-            labelMedium: TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5)),
-      ),
+      theme: lightTheme(),
+      darkTheme: darkTheme(),
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
