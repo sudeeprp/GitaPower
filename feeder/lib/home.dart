@@ -13,18 +13,17 @@ ThemeData lightTheme() {
   final defaultLightTheme = ThemeData.light();
   const codeTextLight = TextStyle(color: Color(0xFF800000), height: 1.5);
   return defaultLightTheme.copyWith(
-        cardColor: const Color(0xFFFFFFFF),
-        textTheme: defaultLightTheme.textTheme.copyWith(labelMedium: codeTextLight)
-      );
+      cardColor: const Color(0xFFFFFFFF),
+      textTheme: defaultLightTheme.textTheme.copyWith(labelMedium: codeTextLight));
 }
 
 ThemeData darkTheme() {
   final defaultDarkTheme = ThemeData.dark();
   const codeTextDark = TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5);
   return defaultDarkTheme.copyWith(
-        cardColor: const Color(0xFF000000),
-        textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
-      );
+    cardColor: const Color(0xFF000000),
+    textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
+  );
 }
 
 Widget makeMyHome() {
