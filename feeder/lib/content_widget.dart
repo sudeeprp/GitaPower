@@ -294,13 +294,10 @@ Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
 }
 
 Widget _buildNote(BuildContext context, Widget content) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.background.withOpacity(0.1),
-      borderRadius: BorderRadius.circular(8),
-    ),
-    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-    child: content,
+  return Card(
+    elevation: 5,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+    child: Padding(padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2), child: content),
   );
 }
 
@@ -420,10 +417,19 @@ class ContentWidget extends StatelessWidget {
       if (contentNote != null) {
         contentWidgets.insert(
             0,
-            _buildNote(
-                context,
-                Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                    style: styleFor('note', null))));
+            Row(children: [
+              Expanded(
+                  flex: 9,
+                  child: _buildNote(
+                      context,
+                      Text.rich(TextSpan(text: toPlainText(contentNote!)),
+                          style: styleFor('note', null)))),
+              Expanded(
+                flex: 1,
+                child: Text(Chapter.filenameToTitle(mdFilename),
+                    style: Theme.of(context).textTheme.bodySmall),
+              ),
+            ]));
       }
     }
 
@@ -456,20 +462,9 @@ class ContentWidget extends StatelessWidget {
           }),
         ),
       )),
-      shlokaTitle(mdFilename, context),
       ...navigationButtons(context, mdFilename, nextmd, prevmd),
     ]);
   }
-}
-
-Widget shlokaTitle(String mdFilename, BuildContext context) {
-  return Positioned(
-      top: 0,
-      right: 2,
-      child: Text(
-        Chapter.filenameToTitle(mdFilename),
-        style: TextStyle(color: Theme.of(context).colorScheme.background.withOpacity(0.6)),
-      ));
 }
 
 ContentWidget buildContent(String mdFilename,
