@@ -22,67 +22,22 @@ void main() {
         (server) => server.reply(200, compiledMDtoNoteIds));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('navigates to a shloka from the chapters toc', (WidgetTester tester) async {
-    Get.put(ChaptersTOC());
-    Get.put(Choices());
-
-    await tester.pumpWidget(GetMaterialApp(
-      home: const ChaptersWidget(),
-      getPages: [GetPage(name: '/shloka', page: () => const Text('shloka reached'))],
-    ));
-    await tester.pumpAndSettle();
-    expect(find.byType(ListView), findsOneWidget);
-
-    await tester.tap(find.text('Chapter 1'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('1-1'));
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka/1-1.md');
-    Get.delete<Choices>();
-    Get.delete<ChaptersTOC>();
-  });
   testWidgets('navigates to a chapter from the toc', (tester) async {
     Get.put(ChaptersTOC());
     Get.put(Choices());
 
     await tester.pumpWidget(GetMaterialApp(
       home: const ChaptersWidget(),
-      getPages: [GetPage(name: '/shloka', page: () => const Text('shloka reached'))],
+      getPages: [
+        GetPage(name: '/shlokaheaders', page: () => const Text('shloka headers reached')),
+      ],
     ));
     await tester.pumpAndSettle();
     final chapterHeadFinder = find.text('Chapter 1');
-    final chapterHeadWidget = tester.firstWidget(chapterHeadFinder);
     await tester.tap(chapterHeadFinder);
     await tester.pumpAndSettle();
-    final chapterEntries = tester.widgetList(find.text('Chapter 1'));
-    expect(chapterEntries.length, equals(2)); // 2 = one parent + one child
-    Widget? chapterEntryWidget; // get the child
-    for (final entry in chapterEntries) {
-      if (entry != chapterHeadWidget) {
-        chapterEntryWidget = entry;
-        break;
-      }
-    }
-    expect(chapterEntryWidget, isNotNull);
-    await tester.tap(find.byWidget(chapterEntryWidget!));
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka/Chapter_1.md');
+    expect(Get.currentRoute, '/shlokaheaders/Chapter_1.md');
     Get.delete<Choices>();
     Get.delete<ChaptersTOC>();
-  });
-  testWidgets('goes by choice to show sloka or widget', (tester) async {
-    Get.put(ChaptersTOC());
-    var choices = Choices();
-    Get.put(choices);
-
-    await tester.pumpWidget(const GetMaterialApp(home: ChaptersWidget()));
-    await tester.pumpAndSettle();
-    final chapterHeadFinder = find.text('Chapter 2');
-    await tester.tap(chapterHeadFinder);
-    await tester.pumpAndSettle();
-    expect(find.textContaining('तम् तथा कृपयाविष्टम्'), findsOneWidget);
-    choices.headPreference.value = HeadPreference.meaning;
-    await tester.pumpAndSettle();
-    expect(find.textContaining('overcome with pity'), findsOneWidget);
   });
 }

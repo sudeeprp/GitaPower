@@ -1,47 +1,45 @@
+import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:askys/choice_selector.dart';
 import 'package:askys/choice_bindings.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/begin_widget.dart';
 import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
+import 'package:askys/screenify.dart';
 
-Widget screenify(Widget body, {AppBar? appBar}) {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  return Scaffold(
-      key: scaffoldKey,
-      appBar: appBar,
-      endDrawer: SafeArea(
-          child: Drawer(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [themeSelector(), scriptSelector(), headerSelector()]))),
-      body: SafeArea(
-        child: Stack(children: [
-          body,
-          Positioned(
-              bottom: 0,
-              right: 0,
-              child: GestureDetector(
-                  onTap: () => scaffoldKey.currentState?.openEndDrawer(),
-                  child: const Icon(key: Key('home/settingsicon'), Icons.settings))),
-        ]),
-      ));
+ThemeData lightTheme() {
+  final defaultLightTheme = ThemeData.light();
+  const codeTextLight = TextStyle(color: Color(0xFF800000), height: 1.5);
+  return defaultLightTheme.copyWith(
+      cardColor: const Color(0xFFFFFFFF),
+      textTheme: defaultLightTheme.textTheme.copyWith(labelMedium: codeTextLight));
+}
+
+ThemeData darkTheme() {
+  final defaultDarkTheme = ThemeData.dark();
+  const codeTextDark = TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5);
+  return defaultDarkTheme.copyWith(
+    cardColor: const Color(0xFF000000),
+    textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
+  );
 }
 
 Widget makeMyHome() {
   return GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
-      theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
+      theme: lightTheme(),
+      darkTheme: darkTheme(),
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
         GetPage(name: '/feed', page: () => screenify(buildFeed())),
         GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
+        GetPage(
+            name: '/shlokaheaders/:chapter',
+            page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),

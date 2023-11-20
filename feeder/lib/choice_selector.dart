@@ -31,16 +31,13 @@ T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
 }
 
 class Choices extends GetxController {
-  static const codeColorForLight = Color(0xFF800000);
-  static final codeColorForDark = Colors.deepOrange.shade900.withOpacity(0.9);
   var theme = Get.isDarkMode ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
-  var codeColor = Get.isDarkMode ? Rx<Color>(codeColorForDark) : Rx<Color>(codeColorForLight);
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
   var headPreference = HeadPreference.shloka.obs;
   final appearanceChoices = {
-    ReadingTheme.dark: ThemeData.dark(),
-    ReadingTheme.light: ThemeData.light(),
+    ReadingTheme.dark: ThemeMode.dark,
+    ReadingTheme.light: ThemeMode.light,
   };
   Future<void> storeAllPreferences() async {
     await storePreferences(theme.value, script.value, meaningMode.value, headPreference.value);
@@ -49,8 +46,7 @@ class Choices extends GetxController {
   @override
   void onInit() async {
     theme.listen((themeValue) {
-      Get.changeTheme(appearanceChoices[themeValue]!);
-      codeColor.value = themeValue == ReadingTheme.dark ? codeColorForDark : codeColorForLight;
+      Get.changeThemeMode(appearanceChoices[themeValue]!);
       storeAllPreferences();
     });
     script.listen((_) => storeAllPreferences());
@@ -78,11 +74,15 @@ Widget _makeSelector(String title, String leftChoice, String rightChoice, Widget
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 25),
     child: Column(children: [
-      Text(title, textScaleFactor: 2.5),
+      Text(title, textScaler: const TextScaler.linear(1.8)),
       Row(children: [
-        Expanded(child: Text(leftChoice, textAlign: TextAlign.right, textScaleFactor: 1.8)),
+        Expanded(
+            child: Text(leftChoice,
+                textAlign: TextAlign.right, textScaler: const TextScaler.linear(1.3))),
         Expanded(child: child),
-        Expanded(child: Text(rightChoice, textAlign: TextAlign.left, textScaleFactor: 1.8)),
+        Expanded(
+            child: Text(rightChoice,
+                textAlign: TextAlign.left, textScaler: const TextScaler.linear(1.3))),
       ]),
     ]),
   );

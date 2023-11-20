@@ -4,14 +4,22 @@ import 'content_source.dart';
 class Chapter {
   Chapter(this.title, this.shokas);
   factory Chapter.fromChapterNotesJson(List<Map<String, dynamic>> chapterNotes) {
-    return Chapter(
-      filenameToTitle(chapterNotes[0].keys.first),
-      chapterNotes
-          .sublist(0, chapterNotes.length)
-          .map(((e) => filenameToTitle(e.keys.first)))
-          .toList(),
-    );
+    final chapterTitle = filenameToTitle(chapterNotes[0].keys.first);
+    final chapterShlokaTitles = chapterNotes
+        .sublist(0, chapterNotes.length)
+        .map(((e) => filenameToTitle(e.keys.first)))
+        .toList();
+    chapterShlokaTitles[0] = 'Introduction';
+    return Chapter(chapterTitle, chapterShlokaTitles);
   }
+  String shlokaTitleToFilename(String shlokaTitle) {
+    if (shlokaTitle == 'Introduction') {
+      return titleToFilename(title);
+    } else {
+      return titleToFilename(shlokaTitle);
+    }
+  }
+
   static String filenameToTitle(String filename) {
     return filename.replaceAll('.md', '').replaceAll('_', ' ');
   }

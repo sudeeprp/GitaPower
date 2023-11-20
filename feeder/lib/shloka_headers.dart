@@ -36,7 +36,7 @@ const headers = {
 सहसैव अभ्यहन्यन्त स शब्दः तुमुलोऽभवत् ॥ १३ ॥
 ततः श्वेतैः हयैर्युक्ते महति स्यन्दने स्थितौ ।
 माधवः पांडवः चैव दिव्यौ शङ्खौ प्रदध्मतुः ॥ १४ ॥
-पान्चजन्यम् हृषिकेशो देवदत्तम् धनन्जयः ।
+पान्चजन्यम् हृषीकेशो देवदत्तम् धनन्जयः ।
 पौन्ड्रम् दध्मौ महा शङ्खम् भीमकर्म वृकोदरः ॥ १५ ॥
 अनन्तविजयम् राजा कुन्तीपुत्रो युधिष्ठिरः ।
 नकुलः सहदेवश्च सुग्ःओष मणिपुष्पकौ ॥ १६ ॥
@@ -52,7 +52,7 @@ const headers = {
   '1-20_to_1-23.md': {
     'shloka': '''अथ व्यवस्थितान् दृष्ट्वा धार्तराष्ट्रान् कपिध्वजः ।
 प्रवृत्ते शस्त्र संपाते धनुरुद्यम्य पांडवः ॥ २० ॥
-हृषिकेशम् तदा वाक्यम् इदम् आह महीपते ।
+हृषीकेशम् तदा वाक्यम् इदम् आह महीपते ।
 सेनयोरुभ्योः मध्ये रथम् स्थापय मे अच्युत ॥ २१ ॥
 यावत् एतान् निरीक्षे अहम् योद्धुकामान् अवस्थितान् ।
 कैर्मया सह योद्धव्यम् अस्मिन् रन समुद्यमे ॥ २२ ॥
@@ -62,7 +62,7 @@ const headers = {
         '''Next, my King, it was time to start wielding weapons. Arjuna, with Hanuman on his flag, saw the clan of Dhrtarashtra present there. Then he lifted his bow and said this to Krishna – Krishna, park my chariot between the two armies so that I can see those who have assembled to fight - those whom I must confront in this war. I shall see those warriors who have come here as the inspiration for the evil sons of Dhrtarashtra in war.'''
   },
   '1-24_to_1-25.md': {
-    'shloka': '''एवम् उक्तो हृषिकेशो गुडाकेशेन भारत ।
+    'shloka': '''एवम् उक्तो हृषीकेशो गुडाकेशेन भारत ।
 सेनयोरुभयोः मध्ये स्थापयित्वा रथोत्तमम् ॥ २४ ॥
 भीष्म द्रोण प्रमुखतः सर्वेशाम् च महीक्षिताम् ।
 उवाच पार्थ पश्यैतान् समवेतान् कुरून् इति ॥ २५ ॥''',
@@ -347,7 +347,7 @@ const headers = {
     'shloka': '''नेह अभिक्रमनाशोस्ति प्रत्यवायो न विद्यते ।
 स्वल्पम् अप्यस्य धर्मस्य त्रायते महतो भयात् ॥ ४० ॥''',
     'meaning':
-        '''While working without attachment towards the outcome, something that has been started is not destroyed; something that has been started, but is left incomplete doesn’t incur blame. Even a little of this conduct (of working without attachments) will save you from the great fears of this world.'''
+        '''While working without attachment towards the outcome, something that has been started is not destroyed; incomplete initiatives don’t incur blame. Even a little of this conduct (of working without attachments) will save you from the great fears of this world.'''
   },
   '2-41.md': {
     'shloka': '''व्यवसायात्मिका बुद्धिरेकेह कुरुनन्दन ।
@@ -1429,7 +1429,7 @@ const headers = {
   },
   '7-2.md': {
     'shloka': '''ज्ञानम् तेऽहम् सविज्ञानम् इदम् वक्ष्यामि अशेषतः ।
-यत् ज्ञात्वा नेह भूयो अन्यत् ज्ञातव्यम् अव्शिष्यते ॥ २ ॥''',
+यत् ज्ञात्वा नेह भूयो अन्यत् ज्ञातव्यम् अवशिष्यते ॥ २ ॥''',
     'meaning':
         '''I will now tell you this knowledge along with the ability to distinguish, in completeness. After knowing this there is nothing else, which remains over here to be learnt any more.'''
   },
@@ -1447,7 +1447,7 @@ const headers = {
   },
   '7-5.md': {
     'shloka': '''अपरेयम् इतस्त्वन्यम् प्रकृतिम् विद्धि मे पराम् ।
-जीवबूताम् महाबाहो यया इदम् धार्यते जगत् ॥ ५ ॥''',
+जीवबूतम् महाबाहो यया इदम् धार्यते जगत् ॥ ५ ॥''',
     'meaning':
         '''Arjuna, the universe that I just described is not the ultimate one. Know My ultimate nature, which is something distinct from this one, in the form of a conscious being by whom this world is sustained.'''
   },
@@ -2393,7 +2393,7 @@ const headers = {
     'shloka': '''श्री भगवान् उवाच -
 कालोऽस्मि लोक क्षयकृत् प्रवृद्धो
 लोकान् समाहर्तुम् इह प्रवृत्तः ।
-ऋतेपि त्वा न भ्विष्यन्ति सर्वे
+ऋतेपि त्वा न भविष्यन्ति सर्वे
 येऽवस्थिताः प्रत्यनीकेषु योधाः ॥ ३२ ॥''',
     'meaning':
         '''Lord Krishna said - I am the count-down to destruction. I transformed into this terrible form. This form of Mine causes the wear-out and destruction of the universe. I have set to work the destruction of the warriors here. Even without your involvement, all warriors who stand among the unfavorable shall not continue to exist.'''
@@ -2613,7 +2613,7 @@ const headers = {
   },
   '12-8.md': {
     'shloka': '''मयि एव मन आधत्स्व मयि बुद्धिम् निवेशय ।
-निवसिष्यसि मयि एव आत ऊर्ध्वम् न सम्शयः ॥ ८ ॥''',
+निवसिष्यसि मयि एव अत ऊर्ध्वम् न सम्शयः ॥ ८ ॥''',
     'meaning':
         '''Station the mind in Me alone. Keep your intentions in Me. After that, you will be in Me alone, there is no doubt in this.'''
   },
@@ -3196,7 +3196,7 @@ const headers = {
 अभयम् सत्त्व सम्शुद्धिः ज्ञानयोग व्यवस्थितिः ।
 दानम् दमः च यज्ञः च स्वाध्यायः तप आर्जवम् ॥ १ ॥
 अहिंसा सत्यम् अक्रोधः त्यागः शान्तिः अपैशुनम् ।
-दया भूतेषु अलोलुप्त्वम् मार्दवम् ह्रीः आचापलम् ॥ २ ॥
+दया भूतेषु अलोलुप्त्वम् मार्दवम् ह्रीः अचापलम् ॥ २ ॥
 तेजः क्षमा धृतिः शौचम् अद्रोहो नातिमानिता ।
 भवन्ति सम्पदम् दैवीम् अभिजातस्य भारत ॥ ३ ॥''',
     'meaning':
@@ -3238,7 +3238,7 @@ const headers = {
   },
   '16-9.md': {
     'shloka': '''एताम् दृष्टिम् अवष्टभ्य नष्टात्मानः अल्प बुद्धयः ।
-प्रभवनि उग्रकर्माणः क्षयाय जगतोऽहिताः ॥ ९ ॥''',
+प्रभवन्ति उग्रकर्माणः क्षयाय जगतोऽहिताः ॥ ९ ॥''',
     'meaning':
         '''Staying with these opinions, they lose the Self and diminish in intellect. They are a nuisance, doing things that hurt others. They become the decay of the world.'''
   },
@@ -3902,7 +3902,8 @@ const headers = {
   '18-66.md': {
     'shloka': '''सर्व धर्मान् परित्यज्य माम् एकम् शरणम् व्रज ।
 अहम् त्वा सर्व पापेभ्यः मोक्षयिष्यामि मा शुचः ॥ ६६ ॥''',
-    'meaning': ''''''
+    'meaning':
+        '''Let go of all uplifting achievements and make your surrender to Me alone. I shall free you from all misfortune. Don't worry.'''
   },
   '18-67.md': {
     'shloka': '''इदम् ते नातपस्काय नाभक्ताय कदाचन ।
