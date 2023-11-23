@@ -31,7 +31,7 @@ T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
 }
 
 class Choices extends GetxController {
-  var theme = Get.isDarkMode ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
+  var theme = ThemeMode.system == ThemeMode.dark ? ReadingTheme.dark.obs : ReadingTheme.light.obs;
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
   var headPreference = HeadPreference.shloka.obs;
