@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 import 'chaptercontent.dart';
 import 'notecontent.dart';
@@ -304,6 +305,8 @@ Widget _buildNote(BuildContext context, Widget content) {
 BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
   if (sectionType == SectionType.meaning) {
     return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
+  } else if (sectionType == SectionType.commentary) {
+    return null;
   } else {
     return null;
   }
@@ -323,6 +326,13 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
+  } else if (sectionType == SectionType.commentary) {
+    return ChatBubble(
+      clipper: ChatBubbleClipper1(type: BubbleType.receiverBubble),
+      margin: const EdgeInsets.only(top: 50),
+      backGroundColor: Theme.of(context).colorScheme.background,
+      child: _horizontalScrollForOneLiners(sectionType, content),
+    );
   }
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
