@@ -19,7 +19,8 @@ enum SectionType {
   shlokaSAHK,
   meaning,
   commentary,
-  note
+  note,
+  applAnchor
 }
 
 final _multipleSpaces = RegExp(r"\s+");
@@ -63,6 +64,15 @@ class WidgetMaker implements md.NodeVisitor {
   void _moveToNextSection() {
     collectedInlines = [];
   }
+  SectionType _sectionTypeInPara(md.Element element) {
+    if (_startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()) {
+      return SectionType.meaning;
+    } else if (element.textContent.startsWith('<a name=') &&
+      (element.textContent.contains('applnote') || element.textContent.contains('applopener'))) {
+      return SectionType.applAnchor;
+    }
+    return SectionType.commentary;
+  }
 
   SectionType _detectSectionType(md.Element element) {
     final classToSectionType = {
@@ -73,9 +83,7 @@ class WidgetMaker implements md.NodeVisitor {
       'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => _headingType(element.textContent),
       'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-      'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
-          ? SectionType.meaning
-          : SectionType.commentary,
+      'p': (element) => _sectionTypeInPara(element),
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -98,7 +106,7 @@ class WidgetMaker implements md.NodeVisitor {
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
       collectedWidgets
-          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
+          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType)); // TODO: check if change of section reflects here
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -135,8 +143,9 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
+          final sectionType = noteId.startsWith('appl') ? SectionType.applAnchor : element.sectionType;
           collectedInlines
-              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
+              .add(MatterForInline(noteId, sectionType, 'anchor', elmclass, link));
         }
       }
     }
@@ -333,6 +342,8 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
       backGroundColor: Theme.of(context).colorScheme.background,
       child: _horizontalScrollForOneLiners(sectionType, content),
     );
+  } else if (sectionType == SectionType.applAnchor) {
+    return content;
   }
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
