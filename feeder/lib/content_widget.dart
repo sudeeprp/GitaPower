@@ -266,11 +266,8 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
 }
 
 Widget _anchorWidget(String noteId) {
-  if (noteId.startsWith('appl')) {
-    return Image.asset('images/one-step.png', key: Key(noteId));
-  } else {
-    return SizedBox(width: 1, height: 1, key: Key(noteId));
-  }
+  // anchor widget isn't visible, but is required to scroll to it on opening.
+  return SizedBox(width: 1, height: 1, key: Key(noteId));
 }
 
 bool _isVisible(SectionType sectionType) {
@@ -298,7 +295,10 @@ Widget _buildNote(BuildContext context, Widget content) {
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-    child: Padding(padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2), child: content),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+      child: Row(children: [Image.asset('images/one-step.png'), Expanded(child: content)]), 
+    ),
   );
 }
 
