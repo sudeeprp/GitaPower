@@ -20,7 +20,7 @@ enum SectionType {
   meaning,
   commentary,
   note,
-  applAnchor
+  anchor
 }
 
 final _multipleSpaces = RegExp(r"\s+");
@@ -64,12 +64,12 @@ class WidgetMaker implements md.NodeVisitor {
   void _moveToNextSection() {
     collectedInlines = [];
   }
+
   SectionType _sectionTypeInPara(md.Element element) {
     if (_startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()) {
       return SectionType.meaning;
-    } else if (element.textContent.startsWith('<a name=') &&
-      (element.textContent.contains('applnote') || element.textContent.contains('applopener'))) {
-      return SectionType.applAnchor;
+    } else if (element.textContent.startsWith('<a name=') && element.textContent.endsWith('</a>')) {
+      return SectionType.anchor;
     }
     return SectionType.commentary;
   }
@@ -106,7 +106,7 @@ class WidgetMaker implements md.NodeVisitor {
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
       collectedWidgets
-          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType)); // TODO: check if change of section reflects here
+          .addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -143,9 +143,9 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          final sectionType = noteId.startsWith('appl') ? SectionType.applAnchor : element.sectionType;
-          collectedInlines
-              .add(MatterForInline(noteId, sectionType, 'anchor', elmclass, link));
+          final sectionType =
+              noteId.startsWith('appl') ? SectionType.anchor : element.sectionType;
+          collectedInlines.add(MatterForInline(noteId, sectionType, 'anchor', elmclass, link));
         }
       }
     }
@@ -306,7 +306,7 @@ Widget _buildNote(BuildContext context, Widget content) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-      child: Row(children: [Image.asset('images/one-step.png'), Expanded(child: content)]), 
+      child: Row(children: [Image.asset('images/one-step.png'), Expanded(child: content)]),
     ),
   );
 }
@@ -342,7 +342,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
       backGroundColor: Theme.of(context).colorScheme.background,
       child: _horizontalScrollForOneLiners(sectionType, content),
     );
-  } else if (sectionType == SectionType.applAnchor) {
+  } else if (sectionType == SectionType.anchor) {
     return content;
   }
   return Padding(
@@ -380,7 +380,7 @@ class ContentWidget extends StatelessWidget {
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text.rich(TextSpan(children: spans),
-                    style: Theme.of(context).textTheme.labelMedium)),
+                    style: Theme.of(context).textTheme.headlineSmall)),
           )
         ];
       }
