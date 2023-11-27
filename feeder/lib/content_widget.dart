@@ -143,8 +143,7 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          final sectionType =
-              noteId.startsWith('appl') ? SectionType.anchor : element.sectionType;
+          final sectionType = noteId.startsWith('appl') ? SectionType.anchor : element.sectionType;
           collectedInlines.add(MatterForInline(noteId, sectionType, 'anchor', elmclass, link));
         }
       }
