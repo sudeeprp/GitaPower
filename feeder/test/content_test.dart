@@ -352,6 +352,8 @@ _Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or
     expect(lastTextMade.tag, equals('em'));
     expect(lastTextMade.content, endsWith('years'));
     expect(parsedExplainer.widgetsMade.length, equals(2));
+    expect(parsedExplainer.widgetsMade[0].sectionType, equals(SectionType.commentary));
+    expect(parsedExplainer.widgetsMade[1].sectionType, equals(SectionType.explainer));
   });
   test('ignores bullets', () {
     final parsedBullet = recordParseActions('''

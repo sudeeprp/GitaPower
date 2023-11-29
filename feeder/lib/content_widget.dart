@@ -19,6 +19,7 @@ enum SectionType {
   shlokaSAHK,
   meaning,
   commentary,
+  explainer,
   note,
   anchor
 }
@@ -70,7 +71,10 @@ class WidgetMaker implements md.NodeVisitor {
       return SectionType.meaning;
     } else if (element.textContent.startsWith('<a name=') && element.textContent.endsWith('</a>')) {
       return SectionType.anchor;
-    }
+    } else if (element.children?.length == 1 && element.children?[0] is md.Element && 
+        (element.children?[0] as md.Element).tag == 'em') {
+      return SectionType.explainer;
+    } 
     return SectionType.commentary;
   }
 
