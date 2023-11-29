@@ -66,13 +66,23 @@ class WidgetMaker implements md.NodeVisitor {
     collectedInlines = [];
   }
 
+  bool _containsExplainer(md.Element element) {
+    if (element.children != null) {
+      for (final childNode in element.children!) {
+        if (childNode is md.Element && childNode.tag == 'em') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   SectionType _sectionTypeInPara(md.Element element) {
     if (_startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()) {
       return SectionType.meaning;
     } else if (element.textContent.startsWith('<a name=') && element.textContent.endsWith('</a>')) {
       return SectionType.anchor;
-    } else if (element.children?.length == 1 && element.children?[0] is md.Element && 
-        (element.children?[0] as md.Element).tag == 'em') {
+    } else if (_containsExplainer(element)) {
       return SectionType.explainer;
     } 
     return SectionType.commentary;
