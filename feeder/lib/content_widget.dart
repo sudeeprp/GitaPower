@@ -84,7 +84,7 @@ class WidgetMaker implements md.NodeVisitor {
       return SectionType.anchor;
     } else if (_containsExplainer(element)) {
       return SectionType.explainer;
-    } 
+    }
     return SectionType.commentary;
   }
 
