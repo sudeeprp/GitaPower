@@ -407,9 +407,10 @@ class ContentWidget extends StatelessWidget {
 
     TextStyle? styleFor(String tag, String? elmclass) {
       if (elmclass == 'language-shloka-sa') {
-        return Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 18);
+        return GoogleFonts.roboto(
+            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 18);
       } else if (tag == 'code') {
-        return GoogleFonts.robotoMono(
+        return GoogleFonts.roboto(
             color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 16);
       } else if (tag == 'h1') {
         return GoogleFonts.rubik(height: 3);
