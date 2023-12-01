@@ -460,7 +460,7 @@ class ContentWidget extends StatelessWidget {
                           style: styleFor('note', null)))),
               Expanded(
                 flex: 1,
-                child: Text(Chapter.filenameToTitle(mdFilename),
+                child: Text(Chapter.filenameToShortTitle(mdFilename),
                     style: Theme.of(context).textTheme.bodySmall),
               ),
             ]));

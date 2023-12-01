@@ -40,4 +40,9 @@ void main() {
     Get.delete<Choices>();
     Get.delete<ChaptersTOC>();
   });
+  test('shortens the title for number (top right)', () {
+    expect(Chapter.filenameToShortTitle('Chapter_1.md'), equals('Chap. 1'));
+    expect(Chapter.filenameToShortTitle('15-3_second_part_and_15-4_first_part.md'),
+        equals('15-3 2nd & 15-4 1st'));
+  });
 }
