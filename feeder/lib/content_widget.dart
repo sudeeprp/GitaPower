@@ -416,7 +416,7 @@ class ContentWidget extends StatelessWidget {
       } else if (tag == 'h2') {
         return GoogleFonts.workSans(height: 3);
       } else if (tag == 'em') {
-        return GoogleFonts.bubblerOne(height: 1.5, fontSize: 18);
+        return GoogleFonts.caveat(height: 1.5, fontSize: 20);
       } else if (tag == 'note') {
         return const TextStyle(fontSize: 14);
       } else {
