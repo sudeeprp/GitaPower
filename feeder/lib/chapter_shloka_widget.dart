@@ -16,7 +16,8 @@ Widget chapterShlokaScreen(String chapterMdName) {
         return screenify(buildContentWithNote(Chapter.titleToFilename(chapter.title)));
       } else {
         return screenify(ChapterShlokaWidget(chapter),
-            appBar: AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
+            appBar:
+                AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
       }
     }
     return const Column(

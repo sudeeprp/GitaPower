@@ -9,6 +9,7 @@ import 'package:askys/content_source.dart';
 const compiledMDtoNoteIds = '''
 [{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
 ''';
+const sampleBasics = 'Just a sample introduction';
 final sample_1_1 = '''
 # Chapter 1
 
@@ -43,6 +44,8 @@ void main() {
         (server) => server.reply(200, compiledNotes));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
     dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/Back-to-Basics.md', (server) => server.reply(200, sampleBasics));
+    dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
@@ -70,6 +73,14 @@ void main() {
     await tester.tap(find.text('1-1')); // tap #3
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/1-1.md');
+  });
+  testWidgets('Navigates to introduction when it is the only item in the chapter', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Back-to-Basics')); // tap #2
+    await tester.pumpAndSettle();
+    expect(find.text(sampleBasics), findsOneWidget);
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());

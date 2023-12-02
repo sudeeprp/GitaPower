@@ -48,6 +48,11 @@ flutter:
     - images/
     - gita-begin/compile/
     - gita-begin/gita/
+    - google_fonts/
+  fonts:
+    - family: Caveat
+      fonts:
+        - asset: google_fonts/Caveat-Regular.ttf
 
 flutter_icons:
   android: "launcher_icon"
