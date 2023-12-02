@@ -413,9 +413,9 @@ class ContentWidget extends StatelessWidget {
         return GoogleFonts.roboto(
             color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 16);
       } else if (tag == 'h1') {
-        return GoogleFonts.rubik(height: 3);
+        return Theme.of(context).textTheme.headlineMedium;
       } else if (tag == 'h2') {
-        return GoogleFonts.workSans(height: 3);
+        return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3);
       } else if (tag == 'em') {
         return GoogleFonts.caveat(height: 1.5, fontSize: 24);
       } else if (tag == 'note') {

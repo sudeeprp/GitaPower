@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/shloka_headers.dart' as shlokas;
+import 'content_widget.dart';
 
 Widget chapterShlokaScreen(String chapterMdName) {
   final chapterToShloka = Get.find<ChaptersTOC>();
@@ -11,8 +12,12 @@ Widget chapterShlokaScreen(String chapterMdName) {
   return Obx(() {
     if (chapterToShloka.chaptersLoaded.value) {
       final chapter = findChapterByTitle(chapterTitle, chapterToShloka.chapters);
-      return screenify(ChapterShlokaWidget(chapter),
-          appBar: AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
+      if (chapter.shokas.length == 1) {
+        return screenify(buildContentWithNote(Chapter.titleToFilename(chapter.title)));
+      } else {
+        return screenify(ChapterShlokaWidget(chapter),
+            appBar: AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
+      }
     }
     return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
