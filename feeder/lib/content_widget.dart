@@ -349,12 +349,17 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   } else if (sectionType == SectionType.commentary) {
-    return ChatBubble(
-      clipper: ChatBubbleClipper1(type: BubbleType.receiverBubble),
-      margin: const EdgeInsets.only(top: 50),
-      backGroundColor: Theme.of(context).colorScheme.background,
-      child: _horizontalScrollForOneLiners(sectionType, content),
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Padding(
+        padding: EdgeInsets.only(left: 1, top: 10),
+        child: CircleAvatar(radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
+      ),
+      ChatBubble(
+        clipper: ChatBubbleClipper1(type: BubbleType.receiverBubble),
+        backGroundColor: Theme.of(context).colorScheme.background,
+        child: _horizontalScrollForOneLiners(sectionType, content),
+      ),
+    ]);
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
