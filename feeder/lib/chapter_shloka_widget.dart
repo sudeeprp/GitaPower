@@ -35,10 +35,10 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
 
 Widget? _formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
   const headerContents = {
-    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.4},
+    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
     HeadPreference.meaning: {
       'scrollDirection': Axis.vertical,
-      'textScaleFactor': 1.2,
+      'textScaleFactor': 1.4,
     },
   };
   String? headerText;
