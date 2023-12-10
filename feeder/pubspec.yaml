@@ -32,7 +32,8 @@ dependencies:
   firebase_core: ^2.24.0
   shared_preferences: 2.2.2
   enum_to_string:
-  flutter_chat_bubble:
+  float_column:
+  drop_cap_text:
 
 dev_dependencies:
   flutter_test:

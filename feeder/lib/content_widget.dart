@@ -1,12 +1,13 @@
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
+import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:flutter_chat_bubble/chat_bubble.dart';
+import 'package:float_column/float_column.dart';
 
 import 'chaptercontent.dart';
 import 'notecontent.dart';
@@ -229,11 +230,11 @@ List<TextSpan> _renderMeaning(
   return spansToRender;
 }
 
-Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
+Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   Choices choice = Get.find();
   final scriptChoice = choice.script.value;
   final meaningMode = choice.meaningMode.value;
-  List<TextSpan> visibleSpans = [];
+  List<InlineSpan> visibleSpans = [];
   if (sectionType == SectionType.meaning) {
     visibleSpans = _renderMeaning(spans, meaningMode, scriptChoice);
   } else {
@@ -243,6 +244,23 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
     return const Text('');
   } else if (visibleSpans.length == 1) {
     return Text.rich(visibleSpans[0]);
+  } else if (sectionType == SectionType.commentary) {
+    final List<InlineSpan> commenter = [
+      WidgetSpan(
+          child: Floatable(
+              float: FCFloat.start,
+              child: DropCap(
+                width: 50,
+                height: 50,
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 1, top: 10, right: 5),
+                  child:
+                      CircleAvatar(radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
+                ),
+              )))
+    ];
+    visibleSpans = commenter + spans;
+    return FloatColumn(children: [TextSpan(children: visibleSpans)]);
   } else {
     return Text.rich(TextSpan(children: visibleSpans));
   }
@@ -349,17 +367,11 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   if (sectionType == SectionType.note) {
     return _buildNote(context, content);
   } else if (sectionType == SectionType.commentary) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.only(left: 1, top: 10),
-        child: CircleAvatar(radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
-      ),
-      ChatBubble(
-        clipper: ChatBubbleClipper1(type: BubbleType.receiverBubble),
-        backGroundColor: Theme.of(context).colorScheme.background,
-        child: _horizontalScrollForOneLiners(sectionType, content),
-      ),
-    ]);
+    return Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        color: Theme.of(context).cardColor,
+        child: _horizontalScrollForOneLiners(sectionType, content));
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
@@ -426,7 +438,7 @@ class ContentWidget extends StatelessWidget {
       } else if (tag == 'note') {
         return const TextStyle(fontSize: 14);
       } else {
-        return const TextStyle(height: 1.5);
+        return const TextStyle(height: 1.5, fontSize: 18);
       }
     }
 
