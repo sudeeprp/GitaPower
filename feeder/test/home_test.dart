@@ -9,7 +9,12 @@ import 'package:askys/content_source.dart';
 const compiledMDtoNoteIds = '''
 [{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
 ''';
-const sampleBasics = 'Just a sample introduction';
+const sampleBasics = '''
+```shloka-sa
+प्रस्तावना
+```
+Just a sample introduction
+''';
 final sample_1_1 = '''
 # Chapter 1
 
@@ -80,7 +85,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Back-to-Basics')); // tap #2
     await tester.pumpAndSettle();
-    expect(find.text(sampleBasics), findsOneWidget);
+    expect(find.textContaining('प्रस्तावना'), findsOneWidget);
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());

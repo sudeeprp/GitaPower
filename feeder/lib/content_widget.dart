@@ -242,8 +242,6 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   }
   if (visibleSpans.isEmpty) {
     return const Text('');
-  } else if (visibleSpans.length == 1) {
-    return Text.rich(visibleSpans[0]);
   } else if (sectionType == SectionType.commentary) {
     final List<InlineSpan> commenter = [
       WidgetSpan(
@@ -261,6 +259,8 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
     ];
     visibleSpans = commenter + spans;
     return FloatColumn(children: [TextSpan(children: visibleSpans)]);
+  } else if (visibleSpans.length == 1) {
+    return Text.rich(visibleSpans[0]);
   } else {
     return Text.rich(TextSpan(children: visibleSpans));
   }
@@ -282,7 +282,7 @@ GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
   }
 }
 
-void _navigateToLink(String? link) {
+void navigateToLink(String? link) {
   String mdFilename = 'broken-link.md';
   String noteId = '';
   if (link != null) {
@@ -422,7 +422,7 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
-    TextStyle? styleFor(String tag, String? elmclass) {
+    TextStyle? styleFor(String tag, {String? elmclass}) {
       if (elmclass == 'language-shloka-sa') {
         return GoogleFonts.roboto(
             color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 20);
@@ -450,8 +450,8 @@ class ContentWidget extends StatelessWidget {
         return [
           TextSpan(
             text: inlineMatter.text,
-            style: const TextStyle(color: Colors.blue),
-            recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
+            style: styleFor('anchor')?.copyWith(color: Colors.blue),
+            recognizer: TapGestureRecognizer()..onTap = () => navigateToLink(inlineMatter.link),
           ),
           const TextSpan(text: ' ')
         ];
@@ -460,7 +460,7 @@ class ContentWidget extends StatelessWidget {
       return [
         TextSpan(
             text: textContent,
-            style: styleFor(inlineMatter.tag, inlineMatter.elmclass),
+            style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
             recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
       ];
     }
@@ -475,7 +475,7 @@ class ContentWidget extends StatelessWidget {
                   child: _buildNote(
                       context,
                       Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note', null)))),
+                          style: styleFor('note')))),
               Expanded(
                 flex: 1,
                 child: Text(Chapter.filenameToShortTitle(mdFilename),
