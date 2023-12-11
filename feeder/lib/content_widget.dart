@@ -259,6 +259,8 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
     ];
     visibleSpans = commenter + spans;
     return FloatColumn(children: [TextSpan(children: visibleSpans)]);
+  } else if (sectionType == SectionType.anchor) {
+    return SizedBox.shrink(child: Text.rich(TextSpan(children: visibleSpans)));
   } else if (visibleSpans.length == 1) {
     return Text.rich(visibleSpans[0]);
   } else {
@@ -324,10 +326,12 @@ bool _isVisible(SectionType sectionType) {
 }
 
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
+  const horizontalMargins = EdgeInsets.symmetric(horizontal: 8);
   if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
-    return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal, padding: horizontalMargins, child: w);
   } else {
-    return w;
+    return Padding(padding: horizontalMargins, child: w);
   }
 }
 
@@ -335,10 +339,7 @@ Widget _buildNote(BuildContext context, Widget content) {
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-      child: Row(children: [Image.asset('images/one-step.png'), Expanded(child: content)]),
-    ),
+    child: Row(children: [Image.asset('images/one-step.png'), Expanded(child: content)]),
   );
 }
 
@@ -363,24 +364,27 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
+Widget _contentSpacing(Widget w) {
+  return Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: w);
+}
+
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
-    return _buildNote(context, content);
+    return _contentSpacing(_buildNote(context, content));
   } else if (sectionType == SectionType.commentary) {
-    return Card(
+    return _contentSpacing(Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         color: Theme.of(context).cardColor,
-        child: _horizontalScrollForOneLiners(sectionType, content));
+        margin: const EdgeInsets.symmetric(horizontal: 3),
+        child: _horizontalScrollForOneLiners(sectionType, content)));
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
-  return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      child: Container(
-        decoration: _sectionDecoration(context, sectionType),
-        child: _horizontalScrollForOneLiners(sectionType, content),
-      ));
+  return _contentSpacing(Container(
+    decoration: _sectionDecoration(context, sectionType),
+    child: _horizontalScrollForOneLiners(sectionType, content),
+  ));
 }
 
 class ContentWidget extends StatelessWidget {
