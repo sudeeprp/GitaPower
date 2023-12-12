@@ -50,6 +50,7 @@ Widget? _formShlokaTitle(String mdFilename, HeadPreference headPreference, Build
   if (headerText != null) {
     return Card(
       elevation: 10,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       color: Theme.of(context).cardColor,
       child: SingleChildScrollView(
           scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
