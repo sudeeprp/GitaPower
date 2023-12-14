@@ -372,21 +372,20 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   if (sectionType == SectionType.note) {
     return _contentSpacing(_buildNote(context, content));
   } else if (sectionType == SectionType.commentary) {
-    return _contentSpacing(
-      Container(
-        decoration: BoxDecoration(
+    return _contentSpacing(Container(
+      decoration: BoxDecoration(
           // border: const Border(bottom: BorderSide(color: Colors.black)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, -2))
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, -2))
           ],
           color: Theme.of(context).cardColor),
-        margin: const EdgeInsets.symmetric(horizontal: 3),
-        child: _horizontalScrollForOneLiners(sectionType, content),
-      ));
+      margin: const EdgeInsets.symmetric(horizontal: 3),
+      child: _horizontalScrollForOneLiners(sectionType, content),
+    ));
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
