@@ -22,13 +22,13 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.6
-  dio: ^5.3.4
+  dio: ^5.4.0
   card_settings: ^3.5.0
   markdown: ^7.1.1
-  stack: ^0.2.1
+  stack: ^0.2.2
   google_fonts: ^6.1.0
   cupertino_icons: ^1.0.6
-  firebase_crashlytics: ^3.4.6
+  firebase_crashlytics: ^3.4.8
   firebase_core: ^2.24.0
   shared_preferences: 2.2.2
   enum_to_string:
