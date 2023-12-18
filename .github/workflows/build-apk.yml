@@ -32,7 +32,7 @@ jobs:
         flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ github.run_number }}
 
     - name: upload apk
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-apk
         path: feeder/build/app/outputs/apk/release/app-release.apk
