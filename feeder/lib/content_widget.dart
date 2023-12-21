@@ -339,7 +339,10 @@ Widget _buildNote(BuildContext context, Widget content) {
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-    child: Row(children: [Image.asset('images/one-step.png'), Expanded(child: content)]),
+    child: Row(children: [
+      Image.asset('images/one-step.png'), 
+      Expanded(child: Padding(padding: const EdgeInsets.only(left: 3), child: content))
+    ]),
   );
 }
 

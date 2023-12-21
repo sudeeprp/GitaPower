@@ -33,7 +33,7 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
   return foundChapter;
 }
 
-Widget? _formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
+Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
   const headerContents = {
     HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
     HeadPreference.meaning: {
@@ -82,7 +82,7 @@ class ChapterShlokaWidget extends StatelessWidget {
         final mdFilename = chapter.shlokaTitleToFilename(shlokaTitleText);
         return ListTile(
           title: Text(shlokaTitleText),
-          subtitle: _formShlokaTitle(mdFilename, headPreference, context),
+          subtitle: formShlokaTitle(mdFilename, headPreference, context),
           minVerticalPadding: 16,
           onTap: () => Get.toNamed('/shloka/$mdFilename'),
         );
