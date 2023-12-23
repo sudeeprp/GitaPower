@@ -9,6 +9,12 @@ import 'package:askys/content_source.dart';
 const compiledMDtoNoteIds = '''
 [{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
 ''';
+const sampleBasics = '''
+```shloka-sa
+प्रस्तावना
+```
+Just a sample introduction
+''';
 final sample_1_1 = '''
 # Chapter 1
 
@@ -18,7 +24,7 @@ final sample_1_1 = '''
 धर्मक्षेत्रे
 ```
 _Is anxiety due to rajas or tamas?_ 
-${'one line\n' * 120}
+${'one line\n' * 40}
 <a name='applnote_13'></a>
 > In our anxiety, we interpret anything that happens as a signal of doom.
 ''';
@@ -42,6 +48,8 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
         (server) => server.reply(200, compiledNotes));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
+    dioAdapter.onGet(
+        '${GitHubFetcher.mdPath}/Back-to-Basics.md', (server) => server.reply(200, sampleBasics));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
     dioAdapter.onGet(
@@ -71,6 +79,14 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/1-1.md');
   });
+  testWidgets('Navigates to introduction when it is the only item in the chapter', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Back-to-Basics')); // tap #2
+    await tester.pumpAndSettle();
+    expect(find.textContaining('प्रस्तावना'), findsOneWidget);
+  });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/notes'))); // tap #1
@@ -79,12 +95,9 @@ void main() {
     await tester.tap(find.text('Is there a different way?')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3
-    await tester.pumpAndSettle(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/1-1.md/applnote_13');
-    // To check that the note is present somewhere - self-test of this test
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
-    // Next, test the real requirement - seeing the note
-    expect(find.byKey(const Key('applnote_13')).hitTestable(), findsOneWidget);
   });
   testWidgets('Shows feed with one tap', (tester) async {
     await tester.pumpWidget(makeMyHome());

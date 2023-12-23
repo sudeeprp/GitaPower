@@ -1,14 +1,9 @@
 import 'dart:math';
-
 import 'package:get/get.dart';
-
-import 'content_source.dart';
+import 'shloka_headers.dart' as shlokas;
 
 Future<List<String>> allShlokaMDs() async {
-  final GitHubFetcher contentSource = Get.find();
-  final mdToNotes = await contentSource.mdToNoteIds();
-  final mdFilenames = mdToNotes.map((e) => e.keys.first);
-  return mdFilenames.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
+  return shlokas.headers.keys.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
 }
 
 class ShlokaRef {

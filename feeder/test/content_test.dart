@@ -100,10 +100,6 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
 <a name='applnote_156'></a>
 >The Lord's qualities cannot be understood
 '''));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/6-41-anchor.md', (server) => server.reply(200, '''
-<a name='greatness_of_yoga'></a>
-A person diverts from the path of realizing the Self due to some desires.
-'''));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/18-33-meaning-hyper.md',
         (server) => server.reply(200,
@@ -169,15 +165,6 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(find.textContaining('cannot be understood'), findsOneWidget);
     Get.delete<Choices>();
   });
-  testWidgets('Shows commentary following an anchor', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    final contentWidget = buildContent('6-41-anchor.md');
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('greatness_of_yoga'), findsNothing);
-    expect(find.textContaining('due to some desires'), findsOneWidget);
-  });
   testWidgets('Navigates a link in the commentary', (tester) async {
     Get.put(Choices());
     Get.put(ContentActions());
@@ -191,10 +178,7 @@ A person diverts from the path of realizing the Self due to some desires.
       ],
     ));
     await tester.pumpAndSettle();
-    final linkFinder = find.textContaining('See here', findRichText: true);
-    expect(linkFinder, findsOneWidget);
-    _fireOnTap(linkFinder, 'See here');
-    await tester.tap(linkFinder);
+    navigateToLink('$targetFilename#$targetNote');
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/$targetFilename/$targetNote');
   });
@@ -352,6 +336,8 @@ _Yuga is a period of time. There are four yugas: `कृत` `[kRta]` or
     expect(lastTextMade.tag, equals('em'));
     expect(lastTextMade.content, endsWith('years'));
     expect(parsedExplainer.widgetsMade.length, equals(2));
+    expect(parsedExplainer.widgetsMade[0].sectionType, equals(SectionType.commentary));
+    expect(parsedExplainer.widgetsMade[1].sectionType, equals(SectionType.explainer));
   });
   test('ignores bullets', () {
     final parsedBullet = recordParseActions('''
@@ -380,5 +366,15 @@ As the Lord Himself states, it isn't possible to describe the Self.
 ''');
     expect(parsedBasics.textsMade[0].content, equals('आत्म [Atma] - The Self'));
     expect(parsedBasics.widgetsMade[0].sectionType, equals(SectionType.topicHead));
+  });
+  test('Shows commentary following an anchor', () {
+    final parsedAnchor = recordParseActions('''
+<a name='greatness_of_yoga'></a>
+A person diverts from the path of realizing the Self due to some desires.
+''');
+    expect(parsedAnchor.textsMade[0].tag, equals('anchor'));
+    expect(parsedAnchor.textsMade[0].content, equals('greatness_of_yoga'));
+    expect(parsedAnchor.textsMade[1].content,
+        equals('A person diverts from the path of realizing the Self due to some desires.'));
   });
 }

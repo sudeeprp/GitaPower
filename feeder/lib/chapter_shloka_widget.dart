@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/shloka_headers.dart' as shlokas;
+import 'content_widget.dart';
 
 Widget chapterShlokaScreen(String chapterMdName) {
   final chapterToShloka = Get.find<ChaptersTOC>();
@@ -11,8 +12,13 @@ Widget chapterShlokaScreen(String chapterMdName) {
   return Obx(() {
     if (chapterToShloka.chaptersLoaded.value) {
       final chapter = findChapterByTitle(chapterTitle, chapterToShloka.chapters);
-      return screenify(ChapterShlokaWidget(chapter),
-          appBar: AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
+      if (chapter.shokas.length == 1) {
+        return screenify(buildContentWithNote(Chapter.titleToFilename(chapter.title)));
+      } else {
+        return screenify(ChapterShlokaWidget(chapter),
+            appBar:
+                AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
+      }
     }
     return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -27,12 +33,12 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
   return foundChapter;
 }
 
-Widget? _formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
+Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
   const headerContents = {
-    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.4},
+    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
     HeadPreference.meaning: {
       'scrollDirection': Axis.vertical,
-      'textScaleFactor': 1.2,
+      'textScaleFactor': 1.4,
     },
   };
   String? headerText;
@@ -44,6 +50,7 @@ Widget? _formShlokaTitle(String mdFilename, HeadPreference headPreference, Build
   if (headerText != null) {
     return Card(
       elevation: 10,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       color: Theme.of(context).cardColor,
       child: SingleChildScrollView(
           scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
@@ -75,7 +82,7 @@ class ChapterShlokaWidget extends StatelessWidget {
         final mdFilename = chapter.shlokaTitleToFilename(shlokaTitleText);
         return ListTile(
           title: Text(shlokaTitleText),
-          subtitle: _formShlokaTitle(mdFilename, headPreference, context),
+          subtitle: formShlokaTitle(mdFilename, headPreference, context),
           minVerticalPadding: 16,
           onTap: () => Get.toNamed('/shloka/$mdFilename'),
         );

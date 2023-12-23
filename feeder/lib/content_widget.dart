@@ -1,11 +1,13 @@
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
+import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:float_column/float_column.dart';
 
 import 'chaptercontent.dart';
 import 'notecontent.dart';
@@ -18,7 +20,9 @@ enum SectionType {
   shlokaSAHK,
   meaning,
   commentary,
-  note
+  explainer,
+  note,
+  anchor
 }
 
 final _multipleSpaces = RegExp(r"\s+");
@@ -63,6 +67,28 @@ class WidgetMaker implements md.NodeVisitor {
     collectedInlines = [];
   }
 
+  bool _containsExplainer(md.Element element) {
+    if (element.children != null) {
+      for (final childNode in element.children!) {
+        if (childNode is md.Element && childNode.tag == 'em') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  SectionType _sectionTypeInPara(md.Element element) {
+    if (_startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()) {
+      return SectionType.meaning;
+    } else if (element.textContent.startsWith('<a name=') && element.textContent.endsWith('</a>')) {
+      return SectionType.anchor;
+    } else if (_containsExplainer(element)) {
+      return SectionType.explainer;
+    }
+    return SectionType.commentary;
+  }
+
   SectionType _detectSectionType(md.Element element) {
     final classToSectionType = {
       'language-shloka-sa': SectionType.shlokaSA,
@@ -72,9 +98,7 @@ class WidgetMaker implements md.NodeVisitor {
       'h1': (element) => SectionType.chapterHeading,
       'h2': (element) => _headingType(element.textContent),
       'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-      'p': (element) => _startsWithDevanagari(element.textContent) && !_inMidstOfCommentary()
-          ? SectionType.meaning
-          : SectionType.commentary,
+      'p': (element) => _sectionTypeInPara(element),
       'blockquote': (element) => SectionType.note,
     };
     final tagConverter = tagToSectionType[element.tag];
@@ -134,8 +158,8 @@ class WidgetMaker implements md.NodeVisitor {
         final noteId = anchor.group(1);
         if (noteId != null) {
           noteIdsInPage.add(noteId);
-          collectedInlines
-              .add(MatterForInline(noteId, element.sectionType, 'anchor', elmclass, link));
+          final sectionType = noteId.startsWith('appl') ? SectionType.anchor : element.sectionType;
+          collectedInlines.add(MatterForInline(noteId, sectionType, 'anchor', elmclass, link));
         }
       }
     }
@@ -206,11 +230,11 @@ List<TextSpan> _renderMeaning(
   return spansToRender;
 }
 
-Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
+Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   Choices choice = Get.find();
   final scriptChoice = choice.script.value;
   final meaningMode = choice.meaningMode.value;
-  List<TextSpan> visibleSpans = [];
+  List<InlineSpan> visibleSpans = [];
   if (sectionType == SectionType.meaning) {
     visibleSpans = _renderMeaning(spans, meaningMode, scriptChoice);
   } else {
@@ -218,6 +242,25 @@ Text _spansToText(List<TextSpan> spans, SectionType sectionType) {
   }
   if (visibleSpans.isEmpty) {
     return const Text('');
+  } else if (sectionType == SectionType.commentary) {
+    final List<InlineSpan> commenter = [
+      WidgetSpan(
+          child: Floatable(
+              float: FCFloat.start,
+              child: DropCap(
+                width: 50,
+                height: 50,
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 1, top: 10, right: 5),
+                  child:
+                      CircleAvatar(radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
+                ),
+              )))
+    ];
+    visibleSpans = commenter + spans;
+    return FloatColumn(children: [TextSpan(children: visibleSpans)]);
+  } else if (sectionType == SectionType.anchor) {
+    return SizedBox.shrink(child: Text.rich(TextSpan(children: visibleSpans)));
   } else if (visibleSpans.length == 1) {
     return Text.rich(visibleSpans[0]);
   } else {
@@ -241,7 +284,7 @@ GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
   }
 }
 
-void _navigateToLink(String? link) {
+void navigateToLink(String? link) {
   String mdFilename = 'broken-link.md';
   String noteId = '';
   if (link != null) {
@@ -265,11 +308,8 @@ List<TextSpan> _anchorSpan(String noteId, Map<String, GlobalKey> anchorKeys) {
 }
 
 Widget _anchorWidget(String noteId) {
-  if (noteId.startsWith('appl')) {
-    return Image.asset('images/one-step.png', key: Key(noteId));
-  } else {
-    return SizedBox(width: 1, height: 1, key: Key(noteId));
-  }
+  // anchor widget isn't visible, but is required to scroll to it on opening.
+  return SizedBox(width: 1, height: 1, key: Key(noteId));
 }
 
 bool _isVisible(SectionType sectionType) {
@@ -286,10 +326,12 @@ bool _isVisible(SectionType sectionType) {
 }
 
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
+  const horizontalMargins = EdgeInsets.symmetric(horizontal: 8);
   if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
-    return SingleChildScrollView(scrollDirection: Axis.horizontal, child: w);
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal, padding: horizontalMargins, child: w);
   } else {
-    return w;
+    return Padding(padding: horizontalMargins, child: w);
   }
 }
 
@@ -297,13 +339,18 @@ Widget _buildNote(BuildContext context, Widget content) {
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-    child: Padding(padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2), child: content),
+    child: Row(children: [
+      Image.asset('images/one-step.png'),
+      Expanded(child: Padding(padding: const EdgeInsets.only(left: 3), child: content))
+    ]),
   );
 }
 
 BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
   if (sectionType == SectionType.meaning) {
     return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
+  } else if (sectionType == SectionType.commentary) {
+    return null;
   } else {
     return null;
   }
@@ -320,16 +367,35 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
+Widget _contentSpacing(Widget w) {
+  return Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: w);
+}
+
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
-    return _buildNote(context, content);
+    return _contentSpacing(_buildNote(context, content));
+  } else if (sectionType == SectionType.commentary) {
+    return _contentSpacing(Container(
+      decoration: BoxDecoration(
+          // border: const Border(bottom: BorderSide(color: Colors.black)),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, -2))
+          ],
+          color: Theme.of(context).cardColor),
+      margin: const EdgeInsets.symmetric(horizontal: 3),
+      child: _horizontalScrollForOneLiners(sectionType, content),
+    ));
+  } else if (sectionType == SectionType.anchor) {
+    return content;
   }
-  return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      child: Container(
-        decoration: _sectionDecoration(context, sectionType),
-        child: _horizontalScrollForOneLiners(sectionType, content),
-      ));
+  return _contentSpacing(Container(
+    decoration: _sectionDecoration(context, sectionType),
+    child: _horizontalScrollForOneLiners(sectionType, content),
+  ));
 }
 
 class ContentWidget extends StatelessWidget {
@@ -359,7 +425,7 @@ class ContentWidget extends StatelessWidget {
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text.rich(TextSpan(children: spans),
-                    style: Theme.of(context).textTheme.labelMedium)),
+                    style: Theme.of(context).textTheme.headlineSmall)),
           )
         ];
       }
@@ -371,22 +437,23 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
-    TextStyle? styleFor(String tag, String? elmclass) {
+    TextStyle? styleFor(String tag, {String? elmclass}) {
       if (elmclass == 'language-shloka-sa') {
-        return Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 18);
+        return GoogleFonts.roboto(
+            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 20);
       } else if (tag == 'code') {
-        return GoogleFonts.robotoMono(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 16);
+        return GoogleFonts.roboto(
+            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 18);
       } else if (tag == 'h1') {
-        return GoogleFonts.rubik(height: 3);
+        return Theme.of(context).textTheme.headlineMedium;
       } else if (tag == 'h2') {
-        return GoogleFonts.workSans(height: 3);
+        return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3);
       } else if (tag == 'em') {
-        return GoogleFonts.bubblerOne(height: 1.2, fontSize: 16);
+        return GoogleFonts.caveat(height: 1.5, fontSize: 24);
       } else if (tag == 'note') {
         return const TextStyle(fontSize: 14);
       } else {
-        return const TextStyle(height: 1.5);
+        return const TextStyle(height: 1.5, fontSize: 18);
       }
     }
 
@@ -398,8 +465,8 @@ class ContentWidget extends StatelessWidget {
         return [
           TextSpan(
             text: inlineMatter.text,
-            style: const TextStyle(color: Colors.blue),
-            recognizer: TapGestureRecognizer()..onTap = () => _navigateToLink(inlineMatter.link),
+            style: styleFor('anchor')?.copyWith(color: Colors.blue),
+            recognizer: TapGestureRecognizer()..onTap = () => navigateToLink(inlineMatter.link),
           ),
           const TextSpan(text: ' ')
         ];
@@ -408,7 +475,7 @@ class ContentWidget extends StatelessWidget {
       return [
         TextSpan(
             text: textContent,
-            style: styleFor(inlineMatter.tag, inlineMatter.elmclass),
+            style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
             recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
       ];
     }
@@ -423,10 +490,10 @@ class ContentWidget extends StatelessWidget {
                   child: _buildNote(
                       context,
                       Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note', null)))),
+                          style: styleFor('note')))),
               Expanded(
                 flex: 1,
-                child: Text(Chapter.filenameToTitle(mdFilename),
+                child: Text(Chapter.filenameToShortTitle(mdFilename),
                     style: Theme.of(context).textTheme.bodySmall),
               ),
             ]));
