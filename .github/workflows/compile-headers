@@ -16,6 +16,6 @@ jobs:
       working-directory: ./feeder
       run: flutter pub get
 
-    - name: checkmycode
+    - name: generate headers
       working-directory: ./feeder/tools
-      run: bash checkmycode.sh
+      run: bash generate_headers.sh
