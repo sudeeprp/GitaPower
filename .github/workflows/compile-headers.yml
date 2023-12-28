@@ -22,6 +22,8 @@ jobs:
 
     - name: commit in branch
       run: |
+        git config --global user.email "compile.header@rapalearning.com"
+        git config --global user.name "Sudeep Prasad"
         git checkout -b compile-shloka-headers
         git add .
         git commit -m "shloka headers"
