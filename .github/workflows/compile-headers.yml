@@ -19,3 +19,11 @@ jobs:
     - name: generate headers
       working-directory: ./feeder/tools
       run: bash generate_headers.sh
+
+    - name: commit in branch
+      run: |
+        git checkout -b compile-shloka-headers
+        git add .
+        git commit -m "shloka headers"
+        git push
+        
