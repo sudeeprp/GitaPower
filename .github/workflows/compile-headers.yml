@@ -27,5 +27,6 @@ jobs:
         git checkout -b compile-shloka-headers
         git add .
         git commit -m "shloka headers"
+        git push --set-upstream origin compile-shloka-headers
         git push
         
