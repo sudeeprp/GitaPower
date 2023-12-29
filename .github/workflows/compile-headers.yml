@@ -18,7 +18,12 @@ jobs:
 
     - name: generate headers
       working-directory: ./feeder/tools
-      run: bash generate_headers.sh
+      run: |
+        bash generate_headers.sh
+        cd ..
+        echo "formatting generated code"
+        dart format -l 100 .
+        bash checkmycode.sh
 
     - name: commit in branch
       run: |
