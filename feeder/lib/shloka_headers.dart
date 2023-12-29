@@ -1082,7 +1082,8 @@ const headers = {
   '5-13.md': {
     'shloka': '''सर्व कर्माणि मनसा संन्यस्यास्ते सुखम् वशी ।
 नवद्वारे पुरे देही नैव कुर्वन् न कारयन् ॥ १३ ॥''',
-    'meaning': ''''''
+    'meaning':
+        '''Having given up all actions in the city with nine gates (the body) using the mind, the Self, which is the owner of the body will control his organs and stay content without committing any action directly or indirectly.'''
   },
   '5-14.md': {
     'shloka': '''न कर्तृत्वव्म् न कर्माणि लोकस्य सृजति प्रभुः ।
@@ -1952,7 +1953,7 @@ const headers = {
     'shloka': '''न मे विदुः सुरगणाः प्रभवम् न महर्षयः ।
 अहम् आदिर्हि देवानाम् महर्षीणाम् च सर्वषः ॥ २ ॥''',
     'meaning':
-        '''Neither the gods nor the great sages know Me. I am indeed the origin of all the gods and the great sages.'''
+        '''Neither the gods nor the great sages know My source. I am indeed the origin of all the gods and the great sages.'''
   },
   '10-3.md': {
     'shloka': '''यो माम् अजम् अनादिम् च वेत्ति लोकमहेश्वरम् ।
@@ -2553,7 +2554,7 @@ const headers = {
   '11-51.md': {
     'shloka': '''अर्जुन उवाच -
 दृष्ट्वा इदम् मानुषम् रूपम् तव सौम्यम् जनार्दन ।
-इदानीम् अस्मि संम्वृत्तः सचेताः प्रकृतिम् गतः ॥ ५१ ॥''',
+इदानीम् अस्मि संवृत्तः सचेताः प्रकृतिम् गतः ॥ ५१ ॥''',
     'meaning':
         '''Arjuna said - Lord, looking at this human form of Yours, which is gentle, I am now in my senses. I am alive, back in this environment.'''
   },

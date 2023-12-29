@@ -18,4 +18,20 @@ jobs:
 
     - name: generate headers
       working-directory: ./feeder/tools
-      run: bash generate_headers.sh
+      run: |
+        bash generate_headers.sh
+        cd ..
+        echo "formatting generated code"
+        dart format -l 100 .
+        bash checkmycode.sh
+
+    - name: commit in branch
+      run: |
+        git config --global user.email "compile.header@rapalearning.com"
+        git config --global user.name "Sudeep Prasad"
+        git checkout -b compile-shloka-headers
+        git add .
+        git commit -m "shloka headers"
+        git push --set-upstream origin compile-shloka-headers
+        git push
+        
