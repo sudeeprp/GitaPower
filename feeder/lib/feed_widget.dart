@@ -1,8 +1,8 @@
-import 'package:askys/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'feedcontent.dart';
+import 'feed_shloka.dart';
 
 class FeedWidget extends StatelessWidget {
   const FeedWidget({super.key});
@@ -26,7 +26,7 @@ class FeedWidget extends StatelessWidget {
                                 offset: const Offset(0, -5))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: buildContentWithNote(filename, key: Key('feed/${count++}')),
+                      child: FeedShloka(filename, key: Key('feed/${count++}')),
                     )))
                 .toList());
       } else {
