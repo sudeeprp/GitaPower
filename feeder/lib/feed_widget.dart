@@ -13,7 +13,7 @@ class FeedWidget extends StatelessWidget {
     return Obx(() {
       if (feedContent.feedPicked.value) {
         return Column(
-            children: feedContent.threeShlokas
+            children: feedContent.threeShlokaMDs
                 .map((filename) => Expanded(
                         child: Container(
                       decoration: BoxDecoration(

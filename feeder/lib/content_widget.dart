@@ -1,10 +1,11 @@
+import 'package:askys/header_note_widget.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
+import 'package:askys/text_styles.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:float_column/float_column.dart';
@@ -335,17 +336,6 @@ Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
   }
 }
 
-Widget _buildNote(BuildContext context, Widget content) {
-  return Card(
-    elevation: 5,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-    child: Row(children: [
-      Image.asset('images/one-step.png'),
-      Expanded(child: Padding(padding: const EdgeInsets.only(left: 3), child: content))
-    ]),
-  );
-}
-
 BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
   if (sectionType == SectionType.meaning) {
     return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
@@ -373,7 +363,7 @@ Widget _contentSpacing(Widget w) {
 
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
-    return _contentSpacing(_buildNote(context, content));
+    return _contentSpacing(buildNote(context, content));
   } else if (sectionType == SectionType.commentary) {
     return _contentSpacing(Container(
       decoration: BoxDecoration(
@@ -437,26 +427,6 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
-    TextStyle? styleFor(String tag, {String? elmclass}) {
-      if (elmclass == 'language-shloka-sa') {
-        return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 20);
-      } else if (tag == 'code') {
-        return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 18);
-      } else if (tag == 'h1') {
-        return Theme.of(context).textTheme.headlineMedium;
-      } else if (tag == 'h2') {
-        return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3);
-      } else if (tag == 'em') {
-        return GoogleFonts.caveat(height: 1.5, fontSize: 24);
-      } else if (tag == 'note') {
-        return const TextStyle(fontSize: 14);
-      } else {
-        return const TextStyle(height: 1.5, fontSize: 18);
-      }
-    }
-
     List<TextSpan> formatMaker(MatterForInline inlineMatter) {
       if (inlineMatter.tag == 'anchor') {
         return _anchorSpan(inlineMatter.text, anchorKeys);
@@ -465,7 +435,7 @@ class ContentWidget extends StatelessWidget {
         return [
           TextSpan(
             text: inlineMatter.text,
-            style: styleFor('anchor')?.copyWith(color: Colors.blue),
+            style: styleFor(context, 'anchor')?.copyWith(color: Colors.blue),
             recognizer: TapGestureRecognizer()..onTap = () => navigateToLink(inlineMatter.link),
           ),
           const TextSpan(text: ' ')
@@ -475,7 +445,7 @@ class ContentWidget extends StatelessWidget {
       return [
         TextSpan(
             text: textContent,
-            style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
+            style: styleFor(context, inlineMatter.tag, elmclass: inlineMatter.elmclass),
             recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
       ];
     }
@@ -483,20 +453,7 @@ class ContentWidget extends StatelessWidget {
     void insertContentNote(List<Widget> contentWidgets) {
       if (contentNote != null) {
         contentWidgets.insert(
-            0,
-            Row(children: [
-              Expanded(
-                  flex: 9,
-                  child: _buildNote(
-                      context,
-                      Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note')))),
-              Expanded(
-                flex: 1,
-                child: Text(Chapter.filenameToShortTitle(mdFilename),
-                    style: Theme.of(context).textTheme.bodySmall),
-              ),
-            ]));
+            0, HeaderNote(contentNote!, Chapter.filenameToShortTitle(mdFilename)));
       }
     }
 

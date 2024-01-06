@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'shloka_headers.dart' as shlokas;
 
-Future<List<String>> allShlokaMDs() async {
+List<String> allShlokaMDs() {
   return shlokas.headers.keys.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
 }
 
@@ -35,11 +35,12 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 }
 
 class FeedContent extends GetxController {
-  List<String> threeShlokas = [];
+  List<String> threeShlokaMDs = [];
   final feedPicked = false.obs;
   @override
   void onInit() async {
-    threeShlokas = createRandomFeed(await allShlokaMDs());
+    threeShlokaMDs = createRandomFeed(allShlokaMDs());
+
     feedPicked.value = true;
     super.onInit();
   }

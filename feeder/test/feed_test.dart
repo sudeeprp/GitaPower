@@ -45,7 +45,7 @@ void main() {
     Get.delete<FeedContent>();
   });
   test('picks only filenames with shlokas', () async {
-    final shlokaMDs = await allShlokaMDs();
+    final shlokaMDs = allShlokaMDs();
     expect(shlokaMDs.length, equals(600)); // counted 600 shloka files
   });
   test('recognizes chapter and shloka numbers for comparison', () {
