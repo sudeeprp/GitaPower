@@ -18,10 +18,17 @@ class FeedShloka extends StatelessWidget {
         final Choices choices = Get.find();
         final headPreference = choices.headPreference.value;
         return SingleChildScrollView(
-            child: Column(children: [
-          HeaderNote(contentNotes.noteForMD(mdFilename), Chapter.filenameToShortTitle(mdFilename)),
-          formShlokaTitle(mdFilename, headPreference, context) ?? const Text('Not found'),
-        ]));
+            child: GestureDetector(
+              onTap: () => Get.toNamed('/shloka/$mdFilename'),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeaderNote(contentNotes.noteForMD(mdFilename), Chapter.filenameToShortTitle(mdFilename)),
+                  formShlokaTitle(mdFilename, headPreference, context) ?? const Text('Not found'),
+                ]),
+            )
+          );
       } else {
         return const Text('loading');
       }

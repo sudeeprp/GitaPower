@@ -1,3 +1,4 @@
+import 'package:askys/choice_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +40,12 @@ class FeedWidget extends StatelessWidget {
   }
 }
 
-FeedWidget buildFeed() {
-  return const FeedWidget();
+Scaffold feedScreen() {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  return Scaffold(
+      key: scaffoldKey,
+      // appBar: AppBar(bottom: PreferredSize(preferredSize: const Size.fromHeight(80.0), child: shlokaMeaningSwitcher())),
+      body: const SafeArea(child: FeedWidget()),
+      bottomNavigationBar: shlokaMeaningSwitcher(),
+  );
 }

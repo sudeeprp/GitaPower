@@ -35,7 +35,7 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
-        GetPage(name: '/feed', page: () => screenify(buildFeed())),
+        GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
         GetPage(
             name: '/shlokaheaders/:chapter',

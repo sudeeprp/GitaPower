@@ -36,7 +36,7 @@ void main() {
     Get.put(FeedContent());
     Get.put(ContentNotes());
     Get.put(ContentActions());
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpWidget(GetMaterialApp(home: feedScreen()));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feed/1')), findsOneWidget);
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
