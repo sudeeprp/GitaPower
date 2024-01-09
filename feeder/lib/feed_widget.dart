@@ -13,10 +13,8 @@ class FeedWidget extends StatelessWidget {
     final FeedContent feedContent = Get.find();
     return Obx(() {
       if (feedContent.feedPicked.value) {
-        return Column(
-            children: feedContent.threeShlokaMDs
-                .map((filename) => Expanded(
-                        child: Container(
+        final shlokaContainers = feedContent.threeShlokaMDs
+                .map((filename) =>Container(
                       decoration: BoxDecoration(
                           border: const Border(bottom: BorderSide(color: Colors.black)),
                           boxShadow: [
@@ -28,8 +26,17 @@ class FeedWidget extends StatelessWidget {
                           ],
                           color: Theme.of(context).cardColor),
                       child: FeedShloka(filename, key: Key('feed/${count++}')),
-                    )))
-                .toList());
+                    )).toList();
+        final parentWidth = MediaQuery.of(context).size.width;
+        final parentHeight = MediaQuery.of(context).size.height;
+        final padding = parentWidth * 0.07;
+        return Stack(
+            children: [
+              Padding(padding: EdgeInsets.only(right: padding), child: shlokaContainers[0]),
+              Padding(padding: EdgeInsets.only(left: padding, top: parentHeight * 0.3), child: shlokaContainers[1]),
+              Padding(padding: EdgeInsets.only(right: padding, top: parentHeight * 0.6), child: shlokaContainers[2]),
+            ],
+        );
       } else {
         return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,6 +45,28 @@ class FeedWidget extends StatelessWidget {
       }
     });
   }
+}
+
+Widget shlokaMeaningSwitcher() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      GestureDetector(
+        child: const Icon(Icons.refresh),
+      ),
+      GestureDetector(
+        onTap: () {
+          final Choices choice = Get.find();
+          if (choice.headPreference.value == HeadPreference.shloka) {
+            choice.headPreference.value = HeadPreference.meaning;
+          } else {
+            choice.headPreference.value = HeadPreference.shloka;
+          }
+        },
+        child: Image.asset('images/translate.png', width: 60, height: 60),
+      ),
+    ],
+  );
 }
 
 Scaffold feedScreen() {

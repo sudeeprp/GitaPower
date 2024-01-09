@@ -126,17 +126,3 @@ Widget headerSelector() {
             choice.headPreference.value = newValue ? HeadPreference.shloka : HeadPreference.meaning;
           })));
 }
-
-Widget shlokaMeaningSwitcher() {
-  return Row(children: [GestureDetector(
-    onTap: () {
-      final Choices choice = Get.find();
-      if (choice.headPreference.value == HeadPreference.shloka) {
-        choice.headPreference.value = HeadPreference.meaning;
-       } else {
-        choice.headPreference.value = HeadPreference.shloka;
-       }
-    },
-    child: Image.asset('images/translate.png', width: 60, height: 60),
-  )]);
-}
