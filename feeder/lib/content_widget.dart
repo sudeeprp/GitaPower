@@ -484,19 +484,27 @@ class ContentWidget extends StatelessWidget {
       if (contentNote != null) {
         contentWidgets.insert(
             0,
-            Row(children: [
-              Expanded(
-                  flex: 9,
-                  child: _buildNote(
-                      context,
-                      Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note')))),
-              Expanded(
-                flex: 1,
-                child: Text(Chapter.filenameToShortTitle(mdFilename),
-                    style: Theme.of(context).textTheme.bodySmall),
-              ),
-            ]));
+            _buildNote(
+              context,
+              IntrinsicHeight(child: Row(children: [
+                Expanded(
+                  flex: 8,
+                  child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
+                          style: styleFor('note'))),
+                const VerticalDivider(
+                  thickness: 1,
+                  indent: 5,
+                  endIndent: 5,
+                  color: Colors.grey //Theme.of(context).shadowColor.withOpacity(0.5),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(Chapter.filenameToShortTitle(mdFilename),
+                      style: Theme.of(context).textTheme.bodySmall),
+                )
+              ]))
+            )
+        );
       }
     }
 
