@@ -346,16 +346,6 @@ Widget _buildNote(BuildContext context, Widget content) {
   );
 }
 
-BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
-  if (sectionType == SectionType.meaning) {
-    return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
-  } else if (sectionType == SectionType.commentary) {
-    return null;
-  } else {
-    return null;
-  }
-}
-
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
   String contentForDisplay = inlineMatter.text;
   if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
@@ -374,24 +364,26 @@ Widget _contentSpacing(Widget w) {
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
     return _contentSpacing(_buildNote(context, content));
-  } else if (sectionType == SectionType.shlokaSA || sectionType == SectionType.shlokaSAHK || sectionType == SectionType.meaning) {
+  } else if (sectionType == SectionType.shlokaSA ||
+      sectionType == SectionType.shlokaSAHK ||
+      sectionType == SectionType.meaning) {
     return Container(
-        decoration: BoxDecoration(image: DecorationImage(
-             image: AssetImage(Theme.of(context).brightness == Brightness.light? 'images/lightpaper.png' : 'images/darkpaper.png'),
-             repeat: ImageRepeat.repeat,
-           )),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(Theme.of(context).brightness == Brightness.light
+              ? 'images/lightpaper.png'
+              : 'images/darkpaper.png'),
+          repeat: ImageRepeat.repeat,
+        )),
         width: double.infinity,
-        child: Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: content)
-      );
-  } else if (sectionType == SectionType.commentary) {
-    return _contentSpacing(_horizontalScrollForOneLiners(sectionType, content));
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          child: _horizontalScrollForOneLiners(sectionType, content),
+        ));
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
-  return _contentSpacing(Container(
-    decoration: _sectionDecoration(context, sectionType),
-    child: _horizontalScrollForOneLiners(sectionType, content),
-  ));
+  return _contentSpacing(_horizontalScrollForOneLiners(sectionType, content));
 }
 
 class ContentWidget extends StatelessWidget {
@@ -481,26 +473,25 @@ class ContentWidget extends StatelessWidget {
         contentWidgets.insert(
             0,
             _buildNote(
-              context,
-              IntrinsicHeight(child: Row(children: [
-                Expanded(
-                  flex: 8,
-                  child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
+                context,
+                IntrinsicHeight(
+                    child: Row(children: [
+                  Expanded(
+                      flex: 8,
+                      child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
                           style: styleFor('note'))),
-                const VerticalDivider(
-                  thickness: 1,
-                  indent: 5,
-                  endIndent: 5,
-                  color: Colors.grey //Theme.of(context).shadowColor.withOpacity(0.5),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Text(Chapter.filenameToShortTitle(mdFilename),
-                      style: Theme.of(context).textTheme.bodySmall),
-                )
-              ]))
-            )
-        );
+                  const VerticalDivider(
+                      thickness: 1,
+                      indent: 5,
+                      endIndent: 5,
+                      color: Colors.grey //Theme.of(context).shadowColor.withOpacity(0.5),
+                      ),
+                  Expanded(
+                    flex: 1,
+                    child: Text(Chapter.filenameToShortTitle(mdFilename),
+                        style: Theme.of(context).textTheme.bodySmall),
+                  )
+                ]))));
       }
     }
 
