@@ -477,7 +477,7 @@ class ContentWidget extends StatelessWidget {
                 IntrinsicHeight(
                     child: Row(children: [
                   Expanded(
-                      flex: 8,
+                      flex: 7,
                       child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
                           style: styleFor('note'))),
                   const VerticalDivider(
@@ -487,7 +487,7 @@ class ContentWidget extends StatelessWidget {
                       color: Colors.grey //Theme.of(context).shadowColor.withOpacity(0.5),
                       ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Text(Chapter.filenameToShortTitle(mdFilename),
                         style: Theme.of(context).textTheme.bodySmall),
                   )
