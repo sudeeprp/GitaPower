@@ -341,7 +341,9 @@ Widget _buildNote(BuildContext context, Widget content) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
       Image.asset('images/one-step.png'),
-      Expanded(child: Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
+      Expanded(
+          child:
+              Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
     ]),
   );
 }
@@ -359,21 +361,16 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 
 Widget _contentSpacing(Widget w) {
   return Container(
-    decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5.0,
-            spreadRadius: -15.0,
-            offset: Offset(0.0, 25.0),
-          )
-        ],
+    decoration: const BoxDecoration(
+      color: Colors.white,
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+            color: Colors.grey, blurRadius: 5.0, spreadRadius: -15.0, offset: Offset(0.0, 25.0))
+      ],
     ),
     margin: const EdgeInsets.symmetric(vertical: 10),
     child: w,
   );
-  // return Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: w);
 }
 
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
@@ -495,12 +492,7 @@ class ContentWidget extends StatelessWidget {
                       flex: 17,
                       child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
                           style: styleFor('note'))),
-                  const VerticalDivider(
-                      thickness: 1,
-                      indent: 5,
-                      endIndent: 5,
-                      color: Colors.grey
-                      ),
+                  const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
                   Expanded(
                     flex: 3,
                     child: Text(Chapter.filenameToShortTitle(mdFilename),
