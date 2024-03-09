@@ -361,7 +361,7 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
-    decoration: const BoxDecoration(
+    decoration: BoxDecoration(
       color: Theme.of(context).cardColor,
       boxShadow: <BoxShadow>[
         BoxShadow(
