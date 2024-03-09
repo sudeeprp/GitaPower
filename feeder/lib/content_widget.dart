@@ -359,10 +359,10 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
-Widget _contentSpacing(Widget w) {
+Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: const BoxDecoration(
-      color: Theme.of(context).cardColor),
+      color: Theme.of(context).cardColor,
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey, blurRadius: 3.0, spreadRadius: -15.0, offset: Offset(5.0, 25.0))
@@ -395,7 +395,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
-  return _contentSpacing(_horizontalScrollForOneLiners(sectionType, content));
+  return _contentSpacing(context, _horizontalScrollForOneLiners(sectionType, content));
 }
 
 class ContentWidget extends StatelessWidget {
