@@ -363,7 +363,7 @@ Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
       color: Theme.of(context).cardColor,
-      boxShadow: <BoxShadow>[
+      boxShadow: const <BoxShadow>[
         BoxShadow(
             color: Colors.grey, blurRadius: 3.0, spreadRadius: -15.0, offset: Offset(5.0, 25.0))
       ],
