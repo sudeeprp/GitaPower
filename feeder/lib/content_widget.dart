@@ -362,9 +362,10 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 Widget _contentSpacing(Widget w) {
   return Container(
     decoration: const BoxDecoration(
+      color: Theme.of(context).cardColor),
       boxShadow: <BoxShadow>[
         BoxShadow(
-            color: Colors.grey, blurRadius: 5.0, spreadRadius: -15.0, offset: Offset(5.0, 25.0))
+            color: Colors.grey, blurRadius: 3.0, spreadRadius: -15.0, offset: Offset(5.0, 25.0))
       ],
     ),
     margin: const EdgeInsets.symmetric(vertical: 10),
