@@ -341,19 +341,11 @@ Widget _buildNote(BuildContext context, Widget content) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
       Image.asset('images/one-step.png'),
-      Expanded(child: Padding(padding: const EdgeInsets.only(left: 3), child: content))
+      Expanded(
+          child:
+              Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
     ]),
   );
-}
-
-BoxDecoration? _sectionDecoration(BuildContext context, SectionType sectionType) {
-  if (sectionType == SectionType.meaning) {
-    return BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.6))));
-  } else if (sectionType == SectionType.commentary) {
-    return null;
-  } else {
-    return null;
-  }
 }
 
 String _tuneContentForDisplay(MatterForInline inlineMatter) {
@@ -367,35 +359,46 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
   return contentForDisplay;
 }
 
-Widget _contentSpacing(Widget w) {
-  return Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: w);
+Widget _contentSpacing(BuildContext context, Widget w) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.background,
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 5.0,
+            spreadRadius: -15.0,
+            offset: const Offset(5.0, 25.0))
+      ],
+    ),
+    margin: const EdgeInsets.symmetric(vertical: 10),
+    child: w,
+  );
 }
 
 Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget content) {
   if (sectionType == SectionType.note) {
-    return _contentSpacing(_buildNote(context, content));
-  } else if (sectionType == SectionType.commentary) {
-    return _contentSpacing(Container(
-      decoration: BoxDecoration(
-          // border: const Border(bottom: BorderSide(color: Colors.black)),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 4,
-                offset: const Offset(0, -2))
-          ],
-          color: Theme.of(context).cardColor),
-      margin: const EdgeInsets.symmetric(horizontal: 3),
-      child: _horizontalScrollForOneLiners(sectionType, content),
-    ));
+    return _buildNote(context, content);
+  } else if (sectionType == SectionType.shlokaSA ||
+      sectionType == SectionType.shlokaSAHK ||
+      sectionType == SectionType.meaning) {
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(Theme.of(context).brightness == Brightness.light
+              ? 'images/lightpaper.png'
+              : 'images/darkpaper.png'),
+          repeat: ImageRepeat.repeat,
+        )),
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          child: _horizontalScrollForOneLiners(sectionType, content),
+        ));
   } else if (sectionType == SectionType.anchor) {
     return content;
   }
-  return _contentSpacing(Container(
-    decoration: _sectionDecoration(context, sectionType),
-    child: _horizontalScrollForOneLiners(sectionType, content),
-  ));
+  return _contentSpacing(context, _horizontalScrollForOneLiners(sectionType, content));
 }
 
 class ContentWidget extends StatelessWidget {
@@ -484,19 +487,21 @@ class ContentWidget extends StatelessWidget {
       if (contentNote != null) {
         contentWidgets.insert(
             0,
-            Row(children: [
-              Expanded(
-                  flex: 9,
-                  child: _buildNote(
-                      context,
-                      Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note')))),
-              Expanded(
-                flex: 1,
-                child: Text(Chapter.filenameToShortTitle(mdFilename),
-                    style: Theme.of(context).textTheme.bodySmall),
-              ),
-            ]));
+            _buildNote(
+                context,
+                IntrinsicHeight(
+                    child: Row(children: [
+                  Expanded(
+                      flex: 17,
+                      child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
+                          style: styleFor('note'))),
+                  const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
+                  Expanded(
+                    flex: 3,
+                    child: Text(Chapter.filenameToShortTitle(mdFilename),
+                        style: Theme.of(context).textTheme.bodySmall),
+                  )
+                ]))));
       }
     }
 
