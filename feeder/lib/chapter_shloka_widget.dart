@@ -34,37 +34,32 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
 }
 
 Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
-  const headerContents = {
-    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
-    HeadPreference.meaning: {
-      'scrollDirection': Axis.vertical,
-      'textScaleFactor': 1.4,
-    },
-  };
-  String? headerText;
+  Text? headerTextView;
   if (headPreference == HeadPreference.shloka) {
-    headerText = shlokas.headers[mdFilename]?['shloka'];
+    headerTextView = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Text(
+        shlokas.headers[mdFilename]?['shloka']),
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
+      )));
   } else {
-    headerText = shlokas.headers[mdFilename]?['meaning'];
+    headerTextView = SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Text(shlokas.headers[mdFilename]?['meaning']);
   }
-  if (headerText != null) {
+  if (headerTextView != null) {
     return Card(
       elevation: 10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       color: Theme.of(context).cardColor,
-      child: SingleChildScrollView(
-          scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
-          child: textPadding(Text(
-            headerText,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
-          ))),
+      child: headerTextView,
     );
   }
   return null;
 }
 
 Widget textPadding(Widget textChild) {
-  return Padding(padding: const EdgeInsets.symmetric(horizontal: 3), child: textChild);
+  return Padding(padding: const EdgeInsets.only(left: 3), child: textChild);
 }
 
 class ChapterShlokaWidget extends StatelessWidget {
