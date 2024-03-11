@@ -56,9 +56,7 @@ Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildC
           scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
           child: textPadding(Text(
             headerText,
-            style: Theme.of(context).textTheme.labelMedium,
-            textScaler:
-                TextScaler.linear(headerContents[headPreference]!['textScaleFactor'] as double),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
           ))),
     );
   }
