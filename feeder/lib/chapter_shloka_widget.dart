@@ -34,28 +34,26 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
 }
 
 Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
-  Text? headerTextView;
+  Widget? headerTextView;
   if (headPreference == HeadPreference.shloka) {
     headerTextView = SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Text(
-        shlokas.headers[mdFilename]?['shloka']),
+        shlokas.headers[mdFilename]?['shloka'] ?? '',
         style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
-      )));
+      ));
   } else {
     headerTextView = SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Text(shlokas.headers[mdFilename]?['meaning']);
-  }
-  if (headerTextView != null) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      color: Theme.of(context).cardColor,
-      child: headerTextView,
+      child: Text(shlokas.headers[mdFilename]?['meaning'] ?? '')
     );
   }
-  return null;
+  return Card(
+    elevation: 10,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    color: Theme.of(context).cardColor,
+    child: headerTextView,
+  );
 }
 
 Widget textPadding(Widget textChild) {
