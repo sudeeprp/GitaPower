@@ -74,6 +74,7 @@ class ChapterShlokaWidget extends StatelessWidget {
           title: Text(shlokaTitleText),
           subtitle: formShlokaTitle(mdFilename, headPreference, context),
           minVerticalPadding: 16,
+          contentPadding: const EdgeInsets.only(left: 6),
           onTap: () => Get.toNamed('/shloka/$mdFilename'),
         );
       }).toList();
