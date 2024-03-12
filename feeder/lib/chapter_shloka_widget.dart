@@ -37,16 +37,15 @@ Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildC
   Widget? headerTextView;
   if (headPreference == HeadPreference.shloka) {
     headerTextView = SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Text(
-        shlokas.headers[mdFilename]?['shloka'] ?? '',
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
-      ));
+        scrollDirection: Axis.horizontal,
+        child: textPadding(Text(
+          shlokas.headers[mdFilename]?['shloka'] ?? '',
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
+        )));
   } else {
     headerTextView = SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Text(shlokas.headers[mdFilename]?['meaning'] ?? '')
-    );
+        scrollDirection: Axis.vertical,
+        child: textPadding(Text(shlokas.headers[mdFilename]?['meaning'] ?? '')));
   }
   return Card(
     elevation: 10,
