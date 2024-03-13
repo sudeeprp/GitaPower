@@ -47,7 +47,7 @@ Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildC
         scrollDirection: Axis.vertical,
         child: textPadding(Text(
           shlokas.headers[mdFilename]?['meaning'] ?? '',
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         )));
   }
   return Card(
