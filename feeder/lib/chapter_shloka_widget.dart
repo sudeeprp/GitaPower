@@ -48,7 +48,7 @@ Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildC
         child: textPadding(Text(
           shlokas.headers[mdFilename]?['meaning'] ?? '',
           style: TextStyle(fontSize: 18),
-        ));
+        )));
   }
   return Card(
     elevation: 10,
