@@ -34,39 +34,32 @@ Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {
 }
 
 Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildContext context) {
-  const headerContents = {
-    HeadPreference.shloka: {'scrollDirection': Axis.horizontal, 'textScaleFactor': 1.5},
-    HeadPreference.meaning: {
-      'scrollDirection': Axis.vertical,
-      'textScaleFactor': 1.4,
-    },
-  };
-  String? headerText;
+  Widget? headerTextView;
   if (headPreference == HeadPreference.shloka) {
-    headerText = shlokas.headers[mdFilename]?['shloka'];
+    headerTextView = SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: textPadding(Text(
+          shlokas.headers[mdFilename]?['shloka'] ?? '',
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
+        )));
   } else {
-    headerText = shlokas.headers[mdFilename]?['meaning'];
+    headerTextView = SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: textPadding(Text(
+          shlokas.headers[mdFilename]?['meaning'] ?? '',
+          style: const TextStyle(fontSize: 18),
+        )));
   }
-  if (headerText != null) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      color: Theme.of(context).cardColor,
-      child: SingleChildScrollView(
-          scrollDirection: headerContents[headPreference]!['scrollDirection'] as Axis,
-          child: textPadding(Text(
-            headerText,
-            style: Theme.of(context).textTheme.labelMedium,
-            textScaler:
-                TextScaler.linear(headerContents[headPreference]!['textScaleFactor'] as double),
-          ))),
-    );
-  }
-  return null;
+  return Card(
+    elevation: 10,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    color: Theme.of(context).cardColor,
+    child: headerTextView,
+  );
 }
 
 Widget textPadding(Widget textChild) {
-  return Padding(padding: const EdgeInsets.symmetric(horizontal: 3), child: textChild);
+  return Padding(padding: const EdgeInsets.only(left: 3), child: textChild);
 }
 
 class ChapterShlokaWidget extends StatelessWidget {
@@ -84,6 +77,7 @@ class ChapterShlokaWidget extends StatelessWidget {
           title: Text(shlokaTitleText),
           subtitle: formShlokaTitle(mdFilename, headPreference, context),
           minVerticalPadding: 16,
+          contentPadding: const EdgeInsets.only(left: 6),
           onTap: () => Get.toNamed('/shloka/$mdFilename'),
         );
       }).toList();
