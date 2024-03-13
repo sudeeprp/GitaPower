@@ -20,7 +20,7 @@ ThemeData lightTheme() {
 ThemeData darkTheme() {
   final defaultDarkTheme = ThemeData.dark();
   const codeTextDark =
-      TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5, fontWeight: FontWeight.w400);
+      TextStyle(color: Color.fromARGB(255, 236, 118, 82), height: 1.5, fontWeight: FontWeight.w300);
   return defaultDarkTheme.copyWith(
     cardColor: const Color(0xFF000000),
     textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
