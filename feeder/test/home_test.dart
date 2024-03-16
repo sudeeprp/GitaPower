@@ -56,12 +56,6 @@ void main() {
         '${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Navigates to settings from the home screen', (tester) async {
-    await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('home/settingsicon')));
-    await tester.pumpAndSettle();
-    expect(find.text('Theme'), findsOneWidget);
-  });
   testWidgets('Navigates to journey notes from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/notes')));

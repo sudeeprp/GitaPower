@@ -1,4 +1,5 @@
 import 'package:askys/chapter_shloka_widget.dart';
+import 'package:askys/choice_selector.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,15 @@ ThemeData darkTheme() {
   );
 }
 
+List<Widget> choicesForContent() {
+  return const [
+    ScriptSelectionIcon(),
+    HeaderPreferenceIcon(),
+    MeaningExpansionIcon(),
+    ThemeSelectionIcon()
+  ];
+}
+
 Widget makeMyHome() {
   return GetMaterialApp(
       title: 'The Gita',
@@ -35,19 +45,30 @@ Widget makeMyHome() {
       darkTheme: darkTheme(),
       home: const Home(),
       getPages: [
-        GetPage(name: '/notes', page: () => screenify(const NotesWidget())),
-        GetPage(name: '/feed', page: () => screenify(buildFeed())),
-        GetPage(name: '/chapters', page: () => screenify(const ChaptersWidget(key: Key('toc')))),
+        GetPage(
+            name: '/notes',
+            page: () => screenify(const NotesWidget(),
+                choicesRow: choicesRow(const [ThemeSelectionIcon()]))),
+        GetPage(
+            name: '/feed',
+            page: () => screenify(buildFeed(), choicesRow: choicesRow(choicesForContent()))),
+        GetPage(
+            name: '/chapters',
+            page: () => screenify(const ChaptersWidget(key: Key('toc')),
+                choicesRow: choicesRow(const [ThemeSelectionIcon()]))),
         GetPage(
             name: '/shlokaheaders/:chapter',
             page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
-            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!))),
+            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
+                choicesRow: choicesRow(choicesForContent()))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
-            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!,
-                initialAnchor: Get.parameters['noteId']))),
+            page: () => screenify(
+                buildContentWithNote(Get.parameters['mdFilename']!,
+                    initialAnchor: Get.parameters['noteId']),
+                choicesRow: choicesRow(choicesForContent()))),
       ]);
 }
 
@@ -56,9 +77,15 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return screenify(const BeginWidget(),
-        appBar: AppBar(
-            leading: Image.asset('images/sunidhi-krishna.png'),
-            title: const Text("Krishna's Gita")));
+    return screenify(
+      const BeginWidget(),
+      appBar: AppBar(
+          leading: Image.asset('images/sunidhi-krishna.png'), title: const Text("Krishna's Gita")),
+      choicesRow: choicesRow(const [ThemeSelectionIcon()]),
+    );
   }
+}
+
+Row choicesRow(List<Widget> choiceIcons) {
+  return Row(mainAxisAlignment: MainAxisAlignment.end, children: choiceIcons);
 }

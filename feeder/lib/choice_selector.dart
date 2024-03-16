@@ -70,6 +70,65 @@ class Choices extends GetxController {
   }
 }
 
+class ThemeSelectionIcon extends StatelessWidget {
+  const ThemeSelectionIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.theme.value =
+          choice.theme.value == ReadingTheme.light ? ReadingTheme.dark : ReadingTheme.light,
+      child: const Icon(Icons.dark_mode_outlined, color: Colors.grey, size: 48),
+    );
+  }
+}
+
+class ScriptSelectionIcon extends StatelessWidget {
+  const ScriptSelectionIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.script.value = choice.script.value == ScriptPreference.devanagari
+          ? ScriptPreference.sahk
+          : ScriptPreference.devanagari,
+      child: Image.asset('images/translate.png', width: 48, height: 48),
+    );
+  }
+}
+
+class MeaningExpansionIcon extends StatelessWidget {
+  const MeaningExpansionIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.meaningMode.value =
+          choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
+      child: const Icon(Icons.blinds, color: Colors.grey),
+    );
+  }
+}
+
+class HeaderPreferenceIcon extends StatelessWidget {
+  const HeaderPreferenceIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.headPreference.value =
+          choice.headPreference.value == HeadPreference.shloka
+              ? HeadPreference.meaning
+              : HeadPreference.shloka,
+      child: const Icon(Icons.menu_open, color: Colors.grey),
+    );
+  }
+}
+
 Widget _makeSelector(String title, String leftChoice, String rightChoice, Widget child) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 25),
