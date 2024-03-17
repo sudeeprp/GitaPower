@@ -47,36 +47,6 @@ void main() {
     expect(choices.script.value, isNot(initialHeadPreference));
     Get.delete<Choices>();
   });
-  testWidgets('theme selector switches the theme', (tester) async {
-    final choices = Choices();
-    Get.put(choices);
-    final initialTheme = choices.theme.value;
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: themeSelector())));
-    await tester.tap(find.byType(Switch));
-    await tester.pumpAndSettle();
-    expect(choices.theme.value, isNot(initialTheme));
-    Get.delete<Choices>();
-  });
-  testWidgets('script selector switches the script preference', (tester) async {
-    final choices = Choices();
-    Get.put(choices);
-    final initialScript = choices.script.value;
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: scriptSelector())));
-    await tester.tap(find.byType(Switch));
-    await tester.pumpAndSettle();
-    expect(choices.script.value, isNot(initialScript));
-    Get.delete<Choices>();
-  });
-  testWidgets('header selector switches header preference', (tester) async {
-    final choices = Choices();
-    Get.put(choices);
-    final initialHeaderPref = choices.headPreference.value;
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: headerSelector())));
-    await tester.tap(find.byType(Switch));
-    await tester.pumpAndSettle();
-    expect(choices.headPreference, isNot(initialHeaderPref));
-    Get.delete<Choices>();
-  });
   testWidgets('initializes defaults when nothing was stored', (tester) async {
     final choices = Choices();
     expect(choices.theme.value, equals(ReadingTheme.light));
@@ -119,8 +89,8 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     Get.put(Choices());
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: headerSelector())));
-    await tester.tap(find.byType(Switch));
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: HeaderPreferenceIcon())));
+    await tester.tap(find.byType(HeaderPreferenceIcon));
     await tester.pumpAndSettle();
     expect(preferences.getString('head'), isNotNull);
     Get.delete<Choices>();
