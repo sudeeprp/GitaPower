@@ -9,6 +9,7 @@ import 'package:askys/begin_widget.dart';
 import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/screenify.dart';
+import 'package:askys/choices_row.dart';
 
 ThemeData lightTheme() {
   final defaultLightTheme = ThemeData.light();
@@ -27,8 +28,6 @@ ThemeData darkTheme() {
     textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
   );
 }
-
-const double choiceSpacing = 8;
 
 Widget makeMyHome() {
   return GetMaterialApp(
@@ -79,10 +78,6 @@ class Home extends StatelessWidget {
       choicesRow: choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]),
     );
   }
-}
-
-Row choicesRow(List<Widget> choiceIcons) {
-  return Row(mainAxisAlignment: MainAxisAlignment.end, children: choiceIcons);
 }
 
 List<Widget> choicesForContent() {
