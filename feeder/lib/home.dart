@@ -28,14 +28,7 @@ ThemeData darkTheme() {
   );
 }
 
-List<Widget> choicesForContent() {
-  return const [
-    ScriptSelectionIcon(),
-    HeaderPreferenceIcon(),
-    MeaningExpansionIcon(),
-    ThemeSelectionIcon()
-  ];
-}
+const double choiceSpacing = 8;
 
 Widget makeMyHome() {
   return GetMaterialApp(
@@ -48,14 +41,16 @@ Widget makeMyHome() {
         GetPage(
             name: '/notes',
             page: () => screenify(const NotesWidget(),
-                choicesRow: choicesRow(const [ThemeSelectionIcon()]))),
+                choicesRow:
+                    choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(
             name: '/feed',
             page: () => screenify(buildFeed(), choicesRow: choicesRow(choicesForContent()))),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
-                choicesRow: choicesRow(const [ThemeSelectionIcon()]))),
+                choicesRow:
+                    choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(
             name: '/shlokaheaders/:chapter',
             page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
@@ -81,11 +76,24 @@ class Home extends StatelessWidget {
       const BeginWidget(),
       appBar: AppBar(
           leading: Image.asset('images/sunidhi-krishna.png'), title: const Text("Krishna's Gita")),
-      choicesRow: choicesRow(const [ThemeSelectionIcon()]),
+      choicesRow: choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]),
     );
   }
 }
 
 Row choicesRow(List<Widget> choiceIcons) {
   return Row(mainAxisAlignment: MainAxisAlignment.end, children: choiceIcons);
+}
+
+List<Widget> choicesForContent() {
+  return const [
+    ScriptSelectionIcon(),
+    SizedBox(width: choiceSpacing),
+    HeaderPreferenceIcon(),
+    SizedBox(width: choiceSpacing),
+    MeaningExpansionIcon(),
+    SizedBox(width: choiceSpacing),
+    ThemeSelectionIcon(),
+    SizedBox(width: choiceSpacing),
+  ];
 }
