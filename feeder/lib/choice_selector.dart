@@ -108,7 +108,7 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: const Icon(Icons.blinds, color: Colors.grey, size: 48),
+      child: Image.asset('images/expand_meaning.png', width: 48, height: 48),
     );
   }
 }
@@ -124,7 +124,7 @@ class HeaderPreferenceIcon extends StatelessWidget {
           choice.headPreference.value == HeadPreference.shloka
               ? HeadPreference.meaning
               : HeadPreference.shloka,
-      child: const Icon(Icons.menu_open, color: Colors.grey, size: 48),
+      child: Image.asset('images/shloka_visible.png', width: 48, height: 48),
     );
   }
 }
