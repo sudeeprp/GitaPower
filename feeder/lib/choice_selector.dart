@@ -79,7 +79,12 @@ class ThemeSelectionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.theme.value =
           choice.theme.value == ReadingTheme.light ? ReadingTheme.dark : ReadingTheme.light,
-      child: const Icon(Icons.dark_mode_outlined, color: Colors.grey, size: 48),
+      child: Obx((() {
+        final Choices choices = Get.find();
+        return choices.theme.value == ReadingTheme.light
+            ? const Icon(Icons.dark_mode_outlined, color: Colors.black, size: 48)
+            : const Icon(Icons.light_mode_outlined, color: Colors.grey, size: 48);
+      })),
     );
   }
 }
@@ -108,7 +113,15 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: Image.asset('images/expand_meaning.png', width: 48, height: 48),
+      child: Obx(() {
+        final Choices choices = Get.find();
+        return Image.asset(
+            choices.theme.value == ReadingTheme.light
+                ? 'images/expand_meaning_light.png'
+                : 'images/expand_meaning_dark.png',
+            width: 48,
+            height: 48);
+      }),
     );
   }
 }
@@ -124,7 +137,15 @@ class HeaderPreferenceIcon extends StatelessWidget {
           choice.headPreference.value == HeadPreference.shloka
               ? HeadPreference.meaning
               : HeadPreference.shloka,
-      child: Image.asset('images/shloka_visible.png', width: 48, height: 48),
+      child: Obx(() {
+        final Choices choices = Get.find();
+        return Image.asset(
+            choices.theme.value == ReadingTheme.light
+                ? 'images/shloka_visible_light.png'
+                : 'images/shloka_visible_dark.png',
+            width: 48,
+            height: 48);
+      }),
     );
   }
 }
