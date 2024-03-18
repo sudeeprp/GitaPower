@@ -108,7 +108,8 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: Image.asset('images/expand_meaning.png', width: 48, height: 48, color: Colors.black, blendMode: BlendMode.dstIn),
+      child: Image.asset('images/expand_meaning.png', width: 48, height: 48, 
+                         color: Colors.black, colorBlendMode: BlendMode.dstIn),
     );
   }
 }
