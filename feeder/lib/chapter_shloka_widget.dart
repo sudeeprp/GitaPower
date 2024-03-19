@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/shloka_headers.dart' as shlokas;
 import 'content_widget.dart';
+import 'choices_row.dart';
 
 Widget chapterShlokaScreen(String chapterMdName) {
   final chapterToShloka = Get.find<ChaptersTOC>();
@@ -13,11 +14,14 @@ Widget chapterShlokaScreen(String chapterMdName) {
     if (chapterToShloka.chaptersLoaded.value) {
       final chapter = findChapterByTitle(chapterTitle, chapterToShloka.chapters);
       if (chapter.shokas.length == 1) {
-        return screenify(buildContentWithNote(Chapter.titleToFilename(chapter.title)));
+        return screenify(buildContentWithNote(Chapter.titleToFilename(chapter.title)),
+            choicesRow: chapterShlokaChoices());
       } else {
-        return screenify(ChapterShlokaWidget(chapter),
-            appBar:
-                AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)));
+        return screenify(
+          ChapterShlokaWidget(chapter),
+          appBar: AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)),
+          choicesRow: chapterShlokaChoices(),
+        );
       }
     }
     return const Column(
@@ -25,6 +29,15 @@ Widget chapterShlokaScreen(String chapterMdName) {
       children: [CircularProgressIndicator()],
     );
   });
+}
+
+Widget chapterShlokaChoices() {
+  return choicesRow(const [
+    HeaderPreferenceIcon(),
+    SizedBox(width: choiceSpacing),
+    ThemeSelectionIcon(),
+    SizedBox(width: choiceSpacing),
+  ]);
 }
 
 Chapter findChapterByTitle(String chapterTitle, List<Chapter> chapters) {

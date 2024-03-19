@@ -70,59 +70,85 @@ class Choices extends GetxController {
   }
 }
 
-Widget _makeSelector(String title, String leftChoice, String rightChoice, Widget child) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 25),
-    child: Column(children: [
-      Text(title, textScaler: const TextScaler.linear(1.8)),
-      Row(children: [
-        Expanded(
-            child: Text(leftChoice,
-                textAlign: TextAlign.right, textScaler: const TextScaler.linear(1.3))),
-        Expanded(child: child),
-        Expanded(
-            child: Text(rightChoice,
-                textAlign: TextAlign.left, textScaler: const TextScaler.linear(1.3))),
-      ]),
-    ]),
-  );
+class ThemeSelectionIcon extends StatelessWidget {
+  const ThemeSelectionIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.theme.value =
+          choice.theme.value == ReadingTheme.light ? ReadingTheme.dark : ReadingTheme.light,
+      child: Obx((() {
+        final Choices choices = Get.find();
+        return choices.theme.value == ReadingTheme.light
+            ? const Icon(Icons.dark_mode_outlined, color: Colors.black, size: 48)
+            : const Icon(Icons.light_mode_outlined, color: Colors.grey, size: 48);
+      })),
+    );
+  }
 }
 
-Widget themeSelector() {
-  final Choices choice = Get.find();
-  return _makeSelector(
-      'Theme',
-      'Light',
-      'Dark',
-      Obx(() => Switch(
-          value: choice.theme.value == ReadingTheme.dark,
-          onChanged: (bool newValue) {
-            choice.theme.value = newValue ? ReadingTheme.dark : ReadingTheme.light;
-          })));
+class ScriptSelectionIcon extends StatelessWidget {
+  const ScriptSelectionIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () {
+        choice.headPreference.value = HeadPreference.shloka;
+        choice.script.value = choice.script.value == ScriptPreference.devanagari
+            ? ScriptPreference.sahk
+            : ScriptPreference.devanagari;
+      },
+      child: Image.asset('images/translate.png', width: 48, height: 48),
+    );
+  }
 }
 
-Widget scriptSelector() {
-  final Choices choice = Get.find();
-  return _makeSelector(
-      'Devanagari',
-      'bhakti',
-      'भक्ति',
-      Obx(() => Switch(
-          value: choice.script.value == ScriptPreference.devanagari,
-          onChanged: (bool newValue) {
-            choice.script.value = newValue ? ScriptPreference.devanagari : ScriptPreference.sahk;
-          })));
+class MeaningExpansionIcon extends StatelessWidget {
+  const MeaningExpansionIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.meaningMode.value =
+          choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
+      child: Obx(() {
+        final Choices choices = Get.find();
+        return Image.asset(
+            choices.theme.value == ReadingTheme.light
+                ? 'images/expand_meaning_light.png'
+                : 'images/expand_meaning_dark.png',
+            width: 48,
+            height: 48);
+      }),
+    );
+  }
 }
 
-Widget headerSelector() {
-  final Choices choice = Get.find();
-  return _makeSelector(
-      'Header',
-      'meaning',
-      'shloka',
-      Obx(() => Switch(
-          value: choice.headPreference.value == HeadPreference.shloka,
-          onChanged: (bool newValue) {
-            choice.headPreference.value = newValue ? HeadPreference.shloka : HeadPreference.meaning;
-          })));
+class HeaderPreferenceIcon extends StatelessWidget {
+  const HeaderPreferenceIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Choices choice = Get.find();
+    return GestureDetector(
+      onTap: () => choice.headPreference.value =
+          choice.headPreference.value == HeadPreference.shloka
+              ? HeadPreference.meaning
+              : HeadPreference.shloka,
+      child: Obx(() {
+        final Choices choices = Get.find();
+        return Image.asset(
+            choices.theme.value == ReadingTheme.light
+                ? 'images/shloka_visible_light.png'
+                : 'images/shloka_visible_dark.png',
+            width: 48,
+            height: 48);
+      }),
+    );
+  }
 }
