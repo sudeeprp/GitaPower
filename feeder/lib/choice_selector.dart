@@ -96,9 +96,12 @@ class ScriptSelectionIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final Choices choice = Get.find();
     return GestureDetector(
-      onTap: () => choice.script.value = choice.script.value == ScriptPreference.devanagari
-          ? ScriptPreference.sahk
-          : ScriptPreference.devanagari,
+      onTap: () {
+          choice.headPreference.value = HeadPreference.shloka;
+          choice.script.value = choice.script.value == ScriptPreference.devanagari
+            ? ScriptPreference.sahk
+            : ScriptPreference.devanagari;
+      },
       child: Image.asset('images/translate.png', width: 48, height: 48),
     );
   }
