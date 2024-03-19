@@ -97,8 +97,8 @@ class ScriptSelectionIcon extends StatelessWidget {
     final Choices choice = Get.find();
     return GestureDetector(
       onTap: () {
-          choice.headPreference.value = HeadPreference.shloka;
-          choice.script.value = choice.script.value == ScriptPreference.devanagari
+        choice.headPreference.value = HeadPreference.shloka;
+        choice.script.value = choice.script.value == ScriptPreference.devanagari
             ? ScriptPreference.sahk
             : ScriptPreference.devanagari;
       },
