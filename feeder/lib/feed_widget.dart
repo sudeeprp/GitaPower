@@ -26,7 +26,11 @@ class FeedWidget extends StatelessWidget {
                                 offset: const Offset(0, -5))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: buildContentWithNote(filename, key: Key('feed/${count++}')),
+                      child: GestureDetector(
+                          onTap: () {
+                             Get.toNamed('/shloka/$filename');
+                          },
+                          child: buildContentWithNote(filename, key: Key('feed/${count++}'))),
                     )))
                 .toList());
       } else {

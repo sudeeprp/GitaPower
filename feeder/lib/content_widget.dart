@@ -268,22 +268,6 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   }
 }
 
-GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
-  if (sectionType == SectionType.meaning) {
-    return TapGestureRecognizer()
-      ..onTap = () {
-        final Choices choice = Get.find();
-        if (choice.meaningMode.value == MeaningMode.short) {
-          choice.meaningMode.value = MeaningMode.expanded;
-        } else {
-          choice.meaningMode.value = MeaningMode.short;
-        }
-      };
-  } else {
-    return null;
-  }
-}
-
 void navigateToLink(String? link) {
   String mdFilename = 'broken-link.md';
   String noteId = '';
@@ -477,9 +461,9 @@ class ContentWidget extends StatelessWidget {
       var textContent = _tuneContentForDisplay(inlineMatter);
       return [
         TextSpan(
-            text: textContent,
-            style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
-            recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
+          text: textContent,
+          style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
+        )
       ];
     }
 

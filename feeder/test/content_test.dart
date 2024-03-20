@@ -1,10 +1,8 @@
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:askys/content_widget.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
@@ -56,20 +54,6 @@ ParseRecords recordParseActions(mdContent) {
 
   WidgetMaker(widgetMaker, inlineMaker).parse(mdContent);
   return parseRecords;
-}
-
-void _fireOnTap(Finder finder, String text) {
-  final Element element = finder.evaluate().single;
-  final paragraph = element.renderObject as RenderParagraph;
-  // The children are the individual TextSpans which have GestureRecognizers
-  paragraph.text.visitChildren((dynamic span) {
-    if (span.text.contains(text)) {
-      (span.recognizer as TapGestureRecognizer).onTap!();
-      return false; // stop iterating, we found the one.
-    } else {
-      return true; // continue iterating.
-    }
-  });
 }
 
 void main() {
@@ -127,7 +111,7 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
 
-    _fireOnTap(continFinder, 'who worship Me'); // tap to expand with the source
+    Get.find<Choices>().meaningMode.value = MeaningMode.expanded;
     await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsOneWidget);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
@@ -136,8 +120,7 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
 
-    final meaningFinder = find.textContaining('who worship Me', findRichText: true);
-    _fireOnTap(meaningFinder, 'who worship Me'); // tap again for the short meaning
+    Get.find<Choices>().meaningMode.value = MeaningMode.short;
     await tester.pumpAndSettle();
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);

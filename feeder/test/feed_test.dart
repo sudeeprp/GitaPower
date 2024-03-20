@@ -44,6 +44,24 @@ void main() {
     Get.delete<ContentNotes>();
     Get.delete<FeedContent>();
   });
+  testWidgets('tapping on a feed navigates to the shloka', (tester) async {
+    final feedContent = FeedContent();
+    Get.put(feedContent);
+    Get.put(ContentNotes());
+    Get.put(ContentActions());
+    String? navigatedShloka;
+    await tester.pumpWidget(GetMaterialApp(
+      home: Scaffold(body: buildFeed()), getPages: [
+        GetPage(
+            name: '/shloka/:mdFilename',
+            page: () {
+              navigatedShloka = Get.parameters['mdFilename'];
+              return const Text('reached');
+            })]));
+    await tester.tap(find.byKey(const Key('feed/1')));
+    await tester.pumpAndSettle();
+    expect(navigatedShloka, equals(feedContent.threeShlokas[0]));
+  });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = await allShlokaMDs();
     expect(shlokaMDs.length, equals(600)); // counted 600 shloka files
