@@ -387,7 +387,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 
 class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
-      {super.key}) {
+      {this.onTap, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
@@ -396,6 +396,7 @@ class ContentWidget extends StatelessWidget {
   final String? contentNote;
   final String? nextmd;
   final String? prevmd;
+  final void Function()? onTap;
 
   @override
   Widget build(context) {
@@ -509,7 +510,7 @@ class ContentWidget extends StatelessWidget {
               }
             });
             return GestureDetector(
-                onTap: Get.find<ContentActions>().showForAWhile,
+                onTap: onTap,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,8 +525,14 @@ class ContentWidget extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
+    {String? initialAnchor,
+    String? contentNote,
+    String? prevmd,
+    String? nextmd,
+    void Function()? onTap,
+    Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
+      onTap: onTap, key: key);
 }
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
@@ -535,6 +542,7 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
       contentNote: contentNotes.noteForMD(mdFilename),
       prevmd: contentNotes.prevmd(mdFilename),
       nextmd: contentNotes.nextmd(mdFilename),
+      onTap: Get.find<ContentActions>().showForAWhile,
       key: key);
   var contentActions = Get.find<ContentActions>();
   contentActions.showForAWhile();
