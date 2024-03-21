@@ -26,7 +26,7 @@ class FeedWidget extends StatelessWidget {
                                 offset: const Offset(0, -5))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: buildContentWithNote(filename, key: Key('feed/${count++}')),
+                      child: buildContentFeed(filename, key: Key('feed/${count++}')),
                     )))
                 .toList());
       } else {

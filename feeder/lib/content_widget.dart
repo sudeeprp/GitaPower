@@ -548,3 +548,11 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
   contentActions.showForAWhile();
   return contentWidget;
 }
+
+ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
+  final ContentNotes contentNotes = Get.find();
+  return buildContent(mdFilename,
+      contentNote: contentNotes.noteForMD(mdFilename),
+      onTap: () => Get.toNamed('/shloka/$mdFilename'),
+      key: key);
+}
