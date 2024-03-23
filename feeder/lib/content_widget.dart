@@ -268,22 +268,6 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   }
 }
 
-GestureRecognizer? _actionFor(SectionType sectionType, String tag) {
-  if (sectionType == SectionType.meaning) {
-    return TapGestureRecognizer()
-      ..onTap = () {
-        final Choices choice = Get.find();
-        if (choice.meaningMode.value == MeaningMode.short) {
-          choice.meaningMode.value = MeaningMode.expanded;
-        } else {
-          choice.meaningMode.value = MeaningMode.short;
-        }
-      };
-  } else {
-    return null;
-  }
-}
-
 void navigateToLink(String? link) {
   String mdFilename = 'broken-link.md';
   String noteId = '';
@@ -403,7 +387,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 
 class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
-      {super.key}) {
+      {this.onTap, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
@@ -412,6 +396,7 @@ class ContentWidget extends StatelessWidget {
   final String? contentNote;
   final String? nextmd;
   final String? prevmd;
+  final void Function()? onTap;
 
   @override
   Widget build(context) {
@@ -477,9 +462,9 @@ class ContentWidget extends StatelessWidget {
       var textContent = _tuneContentForDisplay(inlineMatter);
       return [
         TextSpan(
-            text: textContent,
-            style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
-            recognizer: _actionFor(inlineMatter.sectionType, inlineMatter.tag))
+          text: textContent,
+          style: styleFor(inlineMatter.tag, elmclass: inlineMatter.elmclass),
+        )
       ];
     }
 
@@ -525,7 +510,7 @@ class ContentWidget extends StatelessWidget {
               }
             });
             return GestureDetector(
-                onTap: Get.find<ContentActions>().showForAWhile,
+                onTap: onTap,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -540,8 +525,14 @@ class ContentWidget extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor, String? contentNote, String? prevmd, String? nextmd, Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd, key: key);
+    {String? initialAnchor,
+    String? contentNote,
+    String? prevmd,
+    String? nextmd,
+    void Function()? onTap,
+    Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
+      onTap: onTap, key: key);
 }
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
@@ -551,8 +542,17 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
       contentNote: contentNotes.noteForMD(mdFilename),
       prevmd: contentNotes.prevmd(mdFilename),
       nextmd: contentNotes.nextmd(mdFilename),
+      onTap: Get.find<ContentActions>().showForAWhile,
       key: key);
   var contentActions = Get.find<ContentActions>();
   contentActions.showForAWhile();
   return contentWidget;
+}
+
+ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
+  final ContentNotes contentNotes = Get.find();
+  return buildContent(mdFilename,
+      contentNote: contentNotes.noteForMD(mdFilename),
+      onTap: () => Get.toNamed('/shloka/$mdFilename'),
+      key: key);
 }
