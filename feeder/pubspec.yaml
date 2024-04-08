@@ -28,7 +28,7 @@ dependencies:
   stack: ^0.2.2
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.6
-  firebase_crashlytics: ^3.4.19
+  firebase_crashlytics: ^3.5.0
   firebase_core: ^2.27.0
   shared_preferences: 2.2.2
   enum_to_string:
