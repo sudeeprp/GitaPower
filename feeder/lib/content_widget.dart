@@ -386,14 +386,13 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
+  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
       {this.onTap, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
   final String mdFilename;
   final String? initialAnchor;
-  final String? contentNote;
   final String? nextmd;
   final String? prevmd;
   final void Function()? onTap;
@@ -529,21 +528,14 @@ class ContentWidget extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor,
-    String? contentNote,
-    String? prevmd,
-    String? nextmd,
-    void Function()? onTap,
-    Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
-      onTap: onTap, key: key);
+    {String? initialAnchor, String? prevmd, String? nextmd, void Function()? onTap, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd, onTap: onTap, key: key);
 }
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   final ContentNotes contentNotes = Get.find();
   var contentWidget = buildContent(mdFilename,
       initialAnchor: initialAnchor,
-      contentNote: contentNotes.noteForMD(mdFilename),
       prevmd: contentNotes.prevmd(mdFilename),
       nextmd: contentNotes.nextmd(mdFilename),
       onTap: Get.find<ContentActions>().showForAWhile,
@@ -554,9 +546,5 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
 }
 
 ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
-  final ContentNotes contentNotes = Get.find();
-  return buildContent(mdFilename,
-      contentNote: contentNotes.noteForMD(mdFilename),
-      onTap: () => Get.toNamed('/shloka/$mdFilename'),
-      key: key);
+  return buildContent(mdFilename, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: key);
 }
