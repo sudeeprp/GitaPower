@@ -533,11 +533,11 @@ ContentWidget buildContent(String mdFilename,
 }
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
-  final ContentNotes contentNotes = Get.find();
+  final ChaptersTOC chapterstoc = Get.find();
   var contentWidget = buildContent(mdFilename,
       initialAnchor: initialAnchor,
-      prevmd: contentNotes.prevmd(mdFilename),
-      nextmd: contentNotes.nextmd(mdFilename),
+      prevmd: chapterstoc.prevmd(mdFilename),
+      nextmd: chapterstoc.nextmd(mdFilename),
       onTap: Get.find<ContentActions>().showForAWhile,
       key: key);
   var contentActions = Get.find<ContentActions>();
