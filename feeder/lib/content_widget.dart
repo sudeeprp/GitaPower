@@ -469,25 +469,29 @@ class ContentWidget extends StatelessWidget {
     }
 
     void insertContentNote(List<Widget> contentWidgets) {
-      if (contentNote != null) {
-        contentWidgets.insert(
-            0,
-            _buildNote(
-                context,
-                IntrinsicHeight(
-                    child: Row(children: [
-                  Expanded(
-                      flex: 17,
-                      child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note'))),
-                  const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
-                  Expanded(
-                    flex: 3,
-                    child: Text(Chapter.filenameToShortTitle(mdFilename),
-                        style: Theme.of(context).textTheme.bodySmall),
-                  )
-                ]))));
-      }
+      final ContentNotes contentNotes = Get.find();
+      contentWidgets.insert(0, Obx(() {
+        if (contentNotes.notesLoaded.value) {
+          final preNote = contentNotes.noteForMD(mdFilename);
+          return _buildNote(
+              context,
+              IntrinsicHeight(
+                  child: Row(children: [
+                Expanded(
+                    flex: 17,
+                    child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')),
+                        style: styleFor('note'))),
+                const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
+                Expanded(
+                  flex: 3,
+                  child: Text(Chapter.filenameToShortTitle(mdFilename),
+                      style: Theme.of(context).textTheme.bodySmall),
+                )
+              ])));
+        } else {
+          return const SizedBox.shrink();
+        }
+      }));
     }
 
     MDContent md = Get.find(tag: mdFilename);

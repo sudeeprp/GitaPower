@@ -74,6 +74,7 @@ Map<String, String?> mapMdsToTheirNotes(
 class ContentNotes extends GetxController {
   Map<String, String?> mdsToInitialNote = {};
   List<String> mdSequence = [];
+  var notesLoaded = false.obs;
   @override
   void onInit() async {
     final GitHubFetcher contentSource = Get.find();
@@ -81,6 +82,7 @@ class ContentNotes extends GetxController {
     final mdToNoteIds = await contentSource.mdToNoteIds();
     mdsToInitialNote = mapMdsToTheirNotes(mdToNoteIds, notesCompiled);
     mdSequence = mdsToInitialNote.keys.toList();
+    notesLoaded.value = true;
     super.onInit();
   }
 
