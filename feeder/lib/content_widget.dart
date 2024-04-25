@@ -386,14 +386,13 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.contentNote, this.prevmd, this.nextmd,
+  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
       {this.onTap, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
   final String mdFilename;
   final String? initialAnchor;
-  final String? contentNote;
   final String? nextmd;
   final String? prevmd;
   final void Function()? onTap;
@@ -469,25 +468,29 @@ class ContentWidget extends StatelessWidget {
     }
 
     void insertContentNote(List<Widget> contentWidgets) {
-      if (contentNote != null) {
-        contentWidgets.insert(
-            0,
-            _buildNote(
-                context,
-                IntrinsicHeight(
-                    child: Row(children: [
-                  Expanded(
-                      flex: 17,
-                      child: Text.rich(TextSpan(text: toPlainText(contentNote!)),
-                          style: styleFor('note'))),
-                  const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
-                  Expanded(
-                    flex: 3,
-                    child: Text(Chapter.filenameToShortTitle(mdFilename),
-                        style: Theme.of(context).textTheme.bodySmall),
-                  )
-                ]))));
-      }
+      final ContentNotes contentNotes = Get.find();
+      contentWidgets.insert(0, Obx(() {
+        if (contentNotes.notesLoaded.value) {
+          final preNote = contentNotes.noteForMD(mdFilename);
+          return _buildNote(
+              context,
+              IntrinsicHeight(
+                  child: Row(children: [
+                Expanded(
+                    flex: 17,
+                    child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')),
+                        style: styleFor('note'))),
+                const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
+                Expanded(
+                  flex: 3,
+                  child: Text(Chapter.filenameToShortTitle(mdFilename),
+                      style: Theme.of(context).textTheme.bodySmall),
+                )
+              ])));
+        } else {
+          return const SizedBox.shrink();
+        }
+      }));
     }
 
     MDContent md = Get.find(tag: mdFilename);
@@ -525,23 +528,16 @@ class ContentWidget extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor,
-    String? contentNote,
-    String? prevmd,
-    String? nextmd,
-    void Function()? onTap,
-    Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, contentNote, prevmd, nextmd,
-      onTap: onTap, key: key);
+    {String? initialAnchor, String? prevmd, String? nextmd, void Function()? onTap, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd, onTap: onTap, key: key);
 }
 
 ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
-  final ContentNotes contentNotes = Get.find();
+  final ChaptersTOC chapterstoc = Get.find();
   var contentWidget = buildContent(mdFilename,
       initialAnchor: initialAnchor,
-      contentNote: contentNotes.noteForMD(mdFilename),
-      prevmd: contentNotes.prevmd(mdFilename),
-      nextmd: contentNotes.nextmd(mdFilename),
+      prevmd: chapterstoc.prevmd(mdFilename),
+      nextmd: chapterstoc.nextmd(mdFilename),
       onTap: Get.find<ContentActions>().showForAWhile,
       key: key);
   var contentActions = Get.find<ContentActions>();
@@ -550,9 +546,5 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
 }
 
 ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
-  final ContentNotes contentNotes = Get.find();
-  return buildContent(mdFilename,
-      contentNote: contentNotes.noteForMD(mdFilename),
-      onTap: () => Get.toNamed('/shloka/$mdFilename'),
-      key: key);
+  return buildContent(mdFilename, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: key);
 }

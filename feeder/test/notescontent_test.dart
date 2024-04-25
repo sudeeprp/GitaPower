@@ -65,13 +65,4 @@ void main() {
         toPlainText('Practice [devotion](b.md#bhakti) always'), equals('Practice devotion always'));
     expect(toPlainText('What am I?'), equals('What am I?'));
   });
-  testWidgets('tells the next and previous md files of a given md', (tester) async {
-    final contentNotes = ContentNotes();
-    Get.put(contentNotes);
-    await tester.pumpAndSettle();
-    expect(contentNotes.nextmd('1-1.md'), equals('1-2.md'));
-    expect(contentNotes.nextmd('1-2.md'), equals(null));
-    expect(contentNotes.prevmd('1-2.md'), equals('1-1.md'));
-    expect(contentNotes.prevmd('1-1.md'), equals(null));
-  });
 }

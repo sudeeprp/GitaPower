@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'content_source.dart';
+import 'shloka_headers.dart' as shlokatoc;
 
 class Chapter {
   Chapter(this.title, this.shokas);
@@ -61,11 +62,29 @@ List<Chapter> mdNotesToChapters(List<Map<String, List<String>>> mdToNotes) {
 class ChaptersTOC extends GetxController {
   List<Chapter> chapters = [];
   final chaptersLoaded = false.obs;
+  final mdSequence = shlokatoc.headers.entries.map((e) => e.key).toList();
+
   @override
   void onInit() async {
     final GitHubFetcher contentSource = Get.find();
     chapters.addAll(mdNotesToChapters(await contentSource.mdToNoteIds()));
     chaptersLoaded.value = true;
     super.onInit();
+  }
+
+  String? nextmd(String mdFilename) {
+    int index = mdSequence.indexOf(mdFilename);
+    if (index != -1 && index < mdSequence.length - 1) {
+      return mdSequence[index + 1];
+    }
+    return null;
+  }
+
+  String? prevmd(String mdFilename) {
+    int index = mdSequence.indexOf(mdFilename);
+    if (index != -1 && index > 0) {
+      return mdSequence[index - 1];
+    }
+    return null;
   }
 }

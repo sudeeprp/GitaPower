@@ -74,6 +74,7 @@ Map<String, String?> mapMdsToTheirNotes(
 class ContentNotes extends GetxController {
   Map<String, String?> mdsToInitialNote = {};
   List<String> mdSequence = [];
+  var notesLoaded = false.obs;
   @override
   void onInit() async {
     final GitHubFetcher contentSource = Get.find();
@@ -81,27 +82,12 @@ class ContentNotes extends GetxController {
     final mdToNoteIds = await contentSource.mdToNoteIds();
     mdsToInitialNote = mapMdsToTheirNotes(mdToNoteIds, notesCompiled);
     mdSequence = mdsToInitialNote.keys.toList();
+    notesLoaded.value = true;
     super.onInit();
   }
 
   String? noteForMD(String mdFilename) {
     return mdsToInitialNote[mdFilename];
-  }
-
-  String? nextmd(String mdFilename) {
-    int index = mdSequence.indexOf(mdFilename);
-    if (index != -1 && index < mdSequence.length - 1) {
-      return mdSequence[index + 1];
-    }
-    return null;
-  }
-
-  String? prevmd(String mdFilename) {
-    int index = mdSequence.indexOf(mdFilename);
-    if (index != -1 && index > 0) {
-      return mdSequence[index - 1];
-    }
-    return null;
   }
 }
 

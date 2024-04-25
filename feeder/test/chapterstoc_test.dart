@@ -27,4 +27,11 @@ void main() {
     expect(chapters[1].title, equals('Chapter 2'));
     expect(chapters[1].shokas.length, equals(3));
   });
+  test('gets the next and previous in the navigation sequence', () {
+    final chapterstoc = ChaptersTOC();
+    expect(chapterstoc.nextmd('1-24_to_1-25.md'), equals('1-26_to_1-47.md'));
+    expect(chapterstoc.nextmd('The_Beginning_of_Joy.md'), equals(null));
+    expect(chapterstoc.prevmd('Chapter_14.md'), equals('13-34.md'));
+    expect(chapterstoc.prevmd('Back-to-Basics.md'), equals(null));
+  });
 }

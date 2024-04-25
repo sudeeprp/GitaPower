@@ -60,7 +60,9 @@ void main() {
     ]));
     await tester.pumpAndSettle();
     final shlokaFinder = find.byType(GestureDetector);
-    await tester.tapAt(tester.getTopLeft(find.byWidget(shlokaFinder.evaluate().first.widget)));
+    var tapOffset = tester.getTopLeft(find.byWidget(shlokaFinder.evaluate().first.widget));
+    tapOffset += const Offset(50, 100);
+    await tester.tapAt(tapOffset);
     await tester.pumpAndSettle();
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
