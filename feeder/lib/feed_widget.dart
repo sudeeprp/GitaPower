@@ -4,6 +4,24 @@ import 'package:get/get.dart';
 
 import 'feedcontent.dart';
 
+Widget contentWithOpenerPane(String filename, int count) {
+  return Stack(
+    children: [
+      buildContentFeed(filename, key: Key('feed/${count++}')),
+      Container(
+        color: Colors.purple.withOpacity(0.8),
+        constraints: const BoxConstraints.expand(),
+        child: GestureDetector(
+          onTap: ()=> {
+            // TODO: Toggle openerCovers in FeedContent
+          },
+          child: const Center(child: Text("Make this glass", textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
+        )
+      ),
+    ],
+  ); 
+}
+
 class FeedWidget extends StatelessWidget {
   const FeedWidget({super.key});
   @override
@@ -26,7 +44,7 @@ class FeedWidget extends StatelessWidget {
                                 offset: const Offset(0, -5))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: buildContentFeed(filename, key: Key('feed/${count++}')),
+                      child: contentWithOpenerPane(filename, count),
                     )))
                 .toList());
       } else {

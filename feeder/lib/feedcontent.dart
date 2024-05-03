@@ -37,10 +37,12 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 class FeedContent extends GetxController {
   List<String> threeShlokas = [];
   final feedPicked = false.obs;
+  final openerCovers = [false.obs, false.obs, false.obs];
   @override
   void onInit() async {
     threeShlokas = createRandomFeed(await allShlokaMDs());
     feedPicked.value = true;
+    // TODO: fetch question content using GitHubFetcher and set the openerCovers to true
     super.onInit();
   }
 }
