@@ -7,16 +7,17 @@ import 'feedcontent.dart';
 Widget contentWithOpenerPane(String filename, int count) {
   return Stack(
     children: [
-      buildContentFeed(filename, key: Key('feed/${count++}')),
-      Container(
-        color: Colors.purple.withOpacity(0.8),
-        constraints: const BoxConstraints.expand(),
-        child: GestureDetector(
-          onTap: ()=> {
-            // TODO: Toggle openerCovers in FeedContent
+      buildContentFeed(filename, key: Key('feed/$count')),
+      Dismissible(
+          key: Key('overq/$count'),
+          onDismissed: (direction) {
+            // TODO: Make openCovers[count-1] in FeedContent as false
           },
-          child: const Center(child: Text("Make this glass", textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
-        )
+          child: Container(
+            color: Colors.purple.withOpacity(0.8),
+            constraints: const BoxConstraints.expand(),
+            child: const Center(child: Text("Make this glass", textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
+          )
       ),
     ],
   ); 
@@ -44,7 +45,7 @@ class FeedWidget extends StatelessWidget {
                                 offset: const Offset(0, -5))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: contentWithOpenerPane(filename, count),
+                      child: contentWithOpenerPane(filename, count++),
                     )))
                 .toList());
       } else {
