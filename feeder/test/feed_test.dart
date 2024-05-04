@@ -10,12 +10,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
-const threeShlokaContent = '''
-[{"Back-to-Basics.md": ["applopener_1"]}, {"Chapter 1.md": []}, {"2-4.md": ["applnote_13"]}, {"10-10.md": []}, {"18-4.md": []}]
-''';
-const someCompiledNotes = '''
-[{"note_id": "applopener_11", "text": "Is there a different way?", "file": "Back-to-Basics.md"}]
-''';
+const someOpenerQs = '''{
+    "2-10.md": ["Why do I hesitate?"],
+    "2-11.md": ["Why do I hesitate?"],
+    "2-12.md": ["Why do I hesitate?"],
+}''';
 
 void main() {
   setUp(() {
@@ -26,14 +25,11 @@ void main() {
     dioAdapter.onGet('${GitHubFetcher.mdPath}/2-4.md', (svr) => svr.reply(200, '`भजताम्`'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md', (svr) => svr.reply(200, '`भजताम्`'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/18-4.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
-        (svr) => svr.reply(200, threeShlokaContent));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
-        (server) => server.reply(200, someCompiledNotes));
+    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_opener_questions.json', (svr) => svr.reply(200, someOpenerQs));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('shows three shlokas', (tester) async {
-    Get.put(FeedContent());
+    Get.put(FeedContent.random());
     Get.put(ContentNotes());
     Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
@@ -45,7 +41,7 @@ void main() {
     Get.delete<FeedContent>();
   });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
-    final feedContent = FeedContent();
+    final feedContent = FeedContent.random();
     Get.put(feedContent);
     Get.put(ContentNotes());
     Get.put(ContentActions());
@@ -67,7 +63,7 @@ void main() {
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
   test('picks only filenames with shlokas', () async {
-    final shlokaMDs = await allShlokaMDs();
+    final shlokaMDs = allShlokaMDs();
     expect(shlokaMDs.length, equals(600)); // counted 600 shloka files
   });
   test('recognizes chapter and shloka numbers for comparison', () {
@@ -91,5 +87,7 @@ void main() {
     expect(feedMDs.length, equals(3));
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
+  });
+  testWidgets('loads the opener questions', (tester) async {
   });
 }

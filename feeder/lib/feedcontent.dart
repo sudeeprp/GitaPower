@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'shloka_headers.dart' as shlokas;
 
-Future<List<String>> allShlokaMDs() async {
+List<String> allShlokaMDs() {
   return shlokas.headers.keys.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
 }
 
@@ -37,10 +37,16 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 class FeedContent extends GetxController {
   List<String> threeShlokas = [];
   final feedPicked = false.obs;
+  final openerQs = ['', '', ''];
   final openerCovers = [false.obs, false.obs, false.obs];
+  FeedContent.random() {
+    threeShlokas = createRandomFeed(allShlokaMDs());
+  }
+  FeedContent.curate(String firstShlokaFilename, String secondShlokaFilename, String thirdShlokaFilename) {
+    threeShlokas = [firstShlokaFilename, secondShlokaFilename, thirdShlokaFilename];
+  }
   @override
   void onInit() async {
-    threeShlokas = createRandomFeed(await allShlokaMDs());
     feedPicked.value = true;
     // TODO: fetch question content using GitHubFetcher and set the openerCovers to true
     super.onInit();

@@ -1,26 +1,32 @@
 import 'package:askys/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'feedcontent.dart';
 
 Widget contentWithOpenerPane(String filename, int count) {
-  return Stack(
-    children: [
-      buildContentFeed(filename, key: Key('feed/$count')),
-      Dismissible(
-          key: Key('overq/$count'),
-          onDismissed: (direction) {
-            // TODO: Make openCovers[count-1] in FeedContent as false
-          },
-          child: Container(
-            color: Colors.purple.withOpacity(0.8),
-            constraints: const BoxConstraints.expand(),
-            child: const Center(child: Text("Make this glass", textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
-          )
-      ),
-    ],
-  ); 
+  return Obx(() {
+    final FeedContent feedContent = Get.find();
+    if (feedContent.openerCovers[count-1].value) {
+      return Stack(
+        children: [
+          buildContentFeed(filename, key: Key('feed/$count')),
+          Dismissible(
+              key: Key('overq/$count'),
+              onDismissed: (direction) {
+                feedContent.openerCovers[count-1].value = false;
+              },
+              child: Container(
+                color: Colors.purple.withOpacity(0.8),
+                constraints: const BoxConstraints.expand(),
+                child: const Center(child: Text("Make this glass", textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
+              )
+          ),
+        ],
+      );
+    } else {
+      return buildContentFeed(filename, key: Key('feed/$count'));
+    }
+  });
 }
 
 class FeedWidget extends StatelessWidget {
