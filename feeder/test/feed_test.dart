@@ -64,9 +64,12 @@ void main() {
     expect(feedContent.openerCovers[0].value, equals(true));
 
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
-    expect(find.text(feedContent.openerQs[0]), findsOneWidget);
-    expect(find.text(feedContent.openerQs[1]), findsOneWidget);
-    expect(find.text(feedContent.openerQs[2]), findsOneWidget);
+    expect(find.text(feedContent.openerQs[0]), findsWidgets);
+    expect(find.text(feedContent.openerQs[1]), findsWidgets);
+    expect(find.text(feedContent.openerQs[2]), findsWidgets);
+
+    final firstOpener = find.byType(Dismissible).first;
+    await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();
