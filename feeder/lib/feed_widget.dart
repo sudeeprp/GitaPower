@@ -6,21 +6,22 @@ import 'feedcontent.dart';
 Widget contentWithOpenerPane(String filename, int count) {
   return Obx(() {
     final FeedContent feedContent = Get.find();
-    if (feedContent.openerCovers[count-1].value) {
+    if (feedContent.openerCovers[count - 1].value) {
       return Stack(
         children: [
           buildContentFeed(filename, key: Key('feed/$count')),
           Dismissible(
               key: Key('overq/$count'),
               onDismissed: (direction) {
-                feedContent.openerCovers[count-1].value = false;
+                feedContent.openerCovers[count - 1].value = false;
               },
               child: Container(
                 color: Colors.purple.withOpacity(0.8),
                 constraints: const BoxConstraints.expand(),
-                child: const Center(child: Text("Make this glass", textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
-              )
-          ),
+                child: const Center(
+                    child: Text("Make this glass",
+                        textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
+              )),
         ],
       );
     } else {

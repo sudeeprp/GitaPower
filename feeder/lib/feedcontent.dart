@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:askys/content_source.dart';
 import 'package:get/get.dart';
 import 'shloka_headers.dart' as shlokas;
 
@@ -42,13 +43,15 @@ class FeedContent extends GetxController {
   FeedContent.random() {
     threeShlokas = createRandomFeed(allShlokaMDs());
   }
-  FeedContent.curate(String firstShlokaFilename, String secondShlokaFilename, String thirdShlokaFilename) {
-    threeShlokas = [firstShlokaFilename, secondShlokaFilename, thirdShlokaFilename];
-  }
   @override
   void onInit() async {
     feedPicked.value = true;
-    // TODO: fetch question content using GitHubFetcher and set the openerCovers to true
+    // TODO: Set the openerCovers to true after including the below
+    final GitHubFetcher fetcher = Get.find();
+    final mdToOpeners = await fetcher.openerQuestions();
+    for (int i = 0; i < threeShlokas.length; i++) {
+      openerQs[i] = mdToOpeners[threeShlokas[i]] ?? '';
+    }
     super.onInit();
   }
 }

@@ -8,28 +8,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
-
-const someOpenerQs = '''{
-    "2-10.md": ["Why do I hesitate?"],
-    "2-11.md": ["Why do I hesitate?"],
-    "2-12.md": ["Why do I hesitate?"],
-}''';
 
 void main() {
   setUp(() {
     Get.put(Choices());
     final dio = Dio();
-    final dioAdapter = DioAdapter(dio: dio);
-    dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/2-4.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/18-4.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_opener_questions.json', (svr) => svr.reply(200, someOpenerQs));
     Get.put(GitHubFetcher(dio));
+    Get.put(FeedContent.random());
   });
   testWidgets('shows three shlokas', (tester) async {
-    Get.put(FeedContent.random());
     Get.put(ContentNotes());
     Get.put(ContentActions());
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
@@ -38,11 +25,9 @@ void main() {
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
     expect(find.byKey(const Key('feed/3')), findsOneWidget);
     Get.delete<ContentNotes>();
-    Get.delete<FeedContent>();
   });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
-    final feedContent = FeedContent.random();
-    Get.put(feedContent);
+    final FeedContent feedContent = Get.find();
     Get.put(ContentNotes());
     Get.put(ContentActions());
     String? navigatedShloka;
@@ -61,6 +46,16 @@ void main() {
     await tester.tapAt(tapOffset);
     await tester.pumpAndSettle();
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
+  });
+  testWidgets('shows the opener questions', (tester) async {
+    final FeedContent feedContent = Get.find();
+    Get.put(ContentNotes());
+    Get.put(ContentActions());
+    await tester.pumpAndSettle();
+    expect(feedContent.openerQs[0], isNotEmpty);
+    expect(feedContent.openerQs[1], isNotEmpty);
+    expect(feedContent.openerQs[2], isNotEmpty);
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();
@@ -87,7 +82,5 @@ void main() {
     expect(feedMDs.length, equals(3));
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
-  });
-  testWidgets('loads the opener questions', (tester) async {
   });
 }
