@@ -18,6 +18,7 @@ Widget contentWithOpenerPane(String filename, int count) {
               child: Container(
                 color: Colors.purple.withOpacity(0.8),
                 constraints: const BoxConstraints.expand(),
+                // TODO: Show the real questions on the glass
                 child: const Center(
                     child: Text("Make this glass",
                         textAlign: TextAlign.center, style: TextStyle(fontSize: 32))),
