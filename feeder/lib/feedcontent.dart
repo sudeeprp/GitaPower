@@ -51,6 +51,7 @@ class FeedContent extends GetxController {
     final mdToOpeners = await fetcher.openerQuestions();
     for (int i = 0; i < threeShlokas.length; i++) {
       openerQs[i] = mdToOpeners[threeShlokas[i]] ?? '';
+      openerCovers[i].value = true;
     }
     super.onInit();
   }

@@ -15,21 +15,27 @@ void main() {
     final dio = Dio();
     Get.put(GitHubFetcher(dio));
     Get.put(FeedContent.random());
-  });
-  testWidgets('shows three shlokas', (tester) async {
     Get.put(ContentNotes());
     Get.put(ContentActions());
+  });
+  void switchOpeners(bool openersAreVisible) {
+    final FeedContent feedContent = Get.find();
+    for (int i = 0; i < feedContent.openerCovers.length; i++) {
+      feedContent.openerCovers[i].value = openersAreVisible;
+    }
+  }
+
+  testWidgets('shows three shlokas', (tester) async {
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feed/1')), findsOneWidget);
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
     expect(find.byKey(const Key('feed/3')), findsOneWidget);
-    Get.delete<ContentNotes>();
   });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
+    switchOpeners(false);
     final FeedContent feedContent = Get.find();
-    Get.put(ContentNotes());
-    Get.put(ContentActions());
+    await tester.pumpAndSettle();
     String? navigatedShloka;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed()), getPages: [
       GetPage(
@@ -48,14 +54,19 @@ void main() {
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
   testWidgets('shows the opener questions', (tester) async {
+    switchOpeners(true);
     final FeedContent feedContent = Get.find();
-    Get.put(ContentNotes());
-    Get.put(ContentActions());
     await tester.pumpAndSettle();
     expect(feedContent.openerQs[0], isNotEmpty);
     expect(feedContent.openerQs[1], isNotEmpty);
     expect(feedContent.openerQs[2], isNotEmpty);
+
+    expect(feedContent.openerCovers[0].value, equals(true));
+
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    expect(find.text(feedContent.openerQs[0]), findsOneWidget);
+    expect(find.text(feedContent.openerQs[1]), findsOneWidget);
+    expect(find.text(feedContent.openerQs[2]), findsOneWidget);
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();
