@@ -53,7 +53,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
-  testWidgets('shows the opener questions', (tester) async {
+  testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
     final FeedContent feedContent = Get.find();
     await tester.pumpAndSettle();
@@ -67,9 +67,11 @@ void main() {
     expect(find.text(feedContent.openerQs[0]), findsWidgets);
     expect(find.text(feedContent.openerQs[1]), findsWidgets);
     expect(find.text(feedContent.openerQs[2]), findsWidgets);
-
-    final firstOpener = find.byType(Dismissible).first;
+    const overqPos = 1;
+    final firstOpener = find.byKey(const Key('overq/$overqPos'));
     await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));
+    await tester.pumpAndSettle();
+    expect(feedContent.openerCovers[overqPos - 1].value, equals(false));
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();

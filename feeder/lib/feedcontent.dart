@@ -46,7 +46,6 @@ class FeedContent extends GetxController {
   @override
   void onInit() async {
     feedPicked.value = true;
-    // TODO: Set the openerCovers to true after including the below
     final GitHubFetcher fetcher = Get.find();
     final mdToOpeners = await fetcher.openerQuestions();
     for (int i = 0; i < threeShlokas.length; i++) {
