@@ -18,13 +18,13 @@ Widget contentWithOpenerPane(String filename, int count) {
               child: Container(
                 margin: const EdgeInsets.fromLTRB(15, 5, 0, 15),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.purple.withOpacity(0.75), Colors.purple.withOpacity(0.95)],
-                    begin: AlignmentDirectional.topStart,
-                    end: AlignmentDirectional.bottomEnd,
-                  ),
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))
-                ),
+                    gradient: LinearGradient(
+                      colors: [Colors.purple.withOpacity(0.75), Colors.purple.withOpacity(0.95)],
+                      begin: AlignmentDirectional.topStart,
+                      end: AlignmentDirectional.bottomEnd,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                 constraints: const BoxConstraints.expand(),
                 child: Center(
                     child: Text(feedContent.openerQs[count - 1],
