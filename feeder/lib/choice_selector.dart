@@ -162,7 +162,7 @@ class OpenerPreferenceIcon extends StatelessWidget {
     final FeedContent feedContent = Get.find();
     return GestureDetector(
       onTap: feedContent.toggleOpenerCovers,
-      child: Image.asset('images/opener_cover.jpg', width: 48, height: 48),
+      child: Image.asset('images/opener_cover.png', width: 48, height: 48),
     );
   }
 }
