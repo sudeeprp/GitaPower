@@ -54,4 +54,14 @@ class FeedContent extends GetxController {
     }
     super.onInit();
   }
+
+  void toggleOpenerCovers() {
+    var toState = false;
+    if (openerCovers.any((coverVisible) => coverVisible.value == false)) {
+      toState = true;
+    }
+    for (int i = 0; i < openerCovers.length; i++) {
+      openerCovers[i].value = toState;
+    }
+  }
 }

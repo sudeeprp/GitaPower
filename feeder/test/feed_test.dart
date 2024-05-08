@@ -99,4 +99,13 @@ void main() {
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
   });
+  test('toggles opener cover visibility', () {
+    final FeedContent feedContent = Get.find();
+    feedContent.openerCovers[0].value = false;
+    feedContent.toggleOpenerCovers();
+    expect(feedContent.openerCovers[0].value, equals(true));
+    feedContent.toggleOpenerCovers();
+    expect(feedContent.openerCovers[0].value, equals(false));
+    expect(feedContent.openerCovers[2].value, equals(false));
+  });
 }
