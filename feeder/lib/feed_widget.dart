@@ -16,7 +16,7 @@ Widget contentWithOpenerPane(String filename, int count) {
                 feedContent.openerCovers[count - 1].value = false;
               },
               child: Container(
-                margin: const EdgeInsets.fromLTRB(15, 5, 0, 15),
+                margin: const EdgeInsets.fromLTRB(15, 5, 0, 8),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Colors.purple.withOpacity(0.75), Colors.purple.withOpacity(0.95)],
