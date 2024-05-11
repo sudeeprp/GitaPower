@@ -23,8 +23,8 @@ Widget contentWithOpenerPane(String filename, int count) {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Colors.deepOrange.withOpacity(0.75),
-                          Colors.purple.withOpacity(0.95)
+                          Colors.grey.shade900.withOpacity(0.75),
+                          Colors.grey.shade700.withOpacity(0.95)
                         ],
                         begin: AlignmentDirectional.topStart,
                         end: AlignmentDirectional.bottomEnd,
