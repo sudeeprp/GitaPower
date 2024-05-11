@@ -8,6 +8,7 @@ Widget contentWithOpenerPane(String filename, int count) {
   void hideOpener() {
     feedContent.openerCovers[count - 1].value = false;
   }
+
   return Obx(() {
     if (feedContent.openerCovers[count - 1].value) {
       return Stack(
@@ -17,30 +18,31 @@ Widget contentWithOpenerPane(String filename, int count) {
               key: Key('overq/$count'),
               onDismissed: (direction) => hideOpener(),
               child: GestureDetector(
-                onTap: hideOpener,
+                  onTap: hideOpener,
                   child: Container(
-                  margin: const EdgeInsets.fromLTRB(15, 5, 0, 8),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.grey.shade700.withOpacity(0.8),
-                          Colors.grey.shade500.withOpacity(0.95)
-                        ],
-                        begin: AlignmentDirectional.topStart,
-                        end: AlignmentDirectional.bottomEnd,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                  constraints: const BoxConstraints.expand(),
-                  child: Center(
-                      child: Text(feedContent.openerQs[count - 1], textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.black,
-                            shadows: [Shadow(offset: const Offset(1, 1), blurRadius: 1, color: Colors.grey.shade800)]
-                          ))),
-                )
-              )),
+                    margin: const EdgeInsets.fromLTRB(15, 5, 0, 8),
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.grey.shade700.withOpacity(0.8),
+                            Colors.grey.shade500.withOpacity(0.95)
+                          ],
+                          begin: AlignmentDirectional.topStart,
+                          end: AlignmentDirectional.bottomEnd,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                    constraints: const BoxConstraints.expand(),
+                    child: Center(
+                        child: Text(feedContent.openerQs[count - 1],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 32, color: Colors.black, shadows: [
+                              Shadow(
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 1,
+                                  color: Colors.grey.shade800)
+                            ]))),
+                  ))),
         ],
       );
     } else {
