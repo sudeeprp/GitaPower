@@ -23,8 +23,8 @@ Widget contentWithOpenerPane(String filename, int count) {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Colors.grey.shade900.withOpacity(0.75),
-                          Colors.grey.shade700.withOpacity(0.95)
+                          Colors.grey.shade700.withOpacity(0.8),
+                          Colors.grey.shade500.withOpacity(0.95)
                         ],
                         begin: AlignmentDirectional.topStart,
                         end: AlignmentDirectional.bottomEnd,
@@ -33,8 +33,12 @@ Widget contentWithOpenerPane(String filename, int count) {
                           topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                   constraints: const BoxConstraints.expand(),
                   child: Center(
-                      child: Text(feedContent.openerQs[count - 1],
-                          textAlign: TextAlign.center, style: const TextStyle(fontSize: 32))),
+                      child: Text(feedContent.openerQs[count - 1], textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 32,
+                            color: Colors.black,
+                            shadows: [Shadow(offset: const Offset(1, 1), blurRadius: 1, color: Colors.grey.shade800)]
+                          ))),
                 )
               )),
         ],
