@@ -1,3 +1,6 @@
+import 'package:askys/content_source.dart';
+import 'package:askys/feedcontent.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -46,6 +49,22 @@ void main() {
     await tester.pumpAndSettle();
     expect(choices.script.value, isNot(initialHeadPreference));
     Get.delete<Choices>();
+  });
+  testWidgets('opener preference icon toggles opener visibility', (tester) async {
+    Get.put(GitHubFetcher(Dio()));
+    final feedContent = FeedContent.random();
+    Get.put(feedContent);
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: OpenerPreferenceIcon())));
+    final openerPreference = find.byType(OpenerPreferenceIcon);
+    await tester.tap(openerPreference);
+    await tester.pumpAndSettle();
+    final oneTapState = feedContent.openerCovers[1].value;
+    await tester.tap(openerPreference);
+    await tester.pumpAndSettle();
+    final twoTapState = feedContent.openerCovers[1].value;
+    expect(twoTapState, isNot(oneTapState));
+    Get.delete<FeedContent>();
+    Get.delete<GitHubFetcher>();
   });
   testWidgets('initializes defaults when nothing was stored', (tester) async {
     final choices = Choices();

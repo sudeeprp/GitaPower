@@ -44,7 +44,7 @@ Widget makeMyHome() {
                     choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(
             name: '/feed',
-            page: () => screenify(buildFeed(), choicesRow: choicesRow(choicesForContent()))),
+            page: () => screenify(buildFeed(), choicesRow: choicesRow(choicesForFeed()))),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
@@ -91,4 +91,8 @@ List<Widget> choicesForContent() {
     ThemeSelectionIcon(),
     SizedBox(width: choiceSpacing),
   ];
+}
+
+List<Widget> choicesForFeed() {
+  return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
 }

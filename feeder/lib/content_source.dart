@@ -36,6 +36,13 @@ class GitHubFetcher extends GetxController {
     return notes;
   }
 
+  Future<Map<String, String>> openerQuestions() async {
+    final openerQuestionsAsStr = await _compiledAsString('md_opener_questions.json');
+    final Map<String, dynamic> mdToQuestionsJson = jsonDecode(openerQuestionsAsStr);
+    final mdToQuestions = Map<String, String>.from(mdToQuestionsJson);
+    return mdToQuestions;
+  }
+
   Future<String> _compiledAsString(String jsonFilename) async {
     return await _getRawContent(compileFolder, jsonFilename);
   }

@@ -8,47 +8,34 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
-
-const threeShlokaContent = '''
-[{"Back-to-Basics.md": ["applopener_1"]}, {"Chapter 1.md": []}, {"2-4.md": ["applnote_13"]}, {"10-10.md": []}, {"18-4.md": []}]
-''';
-const someCompiledNotes = '''
-[{"note_id": "applopener_11", "text": "Is there a different way?", "file": "Back-to-Basics.md"}]
-''';
 
 void main() {
   setUp(() {
     Get.put(Choices());
     final dio = Dio();
-    final dioAdapter = DioAdapter(dio: dio);
-    dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/2-4.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-10.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.mdPath}/18-4.md', (svr) => svr.reply(200, '`भजताम्`'));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
-        (svr) => svr.reply(200, threeShlokaContent));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
-        (server) => server.reply(200, someCompiledNotes));
     Get.put(GitHubFetcher(dio));
-  });
-  testWidgets('shows three shlokas', (tester) async {
-    Get.put(FeedContent());
+    Get.put(FeedContent.random());
     Get.put(ContentNotes());
     Get.put(ContentActions());
+  });
+  void switchOpeners(bool openersAreVisible) {
+    final FeedContent feedContent = Get.find();
+    for (int i = 0; i < feedContent.openerCovers.length; i++) {
+      feedContent.openerCovers[i].value = openersAreVisible;
+    }
+  }
+
+  testWidgets('shows three shlokas', (tester) async {
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feed/1')), findsOneWidget);
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
     expect(find.byKey(const Key('feed/3')), findsOneWidget);
-    Get.delete<ContentNotes>();
-    Get.delete<FeedContent>();
   });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
-    final feedContent = FeedContent();
-    Get.put(feedContent);
-    Get.put(ContentNotes());
-    Get.put(ContentActions());
+    switchOpeners(false);
+    final FeedContent feedContent = Get.find();
+    await tester.pumpAndSettle();
     String? navigatedShloka;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed()), getPages: [
       GetPage(
@@ -66,8 +53,28 @@ void main() {
     await tester.pumpAndSettle();
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
+  testWidgets('shows the opener questions, hides on swipe', (tester) async {
+    switchOpeners(true);
+    final FeedContent feedContent = Get.find();
+    await tester.pumpAndSettle();
+    expect(feedContent.openerQs[0], isNotEmpty);
+    expect(feedContent.openerQs[1], isNotEmpty);
+    expect(feedContent.openerQs[2], isNotEmpty);
+
+    expect(feedContent.openerCovers[0].value, equals(true));
+
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    expect(find.text(feedContent.openerQs[0]), findsWidgets);
+    expect(find.text(feedContent.openerQs[1]), findsWidgets);
+    expect(find.text(feedContent.openerQs[2]), findsWidgets);
+    const overqPos = 1;
+    final firstOpener = find.byKey(const Key('overq/$overqPos'));
+    await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));
+    await tester.pumpAndSettle();
+    expect(feedContent.openerCovers[overqPos - 1].value, equals(false));
+  });
   test('picks only filenames with shlokas', () async {
-    final shlokaMDs = await allShlokaMDs();
+    final shlokaMDs = allShlokaMDs();
     expect(shlokaMDs.length, equals(600)); // counted 600 shloka files
   });
   test('recognizes chapter and shloka numbers for comparison', () {
@@ -91,5 +98,14 @@ void main() {
     expect(feedMDs.length, equals(3));
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
+  });
+  test('toggles opener cover visibility', () {
+    final FeedContent feedContent = Get.find();
+    feedContent.openerCovers[0].value = false;
+    feedContent.toggleOpenerCovers();
+    expect(feedContent.openerCovers[0].value, equals(true));
+    feedContent.toggleOpenerCovers();
+    expect(feedContent.openerCovers[0].value, equals(false));
+    expect(feedContent.openerCovers[2].value, equals(false));
   });
 }

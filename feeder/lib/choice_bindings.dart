@@ -17,7 +17,7 @@ class ChoiceBinding implements Bindings {
     Get.put(ChaptersTOC());
     Get.put(NotesTOC());
     Get.put(ContentNotes());
-    Get.put(FeedContent());
+    Get.put(FeedContent.random());
     Get.put(ContentActions());
   }
 }

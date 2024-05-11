@@ -1,3 +1,4 @@
+import 'package:askys/feedcontent.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -149,6 +150,19 @@ class HeaderPreferenceIcon extends StatelessWidget {
             width: 48,
             height: 48);
       }),
+    );
+  }
+}
+
+class OpenerPreferenceIcon extends StatelessWidget {
+  const OpenerPreferenceIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final FeedContent feedContent = Get.find();
+    return GestureDetector(
+      onTap: feedContent.toggleOpenerCovers,
+      child: Image.asset('images/opener_cover.png', width: 48, height: 48),
     );
   }
 }

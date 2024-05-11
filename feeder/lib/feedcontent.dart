@@ -1,8 +1,9 @@
 import 'dart:math';
+import 'package:askys/content_source.dart';
 import 'package:get/get.dart';
 import 'shloka_headers.dart' as shlokas;
 
-Future<List<String>> allShlokaMDs() async {
+List<String> allShlokaMDs() {
   return shlokas.headers.keys.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
 }
 
@@ -37,10 +38,30 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 class FeedContent extends GetxController {
   List<String> threeShlokas = [];
   final feedPicked = false.obs;
+  final openerQs = ['', '', ''];
+  final openerCovers = [false.obs, false.obs, false.obs];
+  FeedContent.random() {
+    threeShlokas = createRandomFeed(allShlokaMDs());
+  }
   @override
   void onInit() async {
-    threeShlokas = createRandomFeed(await allShlokaMDs());
     feedPicked.value = true;
+    final GitHubFetcher fetcher = Get.find();
+    final mdToOpeners = await fetcher.openerQuestions();
+    for (int i = 0; i < threeShlokas.length; i++) {
+      openerQs[i] = mdToOpeners[threeShlokas[i]] ?? '';
+      openerCovers[i].value = true;
+    }
     super.onInit();
+  }
+
+  void toggleOpenerCovers() {
+    var toState = false;
+    if (openerCovers.any((coverVisible) => coverVisible.value == false)) {
+      toState = true;
+    }
+    for (int i = 0; i < openerCovers.length; i++) {
+      openerCovers[i].value = toState;
+    }
   }
 }
