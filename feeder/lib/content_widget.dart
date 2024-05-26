@@ -252,16 +252,13 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
     final List<InlineSpan> commenter = [
       WidgetSpan(
           child: Floatable(
-              float: FCFloat.start,
-              child: DropCap(
-                width: 50,
-                height: 50,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 1, top: 10, right: 5),
-                  child: CircleAvatar(
-                      radius: 20, backgroundImage: avatarImages[rnd.nextInt(avatarImages.length)]),
-                ),
-              )))
+        float: FCFloat.start,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 1, top: 10, right: 5),
+          child: CircleAvatar(
+              radius: 20, backgroundImage: avatarImages[rnd.nextInt(avatarImages.length)]),
+        ),
+      )),
     ];
     visibleSpans = commenter + spans;
     return FloatColumn(children: [TextSpan(children: visibleSpans)]);

@@ -33,7 +33,6 @@ dependencies:
   shared_preferences: 2.2.3
   enum_to_string:
   float_column: 2.1.5
-  drop_cap_text:
 
 dev_dependencies:
   flutter_test:
