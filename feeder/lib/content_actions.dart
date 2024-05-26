@@ -36,7 +36,7 @@ List<Widget> navigationButtons(
                 heroTag:
                     'nextBtn${String.fromCharCodes(List.generate(5, (index) => Random().nextInt(33) + 89))}',
                 mini: true,
-                backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.5),
+                backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.5),
                 child: Icon(icon),
               ))));
   return [

@@ -1,6 +1,6 @@
+import 'dart:math';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
-import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -243,19 +243,22 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   if (visibleSpans.isEmpty) {
     return const Text('');
   } else if (sectionType == SectionType.commentary) {
+    const avatarImages = [
+      AssetImage('images/ramanuja3.png'),
+      AssetImage('images/omnamonarayanaya.png'),
+      AssetImage('images/threepromises.png')
+    ];
+    final rnd = Random();
     final List<InlineSpan> commenter = [
       WidgetSpan(
           child: Floatable(
-              float: FCFloat.start,
-              child: DropCap(
-                width: 50,
-                height: 50,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 1, top: 10, right: 5),
-                  child:
-                      CircleAvatar(radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
-                ),
-              )))
+        float: FCFloat.start,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 1, top: 10, right: 5),
+          child: CircleAvatar(
+              radius: 20, backgroundImage: avatarImages[rnd.nextInt(avatarImages.length)]),
+        ),
+      )),
     ];
     visibleSpans = commenter + spans;
     return FloatColumn(children: [TextSpan(children: visibleSpans)]);
@@ -346,7 +349,7 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey.withOpacity(0.5),
