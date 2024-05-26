@@ -353,7 +353,7 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey.withOpacity(0.5),
