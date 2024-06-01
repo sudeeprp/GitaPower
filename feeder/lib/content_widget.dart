@@ -243,27 +243,7 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   if (visibleSpans.isEmpty) {
     return const Text('');
   } else if (sectionType == SectionType.commentary) {
-    const avatarImages = [
-      AssetImage('images/ramanuja3.png'),
-      AssetImage('images/omnamonarayanaya.png'),
-      AssetImage('images/threepromises.png')
-    ];
-    final rnd = Random();
-    final List<InlineSpan> commenter = [
-      WidgetSpan(
-          child: Floatable(
-        float: FCFloat.start,
-        child: Padding(
-            padding: const EdgeInsets.only(left: 1, top: 10, right: 5),
-            child: GestureDetector(
-              onTap: () => Get.toNamed('/shloka/ramanuja.md'),
-              child: CircleAvatar(
-                  radius: 20, backgroundImage: avatarImages[rnd.nextInt(avatarImages.length)]),
-            )),
-      )),
-    ];
-    visibleSpans = commenter + spans;
-    return FloatColumn(children: [TextSpan(children: visibleSpans)]);
+    return constructCommentary(spans);
   } else if (sectionType == SectionType.anchor) {
     return SizedBox.shrink(child: Text.rich(TextSpan(children: visibleSpans)));
   } else if (visibleSpans.length == 1) {
@@ -271,6 +251,33 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   } else {
     return Text.rich(TextSpan(children: visibleSpans));
   }
+}
+
+Widget constructCommentary(List<TextSpan> spans) {
+  final List<InlineSpan> commenter = [
+    WidgetSpan(
+        child: Floatable(
+      float: FCFloat.start,
+      child: Padding(
+          padding: const EdgeInsets.only(left: 1, top: 10, right: 5), child: avataraRamanuja()),
+    )),
+  ];
+  return FloatColumn(children: [TextSpan(children: commenter + spans)]);
+}
+
+Widget avataraRamanuja({String? key}) {
+  const avatarImages = [
+    AssetImage('images/ramanuja3.png'),
+    AssetImage('images/omnamonarayanaya.png'),
+    AssetImage('images/threepromises.png')
+  ];
+  const avatarAnchors = ['ramanuja3', 'omnamonarayanaya', 'threepromises'];
+  final avatarIndex = Random().nextInt(avatarImages.length);
+  return GestureDetector(
+    onTap: () => Get.toNamed('/shloka/ramanuja.md/${avatarAnchors[avatarIndex]}'),
+    child: CircleAvatar(
+        key: key != null ? Key(key) : null, radius: 20, backgroundImage: avatarImages[avatarIndex]),
+  );
 }
 
 void navigateToLink(String? link) {

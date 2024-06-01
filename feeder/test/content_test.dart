@@ -181,6 +181,22 @@ Arjuna says to Krishna - how do we think of You?
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/$targetFilename/$targetNote');
   });
+  testWidgets('Navigates to the story behind the avatar', (tester) async {
+    String? anchor;
+    await tester
+        .pumpWidget(GetMaterialApp(home: Scaffold(body: avataraRamanuja(key: 'avakey')), getPages: [
+      GetPage(
+          name: '/shloka/ramanuja.md/:anchor',
+          page: () {
+            anchor = Get.parameters['anchor']!;
+            return const Text('ramanuja reached');
+          }),
+    ]));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('avakey')));
+    await tester.pumpAndSettle();
+    expect(anchor, isNotNull);
+  });
   testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
     Get.put(Choices());
     Get.put(ContentActions());

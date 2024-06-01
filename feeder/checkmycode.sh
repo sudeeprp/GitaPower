@@ -8,7 +8,7 @@ NC='\033[0m'
 
 if [[ -d gita-begin/gita ]] && [[ -d gita-begin/compile ]]
 then
-  echo "Skipping Gita clone, since directories already exist"
+  echo "Skipping Gita clone, since gita-begin/gita gita-begin/compile already exist"
 else
   bash gita-begin-offline.sh
 fi
