@@ -191,7 +191,7 @@ class WidgetMaker implements md.NodeVisitor {
 }
 
 bool _hasAnchor(String inputText) {
-  return inputText.startsWith('<a name=');
+  return inputText.trim().startsWith('<a name=');
 }
 
 bool _startsWithDevanagari(String? content) {
