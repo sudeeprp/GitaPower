@@ -36,12 +36,8 @@ Widget contentWithOpenerPane(String filename, int count) {
                     child: Center(
                         child: Text(feedContent.openerQs[count - 1],
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 32, color: Colors.black, shadows: [
-                              Shadow(
-                                  offset: const Offset(1, 1),
-                                  blurRadius: 1,
-                                  color: Colors.grey.shade800)
-                            ]))),
+                            style: const TextStyle(
+                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold))),
                   ))),
         ],
       );
