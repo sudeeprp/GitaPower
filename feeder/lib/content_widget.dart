@@ -269,9 +269,19 @@ Widget avataraRamanuja({String? key}) {
   const avatarImages = [
     AssetImage('images/ramanuja3.png'),
     AssetImage('images/omnamonarayanaya.png'),
-    AssetImage('images/threepromises.png')
+    AssetImage('images/threepromises.png'),
+    AssetImage('images/melukote.png'),
+    AssetImage('images/sanyasa.png'),
+    AssetImage('images/srirangam.png'),
   ];
-  const avatarAnchors = ['ramanuja3', 'omnamonarayanaya', 'threepromises'];
+  const avatarAnchors = [
+    'ramanuja3',
+    'omnamonarayanaya',
+    'threepromises',
+    'melukote',
+    'sanyasa',
+    'srirangam'
+  ];
   final avatarIndex = Random().nextInt(avatarImages.length);
   return GestureDetector(
     onTap: () => Get.toNamed('/shloka/ramanuja.md/${avatarAnchors[avatarIndex]}'),
