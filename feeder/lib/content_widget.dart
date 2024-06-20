@@ -1,6 +1,6 @@
+import 'dart:math';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
-import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -191,7 +191,7 @@ class WidgetMaker implements md.NodeVisitor {
 }
 
 bool _hasAnchor(String inputText) {
-  return inputText.startsWith('<a name=');
+  return inputText.trim().startsWith('<a name=');
 }
 
 bool _startsWithDevanagari(String? content) {
@@ -243,22 +243,7 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   if (visibleSpans.isEmpty) {
     return const Text('');
   } else if (sectionType == SectionType.commentary) {
-    final List<InlineSpan> commenter = [
-      WidgetSpan(
-          child: Floatable(
-              float: FCFloat.start,
-              child: DropCap(
-                width: 50,
-                height: 50,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 1, top: 10, right: 5),
-                  child:
-                      CircleAvatar(radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
-                ),
-              )))
-    ];
-    visibleSpans = commenter + spans;
-    return FloatColumn(children: [TextSpan(children: visibleSpans)]);
+    return constructCommentary(spans);
   } else if (sectionType == SectionType.anchor) {
     return SizedBox.shrink(child: Text.rich(TextSpan(children: visibleSpans)));
   } else if (visibleSpans.length == 1) {
@@ -266,6 +251,43 @@ Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
   } else {
     return Text.rich(TextSpan(children: visibleSpans));
   }
+}
+
+Widget constructCommentary(List<TextSpan> spans) {
+  final List<InlineSpan> commenter = [
+    WidgetSpan(
+        child: Floatable(
+      float: FCFloat.start,
+      child: Padding(
+          padding: const EdgeInsets.only(left: 1, top: 10, right: 5), child: avataraRamanuja()),
+    )),
+  ];
+  return FloatColumn(children: [TextSpan(children: commenter + spans)]);
+}
+
+Widget avataraRamanuja({String? key}) {
+  const avatarImages = [
+    AssetImage('images/ramanuja3.png'),
+    AssetImage('images/omnamonarayanaya.png'),
+    AssetImage('images/threepromises.png'),
+    AssetImage('images/melukote.png'),
+    AssetImage('images/sanyasa.png'),
+    AssetImage('images/srirangam.png'),
+  ];
+  const avatarAnchors = [
+    'ramanuja3',
+    'omnamonarayanaya',
+    'threepromises',
+    'melukote',
+    'sanyasa',
+    'srirangam'
+  ];
+  final avatarIndex = Random().nextInt(avatarImages.length);
+  return GestureDetector(
+    onTap: () => Get.toNamed('/shloka/ramanuja.md/${avatarAnchors[avatarIndex]}'),
+    child: CircleAvatar(
+        key: key != null ? Key(key) : null, radius: 20, backgroundImage: avatarImages[avatarIndex]),
+  );
 }
 
 void navigateToLink(String? link) {
@@ -346,7 +368,7 @@ String _tuneContentForDisplay(MatterForInline inlineMatter) {
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey.withOpacity(0.5),
