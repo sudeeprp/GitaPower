@@ -46,7 +46,9 @@ void navigateApplink(Uri? uri) {
 }
 
 String? uriToNavigationPath(Uri uri) {
-  if (uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'gitapower' && uri.pathSegments[1] == 'feed') {
+  if (uri.pathSegments.length >= 2 &&
+      uri.pathSegments[0] == 'gitapower' &&
+      uri.pathSegments[1] == 'feed') {
     if (uri.pathSegments.length == 3) {
       return '/feed/${uri.pathSegments[2]}';
     } else {
@@ -72,7 +74,7 @@ Widget makeMyHome() {
                 choicesRow:
                     choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/feed', page: () => feedScreen()),
-        GetPage(name: '/feed/:shlokas', page: () => feedScreen()),
+        GetPage(name: '/feed/:shlokas', page: () => feedScreen(shlokas: Get.parameters['shlokas'])),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
@@ -94,7 +96,7 @@ Widget makeMyHome() {
       ]);
 }
 
-Widget feedScreen(String? shlokas) {
+Widget feedScreen({String? shlokas}) {
   return screenify(buildFeed(), choicesRow: choicesRow(choicesForFeed()));
 }
 
