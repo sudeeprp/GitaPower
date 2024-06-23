@@ -1,3 +1,4 @@
+import 'package:app_links/app_links.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/notes_widget.dart';
@@ -29,7 +30,35 @@ ThemeData darkTheme() {
   );
 }
 
+final _appLinks = AppLinks();
+
+void initialApplinkup() async {
+  navigateApplink(await _appLinks.getInitialLink());
+}
+
+void navigateApplink(Uri? uri) {
+  if (uri != null) {
+    final navigationPath = uriToNavigationPath(uri);
+    if (navigationPath != null) {
+      Get.toNamed(navigationPath);
+    }
+  }
+}
+
+String? uriToNavigationPath(Uri uri) {
+  if (uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'gitapower' && uri.pathSegments[1] == 'feed') {
+    if (uri.pathSegments.length == 3) {
+      return '/feed/${uri.pathSegments[2]}';
+    } else {
+      return '/feed';
+    }
+  }
+  return null;
+}
+
 Widget makeMyHome() {
+  _appLinks.uriLinkStream.listen(navigateApplink);
+  WidgetsBinding.instance.addPostFrameCallback((_) => initialApplinkup());
   return GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
@@ -42,9 +71,8 @@ Widget makeMyHome() {
             page: () => screenify(const NotesWidget(),
                 choicesRow:
                     choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
-        GetPage(
-            name: '/feed',
-            page: () => screenify(buildFeed(), choicesRow: choicesRow(choicesForFeed()))),
+        GetPage(name: '/feed', page: () => feedScreen()),
+        GetPage(name: '/feed/:shlokas', page: () => feedScreen()),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
@@ -64,6 +92,10 @@ Widget makeMyHome() {
                     initialAnchor: Get.parameters['noteId']),
                 choicesRow: choicesRow(choicesForContent()))),
       ]);
+}
+
+Widget feedScreen(String? shlokas) {
+  return screenify(buildFeed(), choicesRow: choicesRow(choicesForFeed()));
 }
 
 class Home extends StatelessWidget {
