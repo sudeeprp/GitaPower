@@ -99,6 +99,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
+  testWidgets('Navigates an app link', (tester) async {
+    navigateApplink(null);
+  });
   test('Converts uri to navigation path', () {
     expect(uriToNavigationPath(Uri.parse('/gitapower/feed/item')), '/feed/item');
 
