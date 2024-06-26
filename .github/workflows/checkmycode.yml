@@ -1,12 +1,12 @@
 name: Flutter checkmycode
 
 on:
-  - push
-  - pull_request
-  - workflow_run:
-      workflows: ["Flutter format"]
-      types:
-        - completed
+  push
+  pull_request
+  workflow_run:
+    workflows: ["Flutter format"]
+    types:
+      - completed
 
 jobs:
   checks:
