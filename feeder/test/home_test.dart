@@ -100,7 +100,15 @@ void main() {
     expect(Get.currentRoute, '/feed');
   });
   testWidgets('Navigates an app link', (tester) async {
+    await tester.pumpWidget(GetMaterialApp(
+        home: const Scaffold(body: Text('Start page')),
+        getPages: [GetPage(name: '/feed/:shlokas', page: () => const Text('reached'))]));
     navigateApplink(null);
+    await tester.pumpAndSettle();
+    const shlokas = '11-34.15-17.18-51_to_18-53';
+    navigateApplink(Uri.parse('/gitapower/feed/$shlokas'));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/feed/$shlokas');
   });
   test('Converts uri to navigation path', () {
     expect(uriToNavigationPath(Uri.parse('/gitapower/feed/item')), '/feed/item');
