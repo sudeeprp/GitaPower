@@ -1,0 +1,25 @@
+name: Flutter format
+
+on: [workflow_dispatch]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+    - name: setup flutter
+      uses: subosito/flutter-action@v2
+    - name: get dependencies
+      working-directory: ./feeder
+      run: flutter pub get
+    - name: format
+      working-directory: ./feeder
+      run: dart format -l 100 .
+    - name: commit
+      run: |
+        git config user.email "flutformat@rapalearning.com"
+        git config user.name "flutter formatter"
+        git commit -m "formatting bot"
+        git push
+
