@@ -102,21 +102,21 @@ void main() {
   testWidgets('Navigates an app link', (tester) async {
     await tester.pumpWidget(GetMaterialApp(
         home: const Scaffold(body: Text('Start page')),
-        getPages: [GetPage(name: '/feed/:shlokas', page: () => const Text('reached'))]));
+        getPages: [GetPage(name: '/feed', page: () => const Text('reached'))]));
     navigateApplink(null);
     await tester.pumpAndSettle();
     const shlokas = '11-34.15-17.18-51_to_18-53';
     navigateApplink(Uri.parse('/gitapower/feed/$shlokas'));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/feed/$shlokas');
+    expect(Get.currentRoute, '/feed');
   });
   test('Converts uri to navigation path', () {
-    expect(uriToNavigationPath(Uri.parse('/gitapower/feed/item')), '/feed/item');
+    expect(uriPointsToFeed(Uri.parse('/gitapower/feed/1-1.2-2.3-3')), isTrue);
 
-    expect(uriToNavigationPath(Uri.parse('/gitapower/feed')), '/feed');
+    expect(uriPointsToFeed(Uri.parse('/gitapower/feed')), isTrue);
 
-    expect(uriToNavigationPath(Uri.parse('/otherpath')), isNull);
+    expect(uriPointsToFeed(Uri.parse('/otherpath')), isFalse);
 
-    expect(uriToNavigationPath(Uri.parse('/gitapower')), isNull);
+    expect(uriPointsToFeed(Uri.parse('/gitapower')), isFalse);
   });
 }

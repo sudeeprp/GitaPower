@@ -57,13 +57,11 @@ void main() {
   testWidgets('switches to curated shlokas', (tester) async {
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed()), getPages: [
-      GetPage(name: '/feed/:shlokas', page: () => feedScreen(shlokas: Get.parameters['shlokas']))
-    ]));
+    await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: buildFeed()),
+        getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
     await tester.pumpAndSettle();
     navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14'));
-    // final FeedContent feedContent = Get.find();
-    // feedContent.setCuratedShlokaMDs(['2-34.md', '9-13.md', '15-14.md']);
     await tester.pumpAndSettle();
     expect(find.text('2-34'), findsOneWidget);
   });

@@ -38,31 +38,21 @@ void initialApplinkup() async {
 }
 
 void navigateApplink(Uri? uri) {
-  if (uri != null) {
-    final navigationPath = uriToNavigationPath(uri);
-    if (navigationPath != null) {
-      if (uri.pathSegments.length == 3) {
-        final mdsInFeed =
-            uri.pathSegments[2].split('.').map((shlokaFile) => '$shlokaFile.md').toList();
-        final FeedContent feedContent = Get.find();
-        feedContent.setCuratedShlokaMDs(mdsInFeed);
-      }
-      Get.toNamed(navigationPath);
+  if (uri != null && uriPointsToFeed(uri)) {
+    if (uri.pathSegments.length == 3) {
+      final mdsInFeed =
+          uri.pathSegments[2].split('.').map((shlokaFile) => '$shlokaFile.md').toList();
+      final FeedContent feedContent = Get.find();
+      feedContent.setCuratedShlokaMDs(mdsInFeed);
     }
+    Get.toNamed('/feed');
   }
 }
 
-String? uriToNavigationPath(Uri uri) {
-  if (uri.pathSegments.length >= 2 &&
+bool uriPointsToFeed(Uri uri) {
+  return uri.pathSegments.length >= 2 &&
       uri.pathSegments[0] == 'gitapower' &&
-      uri.pathSegments[1] == 'feed') {
-    if (uri.pathSegments.length == 3) {
-      return '/feed/${uri.pathSegments[2]}';
-    } else {
-      return '/feed';
-    }
-  }
-  return null;
+      uri.pathSegments[1] == 'feed';
 }
 
 Widget makeMyHome() {
@@ -81,7 +71,6 @@ Widget makeMyHome() {
                 choicesRow:
                     choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/feed', page: () => feedScreen()),
-        GetPage(name: '/feed/:shlokas', page: () => feedScreen(shlokas: Get.parameters['shlokas'])),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
@@ -103,7 +92,7 @@ Widget makeMyHome() {
       ]);
 }
 
-Widget feedScreen({String? shlokas}) {
+Widget feedScreen() {
   return screenify(buildFeed(), choicesRow: choicesRow(choicesForFeed()));
 }
 
