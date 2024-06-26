@@ -1,6 +1,7 @@
 import 'package:app_links/app_links.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
+import 'package:askys/feedcontent.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,6 +41,12 @@ void navigateApplink(Uri? uri) {
   if (uri != null) {
     final navigationPath = uriToNavigationPath(uri);
     if (navigationPath != null) {
+      if (uri.pathSegments.length == 3) {
+        final mdsInFeed =
+            uri.pathSegments[2].split('.').map((shlokaFile) => '$shlokaFile.md').toList();
+        final FeedContent feedContent = Get.find();
+        feedContent.setCuratedShlokaMDs(mdsInFeed);
+      }
       Get.toNamed(navigationPath);
     }
   }
