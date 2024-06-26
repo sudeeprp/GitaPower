@@ -99,4 +99,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
+  test('Converts uri to navigation path', () {
+    expect(uriToNavigationPath(Uri.parse('/gitapower/feed/item')), '/feed/item');
+
+    expect(uriToNavigationPath(Uri.parse('/gitapower/feed')), '/feed');
+
+    expect(uriToNavigationPath(Uri.parse('/otherpath')), isNull);
+
+    expect(uriToNavigationPath(Uri.parse('/gitapower')), isNull);
+  });
 }

@@ -32,6 +32,16 @@ void main() {
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
     expect(find.byKey(const Key('feed/3')), findsOneWidget);
   });
+  testWidgets('switches to curated shlokas', (tester) async {
+    final ContentNotes contentNotes = Get.find();
+    contentNotes.notesLoaded.value = true;
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpAndSettle();
+    final FeedContent feedContent = Get.find();
+    feedContent.setCuratedShlokaMDs(['2-34.md', '9-13.md', '15-14.md']);
+    await tester.pumpAndSettle();
+    expect(find.text('2-34', findRichText: true, skipOffstage: false), findsOneWidget);
+  });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
     switchOpeners(false);
     final FeedContent feedContent = Get.find();
