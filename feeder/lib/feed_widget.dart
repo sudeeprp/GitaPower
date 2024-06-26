@@ -51,10 +51,10 @@ class FeedWidget extends StatelessWidget {
   const FeedWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    int count = 1;
     final FeedContent feedContent = Get.find();
     return Obx(() {
-      if (feedContent.feedPicked.value) {
+      if (feedContent.threeShlokas.length == 3) {
+        int count = 1;
         return Column(
             children: feedContent.threeShlokas
                 .map((filename) => Expanded(

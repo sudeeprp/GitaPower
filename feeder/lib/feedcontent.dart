@@ -36,23 +36,25 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 }
 
 class FeedContent extends GetxController {
-  List<String> threeShlokas = [];
-  final feedPicked = false.obs;
+  final threeShlokas = <String>[].obs;
   final openerQs = ['', '', ''];
   final openerCovers = [false.obs, false.obs, false.obs];
   FeedContent.random() {
-    threeShlokas = createRandomFeed(allShlokaMDs());
+    threeShlokas.value = createRandomFeed(allShlokaMDs());
   }
   @override
   void onInit() async {
-    feedPicked.value = true;
+    await initFeedContent();
+    super.onInit();
+  }
+
+  Future<void> initFeedContent() async {
     final GitHubFetcher fetcher = Get.find();
     final mdToOpeners = await fetcher.openerQuestions();
     for (int i = 0; i < threeShlokas.length; i++) {
       openerQs[i] = mdToOpeners[threeShlokas[i]] ?? '';
       openerCovers[i].value = true;
     }
-    super.onInit();
   }
 
   void toggleOpenerCovers() {
@@ -63,5 +65,10 @@ class FeedContent extends GetxController {
     for (int i = 0; i < openerCovers.length; i++) {
       openerCovers[i].value = toState;
     }
+  }
+
+  void setCuratedShlokaMDs(List<String> list) async {
+    threeShlokas.value = list;
+    await initFeedContent();
   }
 }
