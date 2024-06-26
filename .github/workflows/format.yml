@@ -20,6 +20,6 @@ jobs:
       run: |
         git config user.email "flutformat@rapalearning.com"
         git config user.name "flutter formatter"
-        git commit -m "formatting bot"
+        git commit -a -m "formatting bot"
         git push
 
