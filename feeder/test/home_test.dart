@@ -100,6 +100,9 @@ void main() {
     expect(Get.currentRoute, '/feed');
   });
   testWidgets('Navigates an app link', (tester) async {
+    // To test manually, use:
+    // adb shell am start -a android.intent.action.VIEW   -c android.intent.category.BROWSABLE \
+    //   -d "https://rapalearning.com/gitapower/feed/1-1.2-1.3-1"
     await tester.pumpWidget(GetMaterialApp(
         home: const Scaffold(body: Text('Start page')),
         getPages: [GetPage(name: '/feed', page: () => const Text('reached'))]));
