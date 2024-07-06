@@ -41,6 +41,7 @@ void initialApplinkup() async {
 void navigateApplink(Uri? uri) {
   if (uri != null && uriPointsToFeed(uri)) {
     if (uri.pathSegments.length == 3) {
+      // TODO: Take the docId from the URL
       // String? docId;
       final curation = uri.pathSegments[2].split('.');
       if (curation.length >= 3) {
