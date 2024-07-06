@@ -65,10 +65,23 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('2-34'), findsOneWidget);
   });
+  testWidgets('can tap on play when narration is available', (tester) async {
+    final ContentNotes contentNotes = Get.find();
+    contentNotes.notesLoaded.value = true;
+    await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: buildFeed()),
+        getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
+    await tester.pumpAndSettle();
+    navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14.docid'));
+    await tester.pumpAndSettle();
+    final player = find.byKey(const Key('feedplay'));
+    expect(player, findsOneWidget);
+    await tester.tap(player);
+  });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
-    final FeedContent feedContent = Get.find();
     await tester.pumpAndSettle();
+    final FeedContent feedContent = Get.find();
     expect(feedContent.openerQs[0], isNotEmpty);
     expect(feedContent.openerQs[1], isNotEmpty);
     expect(feedContent.openerQs[2], isNotEmpty);

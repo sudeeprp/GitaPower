@@ -2,6 +2,7 @@ import 'package:app_links/app_links.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
+import 'package:askys/feedplay.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,10 +41,17 @@ void initialApplinkup() async {
 void navigateApplink(Uri? uri) {
   if (uri != null && uriPointsToFeed(uri)) {
     if (uri.pathSegments.length == 3) {
-      final mdsInFeed =
-          uri.pathSegments[2].split('.').map((shlokaFile) => '$shlokaFile.md').toList();
-      final FeedContent feedContent = Get.find();
-      feedContent.setCuratedShlokaMDs(mdsInFeed);
+      // String? docId;
+      final curation = uri.pathSegments[2].split('.');
+      if (curation.length >= 3) {
+        final filesWithoutExtn = curation.sublist(0, 3);
+        // if (curation.length == 4) {
+        //   docId = curation[3];
+        // }
+        final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
+        final FeedContent feedContent = Get.find();
+        feedContent.setCuratedShlokaMDs(mdsInFeed);
+      }
     }
     Get.toNamed('/feed');
   }
@@ -124,5 +132,12 @@ List<Widget> choicesForContent() {
 }
 
 List<Widget> choicesForFeed() {
-  return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
+  return const [
+        FeedPlay(
+          key: Key('feedplay'),
+        ),
+        SizedBox(width: choiceSpacing)
+      ] +
+      const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] +
+      choicesForContent();
 }
