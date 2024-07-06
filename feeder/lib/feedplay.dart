@@ -15,11 +15,21 @@ class FeedPlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final dio = Dio();
-        final narration = await dio.get(asysWebApp, queryParameters: {'id': docId});
+        try {
+          final dio = Dio();
+          final gdoc = await dio.get(asysWebApp, queryParameters: {'id': docId});
 
-        FlutterTts flutterTts = FlutterTts();
-        await flutterTts.speak(narration.data.toString());
+          FlutterTts flutterTts = FlutterTts();
+          await flutterTts.setQueueMode(1);
+          final narration = gdoc.data.toString();
+          final narrationParas = narration.split('\n');
+          for (final para in narrationParas) {
+            await flutterTts.speak(para);
+          }
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('played!')));
+        } on DioException {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('error getting asky!')));
+        }
       },
       child: const Icon(Icons.play_arrow),
     );
