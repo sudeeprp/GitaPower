@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget beginItem(String title, String about, Image image, {Key? key}) {
+Widget titleTextContainer(String title, String about) {
   final titleText = Padding(
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     child: Text.rich(
@@ -11,19 +11,49 @@ Widget beginItem(String title, String about, Image image, {Key? key}) {
           TextSpan(text: about),
         ], style: const TextStyle(height: 1.5))),
   );
-  final textContainer = Container(
+  return Container(
     alignment: Alignment.centerLeft,
     child: titleText,
   );
+}
+
+Widget beginItem(String title, String about, Image image, {Key? key}) {
   return Expanded(
       child: GestureDetector(
           onTap: () => Get.toNamed('/$title'),
           child: Row(children: [
-            Expanded(key: key, child: textContainer),
+            Expanded(key: key, child: titleTextContainer(title, about)),
             Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
           ])));
+}
+
+Widget doubleTitleText() {
+  return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    GestureDetector(
+      onTap: () => Get.toNamed('/chapters'),
+      child: titleTextContainer('chapters', 'Start chapter by chapter'),
+    ),
+    GestureDetector(
+      onTap: () => Get.toNamed('/notes'),
+      child: titleTextContainer('notes', 'Follow the conversation'),
+    )
+  ]);
+}
+
+Widget doubleBeginItem({Key? key}) {
+  return Expanded(
+      child: Row(children: [
+    doubleTitleText(),
+    Expanded(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          child: GestureDetector(
+              onTap: () => Get.toNamed('/chapters'),
+              child: Image.asset('images/begin-chapters.png'))),
+    )
+  ]));
 }
 
 class BeginWidget extends StatelessWidget {
@@ -32,11 +62,10 @@ class BeginWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return Column(children: [
-      beginItem(
-          'notes', 'Follow the conversation by themes', Image.asset('images/begin-notes.png')),
+      beginItem('tour', 'Play a feed', Image.asset('images/begin-notes.png')),
       beginItem(
           'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
-      beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png')),
+      doubleBeginItem(),
     ]);
   }
 }

@@ -22,13 +22,15 @@ class FeedPlay extends StatelessWidget {
           FlutterTts flutterTts = FlutterTts();
           await flutterTts.setQueueMode(1);
           final narration = gdoc.data.toString();
+          // split into paras here- due to this issue: https://github.com/dlutton/flutter_tts/issues/178
           final narrationParas = narration.split('\n');
           for (final para in narrationParas) {
             await flutterTts.speak(para);
           }
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('played!')));
         } on DioException {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('error getting asky!')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('error getting asky!')));
         }
       },
       child: const Icon(Icons.play_arrow),
