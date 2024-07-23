@@ -3,14 +3,12 @@ import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/feedcontent.dart';
-import 'package:askys/feedplay.dart';
 import 'package:askys/home.dart';
 import 'package:askys/notecontent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 void main() {
   setUp(() {
@@ -68,13 +66,6 @@ void main() {
     expect(find.text('2-34'), findsOneWidget);
   });
   testWidgets('can tap on play when narration is available', (tester) async {
-    // TODO: this dio is not the same as the one used to fetch from asysWebApp in feedplay.dart
-    // Pass it to the controller in feedcontent.dart
-    final dio = Dio();
-    final dioAdapter = DioAdapter(dio: dio);
-    dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet(asysWebApp, (server) => server.reply(200, 'Work for Krishna'));
-
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
     await tester.pumpWidget(GetMaterialApp(
