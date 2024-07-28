@@ -72,3 +72,20 @@ class FeedContent extends GetxController {
     await initFeedContent();
   }
 }
+
+class Playable {
+  Playable(this.title, this.url);
+  final String title;
+  final String url;
+}
+
+class PlayablesTOC extends GetxController {
+  final playables = <Playable>[].obs;
+  @override
+  void onInit() async {
+    // TODO: parse the playables TOC
+    // final GitHubFetcher contentSource = Get.find();
+    // final playablesTocMD = await contentSource.playablesTocMD();
+    super.onInit();
+  }
+}

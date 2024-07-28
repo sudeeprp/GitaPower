@@ -4,6 +4,7 @@ import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/feedplay.dart';
 import 'package:askys/notes_widget.dart';
+import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_bindings.dart';
@@ -83,6 +84,11 @@ Widget makeMyHome() {
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
+                choicesRow:
+                    choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+        GetPage(
+            name: '/tour',
+            page: () => screenify(const ToursWidget(),
                 choicesRow:
                     choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(

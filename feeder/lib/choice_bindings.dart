@@ -19,5 +19,6 @@ class ChoiceBinding implements Bindings {
     Get.put(ContentNotes());
     Get.put(FeedContent.random());
     Get.put(ContentActions());
+    Get.lazyPut(() => PlayablesTOC());
   }
 }

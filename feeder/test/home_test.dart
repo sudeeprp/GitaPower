@@ -99,6 +99,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
+  testWidgets('Navigates to curated tours from the home screen', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.tap(find.byKey(const Key('begin/tour')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/tour');
+    expect(find.text('Bring the best in you'), findsOneWidget);
+  });
   testWidgets('Navigates an app link', (tester) async {
     // To test manually, use:
     // adb shell am start -a android.intent.action.VIEW   -c android.intent.category.BROWSABLE \

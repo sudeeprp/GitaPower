@@ -8,6 +8,7 @@ class GitHubFetcher extends GetxController {
   final Dio dio;
   GitHubFetcher(this.dio);
   static const baseUrl = 'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main';
+  static const playablesUrl = 'https://raw.githubusercontent.com/RaPaLearning/askys/main/playables';
   static const compileFolder = 'compile';
   static const mdFolder = 'gita';
   static const compiledPath = '$baseUrl/$compileFolder';
@@ -54,5 +55,14 @@ class GitHubFetcher extends GetxController {
     } on DioException {
       return await rootBundle.loadString('gita-begin/$foldername/$filename');
     }
+  }
+
+  Future<String> playablesTocMD() async {
+    // TODO: retrieve content from github
+    return '''
+# Playable feeds
+
+[Bring the best in you](https://rapalearning.com/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you)
+''';
   }
 }
