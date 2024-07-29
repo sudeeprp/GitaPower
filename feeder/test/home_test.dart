@@ -104,7 +104,9 @@ void main() {
     await tester.tap(find.byKey(const Key('begin/tour')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/tour');
-    expect(find.text('Bring the best in you'), findsOneWidget);
+    await tester.tap(find.text('Bring the best in you'));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/feed');
   });
   testWidgets('Navigates an app link', (tester) async {
     // To test manually, use:

@@ -79,13 +79,34 @@ class Playable {
   final String url;
 }
 
+List<Playable> extractPlayables(List<String> lines) {
+  final playables = <Playable>[];
+  final regex = RegExp(r'\[(.+)\]\((.+)\)');
+  const baseUrl = 'https://rapalearning.com';
+
+  for (var line in lines) {
+    final match = regex.firstMatch(line);
+    if (match != null) {
+      final title = match.group(1);
+      var url = match.group(2);
+      if (title != null && url != null) {
+        if (url.startsWith(baseUrl)) {
+          url = url.substring(baseUrl.length);
+        }
+        playables.add(Playable(title, url));
+      }
+    }
+  }
+  return playables;
+}
+
 class PlayablesTOC extends GetxController {
   final playables = <Playable>[].obs;
   @override
   void onInit() async {
-    // TODO: parse the playables TOC
-    // final GitHubFetcher contentSource = Get.find();
-    // final playablesTocMD = await contentSource.playablesTocMD();
+    final GitHubFetcher contentSource = Get.find();
+    final playablesTocMD = await contentSource.playablesTocMD();
+    playables.value = extractPlayables(playablesTocMD.split('\n'));
     super.onInit();
   }
 }

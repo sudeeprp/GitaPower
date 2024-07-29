@@ -1,4 +1,5 @@
 import 'package:askys/feedcontent.dart';
+import 'package:askys/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,10 @@ class ToursWidget extends StatelessWidget {
     return Obx(() => Scaffold(
         body: ListView(
             children: playablesTOC.playables
-                .map((playable) => ListTile(title: Text(playable.title)))
+                .map((playable) => ListTile(
+                      title: Text(playable.title),
+                      onTap: () => navigateApplink(Uri.parse(playable.url)),
+                    ))
                 .toList())));
   }
 }
