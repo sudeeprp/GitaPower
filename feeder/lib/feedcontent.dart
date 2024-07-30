@@ -35,6 +35,13 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
   return randomFeed;
 }
 
+// class TourStop {
+//   TourStop(this.speechFilename, this.link, this.show);
+//   final String speechFilename;
+//   final String link;
+//   final List<String> show;
+// }
+
 class FeedContent extends GetxController {
   final threeShlokas = <String>[].obs;
   final openerQs = ['', '', ''];
@@ -67,19 +74,21 @@ class FeedContent extends GetxController {
     }
   }
 
-  void setCuratedShlokaMDs(List<String> list) async {
+  void setCuratedShlokaMDs(List<String> list, {String? tourFolder}) async {
     threeShlokas.value = list;
+    // TODO: read json from tourFolder and populate a List<TourStop>
     await initFeedContent();
   }
 }
 
 class Playable {
-  Playable(this.title, this.url);
+  Playable(this.title, this.url, this.tourFolder);
   final String title;
   final String url;
+  final String tourFolder;
 }
 
-List<Playable> extractPlayables(List<String> lines) {
+List<Playable> extractPlayablesFromTOC(List<String> lines) {
   final playables = <Playable>[];
   final regex = RegExp(r'\[(.+)\]\((.+)\)');
   const baseUrl = 'https://rapalearning.com';
@@ -92,8 +101,9 @@ List<Playable> extractPlayables(List<String> lines) {
       if (title != null && url != null) {
         if (url.startsWith(baseUrl)) {
           url = url.substring(baseUrl.length);
+          final tourFolder = url.split('.').last;
+          playables.add(Playable(title, url, tourFolder));
         }
-        playables.add(Playable(title, url));
       }
     }
   }
@@ -106,7 +116,7 @@ class PlayablesTOC extends GetxController {
   void onInit() async {
     final GitHubFetcher contentSource = Get.find();
     final playablesTocMD = await contentSource.playablesTocMD();
-    playables.value = extractPlayables(playablesTocMD.split('\n'));
+    playables.value = extractPlayablesFromTOC(playablesTocMD.split('\n'));
     super.onInit();
   }
 }
