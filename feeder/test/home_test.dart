@@ -37,6 +37,10 @@ const sampleShloka = '''
 const compiledNotes = '''
 [{"note_id": "applopener_11", "text": "Is there a different way?", "file": "Back-to-Basics.md"}, {"note_id": "applnote_13", "text": "We often doubt", "file": "1-1.md"}]
 ''';
+const playablesTOC = '''# Playable feeds
+
+[Bring the best in you](https://rapalearning.com/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you)
+''';
 
 void main() {
   setUp(() {
@@ -54,6 +58,8 @@ void main() {
         '${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
+    dioAdapter.onGet('${GitHubFetcher.playablesUrl}/playablestoc.md',
+        (server) => server.reply(200, playablesTOC));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Navigates to journey notes from the home screen', (tester) async {

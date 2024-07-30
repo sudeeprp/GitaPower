@@ -58,11 +58,8 @@ class GitHubFetcher extends GetxController {
   }
 
   Future<String> playablesTocMD() async {
-    // TODO: retrieve content from github
-    return '''
-# Playable feeds
-
-[Bring the best in you](https://rapalearning.com/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you)
-''';
+    // TODO: Handle no-internet exception here, or in the caller
+    final content = await dio.get('$playablesUrl/playablestoc.md');
+    return content.data.toString();
   }
 }
