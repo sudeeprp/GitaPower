@@ -13,6 +13,7 @@ class ToursWidget extends StatelessWidget {
         body: ListView(
             children: playablesTOC.playables
                 .map((playable) => ListTile(
+                      leading: const Icon(Icons.play_arrow, size: 48),
                       title: Text(playable.title),
                       onTap: () => navigateApplink(Uri.parse(playable.url)),
                     ))
