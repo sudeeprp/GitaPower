@@ -57,9 +57,20 @@ class GitHubFetcher extends GetxController {
     }
   }
 
-  Future<String> playablesTocMD() async {
-    // TODO: Handle no-internet exception here, or in the caller
-    final content = await dio.get('$playablesUrl/playablestoc.md');
-    return content.data.toString();
+  Future<String?> fetchMDwithoutLocal(String rawMDurl) async {
+    try {
+      final content = await dio.get(rawMDurl);
+      return content.data.toString();
+    } on DioException {
+      return null;
+    }
+  }
+
+  Future<String?> playablesTocMD() async {
+    return await fetchMDwithoutLocal('$playablesUrl/playablestoc.md');
+  }
+
+  Future<String?> playableMD(String playableFolder) async {
+    return await fetchMDwithoutLocal('$playablesUrl/$playableFolder/playable.json');
   }
 }

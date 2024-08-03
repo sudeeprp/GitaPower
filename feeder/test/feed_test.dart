@@ -9,11 +9,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 void main() {
   setUp(() {
     Get.put(Choices());
     final dio = Dio();
+    final dioAdapter = DioAdapter(dio: dio);
+    dioAdapter.onGet(
+        '${GitHubFetcher.playablesUrl}/bring_the_best_in_you/playable.json',
+        (server) =>
+            server.reply(200, '[{"line": "l1", "speech": "s1.mp3", "show": ["k11", "k12"]}]'));
+    dio.httpClientAdapter = dioAdapter;
+
     Get.put(GitHubFetcher(dio));
     Get.put(FeedContent.random());
     Get.put(ContentNotes());
@@ -124,6 +132,13 @@ void main() {
     expect(feedMDs.length, equals(3));
     expect(firstComesBefore(feedMDs[0], feedMDs[1]), isTrue);
     expect(firstComesBefore(feedMDs[1], feedMDs[2]), isTrue);
+  });
+  testWidgets('retrieves tour stops from tour folder', (tester) async {
+    final feedContent = FeedContent.random();
+    feedContent
+        .setCuratedShlokaMDs(['2-1.md', '3-11.md', '4-12.md'], tourFolder: 'bring_the_best_in_you');
+    await tester.pumpAndSettle();
+    expect(feedContent.tourStops, isNotEmpty);
   });
   test('toggles opener cover visibility', () {
     final FeedContent feedContent = Get.find();

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:askys/content_source.dart';
 import 'package:get/get.dart';
@@ -35,17 +36,18 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
   return randomFeed;
 }
 
-// class TourStop {
-//   TourStop(this.speechFilename, this.link, this.show);
-//   final String speechFilename;
-//   final String link;
-//   final List<String> show;
-// }
+class TourStop {
+  TourStop(this.speechFilename, this.link, this.show);
+  final String speechFilename;
+  final String? link;
+  final List<String>? show;
+}
 
 class FeedContent extends GetxController {
   final threeShlokas = <String>[].obs;
   final openerQs = ['', '', ''];
   final openerCovers = [false.obs, false.obs, false.obs];
+  final tourStops = <TourStop>[].obs;
   FeedContent.random() {
     threeShlokas.value = createRandomFeed(allShlokaMDs());
   }
@@ -74,9 +76,25 @@ class FeedContent extends GetxController {
     }
   }
 
-  void setCuratedShlokaMDs(List<String> list, {String? tourFolder}) async {
-    threeShlokas.value = list;
-    // TODO: read json from tourFolder and populate a List<TourStop>
+  void setCuratedShlokaMDs(List<String> mdFilenames, {String? tourFolder}) async {
+    threeShlokas.value = mdFilenames;
+    final GitHubFetcher contentSource = Get.find();
+    if (tourFolder != null) {
+      final playableJsonAsStr = await contentSource.playableMD(tourFolder);
+      if (playableJsonAsStr != null) {
+        TourStop jsonToTourStop(Map<String, dynamic> tourStopJson) {
+          final speechFilename = tourStopJson['speech'] as String;
+          final link = tourStopJson['link'] as String?;
+          final List<String> show =
+              tourStopJson['show']?.cast<String>(); // map((e) => e as String).toList();
+          return TourStop(speechFilename, link, show);
+        }
+
+        final List<dynamic> playableJson = jsonDecode(playableJsonAsStr);
+        tourStops.value =
+            playableJson.map((e) => e as Map<String, dynamic>).map(jsonToTourStop).toList();
+      }
+    }
     await initFeedContent();
   }
 }
@@ -116,7 +134,9 @@ class PlayablesTOC extends GetxController {
   void onInit() async {
     final GitHubFetcher contentSource = Get.find();
     final playablesTocMD = await contentSource.playablesTocMD();
-    playables.value = extractPlayablesFromTOC(playablesTocMD.split('\n'));
+    if (playablesTocMD != null) {
+      playables.value = extractPlayablesFromTOC(playablesTocMD.split('\n'));
+    }
     super.onInit();
   }
 }
