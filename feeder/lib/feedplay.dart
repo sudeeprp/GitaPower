@@ -8,7 +8,7 @@ List<Widget> makePlay() {
   return [
     Obx(() => Visibility(
         visible: feedContent.tour.tourStops.isNotEmpty,
-        child: const FeedPlay(key: Key('feedplay')))),
+        child: FeedPlay(feedContent.tour.state.value, key: const Key('feedplay')))),
     Obx(() => Visibility(
         visible: feedContent.tour.tourStops.isNotEmpty,
         child: const SizedBox(width: choiceSpacing))),
@@ -16,7 +16,8 @@ List<Widget> makePlay() {
 }
 
 class FeedPlay extends StatelessWidget {
-  const FeedPlay({super.key});
+  const FeedPlay(this.state, {super.key});
+  final TourState state;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,14 @@ class FeedPlay extends StatelessWidget {
       onTap: () async {
         feedContent.play();
       },
-      child: const Icon(Icons.play_arrow, size: 48),
+      child: Icon(
+          switch (state) {
+            TourState.idle => Icons.play_arrow,
+            TourState.loading => Icons.hourglass_top,
+            TourState.playing => Icons.pause,
+            TourState.error => Icons.error,
+          },
+          size: 48),
     );
   }
 }
