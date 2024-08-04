@@ -138,12 +138,7 @@ List<Widget> choicesForContent() {
 }
 
 List<Widget> choicesForFeed() {
-  return const [
-        FeedPlay(
-          key: Key('feedplay'),
-        ),
-        SizedBox(width: choiceSpacing)
-      ] +
+  return makePlay() +
       const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] +
       choicesForContent();
 }

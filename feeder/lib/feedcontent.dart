@@ -85,8 +85,7 @@ class FeedContent extends GetxController {
         TourStop jsonToTourStop(Map<String, dynamic> tourStopJson) {
           final speechFilename = tourStopJson['speech'] as String;
           final link = tourStopJson['link'] as String?;
-          final List<String> show =
-              tourStopJson['show']?.cast<String>(); // map((e) => e as String).toList();
+          final List<String> show = tourStopJson['show']?.cast<String>();
           return TourStop(speechFilename, link, show);
         }
 

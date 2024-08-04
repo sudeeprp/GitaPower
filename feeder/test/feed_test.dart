@@ -73,14 +73,15 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('2-34'), findsOneWidget);
   });
-  testWidgets('can tap on play when narration is available', (tester) async {
+  testWidgets('can tap on play only when narration is available', (tester) async {
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
     await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: buildFeed()),
+        home: Scaffold(body: feedScreen()),
         getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
     await tester.pumpAndSettle();
-    navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14.docid'));
+    expect(find.byKey(const Key('feedplay')), findsNothing);
+    navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14.bring_the_best_in_you'));
     await tester.pumpAndSettle();
     final player = find.byKey(const Key('feedplay'));
     expect(player, findsOneWidget);
