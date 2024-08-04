@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:askys/content_source.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'shloka_headers.dart' as shlokas;
 
 List<String> allShlokaMDs() {
@@ -43,11 +44,34 @@ class TourStop {
   final List<String>? show;
 }
 
+enum TourState { idle, loading, playing, error }
+
+class Tour {
+  int stopIndex = 0;
+  var state = TourState.idle.obs;
+  final tourStops = <TourStop>[].obs;
+  dynamic lastException;
+  void moveTo(int? index) {
+    (index) => stopIndex = index ?? 0;
+  }
+
+  void playState(PlayerState playerState) {
+    state.value = switch (playerState.processingState) {
+      ProcessingState.idle => TourState.idle,
+      ProcessingState.loading => TourState.loading,
+      ProcessingState.buffering => TourState.loading,
+      ProcessingState.ready => TourState.playing,
+      ProcessingState.completed => TourState.idle,
+    };
+  }
+}
+
 class FeedContent extends GetxController {
   final threeShlokas = <String>[].obs;
   final openerQs = ['', '', ''];
   final openerCovers = [false.obs, false.obs, false.obs];
-  final tourStops = <TourStop>[].obs;
+  String? tourFolder;
+  final tour = Tour();
   FeedContent.random() {
     threeShlokas.value = createRandomFeed(allShlokaMDs());
   }
@@ -76,14 +100,15 @@ class FeedContent extends GetxController {
     }
   }
 
-  void setCuratedShlokaMDs(List<String> mdFilenames, {String? tourFolder}) async {
+  void setCuratedShlokaMDs(List<String> mdFilenames, {String? playableFolder}) async {
     threeShlokas.value = mdFilenames;
     final GitHubFetcher contentSource = Get.find();
-    if (tourFolder != null) {
-      final playableJsonAsStr = await contentSource.playableMD(tourFolder);
+    if (playableFolder != null) {
+      tourFolder = playableFolder;
+      final playableJsonAsStr = await contentSource.playableMD(playableFolder);
       if (playableJsonAsStr != null) {
         final List<dynamic> playableJson = jsonDecode(playableJsonAsStr);
-        tourStops.value = playableJson
+        tour.tourStops.value = playableJson
             .map((e) => e as Map<String, dynamic>)
             .map((tourStopJson) => TourStop(
                   tourStopJson['speech'] as String,
@@ -94,6 +119,31 @@ class FeedContent extends GetxController {
       }
     }
     await initFeedContent();
+  }
+
+  void play() async {
+    try {
+      final audioPlayer = AudioPlayer();
+      final uriList = tour.tourStops
+          .map((tourStop) =>
+              Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
+          .toList();
+      final playlist =
+          ConcatenatingAudioSource(children: uriList.map((uri) => AudioSource.uri(uri)).toList());
+      audioPlayer.currentIndexStream.listen(tour.moveTo);
+      audioPlayer.playerStateStream.listen(tour.playState);
+      await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
+      await audioPlayer.play();
+    } on PlayerException catch (e) {
+      tour.state.value = TourState.error;
+      tour.lastException = e;
+    } on PlayerInterruptedException catch (e) {
+      tour.state.value = TourState.error;
+      tour.lastException = e;
+    } catch (e) {
+      tour.state.value = TourState.error;
+      tour.lastException = e;
+    }
   }
 }
 

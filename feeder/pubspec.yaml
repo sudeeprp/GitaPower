@@ -34,7 +34,7 @@ dependencies:
   enum_to_string:
   float_column: 2.1.5
   app_links: ^6.1.1
-  flutter_tts:
+  just_audio:
 
 dev_dependencies:
   flutter_test:

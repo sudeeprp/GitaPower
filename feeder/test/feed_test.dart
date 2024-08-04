@@ -90,6 +90,8 @@ void main() {
     expect(player, findsOneWidget);
     await tester.tap(player);
     await tester.pumpAndSettle();
+    final FeedContent feedContent = Get.find();
+    expect(feedContent.tour.state.value, equals(TourState.idle));
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
@@ -139,10 +141,10 @@ void main() {
   });
   testWidgets('retrieves tour stops from tour folder', (tester) async {
     final feedContent = FeedContent.random();
-    feedContent
-        .setCuratedShlokaMDs(['2-1.md', '3-11.md', '4-12.md'], tourFolder: 'bring_the_best_in_you');
+    feedContent.setCuratedShlokaMDs(['2-1.md', '3-11.md', '4-12.md'],
+        playableFolder: 'bring_the_best_in_you');
     await tester.pumpAndSettle();
-    expect(feedContent.tourStops, isNotEmpty);
+    expect(feedContent.tour.tourStops, isNotEmpty);
   });
   test('toggles opener cover visibility', () {
     final FeedContent feedContent = Get.find();

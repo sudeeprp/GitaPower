@@ -7,9 +7,11 @@ List<Widget> makePlay() {
   final FeedContent feedContent = Get.find();
   return [
     Obx(() => Visibility(
-        visible: feedContent.tourStops.isNotEmpty, child: const FeedPlay(key: Key('feedplay')))),
+        visible: feedContent.tour.tourStops.isNotEmpty,
+        child: const FeedPlay(key: Key('feedplay')))),
     Obx(() => Visibility(
-        visible: feedContent.tourStops.isNotEmpty, child: const SizedBox(width: choiceSpacing))),
+        visible: feedContent.tour.tourStops.isNotEmpty,
+        child: const SizedBox(width: choiceSpacing))),
   ];
 }
 
@@ -18,8 +20,11 @@ class FeedPlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FeedContent feedContent = Get.find();
     return GestureDetector(
-      onTap: () async {},
+      onTap: () async {
+        feedContent.play();
+      },
       child: const Icon(Icons.play_arrow, size: 48),
     );
   }

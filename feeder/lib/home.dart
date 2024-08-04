@@ -51,7 +51,7 @@ void navigateApplink(Uri? uri) {
         }
         final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
         final FeedContent feedContent = Get.find();
-        feedContent.setCuratedShlokaMDs(mdsInFeed, tourFolder: tourFolder);
+        feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
       }
     }
     Get.toNamed('/feed');
