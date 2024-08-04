@@ -82,16 +82,15 @@ class FeedContent extends GetxController {
     if (tourFolder != null) {
       final playableJsonAsStr = await contentSource.playableMD(tourFolder);
       if (playableJsonAsStr != null) {
-        TourStop jsonToTourStop(Map<String, dynamic> tourStopJson) {
-          final speechFilename = tourStopJson['speech'] as String;
-          final link = tourStopJson['link'] as String?;
-          final List<String> show = tourStopJson['show']?.cast<String>();
-          return TourStop(speechFilename, link, show);
-        }
-
         final List<dynamic> playableJson = jsonDecode(playableJsonAsStr);
-        tourStops.value =
-            playableJson.map((e) => e as Map<String, dynamic>).map(jsonToTourStop).toList();
+        tourStops.value = playableJson
+            .map((e) => e as Map<String, dynamic>)
+            .map((tourStopJson) => TourStop(
+                  tourStopJson['speech'] as String,
+                  tourStopJson['link'] as String?,
+                  tourStopJson['show']?.cast<String>(),
+                ))
+            .toList();
       }
     }
     await initFeedContent();

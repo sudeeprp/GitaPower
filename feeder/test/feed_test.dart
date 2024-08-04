@@ -18,8 +18,11 @@ void main() {
     final dioAdapter = DioAdapter(dio: dio);
     dioAdapter.onGet(
         '${GitHubFetcher.playablesUrl}/bring_the_best_in_you/playable.json',
-        (server) =>
-            server.reply(200, '[{"line": "l1", "speech": "s1.mp3", "show": ["k11", "k12"]}]'));
+        (server) => server.reply(
+            200,
+            '[{"line": "l1", "link": "1-1", "speech": "s1.mp3", "show": ["k11", "k12"]}, '
+            '{"line": "l2", "speech": "s2.mp3"}, '
+            '{"line": "l3", "speech": "s3.mp3", "link": "1-3"}]'));
     dio.httpClientAdapter = dioAdapter;
 
     Get.put(GitHubFetcher(dio));
