@@ -8,15 +8,15 @@ List<Widget> makePlay() {
   return [
     Obx(() => Visibility(
         visible: feedContent.tour.tourStops.isNotEmpty,
-        child: FeedPlay(feedContent.tour.state.value, key: const Key('feedplay')))),
+        child: FeedPlayIcon(feedContent.tour.state.value, key: const Key('feedplay')))),
     Obx(() => Visibility(
         visible: feedContent.tour.tourStops.isNotEmpty,
         child: const SizedBox(width: choiceSpacing))),
   ];
 }
 
-class FeedPlay extends StatelessWidget {
-  const FeedPlay(this.state, {super.key});
+class FeedPlayIcon extends StatelessWidget {
+  const FeedPlayIcon(this.state, {super.key});
   final TourState state;
 
   @override
@@ -31,7 +31,6 @@ class FeedPlay extends StatelessWidget {
             TourState.idle => Icons.play_arrow,
             TourState.loading => Icons.hourglass_top,
             TourState.playing => Icons.pause,
-            TourState.error => Icons.error,
           },
           size: 48),
     );

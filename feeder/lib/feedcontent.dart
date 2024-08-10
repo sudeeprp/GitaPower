@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:askys/content_source.dart';
+import 'package:askys/tell_if_error.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'shloka_headers.dart' as shlokas;
@@ -44,7 +45,7 @@ class TourStop {
   final List<String>? show;
 }
 
-enum TourState { idle, loading, playing, error }
+enum TourState { idle, loading, playing }
 
 class Tour {
   int stopIndex = 0;
@@ -72,7 +73,8 @@ class FeedContent extends GetxController {
   final openerCovers = [false.obs, false.obs, false.obs];
   String? tourFolder;
   final tour = Tour();
-  FeedContent.random() {
+  final AudioPlayer audioPlayer;
+  FeedContent.random({AudioPlayer? aPlayer}) : audioPlayer = aPlayer ?? AudioPlayer() {
     threeShlokas.value = createRandomFeed(allShlokaMDs());
   }
   @override
@@ -122,8 +124,7 @@ class FeedContent extends GetxController {
   }
 
   void play() async {
-    try {
-      final audioPlayer = AudioPlayer();
+    await tellIfError(() async {
       final uriList = tour.tourStops
           .map((tourStop) =>
               Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
@@ -134,16 +135,7 @@ class FeedContent extends GetxController {
       audioPlayer.playerStateStream.listen(tour.playState);
       await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
       await audioPlayer.play();
-    } on PlayerException catch (e) {
-      tour.state.value = TourState.error;
-      tour.lastException = e;
-    } on PlayerInterruptedException catch (e) {
-      tour.state.value = TourState.error;
-      tour.lastException = e;
-    } catch (e) {
-      tour.state.value = TourState.error;
-      tour.lastException = e;
-    }
+    });
   }
 }
 

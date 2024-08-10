@@ -2,7 +2,7 @@ import 'package:app_links/app_links.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
-import 'package:askys/feedplay.dart';
+import 'package:askys/feedplay_icon.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
