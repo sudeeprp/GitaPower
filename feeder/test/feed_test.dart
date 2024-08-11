@@ -125,6 +125,10 @@ void main() {
     await tester.tap(find.byKey(const Key('feedplay')));
     await tester.pumpAndSettle();
     verifyNever(mockPlayer.play());
+    // After loading, it starts playing
+    feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
+    expect(feedContent.tour.state.value, equals(TourState.playing));
+    // TODO Tapping while playing must pause
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
