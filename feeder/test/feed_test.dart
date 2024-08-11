@@ -129,6 +129,9 @@ void main() {
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
     expect(feedContent.tour.state.value, equals(TourState.playing));
     // TODO Tapping while playing must pause
+    // Finally it completes
+    feedContent.tour.playState(PlayerState(true, ProcessingState.completed));
+    expect(feedContent.tour.state.value, equals(TourState.idle));
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
