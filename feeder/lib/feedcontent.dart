@@ -53,7 +53,7 @@ class Tour {
   final tourStops = <TourStop>[].obs;
   dynamic lastException;
   void moveTo(int? index) {
-    (index) => stopIndex = index ?? 0;
+    stopIndex = index ?? 0;
   }
 
   void playState(PlayerState playerState) {
@@ -136,6 +136,10 @@ class FeedContent extends GetxController {
       await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
       await audioPlayer.play();
     });
+  }
+
+  void pause() async {
+    await audioPlayer.pause();
   }
 }
 

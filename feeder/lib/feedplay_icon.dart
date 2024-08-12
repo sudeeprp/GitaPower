@@ -26,6 +26,8 @@ class FeedPlayIcon extends StatelessWidget {
       onTap: () async {
         if (feedContent.tour.state.value == TourState.idle) {
           feedContent.play();
+        } else if (feedContent.tour.state.value == TourState.playing) {
+          feedContent.pause();
         }
       },
       child: Icon(

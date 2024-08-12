@@ -128,10 +128,26 @@ void main() {
     // After loading, it starts playing
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
     expect(feedContent.tour.state.value, equals(TourState.playing));
-    // TODO Tapping while playing must pause
+    // Tapping while playing must pause
+    await tester.tap(find.byKey(const Key('feedplay')));
+    await tester.pumpAndSettle();
+    verify(mockPlayer.pause()).called(1);
     // Finally it completes
     feedContent.tour.playState(PlayerState(true, ProcessingState.completed));
     expect(feedContent.tour.state.value, equals(TourState.idle));
+  });
+  testWidgets('tours from one para to the next', (tester) async {
+    final FeedContent feedContent = Get.find();
+    feedContent.tour.tourStops.value = [
+      TourStop('s1.mp3', null, null),
+      TourStop('s2.mp3', '2-34', null)
+    ];
+    reset(mockPlayer);
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: FeedPlayIcon(TourState.idle))));
+    // Start playing
+    feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
+    feedContent.tour.moveTo(1);
+    expect(feedContent.tour.stopIndex, equals(1));
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
