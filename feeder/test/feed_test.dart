@@ -143,11 +143,21 @@ void main() {
       TourStop('s2.mp3', '2-34', null)
     ];
     reset(mockPlayer);
-    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: FeedPlayIcon(TourState.idle))));
+    String? navigatedShloka;
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: FeedPlayIcon(TourState.idle)),
+      getPages: [
+        GetPage(
+          name: '/shloka/:mdFilename',
+          page: () {
+            navigatedShloka = Get.parameters['mdFilename'];
+            return const Text('reached');
+          })
+      ])));
     // Start playing
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
     feedContent.tour.moveTo(1);
     expect(feedContent.tour.stopIndex, equals(1));
+    expect(navigatedShloka, '2-34');
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
