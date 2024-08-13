@@ -54,6 +54,11 @@ class Tour {
   dynamic lastException;
   void moveTo(int? index) {
     stopIndex = index ?? 0;
+    final filenameWithoutMd = tourStops[stopIndex].link;
+    if (filenameWithoutMd != null) {
+      final mdLaunchPath = '/shloka/$filenameWithoutMd.md';
+      Get.toNamed(mdLaunchPath);
+    }
   }
 
   void playState(PlayerState playerState) {
