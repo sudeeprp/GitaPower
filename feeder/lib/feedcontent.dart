@@ -54,9 +54,9 @@ class Tour {
   dynamic lastException;
   void moveTo(int? index) {
     stopIndex = index ?? 0;
-    final filenameWithoutMd = tourStops[stopIndex].link;
-    if (filenameWithoutMd != null) {
-      final mdLaunchPath = '/shloka/$filenameWithoutMd.md';
+    final mdFilenameWithLink = tourStops[stopIndex].link;
+    if (mdFilenameWithLink != null) {
+      final mdLaunchPath = '/shloka/$mdFilenameWithLink';
       Get.toNamed(mdLaunchPath);
     }
   }

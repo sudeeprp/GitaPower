@@ -140,19 +140,23 @@ void main() {
     final FeedContent feedContent = Get.find();
     feedContent.tour.tourStops.value = [
       TourStop('s1.mp3', null, null),
-      TourStop('s2.mp3', '2-34', null)
+      TourStop('s2.mp3', '2-34.md', null),
+      TourStop('s3.mp3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
     ];
     reset(mockPlayer);
-    await tester.pumpWidget(GetMaterialApp(
-        home: const Scaffold(body: FeedPlayIcon(TourState.idle)),
-        getPages: [GetPage(name: '/shloka/:mdFilename', page: () => const Text('reached'))]));
+    await tester.pumpWidget(
+        GetMaterialApp(home: const Scaffold(body: FeedPlayIcon(TourState.idle)), getPages: [
+      GetPage(name: '/shloka/:mdFilename', page: () => const Text('mdfile')),
+      GetPage(name: '/shloka/:mdFilename/:noteId', page: () => const Text('mdfile with nodeid')),
+    ]));
     await tester.pumpAndSettle();
     // Start playing
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
     feedContent.tour.moveTo(1);
     await tester.pumpAndSettle();
-    expect(feedContent.tour.stopIndex, equals(1));
     expect(Get.currentRoute, '/shloka/2-34.md');
+    feedContent.tour.moveTo(2);
+    expect(Get.currentRoute, '/shloka/Chapter_7.md/bhakti_a_defn');
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
