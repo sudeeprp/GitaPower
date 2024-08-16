@@ -45,7 +45,7 @@ class TourStop {
   final List<String>? show;
 }
 
-enum TourState { idle, loading, playing }
+enum TourState { idle, loading, playing, paused }
 
 class Tour {
   int stopIndex = 0;
@@ -66,7 +66,7 @@ class Tour {
       ProcessingState.idle => TourState.idle,
       ProcessingState.loading => TourState.loading,
       ProcessingState.buffering => TourState.loading,
-      ProcessingState.ready => TourState.playing,
+      ProcessingState.ready => playerState.playing ? TourState.playing : TourState.paused,
       ProcessingState.completed => TourState.idle,
     };
   }
