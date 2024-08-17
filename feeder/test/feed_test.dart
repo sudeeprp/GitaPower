@@ -105,6 +105,10 @@ void main() {
     await tester.pumpAndSettle();
     final FeedContent feedContent = Get.find();
     expect(feedContent.tour.state.value, equals(TourState.idle));
+    verify(mockPlayer.setAudioSource(any,
+            preload: true, initialIndex: 0, initialPosition: Duration.zero))
+        .called(1);
+    verify(mockPlayer.play()).called(1);
   });
   testWidgets('syncs with the player state', (tester) async {
     final FeedContent feedContent = Get.find();
@@ -132,6 +136,16 @@ void main() {
     await tester.tap(find.byKey(const Key('feedplay')));
     await tester.pumpAndSettle();
     verify(mockPlayer.pause()).called(1);
+    feedContent.tour.playState(PlayerState(false, ProcessingState.ready));
+    expect(feedContent.tour.state.value, equals(TourState.paused));
+    // Tapping on pause must play again, without reloading
+    await tester.tap(find.byKey(const Key('feedplay')));
+    await tester.pumpAndSettle();
+    verify(mockPlayer.play()).called(1);
+    verifyNever(mockPlayer.setAudioSource(any,
+        preload: anyNamed('preload'),
+        initialIndex: anyNamed('initialIndex'),
+        initialPosition: anyNamed('initialPosition')));
     // Finally it completes
     feedContent.tour.playState(PlayerState(true, ProcessingState.completed));
     expect(feedContent.tour.state.value, equals(TourState.idle));

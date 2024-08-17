@@ -24,8 +24,10 @@ class FeedPlayIcon extends StatelessWidget {
     final FeedContent feedContent = Get.find();
     return GestureDetector(
       onTap: () async {
-        if (feedContent.tour.state.value == TourState.idle || feedContent.tour.state.value == TourState.paused) {
+        if (feedContent.tour.state.value == TourState.idle) {
           feedContent.play();
+        } else if (feedContent.tour.state.value == TourState.paused) {
+          feedContent.resume();
         } else if (feedContent.tour.state.value == TourState.playing) {
           feedContent.pause();
         }

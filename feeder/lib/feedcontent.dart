@@ -146,6 +146,10 @@ class FeedContent extends GetxController {
   void pause() async {
     await audioPlayer.pause();
   }
+
+  void resume() async {
+    await audioPlayer.play();
+  }
 }
 
 class Playable {
