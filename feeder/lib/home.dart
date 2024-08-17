@@ -124,17 +124,26 @@ class Home extends StatelessWidget {
   }
 }
 
+List<Widget> makePlayWhenPlaying() {
+  final FeedContent feedContent = Get.find();
+  if (feedContent.tour.state.value == TourState.playing) {
+    return makePlay();
+  }
+  return [];
+}
+
 List<Widget> choicesForContent() {
-  return const [
-    ScriptSelectionIcon(),
-    SizedBox(width: choiceSpacing),
-    HeaderPreferenceIcon(),
-    SizedBox(width: choiceSpacing),
-    MeaningExpansionIcon(),
-    SizedBox(width: choiceSpacing),
-    ThemeSelectionIcon(),
-    SizedBox(width: choiceSpacing),
-  ];
+  return makePlayWhenPlaying() +
+      const [
+        ScriptSelectionIcon(),
+        SizedBox(width: choiceSpacing),
+        HeaderPreferenceIcon(),
+        SizedBox(width: choiceSpacing),
+        MeaningExpansionIcon(),
+        SizedBox(width: choiceSpacing),
+        ThemeSelectionIcon(),
+        SizedBox(width: choiceSpacing),
+      ];
 }
 
 List<Widget> choicesForFeed() {
