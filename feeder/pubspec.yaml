@@ -35,7 +35,6 @@ dependencies:
   float_column: 2.1.8
   app_links: ^6.1.1
   just_audio:
-  wakelock:
 
 dev_dependencies:
   flutter_test:

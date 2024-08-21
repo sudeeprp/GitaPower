@@ -4,7 +4,7 @@ import 'package:askys/content_source.dart';
 import 'package:askys/tell_if_error.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:wakelock/wakelock.dart';
+// TODO: import 'package:wakelock/wakelock.dart';
 import 'shloka_headers.dart' as shlokas;
 
 List<String> allShlokaMDs() {
@@ -70,11 +70,11 @@ class Tour {
       ProcessingState.ready => playerState.playing ? TourState.playing : TourState.paused,
       ProcessingState.completed => TourState.idle,
     };
-    if (state.value == TourState.playing) {
-      Wakelock.enable();
-    } else {
-      Wakelock.disable();
-    }
+    // if (state.value == TourState.playing) {
+    //   Wakelock.enable();
+    // } else {
+    //   Wakelock.disable();
+    // }
   }
 }
 
