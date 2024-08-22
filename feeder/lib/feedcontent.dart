@@ -4,8 +4,8 @@ import 'package:askys/content_source.dart';
 import 'package:askys/tell_if_error.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 import 'shloka_headers.dart' as shlokas;
+import 'package:keep_screen_on/keep_screen_on.dart';
 
 List<String> allShlokaMDs() {
   return shlokas.headers.keys.where((filename) => filename.startsWith(RegExp(r'[0-9]'))).toList();
@@ -71,9 +71,9 @@ class Tour {
       ProcessingState.completed => TourState.idle,
     };
     if (state.value == TourState.playing) {
-      WakelockPlus.enable();
+      KeepScreenOn.turnOn();
     } else {
-      WakelockPlus.disable();
+      KeepScreenOn.turnOff();
     }
   }
 }
