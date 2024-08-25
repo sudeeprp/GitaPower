@@ -51,6 +51,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - audio/
     - gita-begin/compile/
     - gita-begin/gita/
     - google_fonts/

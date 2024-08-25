@@ -140,8 +140,9 @@ class FeedContent extends GetxController {
           .map((tourStop) =>
               Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
           .toList();
-      final playlist =
-          ConcatenatingAudioSource(children: uriList.map((uri) => AudioSource.uri(uri)).toList());
+      final playlist = ConcatenatingAudioSource(
+          children: [AudioSource.file('audio/background.mp3')] +
+              uriList.map((uri) => AudioSource.uri(uri)).toList());
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
       await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
