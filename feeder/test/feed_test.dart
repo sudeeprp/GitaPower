@@ -176,16 +176,16 @@ void main() {
     switchOpeners(true);
     await tester.pumpAndSettle();
     final FeedContent feedContent = Get.find();
-    expect(feedContent.openerQs[0], isNotEmpty);
-    expect(feedContent.openerQs[1], isNotEmpty);
-    expect(feedContent.openerQs[2], isNotEmpty);
+    expect(feedContent.openerQs[0].value, isNotEmpty);
+    expect(feedContent.openerQs[1].value, isNotEmpty);
+    expect(feedContent.openerQs[2].value, isNotEmpty);
 
     expect(feedContent.openerCovers[0].value, equals(true));
 
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
-    expect(find.text(feedContent.openerQs[0]), findsWidgets);
-    expect(find.text(feedContent.openerQs[1]), findsWidgets);
-    expect(find.text(feedContent.openerQs[2]), findsWidgets);
+    expect(find.text(feedContent.openerQs[0].value), findsWidgets);
+    expect(find.text(feedContent.openerQs[1].value), findsWidgets);
+    expect(find.text(feedContent.openerQs[2].value), findsWidgets);
     const overqPos = 1;
     final firstOpener = find.byKey(const Key('overq/$overqPos'));
     await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));

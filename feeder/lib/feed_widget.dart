@@ -34,10 +34,10 @@ Widget contentWithOpenerPane(String filename, int count) {
                             topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                     constraints: const BoxConstraints.expand(),
                     child: Center(
-                        child: Text(feedContent.openerQs[count - 1],
+                        child: Obx(() => Text(feedContent.openerQs[count - 1].value,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold))),
+                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold)))),
                   ))),
         ],
       );

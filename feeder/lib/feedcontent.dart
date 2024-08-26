@@ -80,7 +80,7 @@ class Tour {
 
 class FeedContent extends GetxController {
   final threeShlokas = <String>[].obs;
-  final openerQs = ['', '', ''];
+  final openerQs = [''.obs, ''.obs, ''.obs];
   final openerCovers = [false.obs, false.obs, false.obs];
   String? tourFolder;
   final tour = Tour();
@@ -98,7 +98,7 @@ class FeedContent extends GetxController {
     final GitHubFetcher fetcher = Get.find();
     final mdToOpeners = await fetcher.openerQuestions();
     for (int i = 0; i < threeShlokas.length; i++) {
-      openerQs[i] = mdToOpeners[threeShlokas[i]] ?? '';
+      openerQs[i].value = mdToOpeners[threeShlokas[i]] ?? '';
       openerCovers[i].value = true;
     }
   }
