@@ -166,10 +166,10 @@ void main() {
     await tester.pumpAndSettle();
     // Start playing
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
-    feedContent.tour.moveTo(1);
+    feedContent.tour.moveTo(2);
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/2-34.md');
-    feedContent.tour.moveTo(2);
+    feedContent.tour.moveTo(3);
     expect(Get.currentRoute, '/shloka/Chapter_7.md/bhakti_a_defn');
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {

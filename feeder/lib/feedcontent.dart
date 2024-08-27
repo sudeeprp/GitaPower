@@ -55,6 +55,7 @@ class Tour {
   dynamic lastException;
   void moveTo(int? index) {
     stopIndex = index ?? 0;
+    stopIndex = (stopIndex - 1).clamp(0, tourStops.length - 1);
     final mdFilenameWithLink = tourStops[stopIndex].link;
     if (mdFilenameWithLink != null) {
       final mdLaunchPath = '/shloka/$mdFilenameWithLink';
