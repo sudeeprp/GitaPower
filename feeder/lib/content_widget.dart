@@ -11,19 +11,7 @@ import 'package:float_column/float_column.dart';
 
 import 'chaptercontent.dart';
 import 'notecontent.dart';
-
-enum SectionType {
-  chapterHeading,
-  topicHead,
-  shlokaNumber,
-  shlokaSA,
-  shlokaSAHK,
-  meaning,
-  commentary,
-  explainer,
-  note,
-  anchor
-}
+import 'matter_forinline.dart';
 
 final _multipleSpaces = RegExp(r"\s+");
 final _anchors = RegExp(r"<a name='([\w]+)'><\/a>\s*");
@@ -33,15 +21,6 @@ class CurrentTextElement {
   final md.Element mdElement;
   final SectionType sectionType;
   final bool isSectionTop;
-}
-
-class MatterForInline {
-  MatterForInline(this.text, this.sectionType, this.tag, this.elmclass, this.link);
-  final String text;
-  SectionType sectionType;
-  String tag;
-  String? elmclass;
-  String? link;
 }
 
 class WidgetMaker implements md.NodeVisitor {
@@ -159,14 +138,16 @@ class WidgetMaker implements md.NodeVisitor {
         if (noteId != null) {
           noteIdsInPage.add(noteId);
           final sectionType = noteId.startsWith('appl') ? SectionType.anchor : element.sectionType;
-          collectedInlines.add(MatterForInline(noteId, sectionType, 'anchor', elmclass, link));
+          collectedInlines
+              .add(MatterForInline(noteId, sectionType, 'anchor', elmclass: elmclass, link: link));
         }
       }
     }
     final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      final inlineMatter = MatterForInline(processedText, element.sectionType, tag, elmclass, link);
-      collectedInlines.add(inlineMatter);
+      final inlineMatter = makeMatterForInlines(processedText, element.sectionType, tag,
+          elmclass: elmclass, link: link);
+      collectedInlines.addAll(inlineMatter);
     }
   }
 
@@ -516,6 +497,7 @@ class ContentWidget extends StatelessWidget {
     }
 
     MDContent md = Get.find(tag: mdFilename);
+    // TODO: try getting the ShowWords of the current playable and extract the show list
     return Stack(children: [
       Center(
           child: SingleChildScrollView(

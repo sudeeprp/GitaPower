@@ -12,3 +12,7 @@ class MDContent extends GetxController {
     super.onInit();
   }
 }
+
+class ShowWords extends GetxController {
+  var words = <String>[].obs;
+}

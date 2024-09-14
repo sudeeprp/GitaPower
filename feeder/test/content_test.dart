@@ -1,6 +1,7 @@
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
 import 'package:flutter/material.dart';
 import 'package:askys/content_widget.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'package:askys/matter_forinline.dart';
 
 List<TextSpan> oneTextMaker(MatterForInline inlineMatter) => [TextSpan(text: inlineMatter.text)];
 List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) {
@@ -394,7 +396,7 @@ As the Lord Himself states, it isn't possible to describe the Self.
     expect(parsedBasics.textsMade[0].content, equals('आत्म [Atma] - The Self'));
     expect(parsedBasics.widgetsMade[0].sectionType, equals(SectionType.topicHead));
   });
-  test('Shows commentary following an anchor', () {
+  test('shows commentary following an anchor', () {
     final parsedAnchor = recordParseActions('''
 <a name='greatness_of_yoga'></a>
 A person diverts from the path of realizing the Self due to some desires.
@@ -403,5 +405,55 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(parsedAnchor.textsMade[0].content, equals('greatness_of_yoga'));
     expect(parsedAnchor.textsMade[1].content,
         equals('A person diverts from the path of realizing the Self due to some desires.'));
+  });
+  test('highlights english words in the content', () {
+    {
+      final midlastEmpha = makeMatterForInlines(
+          'zero one two three four', SectionType.commentary, 'anytag',
+          showPatterns: ['two', 'four']);
+      expect(midlastEmpha.length, equals(4));
+      expect(midlastEmpha[0].text, equals('zero one'));
+      expect(midlastEmpha[0].presentation, equals(Presentation.normal));
+      expect(midlastEmpha[1].text, equals('two'));
+      expect(midlastEmpha[1].presentation, equals(Presentation.emphasis));
+      expect(midlastEmpha[2].text, equals('three'));
+      expect(midlastEmpha[2].presentation, equals(Presentation.normal));
+      expect(midlastEmpha[3].text, equals('four'));
+      expect(midlastEmpha[3].presentation, equals(Presentation.emphasis));
+    }
+    {
+      final firstmidEmpha = makeMatterForInlines(
+          'zero one two three four', SectionType.commentary, 'anytag',
+          showPatterns: ['zero', 'two']);
+      expect(firstmidEmpha.length, equals(4));
+      expect(firstmidEmpha[0].text, equals('zero'));
+      expect(firstmidEmpha[0].presentation, equals(Presentation.emphasis));
+      expect(firstmidEmpha[3].text, equals('three four'));
+      expect(firstmidEmpha[3].presentation, equals(Presentation.normal));
+    }
+  });
+  final showPatterns = ["\u0905\u0939\u092e\u0947\u0935", "ahameva", "Me", "inside"];
+  test('highlights sanskrit words in the content', () {
+    final sanskritInlines =
+        makeMatterForInlines("अहमेव", SectionType.commentary, 'anytag', showPatterns: showPatterns);
+    expect(sanskritInlines[0].text, equals('अहमेव'));
+    expect(sanskritInlines[0].presentation, equals(Presentation.emphasis));
+  });
+  test('highlights transliterated words in the content', () {
+    final translitInInlines = makeMatterForInlines('[ahameva]', SectionType.meaning, 'anytag',
+        showPatterns: showPatterns);
+    expect(translitInInlines[0].text, equals('[ahameva]'));
+    expect(translitInInlines[0].presentation, equals(Presentation.emphasis));
+  });
+  testWidgets('accepts highlights while rendering the content', (tester) async {
+    Get.put(Choices());
+    Get.put(ContentActions());
+    Get.put(ContentNotes());
+    final showWords = ShowWords();
+    showWords.words.value = ['धृतिः', 'dhRtiH', 'resolve'];
+    Get.put(showWords, tag: 'playable_1');
+    await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('resolve', findRichText: true), findsOneWidget);
   });
 }
