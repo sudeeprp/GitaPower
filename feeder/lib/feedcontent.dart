@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:askys/content_source.dart';
+import 'package:askys/mdcontent.dart';
 import 'package:askys/tell_if_error.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -47,9 +48,23 @@ class TourStop {
 
 enum TourState { idle, loading, playing, paused }
 
+void setupWordShow(String? playable, List<String>? show) {
+  ShowWords? showWords;
+  if (Get.isRegistered<ShowWords>(tag: playable)) {
+    showWords = Get.find<ShowWords>(tag: playable);
+  } else {
+    showWords = ShowWords();
+    Get.put(showWords, tag: playable);
+  }
+  if (show != null) {
+    showWords.words.value = show;
+  }
+}
+
 class Tour {
   int stopIndex = 0;
   var state = TourState.idle.obs;
+  String? playable;
   final tourStops = <TourStop>[].obs;
   dynamic lastException;
   void moveTo(int? index) {
@@ -57,6 +72,7 @@ class Tour {
     stopIndex = (stopIndex - 1).clamp(0, tourStops.length - 1);
     final mdFilenameWithLink = tourStops[stopIndex].link;
     if (mdFilenameWithLink != null) {
+      setupWordShow(playable, tourStops[stopIndex].show);
       final mdLaunchPath = '/shloka/$mdFilenameWithLink';
       Get.toNamed(mdLaunchPath);
     }
@@ -121,6 +137,7 @@ class FeedContent extends GetxController {
       final playableJsonAsStr = await contentSource.playableMD(playableFolder);
       if (playableJsonAsStr != null) {
         final List<dynamic> playableJson = jsonDecode(playableJsonAsStr);
+        tour.playable = tourFolder;
         tour.tourStops.value = playableJson
             .map((e) => e as Map<String, dynamic>)
             .map((tourStopJson) => TourStop(
