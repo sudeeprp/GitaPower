@@ -55,14 +55,13 @@ class Choices extends GetxController {
     headPreference.listen((_) => storeAllPreferences());
     try {
       final storedPreferences = await SharedPreferences.getInstance();
-      theme.value =
-          _fromStored(ReadingTheme.values, storedPreferences.getString('theme'), theme.value);
+      theme.value = _fromStored(ReadingTheme.values, storedPreferences.getString('theme'), theme.value);
       script.value =
           _fromStored(ScriptPreference.values, storedPreferences.getString('script'), script.value);
-      meaningMode.value = _fromStored(
-          MeaningMode.values, storedPreferences.getString('meaning'), meaningMode.value);
-      headPreference.value = _fromStored(
-          HeadPreference.values, storedPreferences.getString('head'), headPreference.value);
+      meaningMode.value =
+          _fromStored(MeaningMode.values, storedPreferences.getString('meaning'), meaningMode.value);
+      headPreference.value =
+          _fromStored(HeadPreference.values, storedPreferences.getString('head'), headPreference.value);
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -137,10 +136,9 @@ class HeaderPreferenceIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final Choices choice = Get.find();
     return GestureDetector(
-      onTap: () => choice.headPreference.value =
-          choice.headPreference.value == HeadPreference.shloka
-              ? HeadPreference.meaning
-              : HeadPreference.shloka,
+      onTap: () => choice.headPreference.value = choice.headPreference.value == HeadPreference.shloka
+          ? HeadPreference.meaning
+          : HeadPreference.shloka,
       child: Obx(() {
         final Choices choices = Get.find();
         return Image.asset(

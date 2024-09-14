@@ -33,8 +33,7 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
   randomFeed.sort((a, b) {
     final aRef = mdFilenameToShlokaNumber(a);
     final bRef = mdFilenameToShlokaNumber(b);
-    return (aRef.chapterNumber * 1000 + aRef.shlokaNumber) -
-        (bRef.chapterNumber * 1000 + bRef.shlokaNumber);
+    return (aRef.chapterNumber * 1000 + aRef.shlokaNumber) - (bRef.chapterNumber * 1000 + bRef.shlokaNumber);
   });
   return randomFeed;
 }
@@ -138,8 +137,8 @@ class FeedContent extends GetxController {
   void play() async {
     await tellIfError(() async {
       final uriList = tour.tourStops
-          .map((tourStop) =>
-              Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
+          .map(
+              (tourStop) => Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
           .toList();
       final playlist = ConcatenatingAudioSource(
           children: [AudioSource.asset('audio/background.m4a')] +

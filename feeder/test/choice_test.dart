@@ -95,14 +95,10 @@ void main() {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     await storePreferences(
         ReadingTheme.light, ScriptPreference.sahk, MeaningMode.short, HeadPreference.shloka);
-    expect(
-        preferences.getString('theme'), equals(EnumToString.convertToString(ReadingTheme.light)));
-    expect(preferences.getString('script'),
-        equals(EnumToString.convertToString(ScriptPreference.sahk)));
-    expect(
-        preferences.getString('meaning'), equals(EnumToString.convertToString(MeaningMode.short)));
-    expect(
-        preferences.getString('head'), equals(EnumToString.convertToString(HeadPreference.shloka)));
+    expect(preferences.getString('theme'), equals(EnumToString.convertToString(ReadingTheme.light)));
+    expect(preferences.getString('script'), equals(EnumToString.convertToString(ScriptPreference.sahk)));
+    expect(preferences.getString('meaning'), equals(EnumToString.convertToString(MeaningMode.short)));
+    expect(preferences.getString('head'), equals(EnumToString.convertToString(HeadPreference.shloka)));
   });
   testWidgets('persists preferences when changed', (tester) async {
     SharedPreferences.setMockInitialValues({});

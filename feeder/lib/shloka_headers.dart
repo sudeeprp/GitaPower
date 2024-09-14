@@ -3088,8 +3088,7 @@ const headers = {
   '15-4_second_part.md': {
     'shloka': '''तम् एव चाद्यम् पुरुषम् प्रपद्येत्
 यतः प्रवृत्तिः प्रसृता पुराणी ॥ ४ ॥''',
-    'meaning':
-        '''You must surrender to that very Person from whom all existence came forth long ago.'''
+    'meaning': '''You must surrender to that very Person from whom all existence came forth long ago.'''
   },
   '15-5.md': {
     'shloka': '''निर्मानमोहा जित संगदोषाः
@@ -3216,8 +3215,7 @@ const headers = {
   },
   '16-5_second_part.md': {
     'shloka': '''मा शुचः सम्पदम् दैवीम् अभिजातोऽसि पान्डव ॥ ५ ॥''',
-    'meaning':
-        '''Arjuna, don't worry. You are born with the property of complying to My instructions .'''
+    'meaning': '''Arjuna, don't worry. You are born with the property of complying to My instructions .'''
   },
   '16-6.md': {
     'shloka': '''द्वा भूतसर्गौ लोकेऽस्मिन् दैव असुर एव च ।
@@ -3537,8 +3535,7 @@ const headers = {
   },
   '18-5_second_part.md': {
     'shloka': '''यज्ञो दानम् तपः चैव पावनानि मनीषिणाम् ॥ ५ ॥''',
-    'meaning':
-        '''Worship, charity and discipline are definitely purifying for intelligent, devout people.'''
+    'meaning': '''Worship, charity and discipline are definitely purifying for intelligent, devout people.'''
   },
   '18-6.md': {
     'shloka': '''एतान्यपि तु कर्माणि संगम् त्यक्त्वा फलानि च ।
@@ -3718,13 +3715,11 @@ const headers = {
   },
   '18-36_first_part.md': {
     'shloka': '''सुखम् तु इदानीम् त्रिविधम् शृणु मे भरतर्षभ ।''',
-    'meaning':
-        '''Arjuna, the happiness that comes from them is also of three types. Hear it from Me now.'''
+    'meaning': '''Arjuna, the happiness that comes from them is also of three types. Hear it from Me now.'''
   },
   '18-36_second_part.md': {
     'shloka': '''अभ्यासात् रमते यत्र दुःखान्तम् च निगच्छति ॥ ३६ ॥''',
-    'meaning':
-        '''There is happiness in which a person attains the end of sorrow and enjoys repeatedly.'''
+    'meaning': '''There is happiness in which a person attains the end of sorrow and enjoys repeatedly.'''
   },
   '18-37.md': {
     'shloka': '''यत्तत् अग्रे विषम् इव परिणामे अमृतोपमम् ।
@@ -3797,8 +3792,7 @@ const headers = {
   },
   '18-47_second_part.md': {
     'shloka': '''स्वभाव नियतम् कर्म कुर्वन् नाप्नोति किल्बिषम् ।''',
-    'meaning':
-        '''By doing work according to his nature, a person doesn't obtain any guilt or fault.'''
+    'meaning': '''By doing work according to his nature, a person doesn't obtain any guilt or fault.'''
   },
   '18-48.md': {
     'shloka': '''सहजम् कर्म कौन्तेय सदोषम् अपि न त्यजेत् ।

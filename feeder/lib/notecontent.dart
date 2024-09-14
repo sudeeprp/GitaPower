@@ -32,8 +32,7 @@ List<Opener> compilationsToOpeners(List<Map<String, String>> notes) {
   }
   List<Opener> openers = [];
   for (var i = 0; i < openerIndexes.length - 1; i++) {
-    final applNoteOpener =
-        Opener.fromNotesJson(notes.sublist(openerIndexes[i], openerIndexes[i + 1]));
+    final applNoteOpener = Opener.fromNotesJson(notes.sublist(openerIndexes[i], openerIndexes[i + 1]));
     openers.add(applNoteOpener);
   }
   openers.add(Opener.fromNotesJson(notes.sublist(openerIndexes[openerIndexes.length - 1])));

@@ -26,8 +26,7 @@ void main() {
     await tester.pumpWidget(GetMaterialApp(
       home: const NotesWidget(),
       getPages: [
-        GetPage(
-            name: '/shloka/Back-to-Basics.md/applnote_2', page: () => const Text('note reached'))
+        GetPage(name: '/shloka/Back-to-Basics.md/applnote_2', page: () => const Text('note reached'))
       ],
     ));
     await tester.pumpAndSettle();

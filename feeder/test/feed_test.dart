@@ -77,24 +77,21 @@ void main() {
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
     await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: buildFeed()),
-        getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
+        home: Scaffold(body: buildFeed()), getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
     await tester.pumpAndSettle();
     navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14'));
     await tester.pumpAndSettle();
     expect(find.text('2-34'), findsOneWidget);
   });
   testWidgets('can tap on play only when narration is available', (tester) async {
-    when(mockPlayer.setAudioSource(any,
-            preload: true, initialIndex: 0, initialPosition: Duration.zero))
+    when(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
         .thenAnswer((_) async {
       return const Duration(milliseconds: 50);
     });
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
     await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: feedScreen()),
-        getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
+        home: Scaffold(body: feedScreen()), getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feedplay')), findsNothing);
     navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14.bring_the_best_in_you'));
@@ -105,8 +102,7 @@ void main() {
     await tester.pumpAndSettle();
     final FeedContent feedContent = Get.find();
     expect(feedContent.tour.state.value, equals(TourState.idle));
-    verify(mockPlayer.setAudioSource(any,
-            preload: true, initialIndex: 0, initialPosition: Duration.zero))
+    verify(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
         .called(1);
     verify(mockPlayer.play()).called(1);
   });
@@ -158,8 +154,8 @@ void main() {
       TourStop('s3.mp3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
     ];
     reset(mockPlayer);
-    await tester.pumpWidget(
-        GetMaterialApp(home: const Scaffold(body: FeedPlayIcon(TourState.idle)), getPages: [
+    await tester
+        .pumpWidget(GetMaterialApp(home: const Scaffold(body: FeedPlayIcon(TourState.idle)), getPages: [
       GetPage(name: '/shloka/:mdFilename', page: () => const Text('mdfile')),
       GetPage(name: '/shloka/:mdFilename/:noteId', page: () => const Text('mdfile with nodeid')),
     ]));
@@ -220,8 +216,8 @@ void main() {
   });
   testWidgets('retrieves tour stops from tour folder', (tester) async {
     final feedContent = FeedContent.random();
-    feedContent.setCuratedShlokaMDs(['2-1.md', '3-11.md', '4-12.md'],
-        playableFolder: 'bring_the_best_in_you');
+    feedContent
+        .setCuratedShlokaMDs(['2-1.md', '3-11.md', '4-12.md'], playableFolder: 'bring_the_best_in_you');
     await tester.pumpAndSettle();
     expect(feedContent.tour.tourStops, isNotEmpty);
   });

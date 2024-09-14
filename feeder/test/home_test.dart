@@ -50,17 +50,15 @@ void main() {
     dio.httpClientAdapter = dioAdapter;
     dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
         (server) => server.reply(200, compiledMDtoNoteIds));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
-        (server) => server.reply(200, compiledNotes));
+    dioAdapter.onGet(
+        '${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(200, compiledNotes));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/Back-to-Basics.md', (server) => server.reply(200, sampleBasics));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
     dioAdapter.onGet(
-        '${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
-    dioAdapter.onGet(
-        '${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
-    dioAdapter.onGet('${GitHubFetcher.playablesUrl}/playablestoc.md',
-        (server) => server.reply(200, playablesTOC));
+        '${GitHubFetcher.playablesUrl}/playablestoc.md', (server) => server.reply(200, playablesTOC));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Navigates to journey notes from the home screen', (tester) async {

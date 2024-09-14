@@ -24,8 +24,8 @@ Widget beginItem(String title, String about, Image image, {Key? key}) {
           child: Row(children: [
             Expanded(key: key, child: titleTextContainer(title, about)),
             Expanded(
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
+                child:
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
           ])));
 }
 
@@ -55,8 +55,7 @@ Widget doubleBeginItem({Key? key}) {
     Expanded(
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: GestureDetector(
-              onTap: openChaptersScreen, child: Image.asset('images/begin-chapters.png'))),
+          child: GestureDetector(onTap: openChaptersScreen, child: Image.asset('images/begin-chapters.png'))),
     )
   ]));
 }
@@ -68,8 +67,7 @@ class BeginWidget extends StatelessWidget {
   Widget build(context) {
     return Column(children: [
       beginItem('tour', 'Play a feed', Image.asset('images/begin-notes.png')),
-      beginItem(
-          'feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
+      beginItem('feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
       doubleBeginItem(),
     ]);
   }

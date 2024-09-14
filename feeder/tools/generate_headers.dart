@@ -67,10 +67,9 @@ HeaderSectionType _detectSectionType(md.Element element, HeaderSectionType prevS
   };
   final tagToSectionType = {
     'pre': (element) => classToSectionType[element.children[0].attributes['class']],
-    'p': (element) =>
-        _startsWithDevanagari(element.textContent) && prevSectionType != HeaderSectionType.other
-            ? HeaderSectionType.meaning
-            : HeaderSectionType.other,
+    'p': (element) => _startsWithDevanagari(element.textContent) && prevSectionType != HeaderSectionType.other
+        ? HeaderSectionType.meaning
+        : HeaderSectionType.other,
   };
   final tagConverter = tagToSectionType[element.tag];
   if (tagConverter != null) {
@@ -85,8 +84,7 @@ bool _isSeparate(elementTag) {
 }
 
 void fillHeaderMap() {
-  final mdsStr =
-      File('./source-clone-for-gen/compile/md_to_note_ids_compiled.json').readAsStringSync();
+  final mdsStr = File('./source-clone-for-gen/compile/md_to_note_ids_compiled.json').readAsStringSync();
   final List<dynamic> mdSequence = jsonDecode(mdsStr);
   for (Map<String, dynamic> md in mdSequence) {
     final mdFilename = md.keys.first;
@@ -94,8 +92,7 @@ void fillHeaderMap() {
     print('processing $mdFilename');
     shlokaHeaderMap[mdFilename] = [];
     meaningHeaderMap[mdFilename] = [];
-    HeaderMaker(mdFilename)
-        .parse(File('./source-clone-for-gen/gita/$mdFilename').readAsStringSync());
+    HeaderMaker(mdFilename).parse(File('./source-clone-for-gen/gita/$mdFilename').readAsStringSync());
   }
 }
 
@@ -115,8 +112,7 @@ void writeConstants() {
   final constsFile = File('./consts.dart');
   constsFile.writeAsStringSync('const headers = {');
   for (var mdFilename in shlokaHeaderMap.keys) {
-    constsFile.writeAsStringSync("'$mdFilename': ${shlokaHeaders(mdFilename)},\n",
-        mode: FileMode.append);
+    constsFile.writeAsStringSync("'$mdFilename': ${shlokaHeaders(mdFilename)},\n", mode: FileMode.append);
   }
   constsFile.writeAsStringSync('};', mode: FileMode.append);
 }

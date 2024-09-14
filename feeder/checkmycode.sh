@@ -13,7 +13,7 @@ else
   bash gita-begin-offline.sh
 fi
 
-dart format -l 100 .
+dart format -l 110 .
 flutter analyze
 flutter test --dart-define=actionHideInSecs=0 --coverage
 

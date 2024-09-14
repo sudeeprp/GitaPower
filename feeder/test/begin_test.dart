@@ -14,8 +14,7 @@ void main() {
     bool switchedToTargetWidget = false;
     await tester.pumpWidget(GetMaterialApp(
         home: Column(children: [
-          beginItem(
-              'chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png'),
+          beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png'),
               key: const Key('begin-to-tap'))
         ]),
         getPages: [
@@ -26,8 +25,8 @@ void main() {
                 return const Text('target of chapter');
               })
         ]));
-    await tester.tap(find.byWidgetPredicate(
-        (widget) => widget is RichText && widget.text.toPlainText().contains('chapters')));
+    await tester.tap(find
+        .byWidgetPredicate((widget) => widget is RichText && widget.text.toPlainText().contains('chapters')));
     await tester.pump();
     expect(switchedToTargetWidget, equals(true));
   });

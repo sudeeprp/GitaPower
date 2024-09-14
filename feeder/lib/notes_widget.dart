@@ -49,8 +49,7 @@ class NotesWidget extends StatelessWidget {
       Expanded(
           child: Padding(
               padding: const EdgeInsets.only(left: 8),
-              child:
-                  Text(toPlainText(note.noteContent), textScaler: const TextScaler.linear(0.9)))),
+              child: Text(toPlainText(note.noteContent), textScaler: const TextScaler.linear(0.9)))),
     ]);
   }
 }

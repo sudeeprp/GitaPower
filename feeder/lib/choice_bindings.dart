@@ -11,8 +11,7 @@ class ChoiceBinding implements Bindings {
   @override
   void dependencies() {
     const waitTimeout = Duration(seconds: 2);
-    Get.put(
-        GitHubFetcher(Dio(BaseOptions(connectTimeout: waitTimeout, receiveTimeout: waitTimeout))));
+    Get.put(GitHubFetcher(Dio(BaseOptions(connectTimeout: waitTimeout, receiveTimeout: waitTimeout))));
     Get.put(Choices());
     Get.put(ChaptersTOC());
     Get.put(NotesTOC());
