@@ -58,6 +58,7 @@ void setupWordShow(String? playable, List<String>? show) {
   }
   if (show != null) {
     showWords.words.value = show;
+    showWords.activePlayable = playable;
   }
 }
 
