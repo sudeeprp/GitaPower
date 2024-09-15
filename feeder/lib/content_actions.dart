@@ -8,7 +8,9 @@ class ContentActions extends GetxController {
   Timer? runningTimer;
 
   void showForAWhile() {
-    actionsVisible.value = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      actionsVisible.value = true;
+    });
     const actionHideInSecs = int.fromEnvironment('actionHideInSecs', defaultValue: 4);
     hideAfterAWhile(actionHideInSecs);
   }

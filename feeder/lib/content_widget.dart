@@ -381,8 +381,7 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
-      {this.onTap, this.playable, super.key}) {
+  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd, {this.onTap, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
@@ -391,12 +390,13 @@ class ContentWidget extends StatelessWidget {
   final String? nextmd;
   final String? prevmd;
   final void Function()? onTap;
-  final String? playable;
 
   List<String>? playableShows() {
-    if (Get.isRegistered<ShowWords>(tag: playable)) {
-      final ShowWords showWords = Get.find(tag: playable);
-      return showWords.words;
+    if (Get.isRegistered<ShowWords>()) {
+      final ShowWords showWords = Get.find();
+      if (showWords.activePlayable != null) {
+        return showWords.words;
+      }
     }
     return null;
   }
@@ -536,30 +536,23 @@ class ContentWidget extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor,
-    String? prevmd,
-    String? nextmd,
-    void Function()? onTap,
-    String? playable,
-    Key? key}) {
-  return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd, onTap: onTap, playable: playable, key: key);
+    {String? initialAnchor, String? prevmd, String? nextmd, void Function()? onTap, Key? key}) {
+  return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd, onTap: onTap, key: key);
 }
 
-ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, String? playable, Key? key}) {
+ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   final ChaptersTOC chapterstoc = Get.find();
   var contentWidget = buildContent(mdFilename,
       initialAnchor: initialAnchor,
       prevmd: chapterstoc.prevmd(mdFilename),
       nextmd: chapterstoc.nextmd(mdFilename),
       onTap: Get.find<ContentActions>().showForAWhile,
-      playable: playable,
       key: key);
   var contentActions = Get.find<ContentActions>();
   contentActions.showForAWhile();
   return contentWidget;
 }
 
-ContentWidget buildContentFeed(String mdFilename, {String? playable, Key? key}) {
-  return buildContent(mdFilename,
-      onTap: () => Get.toNamed('/shloka/$mdFilename'), playable: playable, key: key);
+ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
+  return buildContent(mdFilename, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: key);
 }

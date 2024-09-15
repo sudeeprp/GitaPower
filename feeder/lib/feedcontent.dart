@@ -50,11 +50,11 @@ enum TourState { idle, loading, playing, paused }
 
 void setupWordShow(String? playable, List<String>? show) {
   ShowWords? showWords;
-  if (Get.isRegistered<ShowWords>(tag: playable)) {
-    showWords = Get.find<ShowWords>(tag: playable);
+  if (Get.isRegistered<ShowWords>()) {
+    showWords = Get.find<ShowWords>();
   } else {
     showWords = ShowWords();
-    Get.put(showWords, tag: playable);
+    Get.put(showWords);
   }
   if (show != null) {
     showWords.words.value = show;
