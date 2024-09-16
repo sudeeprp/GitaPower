@@ -32,21 +32,24 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
 
   if (showPatterns != null) {
     List<MatterForInline> matterForInlines = [];
-    final words = text.split(RegExp(r'\s+'));
-    List<String> normalWords = [];
-    for (final word in words) {
-      if (showPatterns.any((pattern) => word.contains(pattern))) {
-        if (normalWords.isNotEmpty) {
-          matterForInlines.add(oneMatterForInline(normalWords.join(' '), Presentation.normal));
-          normalWords.clear();
-        }
-        matterForInlines.add(oneMatterForInline(word, Presentation.emphasis));
-      } else {
-        normalWords.add(word);
+    String pattern = showPatterns.map((word) => RegExp.escape(word)).join('|');
+    RegExp regExp = RegExp(pattern, caseSensitive: false);
+
+    int lastMatchEnd = 0;
+    final allMatches = regExp.allMatches(text);
+    for (RegExpMatch match in allMatches) {
+      if (match.start > lastMatchEnd) {
+        // stuff between matches
+        matterForInlines
+            .add(oneMatterForInline(text.substring(lastMatchEnd, match.start), Presentation.normal));
       }
+      matterForInlines.add(oneMatterForInline(match.group(0)!, Presentation.emphasis)); // the match
+      lastMatchEnd = match.end;
     }
-    if (normalWords.isNotEmpty) {
-      matterForInlines.add(oneMatterForInline(normalWords.join(' '), Presentation.normal));
+
+    if (lastMatchEnd < text.length) {
+      // remaining stuff at the end
+      matterForInlines.add(oneMatterForInline(text.substring(lastMatchEnd), Presentation.normal));
     }
     return matterForInlines;
   }
