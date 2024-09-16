@@ -23,6 +23,11 @@ class MatterForInline {
   String? link;
 }
 
+bool isWordAlready(String word) {
+  // either transliteration or devanagari will be unlikely to have substring matches
+  return word.startsWith('[') | RegExp('^[\u0900-\u097F]+').hasMatch(word);
+}
+
 List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType, String tag,
     {String? elmclass, String? link, List<String>? showPatterns}) {
   MatterForInline oneMatterForInline(String text, Presentation presentation) {
@@ -32,8 +37,10 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
 
   if (showPatterns != null) {
     List<MatterForInline> matterForInlines = [];
-    String pattern = showPatterns.map((word) => RegExp.escape(word)).join('|');
-    RegExp regExp = RegExp(pattern, caseSensitive: false);
+    String pattern = showPatterns
+        .map((word) => isWordAlready(word) ? RegExp.escape(word) : r'\b' + RegExp.escape(word) + r'\b')
+        .join('|');
+    RegExp regExp = RegExp(pattern, caseSensitive: false, unicode: true);
 
     int lastMatchEnd = 0;
     final allMatches = regExp.allMatches(text);

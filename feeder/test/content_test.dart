@@ -422,6 +422,12 @@ A person diverts from the path of realizing the Self due to some desires.
       expect(firstmidEmpha[3].text, equals(' three four'));
       expect(firstmidEmpha[3].presentation, equals(Presentation.normal));
     }
+    {
+      final strAndSubstr =
+          makeMatterForInlines('one done', SectionType.commentary, 'anytag', showPatterns: ['one']);
+      expect(strAndSubstr.length, equals(2));
+      expect(strAndSubstr[1].text.trim(), equals('done'));
+    }
   });
   test('retains whitespace after splitting and marking', () {
     const originalText = 'eka dvi\ntrINi catvari';
@@ -433,7 +439,7 @@ A person diverts from the path of realizing the Self due to some desires.
     }
     expect(readBack, equals(originalText));
   });
-  final showPatterns = ["\u0905\u0939\u092e\u0947\u0935", "ahameva", "Me", "inside"];
+  final showPatterns = ["\u0905\u0939\u092e\u0947\u0935", "[ahameva]", "Me", "inside"];
   test('highlights sanskrit words in the content', () {
     final sanskritInlines =
         makeMatterForInlines("अहमेव", SectionType.commentary, 'anytag', showPatterns: showPatterns);
@@ -443,15 +449,15 @@ A person diverts from the path of realizing the Self due to some desires.
   test('highlights transliterated words in the content', () {
     final translitInInlines =
         makeMatterForInlines('[ahameva]', SectionType.meaning, 'anytag', showPatterns: showPatterns);
-    expect(translitInInlines[1].text, equals('ahameva'));
-    expect(translitInInlines[1].presentation, equals(Presentation.emphasis));
+    expect(translitInInlines[0].text, equals('[ahameva]'));
+    expect(translitInInlines[0].presentation, equals(Presentation.emphasis));
   });
   testWidgets('accepts highlights while rendering the content', (tester) async {
     Get.put(Choices());
     Get.put(ContentActions());
     Get.put(ContentNotes());
     final showWords = ShowWords();
-    showWords.words.value = ['धृतिः', 'dhRtiH', 'resolve'];
+    showWords.words.value = ['धृतिः', '[dhRtiH]', 'resolve'];
     showWords.activePlayable = 'playable_1';
     Get.put(showWords);
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
