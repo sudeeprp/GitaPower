@@ -589,7 +589,7 @@ ContentWidget buildContentWithNote(String mdFilename, {String? initialAnchor, Ke
       onTap: Get.find<ContentActions>().showForAWhile,
       key: key);
   var contentActions = Get.find<ContentActions>();
-  contentActions.showForAWhile();
+  contentActions.initialShowForAWhile();
   return contentWidget;
 }
 
