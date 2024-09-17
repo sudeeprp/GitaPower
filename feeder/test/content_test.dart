@@ -42,7 +42,7 @@ class ParseRecords {
   List<WidgetMade> widgetsMade = [];
 }
 
-ParseRecords recordParseActions(mdContent) {
+ParseRecords recordParseActions(mdContent, {List<String>? showPatterns}) {
   var parseRecords = ParseRecords();
   List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
     parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType, inlineMatter.tag,
@@ -55,7 +55,7 @@ ParseRecords recordParseActions(mdContent) {
     return [];
   }
 
-  WidgetMaker(widgetMaker, inlineMaker).parse(mdContent);
+  WidgetMaker(widgetMaker, inlineMaker, showPatterns: showPatterns).parse(mdContent);
   return parseRecords;
 }
 
@@ -103,6 +103,7 @@ Arjuna says to Krishna - how do we think of You?
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (tester) async {
+    Get.put(Choices());
     final widgetWithOneMD = WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
     expect(widgetWithOneMD.length, equals(1));
     await tester.pumpWidget(GetMaterialApp(home: Column(children: widgetWithOneMD)));
@@ -463,5 +464,21 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('resolve', findRichText: true), findsOneWidget);
+  });
+  testWidgets('renders meaning with spaces', (tester) async {
+    Get.put(Choices());
+    Get.put(ContentActions());
+    Get.put(ContentNotes());
+    final showWords = ShowWords();
+    showWords.words.value = ['worship'];
+    showWords.activePlayable = 'playable_1';
+    Get.put(showWords);
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('who worship Me to be with Me always', findRichText: true), findsOneWidget);
+//     final parsedMeaning = recordParseActions('''
+// `देहभृताम् वर` `[dehabhRtAm vara]` O best among the beings who have a body, `अधिभूतम्` `[adhibhUtam]` the entire material creation `क्षरो भावः` `[kSaro bhAvaH]` has the effect of eventually wearing out. `अधिदैवतम् च` `[adhidaivatam ca]` Further, the ‘divine agent' `पुरुषः` `[puruSaH]` is the person who is above all forces of the universe. `अधियज्ञो` `[adhiyajJo]` The purpose of worship `अहमेव` `[ahameva]` is none other than Me, `अत्र देहे` `[atra dehe]` situated inside the body.''',
+//         showPatterns: ["purpose", "worship", "\u0905\u0939\u092e\u0947\u0935", "[ahameva]", "Me", "inside"]);
+//     expect(parsedMeaning.textsMade, isNotEmpty);
   });
 }

@@ -89,9 +89,11 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  List<TextSpan> _collectedElements() {
+  List<TextSpan> _collectedElements(SectionType sectionType) {
     List<TextSpan> collectedElements = [];
-    for (final inlineMatter in collectedInlines) {
+    final visibleInlines = selectVisibleInlines(collectedInlines, sectionType);
+    final inlinesForDisplay = removeConsecutiveSpaces(visibleInlines);
+    for (final inlineMatter in inlinesForDisplay) {
       collectedElements.addAll(_inlineMaker(inlineMatter));
     }
     return collectedElements;
@@ -100,7 +102,9 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets.addAll(_widgetMaker(_collectedElements(), elementForCurrentText.last.sectionType));
+      // TODO: is it necessary to pass elementForCurrentText.last.sectionType twice?
+      collectedWidgets.addAll(_widgetMaker(_collectedElements(elementForCurrentText.last.sectionType),
+          elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -144,9 +148,9 @@ class WidgetMaker implements md.NodeVisitor {
     }
     final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
-      final inlineMatter = makeMatterForInlines(processedText, element.sectionType, tag,
+      final inlineMatters = makeMatterForInlines(processedText, element.sectionType, tag,
           elmclass: elmclass, link: link, showPatterns: showPatterns);
-      collectedInlines.addAll(inlineMatter);
+      collectedInlines.addAll(inlineMatters);
     }
   }
 
@@ -192,6 +196,7 @@ bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
 
+// TODO: Remove this function, now that we are removing in selectVisibleInlines
 List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
   List<TextSpan> spansToRender = [];
   if (meaningMode == MeaningMode.expanded) {
@@ -327,15 +332,52 @@ Widget _buildNote(BuildContext context, Widget content) {
   );
 }
 
-String _tuneContentForDisplay(MatterForInline inlineMatter) {
-  String contentForDisplay = inlineMatter.text;
-  if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
-    final Choices choice = Get.find();
-    if (choice.meaningMode.value == MeaningMode.short) {
-      contentForDisplay = inlineMatter.text.trimLeft();
+List<MatterForInline> removeConsecutiveSpaces(List<MatterForInline> inputInlineSeq) {
+  String lastEnding = ' ';
+  List<MatterForInline> visibleInlineSeq = [];
+  for (var oneInline in inputInlineSeq) {
+    String outputText = oneInline.text;
+    if (RegExp(r'\s$').hasMatch(lastEnding) && RegExp(r'^\s').hasMatch(oneInline.text)) {
+      outputText = oneInline.text.replaceFirst(RegExp(r'^\s+'), '');
+    }
+    if (outputText.isNotEmpty) {
+      final visibleInline = oneInline;
+      visibleInline.text = outputText;
+      visibleInlineSeq.add(visibleInline);
+      lastEnding = oneInline.text[oneInline.text.length - 1];
     }
   }
-  return contentForDisplay;
+  return visibleInlineSeq;
+}
+
+List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq, SectionType sectionType) {
+  if (sectionType != SectionType.meaning) {
+    return inlineMatterSeq;
+  }
+  final Choices choice = Get.find();
+  List<MatterForInline> visibleInlines = [];
+  if (choice.meaningMode.value == MeaningMode.expanded) {
+    if (choice.script.value == ScriptPreference.devanagari) {
+      visibleInlines = inlineMatterSeq.where((oneInline) => !_isSAHK(oneInline.text)).toList();
+    } else if (choice.script.value == ScriptPreference.sahk) {
+      visibleInlines = inlineMatterSeq.where((oneInline) => !_startsWithDevanagari(oneInline.text)).toList();
+    }
+  } else {
+    visibleInlines = inlineMatterSeq
+        .where((oneInline) => !_isSAHK(oneInline.text) && !_startsWithDevanagari(oneInline.text))
+        .toList();
+  }
+  return visibleInlines;
+  // for (final inlineMatter in inlineMatterSeq) {
+  //   if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
+  //     if (choice.meaningMode.value == MeaningMode.short) {
+  //       // TODO: Knock out not-displayed text here and adjust spacing
+  //       // to avoid spaces between code coming on display, trimLeft only when prev ends in whitespace
+  //       // then remove the where clause
+  //       inlineMatter.text = inlineMatter.text.trimLeft();
+  //     }
+  //   }
+  // }
 }
 
 Widget _contentSpacing(BuildContext context, Widget w) {
@@ -462,14 +504,12 @@ class ContentWidget extends StatelessWidget {
             text: inlineMatter.text,
             style: styleFor('anchor')?.copyWith(color: Colors.blue),
             recognizer: TapGestureRecognizer()..onTap = () => navigateToLink(inlineMatter.link),
-          ),
-          const TextSpan(text: ' ')
+          )
         ];
       }
-      var textContent = _tuneContentForDisplay(inlineMatter);
       return [
         TextSpan(
-          text: textContent,
+          text: inlineMatter.text,
           style: styleFor(inlineMatter.tag,
               elmclass: inlineMatter.elmclass, presentation: inlineMatter.presentation),
         )

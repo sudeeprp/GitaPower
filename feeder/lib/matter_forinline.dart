@@ -15,7 +15,7 @@ enum Presentation { normal, emphasis }
 
 class MatterForInline {
   MatterForInline(this.text, this.sectionType, this.tag, {this.elmclass, this.link, this.presentation});
-  final String text;
+  String text;
   SectionType sectionType;
   String tag;
   Presentation? presentation;
