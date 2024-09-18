@@ -49,14 +49,8 @@ class TourStop {
 enum TourState { idle, loading, playing, paused }
 
 void setupWordShow(String? playable, List<String>? show) {
-  ShowWords? showWords;
-  if (Get.isRegistered<ShowWords>()) {
-    showWords = Get.find<ShowWords>();
-  } else {
-    showWords = ShowWords();
-    Get.put(showWords);
-  }
   if (show != null) {
+    final showWords = Get.find<ShowWords>();
     showWords.words.value = show;
     showWords.activePlayable = playable;
   }

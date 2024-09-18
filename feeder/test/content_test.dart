@@ -59,6 +59,13 @@ ParseRecords recordParseActions(mdContent, {List<String>? showPatterns}) {
   return parseRecords;
 }
 
+void putContentControllers() {
+  Get.put(Choices());
+  Get.put(ContentActions());
+  Get.put(ContentNotes());
+  Get.put(ShowWords());
+}
+
 void main() {
   setUp(() {
     final dio = Dio();
@@ -110,9 +117,7 @@ Arjuna says to Krishna - how do we think of You?
     expect(find.text('work without being driven'), findsOneWidget);
   });
   testWidgets('Renders content with meanings as per script preference', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
@@ -139,9 +144,7 @@ Arjuna says to Krishna - how do we think of You?
     Get.delete<Choices>();
   });
   testWidgets('Renders shloka as per script preference', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     Get.find<Choices>().script.value = ScriptPreference.sahk;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
@@ -150,9 +153,7 @@ Arjuna says to Krishna - how do we think of You?
     Get.delete<Choices>();
   });
   testWidgets('Renders note and hides the anchor', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     final contentWidget = buildContent('10-12-anote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -163,9 +164,7 @@ Arjuna says to Krishna - how do we think of You?
     Get.delete<Choices>();
   });
   testWidgets('Navigates a link in the commentary', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     const targetFilename = '10-11-shloka.md';
     const targetNote = 'why-think';
     await tester.pumpWidget(GetMaterialApp(
@@ -195,25 +194,19 @@ Arjuna says to Krishna - how do we think of You?
     expect(anchor, isNotNull);
   });
   testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('such resolve is sattva'), findsOneWidget);
   });
   testWidgets('shows second level headings in intro-basics', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     await tester.pumpWidget(GetMaterialApp(home: buildContent('Back-to-Basics.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('योग [yOga]'), findsOneWidget);
   });
   testWidgets('page-browse by clicking next and previous buttons', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     final shlokaContent = buildContent('10-11-shloka.md',
         prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
     await tester.pumpWidget(GetMaterialApp(
@@ -257,9 +250,7 @@ Arjuna says to Krishna - how do we think of You?
     expect(contentActions.actionsVisible.value, equals(false));
   });
   testWidgets('shows preceding note in each feed', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     final contentWidget = buildContentFeed('10-13-prenote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();

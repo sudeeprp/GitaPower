@@ -102,7 +102,6 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      // TODO: is it necessary to pass elementForCurrentText.last.sectionType twice?
       collectedWidgets.addAll(_widgetMaker(_collectedElements(elementForCurrentText.last.sectionType),
           elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
@@ -196,42 +195,17 @@ bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
 
-// TODO: Remove this function, now that we are removing in selectVisibleInlines
-List<TextSpan> _renderMeaning(List<TextSpan> spans, MeaningMode meaningMode, ScriptPreference scriptChoice) {
-  List<TextSpan> spansToRender = [];
-  if (meaningMode == MeaningMode.expanded) {
-    if (scriptChoice == ScriptPreference.devanagari) {
-      spansToRender = spans.where((textSpan) => !_isSAHK(textSpan.text)).toList();
-    } else if (scriptChoice == ScriptPreference.sahk) {
-      spansToRender = spans.where((textSpan) => !_startsWithDevanagari(textSpan.text)).toList();
-    }
-  } else {
-    spansToRender =
-        spans.where((textSpan) => !_isSAHK(textSpan.text) && !_startsWithDevanagari(textSpan.text)).toList();
-  }
-  return spansToRender;
-}
-
 Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
-  Choices choice = Get.find();
-  final scriptChoice = choice.script.value;
-  final meaningMode = choice.meaningMode.value;
-  List<InlineSpan> visibleSpans = [];
-  if (sectionType == SectionType.meaning) {
-    visibleSpans = _renderMeaning(spans, meaningMode, scriptChoice);
-  } else {
-    visibleSpans = spans;
-  }
-  if (visibleSpans.isEmpty) {
+  if (spans.isEmpty) {
     return const Text('');
   } else if (sectionType == SectionType.commentary) {
     return constructCommentary(spans);
   } else if (sectionType == SectionType.anchor) {
-    return SizedBox.shrink(child: Text.rich(TextSpan(children: visibleSpans)));
-  } else if (visibleSpans.length == 1) {
-    return Text.rich(visibleSpans[0]);
+    return SizedBox.shrink(child: Text.rich(TextSpan(children: spans)));
+  } else if (spans.length == 1) {
+    return Text.rich(spans[0]);
   } else {
-    return Text.rich(TextSpan(children: visibleSpans));
+    return Text.rich(TextSpan(children: spans));
   }
 }
 
@@ -368,16 +342,6 @@ List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq
         .toList();
   }
   return visibleInlines;
-  // for (final inlineMatter in inlineMatterSeq) {
-  //   if (inlineMatter.sectionType == SectionType.meaning && inlineMatter.tag != 'code') {
-  //     if (choice.meaningMode.value == MeaningMode.short) {
-  //       // TODO: Knock out not-displayed text here and adjust spacing
-  //       // to avoid spaces between code coming on display, trimLeft only when prev ends in whitespace
-  //       // then remove the where clause
-  //       inlineMatter.text = inlineMatter.text.trimLeft();
-  //     }
-  //   }
-  // }
 }
 
 Widget _contentSpacing(BuildContext context, Widget w) {
@@ -434,11 +398,9 @@ class ContentWidget extends StatelessWidget {
   final void Function()? onTap;
 
   List<String>? playableShows() {
-    if (Get.isRegistered<ShowWords>()) {
-      final ShowWords showWords = Get.find();
-      if (showWords.activePlayable != null) {
-        return showWords.words;
-      }
+    final ShowWords showWords = Get.find();
+    if (showWords.activePlayable != null) {
+      return showWords.words;
     }
     return null;
   }

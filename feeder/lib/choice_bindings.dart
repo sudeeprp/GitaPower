@@ -1,3 +1,4 @@
+import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class ChoiceBinding implements Bindings {
     Get.put(ContentNotes());
     Get.put(FeedContent.random());
     Get.put(ContentActions());
+    Get.put(ShowWords());
     Get.lazyPut(() => PlayablesTOC(), fenix: true);
   }
 }
