@@ -444,6 +444,13 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(translitInInlines[0].text, equals('[ahameva]'));
     expect(translitInInlines[0].presentation, equals(Presentation.emphasis));
   });
+  test('does not match english inside transliterated words', () {
+    final engInTranslitInlines =
+        makeMatterForInlines('[me matam]', SectionType.meaning, 'anytag', showPatterns: ['me']);
+    expect(engInTranslitInlines.length, equals(1));
+    expect(engInTranslitInlines[0].text, equals('[me matam]'));
+    expect(engInTranslitInlines[0].presentation, equals(Presentation.normal));
+  });
   testWidgets('accepts highlights while rendering the content', (tester) async {
     Get.put(Choices());
     Get.put(ContentActions());
@@ -467,9 +474,5 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
     expect(find.textContaining('who worship Me to be with Me always', findRichText: true), findsOneWidget);
-//     final parsedMeaning = recordParseActions('''
-// `देहभृताम् वर` `[dehabhRtAm vara]` O best among the beings who have a body, `अधिभूतम्` `[adhibhUtam]` the entire material creation `क्षरो भावः` `[kSaro bhAvaH]` has the effect of eventually wearing out. `अधिदैवतम् च` `[adhidaivatam ca]` Further, the ‘divine agent' `पुरुषः` `[puruSaH]` is the person who is above all forces of the universe. `अधियज्ञो` `[adhiyajJo]` The purpose of worship `अहमेव` `[ahameva]` is none other than Me, `अत्र देहे` `[atra dehe]` situated inside the body.''',
-//         showPatterns: ["purpose", "worship", "\u0905\u0939\u092e\u0947\u0935", "[ahameva]", "Me", "inside"]);
-//     expect(parsedMeaning.textsMade, isNotEmpty);
   });
 }

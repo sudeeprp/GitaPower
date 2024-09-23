@@ -23,8 +23,8 @@ class MatterForInline {
   String? link;
 }
 
-bool isWordAlready(String word) {
-  // either transliteration or devanagari will be unlikely to have substring matches
+bool isDevanOrTranslit(String word) {
+  // devanagari and translit are unlikely to have substring matches
   return word.startsWith('[') | RegExp('^[\u0900-\u097F]+').hasMatch(word);
 }
 
@@ -35,11 +35,20 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
         elmclass: elmclass, link: link, presentation: presentation);
   }
 
+  MatterForInline emphasizeOnExactMatch(List<String> matchWords) {
+    var presentation = Presentation.normal;
+    if (matchWords.any((p) => text == p)) {
+      presentation = Presentation.emphasis;
+    }
+    return oneMatterForInline(text, presentation);
+  }
+
   if (showPatterns != null) {
+    if (isDevanOrTranslit(text)) {
+      return [emphasizeOnExactMatch(showPatterns)];
+    }
     List<MatterForInline> matterForInlines = [];
-    String pattern = showPatterns
-        .map((word) => isWordAlready(word) ? RegExp.escape(word) : r'\b' + RegExp.escape(word) + r'\b')
-        .join('|');
+    String pattern = showPatterns.map((word) => r'\b' + RegExp.escape(word) + r'\b').join('|');
     RegExp regExp = RegExp(pattern, caseSensitive: false, unicode: true);
 
     int lastMatchEnd = 0;
