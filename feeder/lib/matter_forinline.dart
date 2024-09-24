@@ -23,9 +23,9 @@ class MatterForInline {
   String? link;
 }
 
+final devanagari = RegExp('^[\u0900-\u097F]+');
 bool isDevanOrTranslit(String word) {
-  // devanagari and translit are unlikely to have substring matches
-  return word.startsWith('[') | RegExp('^[\u0900-\u097F]+').hasMatch(word);
+  return word.startsWith('[') | devanagari.hasMatch(word);
 }
 
 List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType, String tag,
