@@ -75,31 +75,31 @@ Widget makeMyHome() {
         GetPage(
             name: '/notes',
             page: () => screenify(const NotesWidget(),
-                choicesRow: choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')),
-                choicesRow: choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
-                choicesRow: choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
-                choicesRow: choicesRow(choicesForContent()))),
+                choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
             page: () => screenify(
                 buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
-                choicesRow: choicesRow(choicesForContent()))),
+                choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
       ]);
 }
 
 Widget feedScreen() {
-  return screenify(buildFeed(), choicesRow: choicesRow(choicesForFeed()));
+  return screenify(buildFeed(), choicesRow: choicesRow(makePlay(), choicesForFeed()));
 }
 
 class Home extends StatelessWidget {
@@ -110,7 +110,7 @@ class Home extends StatelessWidget {
     return screenify(
       const BeginWidget(),
       appBar: AppBar(leading: Image.asset('images/sunidhi-krishna.png'), title: const Text("Krishna's Gita")),
-      choicesRow: choicesRow(const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]),
+      choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]),
     );
   }
 }
@@ -124,19 +124,18 @@ List<Widget> makePlayWhenPlaying() {
 }
 
 List<Widget> choicesForContent() {
-  return makePlayWhenPlaying() +
-      const [
-        ScriptSelectionIcon(),
-        SizedBox(width: choiceSpacing),
-        HeaderPreferenceIcon(),
-        SizedBox(width: choiceSpacing),
-        MeaningExpansionIcon(),
-        SizedBox(width: choiceSpacing),
-        ThemeSelectionIcon(),
-        SizedBox(width: choiceSpacing),
-      ];
+  return const [
+    ScriptSelectionIcon(),
+    SizedBox(width: choiceSpacing),
+    HeaderPreferenceIcon(),
+    SizedBox(width: choiceSpacing),
+    MeaningExpansionIcon(),
+    SizedBox(width: choiceSpacing),
+    ThemeSelectionIcon(),
+    SizedBox(width: choiceSpacing),
+  ];
 }
 
 List<Widget> choicesForFeed() {
-  return makePlay() + const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
+  return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
 }
