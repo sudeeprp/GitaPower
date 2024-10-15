@@ -1,3 +1,4 @@
+import 'package:askys/feedcontent.dart';
 import 'package:askys/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -125,6 +126,13 @@ void main() {
     navigateApplink(Uri.parse('/gitapower/feed/$shlokas'));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
+  });
+  test('Shows play under content when something is playing', () {
+    Get.put(FeedContent.random());
+    expect(makePlayWhenPlaying(), isEmpty);
+    final FeedContent feedContent = Get.find();
+    feedContent.tour.state.value = TourState.playing;
+    expect(makePlayWhenPlaying(), isNotEmpty);
   });
   test('Converts uri to navigation path', () {
     expect(uriPointsToFeed(Uri.parse('/gitapower/feed/1-1.2-2.3-3')), isTrue);
