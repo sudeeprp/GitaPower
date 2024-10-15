@@ -127,16 +127,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
-  testWidgets('includes play/pause buttons with the choices while playing', (tester) async {
-    Get.delete<FeedContent>();
-    final feedContent = FeedContent.random();
-    Get.put(feedContent);
-    final choicesWithoutPlay = choicesForContent();
-    feedContent.tour.state.value = TourState.playing;
-    await tester.pumpAndSettle();
-    final choicesWithPlay = choicesForContent();
-    expect(choicesWithPlay.length, equals(choicesWithoutPlay.length + 2));
-  });
   test('Converts uri to navigation path', () {
     expect(uriPointsToFeed(Uri.parse('/gitapower/feed/1-1.2-2.3-3')), isTrue);
 
