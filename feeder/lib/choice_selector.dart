@@ -164,3 +164,15 @@ class OpenerPreferenceIcon extends StatelessWidget {
     );
   }
 }
+
+class NotesOrChaptersIcon extends StatelessWidget {
+  const NotesOrChaptersIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Image.asset('images/right-foot.png', width: 48, height: 48),
+    );
+  }
+}

@@ -74,13 +74,11 @@ Widget makeMyHome() {
       getPages: [
         GetPage(
             name: '/notes',
-            page: () => screenify(const NotesWidget(),
-                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+            page: () => screenify(const NotesWidget(), choicesRow: notesChaptersChoices())),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(
             name: '/chapters',
-            page: () => screenify(const ChaptersWidget(key: Key('toc')),
-                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+            page: () => screenify(const ChaptersWidget(key: Key('toc')), choicesRow: notesChaptersChoices())),
         GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
@@ -138,4 +136,8 @@ List<Widget> choicesForContent() {
 
 List<Widget> choicesForFeed() {
   return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
+}
+
+Widget notesChaptersChoices() {
+  return choicesRow(const [NotesOrChaptersIcon()], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
 }
