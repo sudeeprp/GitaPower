@@ -4,10 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 
 void main() {
-  testWidgets('three choices are visible to begin', (WidgetTester tester) async {
+  testWidgets('tour or browse at the start', (WidgetTester tester) async {
     await tester.pumpWidget(const GetMaterialApp(home: BeginWidget()));
-    expect(find.byKey(const Key('begin/notes')).hitTestable(), findsOneWidget);
-    expect(find.byKey(const Key('begin/feed')).hitTestable(), findsOneWidget);
+    expect(find.byKey(const Key('begin/tour')).hitTestable(), findsOneWidget);
     expect(find.byKey(const Key('begin/chapters')).hitTestable(), findsOneWidget);
   });
   testWidgets('begin-item switches to content when tapped', (WidgetTester tester) async {

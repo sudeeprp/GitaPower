@@ -17,6 +17,11 @@ class ToursWidget extends StatelessWidget {
                       title: Text(playable.title),
                       onTap: () => navigateApplink(Uri.parse(playable.url)),
                     ))
-                .toList())));
+                .toList() + [ListTile(
+                  key: const Key('tour/random'),
+                  leading: const Icon(Icons.star_rounded, size: 48),
+                  title: const Text('Random'),
+                  onTap: () => Get.toNamed('/feed')
+                )])));
   }
 }

@@ -61,11 +61,13 @@ void main() {
         '${GitHubFetcher.playablesUrl}/playablestoc.md', (server) => server.reply(200, playablesTOC));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Navigates to journey notes from the home screen', (tester) async {
+  testWidgets('Navigates to journey tours from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notes')));
+    await tester.tap(find.byKey(const Key('begin/tour')));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notes');
+    expect(Get.currentRoute, '/tour');
+    await tester.tap(find.byKey(const Key('tour/random')));
+    expect(Get.currentRoute, '/feed');
   });
   testWidgets('Navigates to a shloka number within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
