@@ -15,12 +15,13 @@ enum HeadPreference { shloka, meaning }
 enum BrowsingPreference { chapters, notes }
 
 Future<void> storePreferences(ReadingTheme theme, ScriptPreference script, MeaningMode meaningMode,
-    HeadPreference headPreference) async {
+    HeadPreference headPreference, BrowsingPreference browsingPreference) async {
   final storedPreferences = await SharedPreferences.getInstance();
   storedPreferences.setString('theme', EnumToString.convertToString(theme));
   storedPreferences.setString('script', EnumToString.convertToString(script));
   storedPreferences.setString('meaning', EnumToString.convertToString(meaningMode));
   storedPreferences.setString('head', EnumToString.convertToString(headPreference));
+  storedPreferences.setString('browsing', EnumToString.convertToString(browsingPreference));
 }
 
 T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
@@ -44,7 +45,8 @@ class Choices extends GetxController {
     ReadingTheme.light: ThemeMode.light,
   };
   Future<void> storeAllPreferences() async {
-    await storePreferences(theme.value, script.value, meaningMode.value, headPreference.value);
+    await storePreferences(
+        theme.value, script.value, meaningMode.value, headPreference.value, browsingPreference.value);
   }
 
   @override
@@ -56,6 +58,7 @@ class Choices extends GetxController {
     script.listen((_) => storeAllPreferences());
     meaningMode.listen((_) => storeAllPreferences());
     headPreference.listen((_) => storeAllPreferences());
+    browsingPreference.listen((_) => storeAllPreferences());
     try {
       final storedPreferences = await SharedPreferences.getInstance();
       theme.value = _fromStored(ReadingTheme.values, storedPreferences.getString('theme'), theme.value);
@@ -65,6 +68,8 @@ class Choices extends GetxController {
           _fromStored(MeaningMode.values, storedPreferences.getString('meaning'), meaningMode.value);
       headPreference.value =
           _fromStored(HeadPreference.values, storedPreferences.getString('head'), headPreference.value);
+      browsingPreference.value = _fromStored(
+          BrowsingPreference.values, storedPreferences.getString('browsing'), browsingPreference.value);
     } catch (e) {
       // ignore: avoid_print
       print(e);

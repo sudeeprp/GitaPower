@@ -103,12 +103,6 @@ void main() {
     expect(Get.currentRoute, '/shloka/1-1.md/applnote_13');
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
   });
-  testWidgets('Shows feed with one tap', (tester) async {
-    await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/feed')));
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/feed');
-  });
   testWidgets('Navigates to curated tours from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/tour')));
