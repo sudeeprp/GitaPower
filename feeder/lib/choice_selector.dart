@@ -12,6 +12,8 @@ enum MeaningMode { short, expanded }
 
 enum HeadPreference { shloka, meaning }
 
+enum BrowsingPreference { chapters, notes }
+
 Future<void> storePreferences(ReadingTheme theme, ScriptPreference script, MeaningMode meaningMode,
     HeadPreference headPreference) async {
   final storedPreferences = await SharedPreferences.getInstance();
@@ -36,6 +38,7 @@ class Choices extends GetxController {
   var script = ScriptPreference.devanagari.obs;
   var meaningMode = MeaningMode.short.obs;
   var headPreference = HeadPreference.shloka.obs;
+  var browsingPreference = BrowsingPreference.chapters.obs;
   final appearanceChoices = {
     ReadingTheme.dark: ThemeMode.dark,
     ReadingTheme.light: ThemeMode.light,
@@ -165,14 +168,30 @@ class OpenerPreferenceIcon extends StatelessWidget {
   }
 }
 
-class NotesOrChaptersIcon extends StatelessWidget {
-  const NotesOrChaptersIcon({super.key});
+class BrowsingPreferenceIcon extends StatelessWidget {
+  const BrowsingPreferenceIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Choices choice = Get.find();
     return GestureDetector(
-      onTap: () {},
-      child: Image.asset('images/right-foot.png', width: 48, height: 48),
+      onTap: () {
+        if (choice.browsingPreference.value == BrowsingPreference.chapters) {
+          choice.browsingPreference.value = BrowsingPreference.notes;
+          Get.toNamed('/notes');
+        } else {
+          choice.browsingPreference.value = BrowsingPreference.chapters;
+          Get.toNamed('/chapters');
+        }
+      },
+      child: Obx(() {
+        return Image.asset(
+            choice.browsingPreference.value == BrowsingPreference.chapters
+                ? 'images/one-step.png'
+                : 'images/begin-chapters.png',
+            width: 48,
+            height: 48);
+      }),
     );
   }
 }
