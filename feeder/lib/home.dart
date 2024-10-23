@@ -73,15 +73,16 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(
+            name: '/tour',
+            page: () => screenify(const ToursWidget(),
+                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+        GetPage(name: '/browse', page: browsingScreen),
+        GetPage(
             name: '/notes', page: () => screenify(const NotesWidget(), choicesRow: notesChaptersChoices())),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(
             name: '/chapters',
             page: () => screenify(const ChaptersWidget(key: Key('toc')), choicesRow: notesChaptersChoices())),
-        GetPage(
-            name: '/tour',
-            page: () => screenify(const ToursWidget(),
-                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
@@ -97,6 +98,16 @@ Widget makeMyHome() {
 
 Widget feedScreen() {
   return screenify(buildFeed(), choicesRow: choicesRow(makePlay(), choicesForFeed()));
+}
+
+Widget browsingScreen() {
+  Choices choices = Get.find();
+  return Obx(() => screenify(
+        choices.browsingPreference.value == BrowsingPreference.chapters
+            ? const ChaptersWidget(key: Key('toc'))
+            : const NotesWidget(),
+        choicesRow: notesChaptersChoices(),
+      ));
 }
 
 class Home extends StatelessWidget {

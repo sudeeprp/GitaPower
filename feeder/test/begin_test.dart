@@ -7,7 +7,7 @@ void main() {
   testWidgets('tour or browse at the start', (WidgetTester tester) async {
     await tester.pumpWidget(const GetMaterialApp(home: BeginWidget()));
     expect(find.byKey(const Key('begin/tour')).hitTestable(), findsOneWidget);
-    expect(find.byKey(const Key('begin/chapters')).hitTestable(), findsOneWidget);
+    expect(find.byKey(const Key('begin/browse')).hitTestable(), findsOneWidget);
   });
   testWidgets('begin-item switches to content when tapped', (WidgetTester tester) async {
     bool switchedToTargetWidget = false;

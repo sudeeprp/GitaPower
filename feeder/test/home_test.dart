@@ -1,3 +1,4 @@
+import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/home.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,9 @@ void main() {
   });
   testWidgets('Navigates to a shloka number within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
+    await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/chapters');
+    expect(Get.currentRoute, '/browse');
     await tester.tap(find.text('Chapter 1')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('1-1')); // tap #3
@@ -82,7 +83,7 @@ void main() {
   });
   testWidgets('Navigates to introduction when it is the only item in the chapter', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
+    await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1
     await tester.pumpAndSettle();
     await tester.tap(find.text('Back-to-Basics')); // tap #2
     await tester.pumpAndSettle();
@@ -90,9 +91,11 @@ void main() {
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notes'))); // tap #1
+    Choices choices = Get.find();
+    choices.browsingPreference.value = BrowsingPreference.notes;
+    await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notes');
+    expect(Get.currentRoute, '/browse');
     await tester.tap(find.text('Is there a different way?')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3

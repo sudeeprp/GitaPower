@@ -67,7 +67,7 @@ class BeginWidget extends StatelessWidget {
   Widget build(context) {
     return Column(children: [
       beginItem('tour', 'Play a feed', Image.asset('images/begin-feed3.png')),
-      beginItem('chapters', 'Follow the chapters', Image.asset('images/begin-chapters.png')),
+      beginItem('browse', 'Browse topics', Image.asset('images/begin-chapters.png')),
     ]);
   }
 }
