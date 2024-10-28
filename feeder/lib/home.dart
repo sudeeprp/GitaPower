@@ -77,12 +77,7 @@ Widget makeMyHome() {
             page: () => screenify(const ToursWidget(),
                 choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/browse', page: browsingScreen),
-        GetPage(
-            name: '/notes', page: () => screenify(const NotesWidget(), choicesRow: notesChaptersChoices())),
         GetPage(name: '/feed', page: () => feedScreen()),
-        GetPage(
-            name: '/chapters',
-            page: () => screenify(const ChaptersWidget(key: Key('toc')), choicesRow: notesChaptersChoices())),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
@@ -149,6 +144,10 @@ List<Widget> choicesForFeed() {
 }
 
 Widget notesChaptersChoices() {
-  return choicesRow(
-      const [BrowsingPreferenceIcon()], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
+  const notesChaptersTabs = [
+    BrowsingPreferenceIcon(BrowsingPreference.chapters, 'images/begin-chapters.png'),
+    SizedBox(width: choiceSpacing),
+    BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
+  ];
+  return choicesRow(notesChaptersTabs, const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
 }

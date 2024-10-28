@@ -13,19 +13,19 @@ void main() {
     bool switchedToTargetWidget = false;
     await tester.pumpWidget(GetMaterialApp(
         home: Column(children: [
-          beginItem('chapters', 'Start chapter by chapter', Image.asset('images/begin-chapters.png'),
+          beginItem('browse', 'Start chapter by chapter', Image.asset('images/begin-chapters.png'),
               key: const Key('begin-to-tap'))
         ]),
         getPages: [
           GetPage(
-              name: '/chapters',
+              name: '/browse',
               page: () {
                 switchedToTargetWidget = true;
-                return const Text('target of chapter');
+                return const Text('target of browse');
               })
         ]));
     await tester.tap(find
-        .byWidgetPredicate((widget) => widget is RichText && widget.text.toPlainText().contains('chapters')));
+        .byWidgetPredicate((widget) => widget is RichText && widget.text.toPlainText().contains('browse')));
     await tester.pump();
     expect(switchedToTargetWidget, equals(true));
   });

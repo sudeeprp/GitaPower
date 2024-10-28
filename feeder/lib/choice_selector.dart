@@ -174,28 +174,39 @@ class OpenerPreferenceIcon extends StatelessWidget {
 }
 
 class BrowsingPreferenceIcon extends StatelessWidget {
-  const BrowsingPreferenceIcon({super.key});
+  const BrowsingPreferenceIcon(this.browsingPreference, this.iconFile, {super.key});
+
+  final BrowsingPreference browsingPreference;
+  final String iconFile;
 
   @override
   Widget build(BuildContext context) {
     final Choices choice = Get.find();
     return GestureDetector(
       onTap: () {
-        if (choice.browsingPreference.value == BrowsingPreference.chapters) {
-          choice.browsingPreference.value = BrowsingPreference.notes;
-          Get.toNamed('/notes');
-        } else {
-          choice.browsingPreference.value = BrowsingPreference.chapters;
-          Get.toNamed('/chapters');
-        }
+        choice.browsingPreference.value = browsingPreference;
       },
       child: Obx(() {
-        return Image.asset(
-            choice.browsingPreference.value == BrowsingPreference.chapters
-                ? 'images/one-step.png'
-                : 'images/begin-chapters.png',
-            width: 48,
-            height: 48);
+        final boxShadow = choice.browsingPreference.value == browsingPreference
+            ? BoxShadow(
+                color: Colors.blue.withOpacity(0.3),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
+              )
+            : BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                offset: const Offset(0, 2),
+                blurRadius: 6,
+              );
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            // color: isSelected ? Colors.blue : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [boxShadow],
+          ),
+          child: Image.asset(iconFile, width: 48, height: 48),
+        );
       }),
     );
   }
