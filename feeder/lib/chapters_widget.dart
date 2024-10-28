@@ -27,7 +27,7 @@ class ChaptersWidget extends StatelessWidget {
   Widget _formChapterTitle(String chapterHeading, String mdFilename) {
     final headerText = chapters.headers[mdFilename] ?? '';
     return ListTile(
-      leading: Image.asset('images/bothfeet.png', width: 30, height: 30),
+      leading: Image.asset('images/begin-chapters.png', width: 30, height: 30),
       title: Text(chapterHeading),
       subtitle: Text(headerText),
       onTap: () => Get.toNamed('/shlokaheaders/$mdFilename'),
