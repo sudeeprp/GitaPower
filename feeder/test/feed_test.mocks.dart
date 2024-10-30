@@ -585,8 +585,7 @@ class MockAudioPlayer extends _i1.Mock implements _i2.AudioPlayer {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<void> setAutomaticallyWaitsToMinimizeStalling(
-          bool? automaticallyWaitsToMinimizeStalling) =>
+  _i3.Future<void> setAutomaticallyWaitsToMinimizeStalling(bool? automaticallyWaitsToMinimizeStalling) =>
       (super.noSuchMethod(
         Invocation.method(
           #setAutomaticallyWaitsToMinimizeStalling,

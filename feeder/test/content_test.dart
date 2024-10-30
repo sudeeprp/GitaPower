@@ -45,8 +45,8 @@ class ParseRecords {
 ParseRecords recordParseActions(mdContent, {List<String>? showPatterns}) {
   var parseRecords = ParseRecords();
   List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
-    parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType,
-        inlineMatter.tag, inlineMatter.elmclass, inlineMatter.link));
+    parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType, inlineMatter.tag,
+        inlineMatter.elmclass, inlineMatter.link));
     return [];
   }
 
@@ -103,18 +103,15 @@ Arjuna says to Krishna - how do we think of You?
             '`सा धृतिः` `[sA dhRtiH]` - such [resolve](18-29.md#intellect_and_resolve) `सात्विकी` `[sAtvikI]` is sattva'));
     dioAdapter.onGet(
         '${GitHubFetcher.baseUrl}/compile/notes_compiled.json',
-        (server) => server.reply(200,
-            '[{"note_id": "applnote_pre_10-12", "text": "What did Arjuna ask?", "file": "10-10.md"}]'));
-    dioAdapter.onGet(
-        '${GitHubFetcher.baseUrl}/compile/md_to_note_ids_compiled.json',
-        (server) =>
-            server.reply(200, '[{"10-10.md": ["applnote_pre_10-12"]}, {"10-13-prenote.md": []}]'));
+        (server) => server.reply(
+            200, '[{"note_id": "applnote_pre_10-12", "text": "What did Arjuna ask?", "file": "10-10.md"}]'));
+    dioAdapter.onGet('${GitHubFetcher.baseUrl}/compile/md_to_note_ids_compiled.json',
+        (server) => server.reply(200, '[{"10-10.md": ["applnote_pre_10-12"]}, {"10-13-prenote.md": []}]'));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (tester) async {
     Get.put(Choices());
-    final widgetWithOneMD =
-        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
+    final widgetWithOneMD = WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
     expect(widgetWithOneMD.length, equals(1));
     await tester.pumpWidget(GetMaterialApp(home: Column(children: widgetWithOneMD)));
     expect(find.text('work without being driven'), findsOneWidget);
@@ -126,8 +123,7 @@ Arjuna says to Krishna - how do we think of You?
     await tester.pumpAndSettle();
 
     // to start with, the shloka needs to be read continuously without the source in-between
-    final continFinder =
-        find.textContaining('who worship Me to be with Me always', findRichText: true);
+    final continFinder = find.textContaining('who worship Me to be with Me always', findRichText: true);
     expect(continFinder, findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
@@ -174,8 +170,7 @@ Arjuna says to Krishna - how do we think of You?
     await tester.pumpWidget(GetMaterialApp(
       home: buildContent('10-12-anote.md'),
       getPages: [
-        GetPage(
-            name: '/shloka/$targetFilename/$targetNote', page: () => const Text('anchor reached'))
+        GetPage(name: '/shloka/$targetFilename/$targetNote', page: () => const Text('anchor reached'))
       ],
     ));
     await tester.pumpAndSettle();
@@ -185,8 +180,7 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Navigates to the story behind the avatar', (tester) async {
     String? anchor;
-    await tester
-        .pumpWidget(GetMaterialApp(home: Scaffold(body: avataraRamanuja(key: 'avakey')), getPages: [
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: avataraRamanuja(key: 'avakey')), getPages: [
       GetPage(
           name: '/shloka/ramanuja.md/:anchor',
           page: () {
@@ -374,8 +368,7 @@ There are many statements in the scriptures
     expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
   });
   test('converts hyperlink in a note to text', () {
-    final parsedHyperInNote =
-        recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
+    final parsedHyperInNote = recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
     expect(parsedHyperInNote.textsMade[1].content, equals('devotion'));
     expect(parsedHyperInNote.widgetsMade.length, equals(1));
   });
@@ -400,8 +393,7 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   test('highlights english words in the content by splitting and marking', () {
     {
-      final midlastEmpha = makeMatterForInlines(
-          'Zero one two three four', SectionType.commentary, 'anytag',
+      final midlastEmpha = makeMatterForInlines('Zero one two three four', SectionType.commentary, 'anytag',
           showPatterns: ['two', 'four']);
       expect(midlastEmpha.length, equals(4));
       expect(midlastEmpha[0].text.trim(), equals('Zero one'));
@@ -414,8 +406,7 @@ A person diverts from the path of realizing the Self due to some desires.
       expect(midlastEmpha[3].presentation, equals(Presentation.emphasis));
     }
     {
-      final firstmidEmpha = makeMatterForInlines(
-          'Zero one two three four', SectionType.commentary, 'anytag',
+      final firstmidEmpha = makeMatterForInlines('Zero one two three four', SectionType.commentary, 'anytag',
           showPatterns: ['zero', 'two']);
       expect(firstmidEmpha.length, equals(4));
       expect(firstmidEmpha[0].text, equals('Zero'));
@@ -432,8 +423,8 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   test('retains whitespace after splitting and marking', () {
     const originalText = 'eka dvi\ntrINi catvari';
-    final splitMarked = makeMatterForInlines(originalText, SectionType.commentary, 'anytag',
-        showPatterns: ['dvi', 'trINi']);
+    final splitMarked =
+        makeMatterForInlines(originalText, SectionType.commentary, 'anytag', showPatterns: ['dvi', 'trINi']);
     String readBack = '';
     for (final phrase in splitMarked) {
       readBack += phrase.text;
@@ -448,8 +439,8 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(sanskritInlines[0].presentation, equals(Presentation.emphasis));
   });
   test('highlights transliterated words in the content', () {
-    final translitInInlines = makeMatterForInlines('[ahameva]', SectionType.meaning, 'anytag',
-        showPatterns: showPatterns);
+    final translitInInlines =
+        makeMatterForInlines('[ahameva]', SectionType.meaning, 'anytag', showPatterns: showPatterns);
     expect(translitInInlines[0].text, equals('[ahameva]'));
     expect(translitInInlines[0].presentation, equals(Presentation.emphasis));
   });
@@ -482,7 +473,6 @@ A person diverts from the path of realizing the Self due to some desires.
     Get.put(showWords);
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
-    expect(find.textContaining('who worship Me to be with Me always', findRichText: true),
-        findsOneWidget);
+    expect(find.textContaining('who worship Me to be with Me always', findRichText: true), findsOneWidget);
   });
 }

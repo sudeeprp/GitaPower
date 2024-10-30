@@ -21,8 +21,8 @@ class GitHubFetcher extends GetxController {
     final mdToNotesStr = await _compiledAsString('md_to_note_ids_compiled.json');
     final List<dynamic> chapterNotesJson = jsonDecode(mdToNotesStr);
     final chapterNotes = chapterNotesJson
-        .map(((e) => (e as Map<String, dynamic>).map((key, value) =>
-            MapEntry(key, (value as List<dynamic>).map((e) => e as String).toList()))))
+        .map(((e) => (e as Map<String, dynamic>)
+            .map((key, value) => MapEntry(key, (value as List<dynamic>).map((e) => e as String).toList()))))
         .toList();
     return chapterNotes;
   }
@@ -31,8 +31,7 @@ class GitHubFetcher extends GetxController {
     final notesCompiledAsStr = await _compiledAsString('notes_compiled.json');
     final List<dynamic> notesCompiledAsJson = jsonDecode(notesCompiledAsStr);
     final notes = notesCompiledAsJson
-        .map(((e) =>
-            (e as Map<String, dynamic>).map((key, value) => MapEntry(key, value as String))))
+        .map(((e) => (e as Map<String, dynamic>).map((key, value) => MapEntry(key, value as String))))
         .toList();
     return notes;
   }

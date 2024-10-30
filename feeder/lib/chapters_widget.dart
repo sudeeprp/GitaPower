@@ -12,8 +12,7 @@ class ChaptersWidget extends StatelessWidget {
     return Obx(() {
       if (toc.chaptersLoaded.value) {
         List<Widget> tocListElements = toc.chapters
-            .map((chapter) =>
-                _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)))
+            .map((chapter) => _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)))
             .toList();
         return Scaffold(body: ListView(children: tocListElements));
       } else {

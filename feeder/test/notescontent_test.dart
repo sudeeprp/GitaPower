@@ -20,11 +20,7 @@ void main() {
     const List<Map<String, String>> compiledNotes = [
       {"note_id": "applopener_1", "text": "Who am I?", "file": "Back-to-Basics.md"},
       {"note_id": "applnote_2", "text": "I am not my body, am I?", "file": "Back-to-Basics.md"},
-      {
-        "note_id": "applnote_3",
-        "text": "I am not just a thought, am I?",
-        "file": "Back-to-Basics.md"
-      },
+      {"note_id": "applnote_3", "text": "I am not just a thought, am I?", "file": "Back-to-Basics.md"},
       {"note_id": "applopener_6", "text": "What am I doing?", "file": "Chapters.md"},
       {
         "note_id": "applnote_7",
@@ -61,8 +57,7 @@ void main() {
     expect(mdsToInitialNotes['2-12.md'], equals('I am not my body'));
   });
   test('loses links when translated to plain text', () {
-    expect(
-        toPlainText('Practice [devotion](b.md#bhakti) always'), equals('Practice devotion always'));
+    expect(toPlainText('Practice [devotion](b.md#bhakti) always'), equals('Practice devotion always'));
     expect(toPlainText('What am I?'), equals('What am I?'));
   });
 }

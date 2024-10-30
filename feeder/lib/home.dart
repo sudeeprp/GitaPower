@@ -59,9 +59,7 @@ void navigateApplink(Uri? uri) {
 }
 
 bool uriPointsToFeed(Uri uri) {
-  return uri.pathSegments.length >= 2 &&
-      uri.pathSegments[0] == 'gitapower' &&
-      uri.pathSegments[1] == 'feed';
+  return uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'gitapower' && uri.pathSegments[1] == 'feed';
 }
 
 Widget makeMyHome() {
@@ -77,13 +75,10 @@ Widget makeMyHome() {
         GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
-                choicesRow:
-                    choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
-        GetPage(
-            name: '/shlokaheaders/:chapter',
-            page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
+        GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
@@ -91,8 +86,7 @@ Widget makeMyHome() {
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
             page: () => screenify(
-                buildContentWithNote(Get.parameters['mdFilename']!,
-                    initialAnchor: Get.parameters['noteId']),
+                buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
                 choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
       ]);
 }
@@ -118,8 +112,7 @@ class Home extends StatelessWidget {
   Widget build(context) {
     return screenify(
       const BeginWidget(),
-      appBar: AppBar(
-          leading: Image.asset('images/sunidhi-krishna.png'), title: const Text("Krishna's Gita")),
+      appBar: AppBar(leading: Image.asset('images/sunidhi-krishna.png'), title: const Text("Krishna's Gita")),
       choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]),
     );
   }
@@ -156,6 +149,5 @@ Widget notesChaptersChoices() {
     SizedBox(width: choiceSpacing),
     BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
   ];
-  return choicesRow(
-      notesChaptersTabs, const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
+  return choicesRow(notesChaptersTabs, const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
 }
