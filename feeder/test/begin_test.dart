@@ -24,8 +24,8 @@ void main() {
                 return const Text('target of browse');
               })
         ]));
-    await tester.tap(find
-        .byWidgetPredicate((widget) => widget is RichText && widget.text.toPlainText().contains('browse')));
+    await tester.tap(find.byWidgetPredicate(
+        (widget) => widget is RichText && widget.text.toPlainText().contains('browse')));
     await tester.pump();
     expect(switchedToTargetWidget, equals(true));
   });

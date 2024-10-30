@@ -102,7 +102,8 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets.addAll(_widgetMaker(_collectedElements(elementForCurrentText.last.sectionType),
+      collectedWidgets.addAll(_widgetMaker(
+          _collectedElements(elementForCurrentText.last.sectionType),
           elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
@@ -116,8 +117,9 @@ class WidgetMaker implements md.NodeVisitor {
       final sectionType = _detectSectionType(element);
       elementForCurrentText.add(CurrentTextElement(element, sectionType, true));
     } else {
-      final sectionType =
-          elementForCurrentText.isNotEmpty ? elementForCurrentText.last.sectionType : SectionType.commentary;
+      final sectionType = elementForCurrentText.isNotEmpty
+          ? elementForCurrentText.last.sectionType
+          : SectionType.commentary;
       elementForCurrentText.add(CurrentTextElement(element, sectionType, false));
     }
     return true;
@@ -168,7 +170,8 @@ class WidgetMaker implements md.NodeVisitor {
   }
 
   bool _inMidstOfCommentary() {
-    return _previousSectionType == SectionType.commentary || _previousSectionType == SectionType.note;
+    return _previousSectionType == SectionType.commentary ||
+        _previousSectionType == SectionType.note;
   }
 }
 
@@ -214,7 +217,8 @@ Widget constructCommentary(List<TextSpan> spans) {
     WidgetSpan(
         child: Floatable(
       float: FCFloat.start,
-      child: Padding(padding: const EdgeInsets.only(left: 1, top: 10, right: 5), child: avataraRamanuja()),
+      child: Padding(
+          padding: const EdgeInsets.only(left: 1, top: 10, right: 5), child: avataraRamanuja()),
     )),
   ];
   return FloatColumn(children: [TextSpan(children: commenter + spans)]);
@@ -289,7 +293,8 @@ bool _isVisible(SectionType sectionType) {
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
   const horizontalMargins = EdgeInsets.symmetric(horizontal: 8);
   if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
-    return SingleChildScrollView(scrollDirection: Axis.horizontal, padding: horizontalMargins, child: w);
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal, padding: horizontalMargins, child: w);
   } else {
     return Padding(padding: horizontalMargins, child: w);
   }
@@ -301,7 +306,9 @@ Widget _buildNote(BuildContext context, Widget content) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
       Image.asset('images/one-step.png'),
-      Expanded(child: Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
+      Expanded(
+          child:
+              Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
     ]),
   );
 }
@@ -324,7 +331,8 @@ List<MatterForInline> removeConsecutiveSpaces(List<MatterForInline> inputInlineS
   return visibleInlineSeq;
 }
 
-List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq, SectionType sectionType) {
+List<MatterForInline> selectVisibleInlines(
+    List<MatterForInline> inlineMatterSeq, SectionType sectionType) {
   if (sectionType != SectionType.meaning) {
     return inlineMatterSeq;
   }
@@ -334,7 +342,8 @@ List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq
     if (choice.script.value == ScriptPreference.devanagari) {
       visibleInlines = inlineMatterSeq.where((oneInline) => !_isSAHK(oneInline.text)).toList();
     } else if (choice.script.value == ScriptPreference.sahk) {
-      visibleInlines = inlineMatterSeq.where((oneInline) => !_startsWithDevanagari(oneInline.text)).toList();
+      visibleInlines =
+          inlineMatterSeq.where((oneInline) => !_startsWithDevanagari(oneInline.text)).toList();
     }
   } else {
     visibleInlines = inlineMatterSeq
@@ -387,7 +396,8 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
 }
 
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd, {this.onTap, super.key}) {
+  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
+      {this.onTap, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
@@ -419,8 +429,8 @@ class ContentWidget extends StatelessWidget {
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child:
-                    Text.rich(TextSpan(children: spans), style: Theme.of(context).textTheme.headlineSmall)),
+                child: Text.rich(TextSpan(children: spans),
+                    style: Theme.of(context).textTheme.headlineSmall)),
           )
         ];
       }
@@ -439,10 +449,14 @@ class ContentWidget extends StatelessWidget {
       }
       if (elmclass == 'language-shloka-sa') {
         return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 20, fontWeight: fontWeight);
+            color: Theme.of(context).textTheme.labelMedium?.color,
+            fontSize: 20,
+            fontWeight: fontWeight);
       } else if (tag == 'code') {
         return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 18, fontWeight: fontWeight);
+            color: Theme.of(context).textTheme.labelMedium?.color,
+            fontSize: 18,
+            fontWeight: fontWeight);
       } else if (tag == 'h1') {
         return Theme.of(context).textTheme.headlineMedium;
       } else if (tag == 'h2') {
@@ -489,7 +503,8 @@ class ContentWidget extends StatelessWidget {
                   child: Row(children: [
                 Expanded(
                     flex: 17,
-                    child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')), style: styleFor('note'))),
+                    child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')),
+                        style: styleFor('note'))),
                 const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
                 Expanded(
                   flex: 3,
@@ -510,7 +525,8 @@ class ContentWidget extends StatelessWidget {
         child: DefaultTextStyle(
           style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
           child: Obx(() {
-            final widgetMaker = WidgetMaker(textRichMaker, formatMaker, showPatterns: playableShows());
+            final widgetMaker =
+                WidgetMaker(textRichMaker, formatMaker, showPatterns: playableShows());
             final widgetsMade = widgetMaker.parse(md.mdContent.value);
             insertContentNote(widgetsMade);
             WidgetsBinding.instance.addPostFrameCallback((_) {
