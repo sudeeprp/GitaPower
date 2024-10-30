@@ -146,6 +146,16 @@ class FeedContent extends GetxController {
     await initFeedContent();
   }
 
+  void resetToRandom() async {
+    threeShlokas.value = createRandomFeed(allShlokaMDs());
+    tourFolder = null;
+    tour.stopIndex = 0;
+    tour.state.value = TourState.idle;
+    tour.playable = null;
+    tour.tourStops.value = [];
+    await initFeedContent();
+  }
+
   void play() async {
     await tellIfError(() async {
       final uriList = tour.tourStops

@@ -68,6 +68,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/tour');
     await tester.tap(find.byKey(const Key('tour/random')));
+    await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
   testWidgets('Navigates to a shloka number within three taps', (tester) async {

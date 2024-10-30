@@ -23,7 +23,11 @@ class ToursWidget extends StatelessWidget {
                       key: const Key('tour/random'),
                       leading: const Icon(Icons.star_rounded, size: 48),
                       title: const Text('Random'),
-                      onTap: () => Get.toNamed('/feed'))
+                      onTap: () {
+                        final FeedContent feedContent = Get.find();
+                        feedContent.resetToRandom();
+                        Get.toNamed('/feed');
+                      }),
                 ])));
   }
 }
