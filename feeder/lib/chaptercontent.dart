@@ -6,8 +6,10 @@ class Chapter {
   Chapter(this.title, this.shokas);
   factory Chapter.fromChapterNotesJson(List<Map<String, dynamic>> chapterNotes) {
     final chapterTitle = filenameToTitle(chapterNotes[0].keys.first);
-    final chapterShlokaTitles =
-        chapterNotes.sublist(0, chapterNotes.length).map(((e) => filenameToTitle(e.keys.first))).toList();
+    final chapterShlokaTitles = chapterNotes
+        .sublist(0, chapterNotes.length)
+        .map(((e) => filenameToTitle(e.keys.first)))
+        .toList();
     chapterShlokaTitles[0] = 'Introduction';
     return Chapter(chapterTitle, chapterShlokaTitles);
   }
@@ -49,9 +51,11 @@ List<Chapter> mdNotesToChapters(List<Map<String, List<String>>> mdToNotes) {
   }
   List<Chapter> chapters = [];
   for (var i = 0; i < chapterIndexes.length - 1; i++) {
-    chapters.add(Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
+    chapters.add(
+        Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
   }
-  chapters.add(Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
+  chapters.add(
+      Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
   return chapters;
 }
 

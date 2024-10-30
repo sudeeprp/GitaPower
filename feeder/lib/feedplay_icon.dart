@@ -10,7 +10,8 @@ List<Widget> makePlay() {
         visible: feedContent.tour.tourStops.isNotEmpty,
         child: FeedPlayIcon(feedContent.tour.state.value, key: const Key('feedplay')))),
     Obx(() => Visibility(
-        visible: feedContent.tour.tourStops.isNotEmpty, child: const SizedBox(width: choiceSpacing))),
+        visible: feedContent.tour.tourStops.isNotEmpty,
+        child: const SizedBox(width: choiceSpacing))),
   ];
 }
 
