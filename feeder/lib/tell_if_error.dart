@@ -1,7 +1,7 @@
 import 'package:just_audio/just_audio.dart';
 import 'package:get/get.dart';
 
-Future<void> tellIfError(Future<void> Function() func,
+Future<void> callAndTellIfError(Future<void> Function() func,
     {Duration durationToShow = const Duration(seconds: 3)}) async {
   try {
     return await func();

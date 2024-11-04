@@ -170,6 +170,23 @@ void main() {
     feedContent.tour.moveTo(3);
     expect(Get.currentRoute, '/shloka/Chapter_7.md/bhakti_a_defn');
   });
+  testWidgets('syncs the subtitle with the play position', (tester) async {
+    final FeedContent feedContent = Get.find();
+    feedContent.tour.updatePlayPosition(const Duration(seconds: 2));
+    // TODO: Test the scroll position of the moving subtitle
+  });
+  testWidgets('shows subtitles only while playing', (tester) async {
+    final FeedContent feedContent = Get.find();
+    feedContent.tour.state.value = TourState.idle;
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('feed/subtitles')), findsNothing);
+    feedContent.tour.state.value = TourState.playing;
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('feed/subtitles')), findsOneWidget);
+    feedContent.tour.state.value = TourState.idle;
+    await tester.pumpAndSettle();
+  });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
     await tester.pumpAndSettle();

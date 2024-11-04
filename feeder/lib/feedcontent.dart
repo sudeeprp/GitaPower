@@ -59,9 +59,11 @@ void setupWordShow(String? playable, List<String>? show) {
 class Tour {
   int stopIndex = 0;
   var state = TourState.idle.obs;
+  var playPosition = const Duration(milliseconds: 0).obs;
   String? playable;
   final tourStops = <TourStop>[].obs;
   dynamic lastException;
+
   void moveTo(int? index) {
     stopIndex = index ?? 0;
     stopIndex = (stopIndex - 1).clamp(0, tourStops.length - 1);
@@ -86,6 +88,10 @@ class Tour {
     } else {
       KeepScreenOn.turnOff();
     }
+  }
+
+  void updatePlayPosition(Duration position) {
+    playPosition.value = position;
   }
 }
 
@@ -157,7 +163,7 @@ class FeedContent extends GetxController {
   }
 
   void play() async {
-    await tellIfError(() async {
+    await callAndTellIfError(() async {
       final uriList = tour.tourStops
           .map(
               (tourStop) => Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
@@ -167,6 +173,7 @@ class FeedContent extends GetxController {
               uriList.map((uri) => AudioSource.uri(uri)).toList());
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
+      audioPlayer.positionStream.listen(tour.updatePlayPosition);
       await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
       await audioPlayer.play();
     });
