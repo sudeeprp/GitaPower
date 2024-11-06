@@ -51,7 +51,9 @@ List<Chapter> mdNotesToChapters(List<Map<String, List<String>>> mdToNotes) {
   for (var i = 0; i < chapterIndexes.length - 1; i++) {
     chapters.add(Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[i], chapterIndexes[i + 1])));
   }
-  chapters.add(Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
+  if (chapterIndexes.isNotEmpty) {
+    chapters.add(Chapter.fromChapterNotesJson(mdToNotes.sublist(chapterIndexes[chapterIndexes.length - 1])));
+  }
   return chapters;
 }
 

@@ -10,7 +10,10 @@ class MovingSubtitles extends StatelessWidget {
     final FeedContent feedContent = Get.find();
     return Obx(() => Visibility(
           visible: feedContent.tour.state.value == TourState.playing,
-          child: Text(feedContent.tour.playPosition.value.toString(), key: const Key('feed/subtitles')),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(feedContent.tour.playPosition.value.toString(), key: const Key('feed/subtitles')),
+          ),
         ));
   }
 }
