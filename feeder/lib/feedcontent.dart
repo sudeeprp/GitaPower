@@ -40,8 +40,9 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 }
 
 class TourStop {
-  TourStop(this.speechFilename, this.link, this.show);
+  TourStop(this.speechFilename, this.line, this.link, this.show);
   final String speechFilename;
+  final String line;
   final String? link;
   final List<String>? show;
 }
@@ -71,7 +72,7 @@ class Tour {
     if (mdFilenameWithLink != null) {
       setupWordShow(playable, tourStops[stopIndex].show);
       final mdLaunchPath = '/shloka/$mdFilenameWithLink';
-      Get.toNamed(mdLaunchPath);
+      Get.offNamed(mdLaunchPath);
     }
   }
 
@@ -143,6 +144,7 @@ class FeedContent extends GetxController {
             .map((e) => e as Map<String, dynamic>)
             .map((tourStopJson) => TourStop(
                   tourStopJson['speech'] as String,
+                  tourStopJson['line'] as String,
                   tourStopJson['link'] as String?,
                   tourStopJson['show']?.cast<String>(),
                 ))

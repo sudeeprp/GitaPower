@@ -110,7 +110,7 @@ void main() {
   });
   testWidgets('syncs with the player state', (tester) async {
     final FeedContent feedContent = Get.find();
-    feedContent.tour.tourStops.value = [TourStop('s1.mp3', null, null)];
+    feedContent.tour.tourStops.value = [TourStop('s1.mp3', 'l1', null, null)];
     reset(mockPlayer);
     await tester.pumpWidget(MaterialApp(home: Scaffold(body: Row(children: makePlay()))));
     await tester.tap(find.byKey(const Key('feedplay')));
@@ -151,9 +151,9 @@ void main() {
   testWidgets('tours from one para to the next', (tester) async {
     final FeedContent feedContent = Get.find();
     feedContent.tour.tourStops.value = [
-      TourStop('s1.mp3', null, null),
-      TourStop('s2.mp3', '2-34.md', null),
-      TourStop('s3.mp3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
+      TourStop('s1.mp3', 'l1', null, null),
+      TourStop('s2.mp3', 'l2', '2-34.md', null),
+      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
     ];
     reset(mockPlayer);
     await tester
@@ -169,11 +169,6 @@ void main() {
     expect(Get.currentRoute, '/shloka/2-34.md');
     feedContent.tour.moveTo(3);
     expect(Get.currentRoute, '/shloka/Chapter_7.md/bhakti_a_defn');
-  });
-  testWidgets('syncs the subtitle with the play position', (tester) async {
-    final FeedContent feedContent = Get.find();
-    feedContent.tour.updatePlayPosition(const Duration(seconds: 2));
-    // TODO: Test the scroll position of the moving subtitle
   });
   testWidgets('shows subtitles only while playing', (tester) async {
     final FeedContent feedContent = Get.find();
