@@ -47,9 +47,4 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('l5', findRichText: true), findsOneWidget);
   });
-  testWidgets('syncs the subtitle with the play position', (tester) async {
-    final FeedContent feedContent = Get.find();
-    feedContent.tour.updatePlayPosition(const Duration(seconds: 2));
-    // TODO: Maybe remove the play position if it's not needed
-  });
 }

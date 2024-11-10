@@ -60,7 +60,6 @@ void setupWordShow(String? playable, List<String>? show) {
 class Tour {
   RxInt stopIndex = 0.obs;
   var state = TourState.idle.obs;
-  var playPosition = const Duration(milliseconds: 0).obs;
   String? playable;
   final tourStops = <TourStop>[].obs;
   dynamic lastException;
@@ -89,10 +88,6 @@ class Tour {
     } else {
       KeepScreenOn.turnOff();
     }
-  }
-
-  void updatePlayPosition(Duration position) {
-    playPosition.value = position;
   }
 }
 
@@ -175,7 +170,6 @@ class FeedContent extends GetxController {
               uriList.map((uri) => AudioSource.uri(uri)).toList());
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
-      audioPlayer.positionStream.listen(tour.updatePlayPosition);
       await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
       await audioPlayer.play();
     });
