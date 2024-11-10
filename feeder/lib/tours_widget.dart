@@ -15,7 +15,7 @@ class ToursWidget extends StatelessWidget {
                 ListTile(
                     key: const Key('tour/random'),
                     leading: const Icon(Icons.star_rounded, size: 48),
-                    title: const Text('Random'),
+                    title: const Text('Explore Yourself'),
                     onTap: () {
                       final FeedContent feedContent = Get.find();
                       feedContent.resetToRandom();
@@ -24,6 +24,7 @@ class ToursWidget extends StatelessWidget {
               ] +
               playablesTOC.playables
                   .map((playable) => ListTile(
+                        key: Key(playable.tourFolder),
                         leading: const Icon(Icons.play_arrow, size: 48),
                         title: Text(playable.title),
                         onTap: () => navigateApplink(Uri.parse(playable.url)),

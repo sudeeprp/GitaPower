@@ -109,7 +109,7 @@ void main() {
     await tester.tap(find.byKey(const Key('begin/tour')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/tour');
-    await tester.tap(find.text('Bring the best in you'));
+    await tester.tap(find.byKey(const Key('bring_the_best_in_you')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });

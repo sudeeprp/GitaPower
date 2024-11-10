@@ -20,7 +20,9 @@ class MovingSubtitlesState extends State<MovingSubtitles> {
   @override
   void initState() {
     final FeedContent feedContent = Get.find();
-    narrations = feedContent.tour.tourStops.map((stop) => Narration(stop.line)).toList();
+    setState(() {
+      narrations = feedContent.tour.tourStops.map((stop) => Narration(stop.line)).toList();
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollToIndex(feedContent.tour.stopIndex.value);
     });
@@ -38,7 +40,8 @@ class MovingSubtitlesState extends State<MovingSubtitles> {
     final FeedContent feedContent = Get.find();
 
     return Obx(() => Visibility(
-        visible: feedContent.tour.state.value == TourState.playing,
+        visible: feedContent.tour.state.value == TourState.playing ||
+            feedContent.tour.state.value == TourState.paused,
         child: SizedBox(
           height: oneLineHeight() * 3.5,
           child: Container(
