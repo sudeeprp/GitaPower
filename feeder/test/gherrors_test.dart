@@ -18,8 +18,8 @@ void main() {
   });
   testWidgets('Shows content even on non-200 result from content-source', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notes')));
+    await tester.tap(find.byKey(const Key('begin/browse')));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notes');
+    expect(Get.currentRoute, '/browse');
   });
 }

@@ -29,46 +29,14 @@ Widget beginItem(String title, String about, Image image, {Key? key}) {
           ])));
 }
 
-void openChaptersScreen() {
-  Get.toNamed('/chapters');
-}
-
-Widget doubleTitleText() {
-  return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-    Expanded(
-        child: GestureDetector(
-      onTap: openChaptersScreen,
-      child: titleTextContainer('chapters', 'Start chapter by chapter'),
-    )),
-    Expanded(
-        child: GestureDetector(
-      onTap: () => Get.toNamed('/notes'),
-      child: titleTextContainer('notes', 'Follow the conversation'),
-    )),
-  ]);
-}
-
-Widget doubleBeginItem({Key? key}) {
-  return Expanded(
-      child: Row(children: [
-    Expanded(child: doubleTitleText()),
-    Expanded(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: GestureDetector(onTap: openChaptersScreen, child: Image.asset('images/begin-chapters.png'))),
-    )
-  ]));
-}
-
 class BeginWidget extends StatelessWidget {
   const BeginWidget({super.key});
 
   @override
   Widget build(context) {
     return Column(children: [
-      beginItem('tour', 'Play a feed', Image.asset('images/begin-notes.png')),
-      beginItem('feed', 'Explore connections across chapters', Image.asset('images/begin-feed3.png')),
-      doubleBeginItem(),
+      beginItem('tour', 'Play a feed', Image.asset('images/begin-feed3.png')),
+      beginItem('browse', 'Browse topics', Image.asset('images/begin-chapters.png')),
     ]);
   }
 }

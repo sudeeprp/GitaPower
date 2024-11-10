@@ -8,7 +8,7 @@ void main() {
   testWidgets('does not crash on player related errors', (tester) async {
     await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: Text('home'))));
     void testError(dynamic exceptionInstance) async {
-      await tellIfError(() async {
+      await callAndTellIfError(() async {
         throw exceptionInstance;
       }, durationToShow: const Duration(milliseconds: 50));
     }

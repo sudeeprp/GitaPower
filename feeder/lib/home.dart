@@ -73,18 +73,11 @@ Widget makeMyHome() {
       home: const Home(),
       getPages: [
         GetPage(
-            name: '/notes',
-            page: () => screenify(const NotesWidget(),
-                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
-        GetPage(name: '/feed', page: () => feedScreen()),
-        GetPage(
-            name: '/chapters',
-            page: () => screenify(const ChaptersWidget(key: Key('toc')),
-                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
-        GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
                 choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+        GetPage(name: '/browse', page: browsingScreen),
+        GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
@@ -100,6 +93,16 @@ Widget makeMyHome() {
 
 Widget feedScreen() {
   return screenify(buildFeed(), choicesRow: choicesRow(makePlay(), choicesForFeed()));
+}
+
+Widget browsingScreen() {
+  Choices choices = Get.find();
+  return Obx(() => screenify(
+        choices.browsingPreference.value == BrowsingPreference.chapters
+            ? const ChaptersWidget(key: Key('toc'))
+            : const NotesWidget(),
+        choicesRow: notesChaptersChoices(),
+      ));
 }
 
 class Home extends StatelessWidget {
@@ -138,4 +141,13 @@ List<Widget> choicesForContent() {
 
 List<Widget> choicesForFeed() {
   return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
+}
+
+Widget notesChaptersChoices() {
+  const notesChaptersTabs = [
+    BrowsingPreferenceIcon(BrowsingPreference.chapters, 'images/begin-chapters.png'),
+    SizedBox(width: choiceSpacing),
+    BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
+  ];
+  return choicesRow(notesChaptersTabs, const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
 }

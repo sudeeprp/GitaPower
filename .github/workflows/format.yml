@@ -15,7 +15,7 @@ jobs:
       run: flutter pub get
     - name: format
       working-directory: ./feeder
-      run: dart format -l 100 .
+      run: dart format -l 110 .
     - name: commit
       run: |
         git config user.email "flutformat@rapalearning.com"

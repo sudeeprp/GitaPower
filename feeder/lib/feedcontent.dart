@@ -40,8 +40,9 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 }
 
 class TourStop {
-  TourStop(this.speechFilename, this.link, this.show);
+  TourStop(this.speechFilename, this.line, this.link, this.show);
   final String speechFilename;
+  final String line;
   final String? link;
   final List<String>? show;
 }
@@ -57,19 +58,20 @@ void setupWordShow(String? playable, List<String>? show) {
 }
 
 class Tour {
-  int stopIndex = 0;
+  RxInt stopIndex = 0.obs;
   var state = TourState.idle.obs;
   String? playable;
   final tourStops = <TourStop>[].obs;
   dynamic lastException;
-  void moveTo(int? index) {
-    stopIndex = index ?? 0;
-    stopIndex = (stopIndex - 1).clamp(0, tourStops.length - 1);
-    final mdFilenameWithLink = tourStops[stopIndex].link;
+
+  void moveTo(int? serialNumber) {
+    final nonNullSerial = serialNumber ?? 0;
+    stopIndex.value = (nonNullSerial - 1).clamp(0, tourStops.length - 1);
+    final mdFilenameWithLink = tourStops[stopIndex.value].link;
     if (mdFilenameWithLink != null) {
-      setupWordShow(playable, tourStops[stopIndex].show);
+      setupWordShow(playable, tourStops[stopIndex.value].show);
       final mdLaunchPath = '/shloka/$mdFilenameWithLink';
-      Get.toNamed(mdLaunchPath);
+      Get.offNamed(mdLaunchPath);
     }
   }
 
@@ -137,6 +139,7 @@ class FeedContent extends GetxController {
             .map((e) => e as Map<String, dynamic>)
             .map((tourStopJson) => TourStop(
                   tourStopJson['speech'] as String,
+                  tourStopJson['line'] as String,
                   tourStopJson['link'] as String?,
                   tourStopJson['show']?.cast<String>(),
                 ))
@@ -146,8 +149,18 @@ class FeedContent extends GetxController {
     await initFeedContent();
   }
 
+  void resetToRandom() async {
+    threeShlokas.value = createRandomFeed(allShlokaMDs());
+    tourFolder = null;
+    tour.stopIndex.value = 0;
+    tour.state.value = TourState.idle;
+    tour.playable = null;
+    tour.tourStops.value = [];
+    await initFeedContent();
+  }
+
   void play() async {
-    await tellIfError(() async {
+    await callAndTellIfError(() async {
       final uriList = tour.tourStops
           .map(
               (tourStop) => Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))

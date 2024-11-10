@@ -1,6 +1,8 @@
+import 'package:askys/chaptercontent.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/feedcontent.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +66,7 @@ void putContentControllers() {
   Get.put(ContentActions());
   Get.put(ContentNotes());
   Get.put(ShowWords());
+  Get.put(FeedContent.random());
 }
 
 void main() {
@@ -207,8 +210,12 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('page-browse by clicking next and previous buttons', (tester) async {
     putContentControllers();
-    final shlokaContent = buildContent('10-11-shloka.md',
-        prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
+    final chaptersTOC = ChaptersTOC();
+    chaptersTOC.mdSequence.insert(0, '10-10-meaning.md');
+    chaptersTOC.mdSequence.insert(1, '10-11-shloka.md');
+    chaptersTOC.mdSequence.insert(2, '10-12-anote.md');
+    Get.put(chaptersTOC);
+    final shlokaContent = buildContentWithNote('10-11-shloka.md', key: const Key('shloka-current'));
     await tester.pumpWidget(GetMaterialApp(
       home: shlokaContent,
       getPages: [
@@ -230,6 +237,7 @@ Arjuna says to Krishna - how do we think of You?
     await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-10-meaning.md');
+    await tester.pumpAndSettle();
   });
   testWidgets('hides page-browse buttons after a while', (tester) async {
     final contentActions = ContentActions();
