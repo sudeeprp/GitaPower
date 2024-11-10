@@ -58,19 +58,19 @@ void setupWordShow(String? playable, List<String>? show) {
 }
 
 class Tour {
-  int stopIndex = 0;
+  RxInt stopIndex = 0.obs;
   var state = TourState.idle.obs;
   var playPosition = const Duration(milliseconds: 0).obs;
   String? playable;
   final tourStops = <TourStop>[].obs;
   dynamic lastException;
 
-  void moveTo(int? index) {
-    stopIndex = index ?? 0;
-    stopIndex = (stopIndex - 1).clamp(0, tourStops.length - 1);
-    final mdFilenameWithLink = tourStops[stopIndex].link;
+  void moveTo(int? serialNumber) {
+    final nonNullSerial = serialNumber ?? 0;
+    stopIndex.value = (nonNullSerial - 1).clamp(0, tourStops.length - 1);
+    final mdFilenameWithLink = tourStops[stopIndex.value].link;
     if (mdFilenameWithLink != null) {
-      setupWordShow(playable, tourStops[stopIndex].show);
+      setupWordShow(playable, tourStops[stopIndex.value].show);
       final mdLaunchPath = '/shloka/$mdFilenameWithLink';
       Get.offNamed(mdLaunchPath);
     }
@@ -157,7 +157,7 @@ class FeedContent extends GetxController {
   void resetToRandom() async {
     threeShlokas.value = createRandomFeed(allShlokaMDs());
     tourFolder = null;
-    tour.stopIndex = 0;
+    tour.stopIndex.value = 0;
     tour.state.value = TourState.idle;
     tour.playable = null;
     tour.tourStops.value = [];

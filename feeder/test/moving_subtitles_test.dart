@@ -28,6 +28,8 @@ void main() {
       TourStop('s1.mp3', 'l1', null, null),
       TourStop('s2.mp3', 'l2', '2-34.md', null),
       TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
+      TourStop('s4.mp3', 'l4', null, null),
+      TourStop('s5.mp3', 'l5', null, null),
     ];
     feedContent.tour.playable = 'bring_the_best_in_you';
     Get.put(feedContent);
@@ -39,10 +41,15 @@ void main() {
     await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: MovingSubtitles())));
     await tester.pumpAndSettle();
     expect(find.text('l1', findRichText: true), findsOneWidget);
+    expect(find.text('l2', findRichText: true), findsOneWidget);
+    expect(find.text('l3', findRichText: true), findsOneWidget);
+    feedContent.tour.moveTo(5);
+    await tester.pumpAndSettle();
+    expect(find.text('l5', findRichText: true), findsOneWidget);
   });
   testWidgets('syncs the subtitle with the play position', (tester) async {
     final FeedContent feedContent = Get.find();
     feedContent.tour.updatePlayPosition(const Duration(seconds: 2));
-    // TODO: Test the scroll position of the moving subtitle
+    // TODO: Maybe remove the play position if it's not needed
   });
 }
