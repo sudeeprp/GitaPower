@@ -46,7 +46,7 @@ class TourStop {
   final String line;
   final String? link;
   final List<String>? show;
-  final Key globalKey;
+  final GlobalKey globalKey;
 }
 
 enum TourState { idle, loading, playing, paused }

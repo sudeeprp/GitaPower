@@ -2,42 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/feedcontent.dart';
 
-class Narration {
-  Narration(this.line);
-  String line;
-  GlobalKey key = GlobalKey();
-}
-
-class NarrationStops extends GetxController {
-  List<Narration> narrations = [];
-
-  @override
-  void onInit() {
-    final FeedContent feedContent = Get.find();
-    narrations = feedContent.tour.tourStops.map((stop) => Narration(stop.line)).toList();
-    // TODO: move this listen (and unlisten) out of this unused controller
-    feedContent.tour.stopIndex.listen((newIndex) => scrollToIndex(newIndex));
-    super.onInit();
-  }
-
-  void scrollToIndex(int index) {
-    BuildContext? context;
-    if (index < narrations.length) {
-      context = narrations[index].key.currentContext;
-    }
-    if (context != null) {
-      Scrollable.ensureVisible(context);
-    }
-  }
-}
-
 class MovingSubtitles extends StatelessWidget {
   const MovingSubtitles({super.key});
 
   @override
   Widget build(BuildContext context) {
     final FeedContent feedContent = Get.find();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      syncWithTheTour(feedContent);
+    });
     return Obx(() => Visibility(
         visible: (feedContent.tour.state.value == TourState.playing ||
             feedContent.tour.state.value == TourState.paused),
@@ -69,5 +42,20 @@ class MovingSubtitles extends StatelessWidget {
     return feedContent.tour.tourStops
         .map((tourStop) => Text(key: tourStop.globalKey, tourStop.line))
         .toList();
+  }
+
+  void syncWithTheTour(FeedContent feedContent) {
+    void scrollTo(int index) {
+      BuildContext? context;
+      if (index < feedContent.tour.tourStops.length) {
+        context = feedContent.tour.tourStops[index].globalKey.currentContext;
+      }
+      if (context != null) {
+        Scrollable.ensureVisible(context);
+      }
+    }
+
+    scrollTo(feedContent.tour.stopIndex.value);
+    feedContent.tour.stopIndex.listen((newIndex) => scrollTo(newIndex));
   }
 }
