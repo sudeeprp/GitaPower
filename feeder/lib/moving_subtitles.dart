@@ -11,22 +11,30 @@ class MovingSubtitles extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       syncWithTheTour(feedContent);
     });
-    return Obx(() => Visibility(
-        visible: (feedContent.tour.state.value == TourState.playing ||
-            feedContent.tour.state.value == TourState.paused),
-        child: SizedBox(
-            height: oneLineHeight() * 3.5,
-            child: Container(
-              decoration: const BoxDecoration(border: Border(top: BorderSide())),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SingleChildScrollView(
-                  key: const Key('feed/subtitles'),
-                  scrollDirection: Axis.vertical,
-                  child: Column(children: narrationWidgets(feedContent)),
-                ),
-              ),
-            ))));
+    return PopScope(
+        onPopInvokedWithResult: (popped, _) {
+          if (popped) {
+            feedContent.tour.stopIndex.value = 0;
+            feedContent.tour.state.value = TourState.idle;
+            feedContent.audioPlayer.stop();
+          }
+        },
+        child: Obx(() => Visibility(
+            visible: (feedContent.tour.state.value == TourState.playing ||
+                feedContent.tour.state.value == TourState.paused),
+            child: SizedBox(
+                height: oneLineHeight() * 3.5,
+                child: Container(
+                  decoration: const BoxDecoration(border: Border(top: BorderSide())),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: SingleChildScrollView(
+                      key: const Key('feed/subtitles'),
+                      scrollDirection: Axis.vertical,
+                      child: Column(children: narrationWidgets(feedContent)),
+                    ),
+                  ),
+                )))));
   }
 
   double oneLineHeight() {
@@ -51,7 +59,7 @@ class MovingSubtitles extends StatelessWidget {
         context = feedContent.tour.tourStops[index].globalKey.currentContext;
       }
       if (context != null) {
-        Scrollable.ensureVisible(context);
+        Scrollable.ensureVisible(context, duration: const Duration(milliseconds: 300));
       }
     }
 
