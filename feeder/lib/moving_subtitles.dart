@@ -15,6 +15,7 @@ class NarrationStops extends GetxController {
   void onInit() {
     final FeedContent feedContent = Get.find();
     narrations = feedContent.tour.tourStops.map((stop) => Narration(stop.line)).toList();
+    // TODO: move this listen (and unlisten) out of this unused controller
     feedContent.tour.stopIndex.listen((newIndex) => scrollToIndex(newIndex));
     super.onInit();
   }
@@ -41,16 +42,18 @@ class MovingSubtitles extends StatelessWidget {
         visible: (feedContent.tour.state.value == TourState.playing ||
             feedContent.tour.state.value == TourState.paused),
         child: SizedBox(
-          height: oneLineHeight() * 3.5,
-          child: Container(
-            decoration: const BoxDecoration(border: Border(top: BorderSide())),
-            child: SingleChildScrollView(
-              key: const Key('feed/subtitles'),
-              scrollDirection: Axis.vertical,
-              child: Column(children: narrationWidgets(feedContent)),
-            ),
-          ),
-        )));
+            height: oneLineHeight() * 3.5,
+            child: Container(
+              decoration: const BoxDecoration(border: Border(top: BorderSide())),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: SingleChildScrollView(
+                  key: const Key('feed/subtitles'),
+                  scrollDirection: Axis.vertical,
+                  child: Column(children: narrationWidgets(feedContent)),
+                ),
+              ),
+            ))));
   }
 
   double oneLineHeight() {
@@ -62,19 +65,9 @@ class MovingSubtitles extends StatelessWidget {
     return textPainter.height;
   }
 
-  NarrationStops getNarrationStops(String playableFolder) {
-    if (!Get.isRegistered<NarrationStops>(tag: playableFolder)) {
-      Get.put(NarrationStops(), tag: playableFolder);
-    }
-    return Get.find<NarrationStops>(tag: playableFolder);
-  }
-
   List<Widget> narrationWidgets(FeedContent feedContent) {
-    final playableFolder = feedContent.tourFolder;
-    if (playableFolder != null) {
-      final narrationStops = getNarrationStops(playableFolder);
-      return narrationStops.narrations.map((narration) => Text(key: narration.key, narration.line)).toList();
-    }
-    return [];
+    return feedContent.tour.tourStops
+        .map((tourStop) => Text(key: tourStop.globalKey, tourStop.line))
+        .toList();
   }
 }
