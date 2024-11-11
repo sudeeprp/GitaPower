@@ -107,6 +107,9 @@ void main() {
     verify(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
         .called(1);
     verify(mockPlayer.play()).called(1);
+    Get.back();
+    await tester.pumpAndSettle();
+    verify(mockPlayer.stop()).called(1);
   });
   testWidgets('syncs with the player state', (tester) async {
     final FeedContent feedContent = Get.find();
