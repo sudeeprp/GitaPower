@@ -110,6 +110,7 @@ void main() {
   });
   testWidgets('syncs with the player state', (tester) async {
     final FeedContent feedContent = Get.find();
+    feedContent.tourFolder = 'bring_the_best_in_you';
     feedContent.tour.tourStops.value = [TourStop('s1.mp3', 'l1', null, null)];
     reset(mockPlayer);
     await tester.pumpWidget(MaterialApp(home: Scaffold(body: Row(children: makePlay()))));
@@ -150,6 +151,7 @@ void main() {
   });
   testWidgets('tours from one para to the next', (tester) async {
     final FeedContent feedContent = Get.find();
+    feedContent.tourFolder = 'bring_the_best_in_you';
     feedContent.tour.tourStops.value = [
       TourStop('s1.mp3', 'l1', null, null),
       TourStop('s2.mp3', 'l2', '2-34.md', null),
@@ -172,6 +174,7 @@ void main() {
   });
   testWidgets('shows subtitles only while playing', (tester) async {
     final FeedContent feedContent = Get.find();
+    feedContent.tourFolder = 'bring_the_best_in_you';
     feedContent.tour.state.value = TourState.idle;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
     await tester.pumpAndSettle();

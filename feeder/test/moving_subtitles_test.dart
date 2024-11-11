@@ -31,6 +31,7 @@ void main() {
       TourStop('s4.mp3', 'l4', null, null),
       TourStop('s5.mp3', 'l5', null, null),
     ];
+    feedContent.tourFolder = 'bring_the_best_in_you';
     feedContent.tour.playable = 'bring_the_best_in_you';
     Get.put(feedContent);
   });

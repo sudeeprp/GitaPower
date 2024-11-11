@@ -131,6 +131,7 @@ void main() {
     Get.put(FeedContent.random());
     expect(makePlayWhenPlaying(), isEmpty);
     final FeedContent feedContent = Get.find();
+    feedContent.tourFolder = 'bring_the_best_in_you';
     feedContent.tour.state.value = TourState.playing;
     expect(makePlayWhenPlaying(), isNotEmpty);
   });

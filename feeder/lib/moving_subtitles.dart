@@ -8,40 +8,38 @@ class Narration {
   GlobalKey key = GlobalKey();
 }
 
-class MovingSubtitles extends StatefulWidget {
-  const MovingSubtitles({super.key});
+class NarrationStops extends GetxController {
+  List<Narration> narrations = [];
 
   @override
-  MovingSubtitlesState createState() => MovingSubtitlesState();
+  void onInit() {
+    final FeedContent feedContent = Get.find();
+    narrations = feedContent.tour.tourStops.map((stop) => Narration(stop.line)).toList();
+    feedContent.tour.stopIndex.listen((newIndex) => scrollToIndex(newIndex));
+    super.onInit();
+  }
+
+  void scrollToIndex(int index) {
+    BuildContext? context;
+    if (index < narrations.length) {
+      context = narrations[index].key.currentContext;
+    }
+    if (context != null) {
+      Scrollable.ensureVisible(context);
+    }
+  }
 }
 
-class MovingSubtitlesState extends State<MovingSubtitles> {
-  List<Narration> narrations = [];
-  @override
-  void initState() {
-    final FeedContent feedContent = Get.find();
-    setState(() {
-      narrations = feedContent.tour.tourStops.map((stop) => Narration(stop.line)).toList();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollToIndex(feedContent.tour.stopIndex.value);
-    });
-    feedContent.tour.stopIndex.listen((newIndex) => scrollToIndex(newIndex));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+class MovingSubtitles extends StatelessWidget {
+  const MovingSubtitles({super.key});
 
   @override
   Widget build(BuildContext context) {
     final FeedContent feedContent = Get.find();
 
     return Obx(() => Visibility(
-        visible: feedContent.tour.state.value == TourState.playing ||
-            feedContent.tour.state.value == TourState.paused,
+        visible: (feedContent.tour.state.value == TourState.playing ||
+            feedContent.tour.state.value == TourState.paused),
         child: SizedBox(
           height: oneLineHeight() * 3.5,
           child: Container(
@@ -49,8 +47,7 @@ class MovingSubtitlesState extends State<MovingSubtitles> {
             child: SingleChildScrollView(
               key: const Key('feed/subtitles'),
               scrollDirection: Axis.vertical,
-              child: Column(
-                  children: narrations.map((narration) => Text(key: narration.key, narration.line)).toList()),
+              child: Column(children: narrationWidgets(feedContent)),
             ),
           ),
         )));
@@ -65,13 +62,19 @@ class MovingSubtitlesState extends State<MovingSubtitles> {
     return textPainter.height;
   }
 
-  void scrollToIndex(int index) {
-    BuildContext? context;
-    if (index < narrations.length) {
-      context = narrations[index].key.currentContext;
+  NarrationStops getNarrationStops(String playableFolder) {
+    if (!Get.isRegistered<NarrationStops>(tag: playableFolder)) {
+      Get.put(NarrationStops(), tag: playableFolder);
     }
-    if (context != null) {
-      Scrollable.ensureVisible(context);
+    return Get.find<NarrationStops>(tag: playableFolder);
+  }
+
+  List<Widget> narrationWidgets(FeedContent feedContent) {
+    final playableFolder = feedContent.tourFolder;
+    if (playableFolder != null) {
+      final narrationStops = getNarrationStops(playableFolder);
+      return narrationStops.narrations.map((narration) => Text(key: narration.key, narration.line)).toList();
     }
+    return [];
   }
 }
