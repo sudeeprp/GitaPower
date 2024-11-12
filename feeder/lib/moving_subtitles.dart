@@ -25,7 +25,7 @@ class MovingSubtitles extends StatelessWidget {
             child: SizedBox(
                 height: oneLineHeight() * 3.5,
                 child: Container(
-                  decoration: const BoxDecoration(color: Colors.grey, border: Border(top: BorderSide())),
+                  decoration: const BoxDecoration(border: Border(top: BorderSide())),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: SingleChildScrollView(
