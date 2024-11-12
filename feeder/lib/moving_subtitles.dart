@@ -12,10 +12,10 @@ class MovingSubtitles extends StatelessWidget {
       syncWithTheTour(feedContent);
     });
     return PopScope(
-        onPopInvokedWithResult: (popped, _) {
+        onPopInvokedWithResult: (popped, _) async {
           if (popped) {
-            feedContent.audioPlayer.stop();
-            feedContent.audioPlayer.seek(Duration(milliseconds: 0), index: 0);
+            await feedContent.audioPlayer.stop();
+            await feedContent.audioPlayer.seek(Duration(milliseconds: 0), index: 0);
             feedContent.tour.stopIndex.value = 0;
             feedContent.tour.state.value = TourState.idle;
           }
