@@ -109,7 +109,7 @@ void main() {
     verify(mockPlayer.play()).called(1);
     Get.back();
     await tester.pumpAndSettle();
-    verify(mockPlayer.dispose()).called(1);
+    verify(mockPlayer.stop()).called(1);
   });
   testWidgets('syncs with the player state', (tester) async {
     final FeedContent feedContent = Get.find();

@@ -14,9 +14,10 @@ class MovingSubtitles extends StatelessWidget {
     return PopScope(
         onPopInvokedWithResult: (popped, _) {
           if (popped) {
+            feedContent.audioPlayer.stop();
+            feedContent.audioPlayer.seek(Duration(milliseconds: 0), index: 0);
             feedContent.tour.stopIndex.value = 0;
             feedContent.tour.state.value = TourState.idle;
-            feedContent.audioPlayer.dispose();
           }
         },
         child: Obx(() => Visibility(
