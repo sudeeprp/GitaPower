@@ -1,6 +1,9 @@
+import 'package:askys/chaptercontent.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/feedcontent.dart';
+import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
 import 'package:flutter/material.dart';
 import 'package:askys/content_widget.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'package:askys/matter_forinline.dart';
 
 List<TextSpan> oneTextMaker(MatterForInline inlineMatter) => [TextSpan(text: inlineMatter.text)];
 List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) {
@@ -40,11 +44,11 @@ class ParseRecords {
   List<WidgetMade> widgetsMade = [];
 }
 
-ParseRecords recordParseActions(mdContent) {
+ParseRecords recordParseActions(mdContent, {List<String>? showPatterns}) {
   var parseRecords = ParseRecords();
   List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
-    parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType,
-        inlineMatter.tag, inlineMatter.elmclass, inlineMatter.link));
+    parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType, inlineMatter.tag,
+        inlineMatter.elmclass, inlineMatter.link));
     return [];
   }
 
@@ -53,8 +57,16 @@ ParseRecords recordParseActions(mdContent) {
     return [];
   }
 
-  WidgetMaker(widgetMaker, inlineMaker).parse(mdContent);
+  WidgetMaker(widgetMaker, inlineMaker, showPatterns: showPatterns).parse(mdContent);
   return parseRecords;
+}
+
+void putContentControllers() {
+  Get.put(Choices());
+  Get.put(ContentActions());
+  Get.put(ContentNotes());
+  Get.put(ShowWords());
+  Get.put(FeedContent.random());
 }
 
 void main() {
@@ -94,32 +106,27 @@ Arjuna says to Krishna - how do we think of You?
             '`सा धृतिः` `[sA dhRtiH]` - such [resolve](18-29.md#intellect_and_resolve) `सात्विकी` `[sAtvikI]` is sattva'));
     dioAdapter.onGet(
         '${GitHubFetcher.baseUrl}/compile/notes_compiled.json',
-        (server) => server.reply(200,
-            '[{"note_id": "applnote_pre_10-12", "text": "What did Arjuna ask?", "file": "10-10.md"}]'));
-    dioAdapter.onGet(
-        '${GitHubFetcher.baseUrl}/compile/md_to_note_ids_compiled.json',
-        (server) =>
-            server.reply(200, '[{"10-10.md": ["applnote_pre_10-12"]}, {"10-13-prenote.md": []}]'));
+        (server) => server.reply(
+            200, '[{"note_id": "applnote_pre_10-12", "text": "What did Arjuna ask?", "file": "10-10.md"}]'));
+    dioAdapter.onGet('${GitHubFetcher.baseUrl}/compile/md_to_note_ids_compiled.json',
+        (server) => server.reply(200, '[{"10-10.md": ["applnote_pre_10-12"]}, {"10-13-prenote.md": []}]'));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Renders a plain-text line', (tester) async {
-    final widgetWithOneMD =
-        WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
+    Get.put(Choices());
+    final widgetWithOneMD = WidgetMaker(simpleTextRichMaker, oneTextMaker).parse('work without being driven');
     expect(widgetWithOneMD.length, equals(1));
     await tester.pumpWidget(GetMaterialApp(home: Column(children: widgetWithOneMD)));
     expect(find.text('work without being driven'), findsOneWidget);
   });
   testWidgets('Renders content with meanings as per script preference', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     Get.find<Choices>().script.value = ScriptPreference.devanagari;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
     await tester.pumpAndSettle();
 
     // to start with, the shloka needs to be read continuously without the source in-between
-    final continFinder =
-        find.textContaining('who worship Me to be with Me always', findRichText: true);
+    final continFinder = find.textContaining('who worship Me to be with Me always', findRichText: true);
     expect(continFinder, findsOneWidget);
     expect(find.textContaining('भजताम्', findRichText: true), findsNothing);
     expect(find.textContaining('[bhajatAm]', findRichText: true), findsNothing);
@@ -140,9 +147,7 @@ Arjuna says to Krishna - how do we think of You?
     Get.delete<Choices>();
   });
   testWidgets('Renders shloka as per script preference', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     Get.find<Choices>().script.value = ScriptPreference.sahk;
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-11-shloka.md'))));
     await tester.pumpAndSettle();
@@ -151,9 +156,7 @@ Arjuna says to Krishna - how do we think of You?
     Get.delete<Choices>();
   });
   testWidgets('Renders note and hides the anchor', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     final contentWidget = buildContent('10-12-anote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -164,16 +167,13 @@ Arjuna says to Krishna - how do we think of You?
     Get.delete<Choices>();
   });
   testWidgets('Navigates a link in the commentary', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     const targetFilename = '10-11-shloka.md';
     const targetNote = 'why-think';
     await tester.pumpWidget(GetMaterialApp(
       home: buildContent('10-12-anote.md'),
       getPages: [
-        GetPage(
-            name: '/shloka/$targetFilename/$targetNote', page: () => const Text('anchor reached'))
+        GetPage(name: '/shloka/$targetFilename/$targetNote', page: () => const Text('anchor reached'))
       ],
     ));
     await tester.pumpAndSettle();
@@ -183,8 +183,7 @@ Arjuna says to Krishna - how do we think of You?
   });
   testWidgets('Navigates to the story behind the avatar', (tester) async {
     String? anchor;
-    await tester
-        .pumpWidget(GetMaterialApp(home: Scaffold(body: avataraRamanuja(key: 'avakey')), getPages: [
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: avataraRamanuja(key: 'avakey')), getPages: [
       GetPage(
           name: '/shloka/ramanuja.md/:anchor',
           page: () {
@@ -198,27 +197,25 @@ Arjuna says to Krishna - how do we think of You?
     expect(anchor, isNotNull);
   });
   testWidgets('gives a space after a hyperlink in the meaning', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('such resolve is sattva'), findsOneWidget);
   });
   testWidgets('shows second level headings in intro-basics', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     await tester.pumpWidget(GetMaterialApp(home: buildContent('Back-to-Basics.md')));
     await tester.pumpAndSettle();
     expect(find.textContaining('योग [yOga]'), findsOneWidget);
   });
   testWidgets('page-browse by clicking next and previous buttons', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
-    final shlokaContent = buildContent('10-11-shloka.md',
-        prevmd: '10-10-meaning.md', nextmd: '10-12-anote.md', key: const Key('shloka-current'));
+    putContentControllers();
+    final chaptersTOC = ChaptersTOC();
+    chaptersTOC.mdSequence.insert(0, '10-10-meaning.md');
+    chaptersTOC.mdSequence.insert(1, '10-11-shloka.md');
+    chaptersTOC.mdSequence.insert(2, '10-12-anote.md');
+    Get.put(chaptersTOC);
+    final shlokaContent = buildContentWithNote('10-11-shloka.md', key: const Key('shloka-current'));
     await tester.pumpWidget(GetMaterialApp(
       home: shlokaContent,
       getPages: [
@@ -240,6 +237,7 @@ Arjuna says to Krishna - how do we think of You?
     await tester.tap(find.widgetWithIcon(FloatingActionButton, Icons.navigate_before));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/10-10-meaning.md');
+    await tester.pumpAndSettle();
   });
   testWidgets('hides page-browse buttons after a while', (tester) async {
     final contentActions = ContentActions();
@@ -260,9 +258,7 @@ Arjuna says to Krishna - how do we think of You?
     expect(contentActions.actionsVisible.value, equals(false));
   });
   testWidgets('shows preceding note in each feed', (tester) async {
-    Get.put(Choices());
-    Get.put(ContentActions());
-    Get.put(ContentNotes());
+    putContentControllers();
     final contentWidget = buildContentFeed('10-13-prenote.md');
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
     await tester.pumpAndSettle();
@@ -380,8 +376,7 @@ There are many statements in the scriptures
     expect(parsedDevanagariComment.widgetsMade.last.sectionType, equals(SectionType.commentary));
   });
   test('converts hyperlink in a note to text', () {
-    final parsedHyperInNote =
-        recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
+    final parsedHyperInNote = recordParseActions('''>Achieve [devotion](2-1.md#bhakti) in every activity''');
     expect(parsedHyperInNote.textsMade[1].content, equals('devotion'));
     expect(parsedHyperInNote.widgetsMade.length, equals(1));
   });
@@ -394,7 +389,7 @@ As the Lord Himself states, it isn't possible to describe the Self.
     expect(parsedBasics.textsMade[0].content, equals('आत्म [Atma] - The Self'));
     expect(parsedBasics.widgetsMade[0].sectionType, equals(SectionType.topicHead));
   });
-  test('Shows commentary following an anchor', () {
+  test('shows commentary following an anchor', () {
     final parsedAnchor = recordParseActions('''
 <a name='greatness_of_yoga'></a>
 A person diverts from the path of realizing the Self due to some desires.
@@ -403,5 +398,89 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(parsedAnchor.textsMade[0].content, equals('greatness_of_yoga'));
     expect(parsedAnchor.textsMade[1].content,
         equals('A person diverts from the path of realizing the Self due to some desires.'));
+  });
+  test('highlights english words in the content by splitting and marking', () {
+    {
+      final midlastEmpha = makeMatterForInlines('Zero one two three four', SectionType.commentary, 'anytag',
+          showPatterns: ['two', 'four']);
+      expect(midlastEmpha.length, equals(4));
+      expect(midlastEmpha[0].text.trim(), equals('Zero one'));
+      expect(midlastEmpha[0].presentation, equals(Presentation.normal));
+      expect(midlastEmpha[1].text.trim(), equals('two'));
+      expect(midlastEmpha[1].presentation, equals(Presentation.emphasis));
+      expect(midlastEmpha[2].text.trim(), equals('three'));
+      expect(midlastEmpha[2].presentation, equals(Presentation.normal));
+      expect(midlastEmpha[3].text.trim(), equals('four'));
+      expect(midlastEmpha[3].presentation, equals(Presentation.emphasis));
+    }
+    {
+      final firstmidEmpha = makeMatterForInlines('Zero one two three four', SectionType.commentary, 'anytag',
+          showPatterns: ['zero', 'two']);
+      expect(firstmidEmpha.length, equals(4));
+      expect(firstmidEmpha[0].text, equals('Zero'));
+      expect(firstmidEmpha[0].presentation, equals(Presentation.emphasis));
+      expect(firstmidEmpha[3].text, equals(' three four'));
+      expect(firstmidEmpha[3].presentation, equals(Presentation.normal));
+    }
+    {
+      final strAndSubstr =
+          makeMatterForInlines('one done', SectionType.commentary, 'anytag', showPatterns: ['one']);
+      expect(strAndSubstr.length, equals(2));
+      expect(strAndSubstr[1].text.trim(), equals('done'));
+    }
+  });
+  test('retains whitespace after splitting and marking', () {
+    const originalText = 'eka dvi\ntrINi catvari';
+    final splitMarked =
+        makeMatterForInlines(originalText, SectionType.commentary, 'anytag', showPatterns: ['dvi', 'trINi']);
+    String readBack = '';
+    for (final phrase in splitMarked) {
+      readBack += phrase.text;
+    }
+    expect(readBack, equals(originalText));
+  });
+  final showPatterns = ["\u0905\u0939\u092e\u0947\u0935", "[ahameva]", "Me", "inside"];
+  test('highlights sanskrit words in the content', () {
+    final sanskritInlines =
+        makeMatterForInlines("अहमेव", SectionType.commentary, 'anytag', showPatterns: showPatterns);
+    expect(sanskritInlines[0].text, equals('अहमेव'));
+    expect(sanskritInlines[0].presentation, equals(Presentation.emphasis));
+  });
+  test('highlights transliterated words in the content', () {
+    final translitInInlines =
+        makeMatterForInlines('[ahameva]', SectionType.meaning, 'anytag', showPatterns: showPatterns);
+    expect(translitInInlines[0].text, equals('[ahameva]'));
+    expect(translitInInlines[0].presentation, equals(Presentation.emphasis));
+  });
+  test('does not match english inside transliterated words', () {
+    final engInTranslitInlines =
+        makeMatterForInlines('[me matam]', SectionType.meaning, 'anytag', showPatterns: ['me']);
+    expect(engInTranslitInlines.length, equals(1));
+    expect(engInTranslitInlines[0].text, equals('[me matam]'));
+    expect(engInTranslitInlines[0].presentation, equals(Presentation.normal));
+  });
+  testWidgets('accepts highlights while rendering the content', (tester) async {
+    Get.put(Choices());
+    Get.put(ContentActions());
+    Get.put(ContentNotes());
+    final showWords = ShowWords();
+    showWords.words.value = ['धृतिः', '[dhRtiH]', 'resolve'];
+    showWords.activePlayable = 'playable_1';
+    Get.put(showWords);
+    await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('resolve', findRichText: true), findsOneWidget);
+  });
+  testWidgets('renders meaning with spaces', (tester) async {
+    Get.put(Choices());
+    Get.put(ContentActions());
+    Get.put(ContentNotes());
+    final showWords = ShowWords();
+    showWords.words.value = ['worship'];
+    showWords.activePlayable = 'playable_1';
+    Get.put(showWords);
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('who worship Me to be with Me always', findRichText: true), findsOneWidget);
   });
 }

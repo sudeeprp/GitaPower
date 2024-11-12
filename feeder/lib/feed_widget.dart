@@ -1,4 +1,5 @@
 import 'package:askys/content_widget.dart';
+import 'package:askys/moving_subtitles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'feedcontent.dart';
@@ -34,10 +35,10 @@ Widget contentWithOpenerPane(String filename, int count) {
                             topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                     constraints: const BoxConstraints.expand(),
                     child: Center(
-                        child: Text(feedContent.openerQs[count - 1],
+                        child: Obx(() => Text(feedContent.openerQs[count - 1].value,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold))),
+                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold)))),
                   ))),
         ],
       );
@@ -51,27 +52,28 @@ class FeedWidget extends StatelessWidget {
   const FeedWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    int count = 1;
     final FeedContent feedContent = Get.find();
     return Obx(() {
-      if (feedContent.feedPicked.value) {
+      if (feedContent.threeShlokas.length == 3) {
+        int count = 1;
         return Column(
             children: feedContent.threeShlokas
-                .map((filename) => Expanded(
-                        child: Container(
-                      decoration: BoxDecoration(
-                          border: const Border(bottom: BorderSide(color: Colors.black)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(0, -5))
-                          ],
-                          color: Theme.of(context).cardColor),
-                      child: contentWithOpenerPane(filename, count++),
-                    )))
-                .toList());
+                    .map((filename) => Expanded(
+                            child: Container(
+                          decoration: BoxDecoration(
+                              border: const Border(bottom: BorderSide(color: Colors.black)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, -5))
+                              ],
+                              color: Theme.of(context).cardColor),
+                          child: contentWithOpenerPane(filename, count++),
+                        )) as Widget)
+                    .toList() +
+                [const MovingSubtitles()]);
       } else {
         return const Column(
           mainAxisAlignment: MainAxisAlignment.center,

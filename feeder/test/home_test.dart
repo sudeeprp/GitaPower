@@ -1,3 +1,5 @@
+import 'package:askys/choice_selector.dart';
+import 'package:askys/feedcontent.dart';
 import 'package:askys/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,6 +39,10 @@ const sampleShloka = '''
 const compiledNotes = '''
 [{"note_id": "applopener_11", "text": "Is there a different way?", "file": "Back-to-Basics.md"}, {"note_id": "applnote_13", "text": "We often doubt", "file": "1-1.md"}]
 ''';
+const playablesTOC = '''# Playable feeds
+
+[Bring the best in you](https://rapalearning.com/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you)
+''';
 
 void main() {
   setUp(() {
@@ -45,28 +51,31 @@ void main() {
     dio.httpClientAdapter = dioAdapter;
     dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
         (server) => server.reply(200, compiledMDtoNoteIds));
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json',
-        (server) => server.reply(200, compiledNotes));
+    dioAdapter.onGet(
+        '${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(200, compiledNotes));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/1-1.md', (server) => server.reply(200, sample_1_1));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/Back-to-Basics.md', (server) => server.reply(200, sampleBasics));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
     dioAdapter.onGet(
-        '${GitHubFetcher.mdPath}/1-12.md', (server) => server.reply(200, sampleShloka));
-    dioAdapter.onGet(
-        '${GitHubFetcher.mdPath}/1-13.md', (server) => server.reply(200, sampleShloka));
+        '${GitHubFetcher.playablesUrl}/playablestoc.md', (server) => server.reply(200, playablesTOC));
     Get.put(GitHubFetcher(dio));
   });
-  testWidgets('Navigates to journey notes from the home screen', (tester) async {
+  testWidgets('Navigates to journey tours from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notes')));
+    await tester.tap(find.byKey(const Key('begin/tour')));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notes');
+    expect(Get.currentRoute, '/tour');
+    await tester.tap(find.byKey(const Key('tour/random')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/feed');
   });
   testWidgets('Navigates to a shloka number within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
+    await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/chapters');
+    expect(Get.currentRoute, '/browse');
     await tester.tap(find.text('Chapter 1')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('1-1')); // tap #3
@@ -75,7 +84,7 @@ void main() {
   });
   testWidgets('Navigates to introduction when it is the only item in the chapter', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/chapters'))); // tap #1
+    await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1
     await tester.pumpAndSettle();
     await tester.tap(find.text('Back-to-Basics')); // tap #2
     await tester.pumpAndSettle();
@@ -83,9 +92,11 @@ void main() {
   });
   testWidgets('Navigates to a note within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notes'))); // tap #1
+    Choices choices = Get.find();
+    choices.browsingPreference.value = BrowsingPreference.notes;
+    await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notes');
+    expect(Get.currentRoute, '/browse');
     await tester.tap(find.text('Is there a different way?')); // tap #2
     await tester.pumpAndSettle();
     await tester.tap(find.text('We often doubt')); // tap #3
@@ -93,10 +104,44 @@ void main() {
     expect(Get.currentRoute, '/shloka/1-1.md/applnote_13');
     expect(find.byKey(const Key('applnote_13')), findsOneWidget);
   });
-  testWidgets('Shows feed with one tap', (tester) async {
+  testWidgets('Navigates to curated tours from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/feed')));
+    await tester.tap(find.byKey(const Key('begin/tour')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/tour');
+    await tester.tap(find.byKey(const Key('bring_the_best_in_you')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
+  });
+  testWidgets('Navigates an app link', (tester) async {
+    // To test manually, use:
+    // adb shell am start -a android.intent.action.VIEW   -c android.intent.category.BROWSABLE \
+    //   -d "https://rapalearning.com/gitapower/feed/1-1.2-1.3-1"
+    await tester.pumpWidget(GetMaterialApp(
+        home: const Scaffold(body: Text('Start page')),
+        getPages: [GetPage(name: '/feed', page: () => const Text('reached'))]));
+    navigateApplink(null);
+    await tester.pumpAndSettle();
+    const shlokas = '11-34.15-17.18-51_to_18-53';
+    navigateApplink(Uri.parse('/gitapower/feed/$shlokas'));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/feed');
+  });
+  test('Shows play under content when something is playing', () {
+    Get.put(FeedContent.random());
+    expect(makePlayWhenPlaying(), isEmpty);
+    final FeedContent feedContent = Get.find();
+    feedContent.tourFolder = 'bring_the_best_in_you';
+    feedContent.tour.state.value = TourState.playing;
+    expect(makePlayWhenPlaying(), isNotEmpty);
+  });
+  test('Converts uri to navigation path', () {
+    expect(uriPointsToFeed(Uri.parse('/gitapower/feed/1-1.2-2.3-3')), isTrue);
+
+    expect(uriPointsToFeed(Uri.parse('/gitapower/feed')), isTrue);
+
+    expect(uriPointsToFeed(Uri.parse('/otherpath')), isFalse);
+
+    expect(uriPointsToFeed(Uri.parse('/gitapower')), isFalse);
   });
 }

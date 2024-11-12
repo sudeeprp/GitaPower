@@ -33,6 +33,9 @@ dependencies:
   shared_preferences: 2.3.3
   enum_to_string:
   float_column: 2.1.8
+  app_links: ^6.1.1
+  just_audio:
+  keep_screen_on:
 
 dev_dependencies:
   flutter_test:
@@ -41,11 +44,14 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^5.0.0
   http_mock_adapter: ^0.6.1
+  mockito: ^5.4.4
+  build_runner: ^2.4.11
 
 flutter:
   uses-material-design: true
   assets:
     - images/
+    - audio/
     - gita-begin/compile/
     - gita-begin/gita/
     - google_fonts/

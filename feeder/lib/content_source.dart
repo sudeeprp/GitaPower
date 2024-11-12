@@ -8,6 +8,7 @@ class GitHubFetcher extends GetxController {
   final Dio dio;
   GitHubFetcher(this.dio);
   static const baseUrl = 'https://raw.githubusercontent.com/RaPaLearning/gita-begin/main';
+  static const playablesUrl = 'https://raw.githubusercontent.com/RaPaLearning/askys/main/playables';
   static const compileFolder = 'compile';
   static const mdFolder = 'gita';
   static const compiledPath = '$baseUrl/$compileFolder';
@@ -20,8 +21,8 @@ class GitHubFetcher extends GetxController {
     final mdToNotesStr = await _compiledAsString('md_to_note_ids_compiled.json');
     final List<dynamic> chapterNotesJson = jsonDecode(mdToNotesStr);
     final chapterNotes = chapterNotesJson
-        .map(((e) => (e as Map<String, dynamic>).map((key, value) =>
-            MapEntry(key, (value as List<dynamic>).map((e) => e as String).toList()))))
+        .map(((e) => (e as Map<String, dynamic>)
+            .map((key, value) => MapEntry(key, (value as List<dynamic>).map((e) => e as String).toList()))))
         .toList();
     return chapterNotes;
   }
@@ -30,8 +31,7 @@ class GitHubFetcher extends GetxController {
     final notesCompiledAsStr = await _compiledAsString('notes_compiled.json');
     final List<dynamic> notesCompiledAsJson = jsonDecode(notesCompiledAsStr);
     final notes = notesCompiledAsJson
-        .map(((e) =>
-            (e as Map<String, dynamic>).map((key, value) => MapEntry(key, value as String))))
+        .map(((e) => (e as Map<String, dynamic>).map((key, value) => MapEntry(key, value as String))))
         .toList();
     return notes;
   }
@@ -54,5 +54,22 @@ class GitHubFetcher extends GetxController {
     } on DioException {
       return await rootBundle.loadString('gita-begin/$foldername/$filename');
     }
+  }
+
+  Future<String?> fetchMDwithoutLocal(String rawMDurl) async {
+    try {
+      final content = await dio.get(rawMDurl);
+      return content.data.toString();
+    } on DioException {
+      return null;
+    }
+  }
+
+  Future<String?> playablesTocMD() async {
+    return await fetchMDwithoutLocal('$playablesUrl/playablestoc.md');
+  }
+
+  Future<String?> playableMD(String playableFolder) async {
+    return await fetchMDwithoutLocal('$playablesUrl/$playableFolder/playable.json');
   }
 }

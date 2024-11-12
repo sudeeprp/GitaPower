@@ -12,8 +12,7 @@ class ChaptersWidget extends StatelessWidget {
     return Obx(() {
       if (toc.chaptersLoaded.value) {
         List<Widget> tocListElements = toc.chapters
-            .map((chapter) =>
-                _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)))
+            .map((chapter) => _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)))
             .toList();
         return Scaffold(body: ListView(children: tocListElements));
       } else {
@@ -28,7 +27,7 @@ class ChaptersWidget extends StatelessWidget {
   Widget _formChapterTitle(String chapterHeading, String mdFilename) {
     final headerText = chapters.headers[mdFilename] ?? '';
     return ListTile(
-      leading: Image.asset('images/bothfeet.png', width: 30, height: 30),
+      leading: Image.asset('images/begin-chapters.png', width: 30, height: 30),
       title: Text(chapterHeading),
       subtitle: Text(headerText),
       onTap: () => Get.toNamed('/shlokaheaders/$mdFilename'),

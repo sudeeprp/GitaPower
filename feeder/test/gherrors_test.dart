@@ -11,16 +11,15 @@ void main() {
     final dio = Dio();
     final dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
-    dioAdapter.onGet('${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json',
-        (server) => server.reply(401, {}));
     dioAdapter.onGet(
-        '${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(401, {}));
+        '${GitHubFetcher.compiledPath}/md_to_note_ids_compiled.json', (server) => server.reply(401, {}));
+    dioAdapter.onGet('${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(401, {}));
     Get.put(GitHubFetcher(dio));
   });
   testWidgets('Shows content even on non-200 result from content-source', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/notes')));
+    await tester.tap(find.byKey(const Key('begin/browse')));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/notes');
+    expect(Get.currentRoute, '/browse');
   });
 }
