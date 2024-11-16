@@ -128,13 +128,9 @@ List<Widget> makePlayWhenPlaying() {
 
 List<Widget> choicesForContent() {
   return const [
-    ScriptSelectionIcon(),
-    SizedBox(width: choiceSpacing),
-    HeaderPreferenceIcon(),
-    SizedBox(width: choiceSpacing),
     MeaningExpansionIcon(),
     SizedBox(width: choiceSpacing),
-    ThemeSelectionIcon(),
+    PreferenceDrawer(),
     SizedBox(width: choiceSpacing),
   ];
 }
