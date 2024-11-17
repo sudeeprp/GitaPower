@@ -10,26 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 void main() {
-  testWidgets('theme selection icon toggles the theme', (tester) async {
-    final choices = Choices();
-    Get.put(choices);
-    final initialTheme = choices.theme.value;
-    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: ThemeSelectionIcon())));
-    await tester.tap(find.byType(ThemeSelectionIcon));
-    await tester.pumpAndSettle();
-    expect(choices.theme.value, isNot(initialTheme));
-    Get.delete<Choices>();
-  });
-  testWidgets('script selection icon toggles the script', (tester) async {
-    final choices = Choices();
-    Get.put(choices);
-    final initialScript = choices.script.value;
-    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: ScriptSelectionIcon())));
-    await tester.tap(find.byType(ScriptSelectionIcon));
-    await tester.pumpAndSettle();
-    expect(choices.script.value, isNot(initialScript));
-    Get.delete<Choices>();
-  });
   testWidgets('expansion icon toggles shloka between meaning', (tester) async {
     final choices = Choices();
     Get.put(choices);

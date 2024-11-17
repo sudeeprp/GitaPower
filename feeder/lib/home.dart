@@ -76,7 +76,8 @@ Widget makeMyHome() {
         GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
-                appBar: AppBar(title: const Text("Tours")),
+                appBar: AppBar(
+                    toolbarHeight: 150, title: Image.asset('images/once-again.png', fit: BoxFit.contain)),
                 choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
