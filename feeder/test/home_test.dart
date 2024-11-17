@@ -127,6 +127,19 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
+  testWidgets('sets app-wide preferences', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key('choice/preferences')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dark Theme'));
+    await tester.pumpAndSettle();
+    final Choices choices = Get.find();
+    expect(choices.theme.value, equals(ReadingTheme.dark));
+    await tester.tap(find.text('Harward-Kyoto'));
+    await tester.pumpAndSettle();
+    expect(choices.script.value, equals(ScriptPreference.sahk));
+  });
   test('Shows play under content when something is playing', () {
     Get.put(FeedContent.random());
     expect(makePlayWhenPlaying(), isEmpty);

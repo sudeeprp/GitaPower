@@ -212,44 +212,13 @@ class BrowsingPreferenceIcon extends StatelessWidget {
   }
 }
 
-class PreferenceDrawer extends StatelessWidget {
-  const PreferenceDrawer({super.key});
+class PersonalizeIcon extends StatelessWidget {
+  const PersonalizeIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // TODO: make a new widget to show preferences with explanation
-        // ...and launch it with Get.toNamed
-        final renderBox = context.findRenderObject() as RenderBox?;
-        final iconPosition = renderBox?.localToGlobal(Offset.zero) ?? Offset.zero;
-        final iconSize = renderBox?.size ?? Size.zero;
-        final anchorOffset = Offset(
-          iconPosition.dx + iconSize.width / 2,
-          iconPosition.dy,
-        );
-
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(16),
-            ),
-          ),
-          anchorPoint: anchorOffset,
-          constraints: BoxConstraints(
-            maxWidth: 200, // Adjust width as needed
-          ),
-          builder: (context) => Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [ScriptSelectionIcon(), ThemeSelectionIcon()],
-            ),
-          ),
-        );
-      },
+      onTap: () => Get.toNamed('/personalize'),
       child: const Icon(Icons.settings, size: 48),
     );
   }
