@@ -34,25 +34,24 @@ class PersonalWidget extends StatelessWidget {
     required Rx<T> groupValue,
     required String Function(T) displayText,
   }) {
-    return Obx(() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-          ...values.map((value) {
-            return RadioListTile<T>(
-              title: Text(displayText(value)),
-              value: value,
-              groupValue: groupValue.value,
-              onChanged: (T? newValue) {
-                if (newValue != null) {
-                  groupValue.value = newValue;
-                }
-              },
-            );
-          }),
-        ],
-      );
-    });
+    return Obx(() => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(title, style: TextStyle(fontWeight: FontWeight.bold))),
+            ...values.map((value) => RadioListTile<T>(
+                  title: Text(displayText(value)),
+                  value: value,
+                  groupValue: groupValue.value,
+                  onChanged: (T? newValue) {
+                    if (newValue != null) {
+                      groupValue.value = newValue;
+                    }
+                  },
+                )),
+            Divider(height: 16, indent: 16),
+          ],
+        ));
   }
 }

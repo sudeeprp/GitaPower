@@ -76,6 +76,7 @@ Widget makeMyHome() {
         GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
+                appBar: AppBar(title: const Text("Tours")),
                 choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
@@ -89,7 +90,9 @@ Widget makeMyHome() {
             page: () => screenify(
                 buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
                 choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
-        GetPage(name: '/personalize', page: () => screenify(PersonalWidget())),
+        GetPage(
+            name: '/personalize',
+            page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
       ]);
 }
 
