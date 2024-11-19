@@ -1,0 +1,15 @@
+The Bhagavad Gita is a conversation between Lord Krishna and Arjuna just before a battle. This conversation is a journey through our self, purpose, and relationship with the Lord.
+
+A thousand years ago, Sri Ramanuja made a consistent, well-knit commentary along the philosophy of Vishishtadvaita. This app presents the commentary, translated into English.
+
+Credits:
+
+<b>Sunidhi Prasad</b> (https://sunidhiprasad.github.io/) for inline images and design
+
+<b>Drishti Hoskote</b> (https://www.linkedin.com/in/drishti-hoskote) for the 3-shloka-feed idea
+
+<b>Varchas Beedu</b> (https://www.linkedin.com/in/varchas-beedu) for valuable help with the look, feel, and code
+
+<b>Salman G</b> (https://www.linkedin.com/in/salman-g-64a74682) for tapping the avatar to Ramanuja's life story
+
+Welcome to this Journey of discovery!

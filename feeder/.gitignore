@@ -2,6 +2,7 @@ tools/source-clone-for-gen
 tools/consts.dart
 gita-begin/compile
 gita-begin/gita
+android/.google-play
 
 # Till we need these builds
 linux/
