@@ -78,43 +78,6 @@ class Choices extends GetxController {
   }
 }
 
-class ThemeSelectionIcon extends StatelessWidget {
-  const ThemeSelectionIcon({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Choices choice = Get.find();
-    return GestureDetector(
-      onTap: () => choice.theme.value =
-          choice.theme.value == ReadingTheme.light ? ReadingTheme.dark : ReadingTheme.light,
-      child: Obx((() {
-        final Choices choices = Get.find();
-        return choices.theme.value == ReadingTheme.light
-            ? const Icon(Icons.dark_mode_outlined, color: Colors.black, size: 48)
-            : const Icon(Icons.light_mode_outlined, color: Colors.grey, size: 48);
-      })),
-    );
-  }
-}
-
-class ScriptSelectionIcon extends StatelessWidget {
-  const ScriptSelectionIcon({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Choices choice = Get.find();
-    return GestureDetector(
-      onTap: () {
-        choice.headPreference.value = HeadPreference.shloka;
-        choice.script.value = choice.script.value == ScriptPreference.devanagari
-            ? ScriptPreference.sahk
-            : ScriptPreference.devanagari;
-      },
-      child: Image.asset('images/translate.png', width: 48, height: 48),
-    );
-  }
-}
-
 class MeaningExpansionIcon extends StatelessWidget {
   const MeaningExpansionIcon({super.key});
 
@@ -208,6 +171,18 @@ class BrowsingPreferenceIcon extends StatelessWidget {
           child: Image.asset(iconFile, width: 48, height: 48),
         );
       }),
+    );
+  }
+}
+
+class PersonalizeIcon extends StatelessWidget {
+  const PersonalizeIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Get.toNamed('/personalize'),
+      child: const Icon(Icons.settings, size: 48),
     );
   }
 }

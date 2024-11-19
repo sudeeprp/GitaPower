@@ -278,11 +278,10 @@ bool _isVisible(SectionType sectionType) {
   Choices choice = Get.find();
   // Assignment to a local variable is needed. Otherwise GetX throws an error when "return true" doesn't access any observable.
   final scriptChoice = choice.script.value;
-  final headPreference = choice.headPreference.value;
   if (sectionType == SectionType.shlokaSA) {
-    return scriptChoice == ScriptPreference.devanagari && headPreference == HeadPreference.shloka;
+    return scriptChoice == ScriptPreference.devanagari;
   } else if (sectionType == SectionType.shlokaSAHK) {
-    return scriptChoice == ScriptPreference.sahk && headPreference == HeadPreference.shloka;
+    return scriptChoice == ScriptPreference.sahk;
   }
   return true;
 }

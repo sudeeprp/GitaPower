@@ -35,7 +35,7 @@ Widget chapterShlokaChoices() {
   return choicesRow([], const [
     HeaderPreferenceIcon(),
     SizedBox(width: choiceSpacing),
-    ThemeSelectionIcon(),
+    PersonalizeIcon(),
     SizedBox(width: choiceSpacing),
   ]);
 }

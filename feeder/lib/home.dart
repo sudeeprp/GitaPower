@@ -4,6 +4,7 @@ import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/feedplay_icon.dart';
 import 'package:askys/notes_widget.dart';
+import 'package:askys/personal_widget.dart';
 import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,7 +76,9 @@ Widget makeMyHome() {
         GetPage(
             name: '/tour',
             page: () => screenify(const ToursWidget(),
-                choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]))),
+                appBar: AppBar(
+                    toolbarHeight: 150, title: Image.asset('images/once-again.png', fit: BoxFit.contain)),
+                choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
@@ -88,6 +91,9 @@ Widget makeMyHome() {
             page: () => screenify(
                 buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
                 choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
+        GetPage(
+            name: '/personalize',
+            page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
       ]);
 }
 
@@ -113,7 +119,8 @@ class Home extends StatelessWidget {
     return screenify(
       const BeginWidget(),
       appBar: AppBar(leading: Image.asset('images/sunidhi-krishna.png'), title: const Text("Krishna's Gita")),
-      choicesRow: choicesRow([], const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]),
+      choicesRow: choicesRow(
+          [], const [PersonalizeIcon(key: Key('choice/preferences')), SizedBox(width: choiceSpacing)]),
     );
   }
 }
@@ -128,13 +135,9 @@ List<Widget> makePlayWhenPlaying() {
 
 List<Widget> choicesForContent() {
   return const [
-    ScriptSelectionIcon(),
-    SizedBox(width: choiceSpacing),
-    HeaderPreferenceIcon(),
-    SizedBox(width: choiceSpacing),
     MeaningExpansionIcon(),
     SizedBox(width: choiceSpacing),
-    ThemeSelectionIcon(),
+    PersonalizeIcon(),
     SizedBox(width: choiceSpacing),
   ];
 }
@@ -149,5 +152,5 @@ Widget notesChaptersChoices() {
     SizedBox(width: choiceSpacing),
     BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
   ];
-  return choicesRow(notesChaptersTabs, const [ThemeSelectionIcon(), SizedBox(width: choiceSpacing)]);
+  return choicesRow(notesChaptersTabs, const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]);
 }
