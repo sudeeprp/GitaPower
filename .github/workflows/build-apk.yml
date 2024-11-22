@@ -58,4 +58,4 @@ jobs:
         cd feeder/android
         mkdir -p ./.google-play
         echo "$GOOGLE_PLAY_JSON_KEY" > ./.google-play/gitapower-service-account.json
-        bundle exec fastlane to_internal_testing
+        fastlane to_internal_testing
