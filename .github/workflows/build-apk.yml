@@ -24,6 +24,9 @@ jobs:
       working-directory: ./feeder
       run: bash gita-begin-offline.sh
 
+    - name: say the version information
+      run: sed -i "s/555/${GITHUB_REF##*/}-${{ github.run_number }}/g" feeder/lib/build_ident_widget.dart
+
     - name: build release apk
       working-directory: ./feeder
       env: 
@@ -55,4 +58,4 @@ jobs:
         cd feeder/android
         mkdir -p ./.google-play
         echo "$GOOGLE_PLAY_JSON_KEY" > ./.google-play/gitapower-service-account.json
-        fastlane to_internal_testing
+        bundle exec fastlane to_internal_testing
