@@ -2,6 +2,7 @@ name: Flutter to apk
 
 on: workflow_dispatch
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,3 +38,21 @@ jobs:
         name: release-apk
         path: feeder/build/app/outputs/apk/release/app-release.apk
         retention-days: 3
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0
+        bundler-cache: true
+
+    - name: Install Fastlane
+      run: gem install fastlane
+
+    - name: upload to internal track
+      env:
+        GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+      run: |
+        cd android
+        mkdir -p ./.google-play
+        echo "$GOOGLE_PLAY_JSON_KEY" > ./.google-play/gitapower-service-account.json
+        fastlane to_internal_testing
