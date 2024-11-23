@@ -3,6 +3,7 @@ tools/consts.dart
 gita-begin/compile
 gita-begin/gita
 android/.google-play
+screenshots/
 
 # Till we need these builds
 linux/
