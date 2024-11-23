@@ -13,6 +13,7 @@ class PersonalWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BuildIdentWidget(),
+        Divider(height: 16, indent: 16),
         buildEnumSelector<ReadingTheme>(
           title: 'Select Theme:',
           values: ReadingTheme.values,
