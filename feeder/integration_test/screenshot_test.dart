@@ -13,10 +13,10 @@ void main() {
   testWidgets('Generate Play Store screenshots', (WidgetTester tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.pumpAndSettle();
-    
+
     // Take screenshot of home screen
     await takeScreenshot('home_screen', tester);
-    
+
     // Example of navigating and taking more screenshots
     /*
     await tester.tap(find.byKey(Key('settings_button')));
@@ -29,12 +29,10 @@ void main() {
 Future<void> takeScreenshot(String name, WidgetTester tester) async {
   await tester.pumpAndSettle();
 
-  final RenderRepaintBoundary boundary = 
-      tester.renderObject(find.byType(RepaintBoundary).first);
+  final RenderRepaintBoundary boundary = tester.renderObject(find.byType(RepaintBoundary).first);
   final ui.Image image = await boundary.toImage();
-  final ByteData? byteData = 
-      await image.toByteData(format: ui.ImageByteFormat.png);
-  
+  final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
   if (byteData != null) {
     final directory = Directory('screenshots');
     if (!directory.existsSync()) {
