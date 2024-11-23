@@ -68,9 +68,7 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            flutter drive \
-              --driver=test_driver/screenshot_driver.dart \
-              --target=integration_test/screenshot_test.dart
+            flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/screenshot_test.dart
 
       - name: Upload screenshots
         uses: actions/upload-artifact@v3
