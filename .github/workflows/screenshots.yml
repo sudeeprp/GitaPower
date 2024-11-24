@@ -1,29 +1,19 @@
 name: Android Screenshots
+# source: https://github.com/marketplace/actions/android-emulator-runner
 
 on: 
   push:
   workflow_dispatch:
 
 jobs:
-  screenshots:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        api-level: [31] # Android 12
-        target: [google_apis]
-        device: ['pixel_4']
     defaults:
       run:
         working-directory: ./feeder
     steps:
-      - uses: actions/checkout@v3
-
-      # - name: Setup Java
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     distribution: 'temurin'
-      #     java-version: '17'
-      #     cache: 'gradle'
+      - name: checkout
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -33,45 +23,22 @@ jobs:
 
       - name: setup offline content
         run: bash gita-begin-offline.sh
-  
-      - name: AVD cache
-        uses: actions/cache@v3
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-${{ matrix.api-level }}-${{ matrix.device }}
-  
-      - name: Create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: x86_64
-          profile: ${{ matrix.device }}
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: echo "Generated AVD snapshot for caching."
 
-      - name: Run tests and take screenshots
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           working-directory: ./feeder
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: x86_64
-          profile: ${{ matrix.device }}
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: |
-            flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart
+          api-level: 29
+          script: flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart
 
       - name: Upload screenshots
         uses: actions/upload-artifact@v3
         with:
-          name: screenshots-${{ matrix.device }}
-          path: screenshots
+          name: screenshots
+          path: feeder/screenshots
