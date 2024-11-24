@@ -72,6 +72,7 @@ Widget makeMyHome() {
       theme: lightTheme(),
       darkTheme: darkTheme(),
       home: const Home(),
+      debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
             name: '/tour',

@@ -1,4 +1,5 @@
 name: Android Screenshots
+# source: https://github.com/marketplace/actions/android-emulator-runner
 
 on: 
   push:
@@ -39,5 +40,5 @@ jobs:
       - name: Upload screenshots
         uses: actions/upload-artifact@v3
         with:
-          name: screenshots-${{ matrix.device }}
+          name: screenshots
           path: feeder/screenshots
