@@ -38,7 +38,7 @@ jobs:
           script: flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart
 
       - name: Upload screenshots
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: screenshots
           path: feeder/screenshots
