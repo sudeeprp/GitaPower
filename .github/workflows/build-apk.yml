@@ -34,6 +34,7 @@ jobs:
       run: |
         echo "Building ${GITHUB_REF##*/}"
         flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ github.run_number }}
+        rm android/app/keystore.jks
 
     - name: upload apk
       uses: actions/upload-artifact@v4
@@ -42,7 +43,34 @@ jobs:
         path: feeder/build/app/outputs/apk/release/app-release.apk
         retention-days: 3
 
-    - name: Set up Ruby
+    - name: Enable KVM
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+
+    - name: run tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        working-directory: ./feeder
+        api-level: 29
+        script: flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart
+
+    - name: Upload screenshots
+      uses: actions/upload-artifact@v4
+      with:
+        name: screenshots
+        path: feeder/screenshots
+
+    - name: Update screenshots for fastlate
+      working-directory: ./feeder
+      run: |
+        bash screenshots-to-fastlane.sh
+        git add ./android/fastlane/metadata/android/en-US/images/phoneScreenshots/*
+        git commit -m "screenshots"
+        git push
+
+    - name: Set up Ruby for Fastlane
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.0
