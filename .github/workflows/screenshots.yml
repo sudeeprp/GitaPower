@@ -2,7 +2,6 @@ name: Android Screenshots
 # source: https://github.com/marketplace/actions/android-emulator-runner
 
 on: 
-  push:
   workflow_dispatch:
 
 jobs:
