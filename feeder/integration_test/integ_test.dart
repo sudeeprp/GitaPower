@@ -43,7 +43,13 @@ void main() {
         await tester.pumpAndSettle();
         await screenIt(tester, 'browse-notes');
       });
-      for (final screen in ['/tour', '/feed', '/shlokaheaders/Chapter_4.md', '/shloka/4-4.md', '/personalize']) {
+      for (final screen in [
+        '/tour',
+        '/feed',
+        '/shlokaheaders/Chapter_4.md',
+        '/shloka/4-4.md',
+        '/personalize'
+      ]) {
         testWidgets('$screen screenshot - ${theme.toString()}', (tester) async {
           await tester.pumpWidget(makeMyHome());
           Get.offNamed(screen);
