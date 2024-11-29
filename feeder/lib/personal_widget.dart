@@ -1,3 +1,4 @@
+import 'package:askys/build_ident_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class PersonalWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        BuildIdentWidget(),
+        Divider(height: 16, indent: 16),
         buildEnumSelector<ReadingTheme>(
           title: 'Select Theme:',
           values: ReadingTheme.values,

@@ -1,0 +1,2 @@
+What's new: New feature. Take a tour - To access the 3-feed shloka, click on "tour", and then "Explore Yourself". Also try the conducted tour "Bring the best in you". Chapters and Notes are now under "browse"
+Limitations: Shlokas from the chapter view are only in Devanagari, they will not switch to SA-HK yet. Word highlights in bold aren't very visible in dark mode.
