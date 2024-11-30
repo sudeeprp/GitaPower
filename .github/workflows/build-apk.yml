@@ -64,13 +64,17 @@ jobs:
 
     - name: Update screenshots for Fastlane
       working-directory: ./feeder
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bash screenshots-to-fastlane.sh
         git config --global user.email "sudeep@rapalearning.com"
         git config --global user.name "GitaPower builder workflow"
+        git checkout -b see-screens-${{ github.run_number }}
         git add ./android/fastlane/metadata/android/en-US/images/phoneScreenshots/*
         git commit -m "screenshots"
         git push
+        gh pr create --title "Snaps from ${GITHUB_REF}" --reviewer sudeeprp
 
     - name: Set up Ruby for Fastlane
       uses: ruby/setup-ruby@v1
