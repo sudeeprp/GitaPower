@@ -72,9 +72,9 @@ jobs:
         git config --global user.name "GitaPower builder workflow"
         git checkout -b see-screens-${{ github.run_number }}
         git add ./android/fastlane/metadata/android/en-US/images/phoneScreenshots/*
-        git commit -m "screenshots"
+        git commit -m "update screenshots"
         git push --set-upstream origin see-screens-${{ github.run_number }}
-        gh pr create --title "Snaps from ${GITHUB_REF}" --reviewer sudeeprp
+        gh pr create --title "Snaps from ${GITHUB_REF}" --body "For Fastlane internal ${{ github.run_number }}"
 
     - name: Set up Ruby for Fastlane
       uses: ruby/setup-ruby@v1
@@ -85,7 +85,7 @@ jobs:
     - name: Install Fastlane
       run: gem install fastlane
 
-    - name: upload to internal track
+    - name: Upload to internal track
       env:
         GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
       run: |
