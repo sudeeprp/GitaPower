@@ -73,7 +73,7 @@ jobs:
         git checkout -b see-screens-${{ github.run_number }}
         git add ./android/fastlane/metadata/android/en-US/images/phoneScreenshots/*
         git commit -m "screenshots"
-        git push
+        git push --set-upstream origin see-screens-${{ github.run_number }}
         gh pr create --title "Snaps from ${GITHUB_REF}" --reviewer sudeeprp
 
     - name: Set up Ruby for Fastlane
