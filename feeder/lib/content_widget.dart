@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/moving_subtitles.dart';
@@ -222,27 +221,10 @@ Widget constructCommentary(List<TextSpan> spans) {
 }
 
 Widget avataraRamanuja({String? key}) {
-  const avatarImages = [
-    AssetImage('images/ramanuja3.png'),
-    AssetImage('images/omnamonarayanaya.png'),
-    AssetImage('images/threepromises.png'),
-    AssetImage('images/melukote.png'),
-    AssetImage('images/sanyasa.png'),
-    AssetImage('images/srirangam.png'),
-  ];
-  const avatarAnchors = [
-    'ramanuja3',
-    'omnamonarayanaya',
-    'threepromises',
-    'melukote',
-    'sanyasa',
-    'srirangam'
-  ];
-  final avatarIndex = Random().nextInt(avatarImages.length);
   return GestureDetector(
-    onTap: () => Get.toNamed('/shloka/ramanuja.md/${avatarAnchors[avatarIndex]}'),
+    onTap: () => Get.toNamed('/shloka/ramanuja.md/ramanuja3'),
     child: CircleAvatar(
-        key: key != null ? Key(key) : null, radius: 20, backgroundImage: avatarImages[avatarIndex]),
+        key: key != null ? Key(key) : null, radius: 20, backgroundImage: AssetImage('images/ramanuja3.png')),
   );
 }
 
