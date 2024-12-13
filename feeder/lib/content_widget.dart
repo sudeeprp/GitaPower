@@ -279,7 +279,8 @@ Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
 
 Widget _buildNote(BuildContext context, Widget content) {
   return Card(
-    elevation: 5,
+    color: Color(0xFF322B3B),
+    elevation: 3,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
       Image.asset('images/one-step.png'),
@@ -329,7 +330,9 @@ List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).brightness == Brightness.light
+          ? Theme.of(context).colorScheme.surface
+          : Color(0xFF28212D),
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey.withValues(alpha: 0.5),
@@ -430,7 +433,8 @@ class ContentWidget extends StatelessWidget {
       } else if (tag == 'h2') {
         return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3);
       } else if (tag == 'em') {
-        return GoogleFonts.caveat(height: 1.5, fontSize: 24, fontWeight: fontWeight);
+        return GoogleFonts.roboto(
+            height: 1.5, fontStyle: FontStyle.italic, fontSize: 16, fontWeight: fontWeight);
       } else if (tag == 'note') {
         return TextStyle(fontSize: 14, fontWeight: fontWeight);
       } else {
