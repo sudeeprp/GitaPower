@@ -332,7 +332,7 @@ Widget _contentSpacing(BuildContext context, Widget w) {
       color: Theme.of(context).colorScheme.surface,
       boxShadow: <BoxShadow>[
         BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
             blurRadius: 5.0,
             spreadRadius: -15.0,
             offset: const Offset(5.0, 25.0))
