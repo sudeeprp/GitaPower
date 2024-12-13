@@ -152,12 +152,12 @@ class BrowsingPreferenceIcon extends StatelessWidget {
       child: Obx(() {
         final boxShadow = choice.browsingPreference.value == browsingPreference
             ? BoxShadow(
-                color: Colors.blue.withOpacity(0.3),
+                color: Colors.blue.withValues(alpha: 0.3),
                 offset: const Offset(0, 4),
                 blurRadius: 10,
               )
             : BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 offset: const Offset(0, 2),
                 blurRadius: 6,
               );

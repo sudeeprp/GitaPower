@@ -25,8 +25,8 @@ Widget contentWithOpenerPane(String filename, int count) {
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Colors.grey.shade700.withOpacity(0.8),
-                            Colors.grey.shade500.withOpacity(0.95)
+                            Colors.grey.shade700.withValues(alpha: 0.8),
+                            Colors.grey.shade500.withValues(alpha: 0.95)
                           ],
                           begin: AlignmentDirectional.topStart,
                           end: AlignmentDirectional.bottomEnd,
@@ -64,7 +64,7 @@ class FeedWidget extends StatelessWidget {
                               border: const Border(bottom: BorderSide(color: Colors.black)),
                               boxShadow: [
                                 BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
+                                    color: Colors.grey.withValues(alpha: 0.5),
                                     spreadRadius: 5,
                                     blurRadius: 7,
                                     offset: const Offset(0, -5))
