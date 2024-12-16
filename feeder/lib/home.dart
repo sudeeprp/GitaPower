@@ -3,6 +3,7 @@ import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/feedplay_icon.dart';
+import 'package:askys/content_themes.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:askys/personal_widget.dart';
 import 'package:askys/tours_widget.dart';
@@ -15,23 +16,6 @@ import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:askys/choices_row.dart';
-
-ThemeData lightTheme() {
-  final defaultLightTheme = ThemeData.light();
-  const codeTextLight = TextStyle(color: Color(0xFF800000), height: 1.5);
-  return defaultLightTheme.copyWith(
-      cardColor: const Color(0xFFFFFFFF),
-      textTheme: defaultLightTheme.textTheme.copyWith(labelMedium: codeTextLight));
-}
-
-ThemeData darkTheme() {
-  final defaultDarkTheme = ThemeData.dark();
-  const codeTextDark = TextStyle(color: Color(0xFFFE7033), height: 1.5, fontWeight: FontWeight.w300);
-  return defaultDarkTheme.copyWith(
-    cardColor: const Color(0xFF000000),
-    textTheme: defaultDarkTheme.textTheme.copyWith(labelMedium: codeTextDark),
-  );
-}
 
 final _appLinks = AppLinks();
 

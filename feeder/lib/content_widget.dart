@@ -1,3 +1,4 @@
+import 'package:askys/content_themes.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/moving_subtitles.dart';
@@ -279,7 +280,7 @@ Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
 
 Widget _buildNote(BuildContext context, Widget content) {
   return Card(
-    color: Color(0xFF322B3B),
+    color: contentColors(context)?.noteBackground,
     elevation: 3,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
@@ -330,9 +331,7 @@ List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).brightness == Brightness.light
-          ? Theme.of(context).colorScheme.surface
-          : Color(0xFF28212D),
+      color: contentColors(context)?.commentaryBackground,
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey.withValues(alpha: 0.5),
