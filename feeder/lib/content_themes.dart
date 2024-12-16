@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 class ContentColors extends ThemeExtension<ContentColors> {
   final Color noteBackground;
   final Color commentaryBackground;
+  final Color commentaryTextColor;
 
   ContentColors({
     required this.noteBackground,
     required this.commentaryBackground,
+    required this.commentaryTextColor,
   });
 
   @override
   ContentColors copyWith({
     Color? noteBackground,
     Color? commentaryBackground,
+    Color? commentaryTextColor,
   }) {
     return ContentColors(
       noteBackground: noteBackground ?? this.noteBackground,
       commentaryBackground: commentaryBackground ?? this.commentaryBackground,
+      commentaryTextColor: commentaryTextColor ?? this.commentaryTextColor,
     );
   }
 
@@ -29,6 +33,7 @@ class ContentColors extends ThemeExtension<ContentColors> {
     return ContentColors(
       noteBackground: Color.lerp(noteBackground, other.noteBackground, t)!,
       commentaryBackground: Color.lerp(commentaryBackground, other.commentaryBackground, t)!,
+      commentaryTextColor: Color.lerp(commentaryTextColor, other.commentaryTextColor, t)!,
     );
   }
 }
@@ -45,8 +50,9 @@ ThemeData lightTheme() {
       textTheme: defaultLightTheme.textTheme.copyWith(labelMedium: codeTextLight),
       extensions: <ThemeExtension<dynamic>>[
         ContentColors(
-          noteBackground: Color(0xFFF0E6FF),
-          commentaryBackground: Color(0xFFEBDAF4),
+          noteBackground: Color(0xFFF7F204),
+          commentaryBackground: Color(0xFFEDE7F6),
+          commentaryTextColor: Color(0xFF4A4A6A),
         ),
       ]);
 }
@@ -61,6 +67,7 @@ ThemeData darkTheme() {
         ContentColors(
           noteBackground: Color(0xFF322B3B),
           commentaryBackground: Color(0xFF28212D),
+          commentaryTextColor: Color(0xFFF4F4F4),
         ),
       ]);
 }

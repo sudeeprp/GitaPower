@@ -461,12 +461,15 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(engInTranslitInlines[0].presentation, equals(Presentation.normal));
   });
   test('content colors can be selectively customized', () {
-    final contentColors = ContentColors(noteBackground: Colors.blue, commentaryBackground: Colors.green);
+    final contentColors = ContentColors(
+        noteBackground: Colors.blue, commentaryBackground: Colors.green, commentaryTextColor: Colors.yellow);
     final differentNote = contentColors.copyWith(noteBackground: Colors.teal);
     expect(differentNote.noteBackground, equals(Colors.teal));
     expect(differentNote.commentaryBackground, equals(Colors.green));
-    final differentCommentary = contentColors.copyWith(commentaryBackground: Colors.cyan);
-    expect(differentCommentary.commentaryBackground, equals(Colors.cyan));
+    final differentCommBkgnd = contentColors.copyWith(commentaryBackground: Colors.cyan);
+    expect(differentCommBkgnd.commentaryBackground, equals(Colors.cyan));
+    final differentCommText = contentColors.copyWith(commentaryTextColor: Colors.amber);
+    expect(differentCommText.commentaryTextColor, equals(Colors.amber));
   });
   testWidgets('accepts highlights while rendering the content', (tester) async {
     Get.put(Choices());
