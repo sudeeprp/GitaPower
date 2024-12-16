@@ -33,14 +33,15 @@ jobs:
         JKS_PASSWORD: ${{ secrets.JKS_PASSWORD }}
       run: |
         echo "Building ${GITHUB_REF##*/}"
-        flutter build apk --release --build-name ${GITHUB_REF##*/} --build-number ${{ github.run_number }}
+        flutter build appbundle --release --build-name ${GITHUB_REF##*/} --build-number ${{ github.run_number }}
         rm android/app/keystore.jks
+        ls -al build/app/outputs/bundle/release/
 
-    - name: upload apk
+    - name: upload appbundle
       uses: actions/upload-artifact@v4
       with:
-        name: release-apk
-        path: feeder/build/app/outputs/apk/release/app-release.apk
+        name: release-aab
+        path: feeder/build/app/outputs/bundle/release/app.aab
         retention-days: 3
 
     - name: Enable KVM
