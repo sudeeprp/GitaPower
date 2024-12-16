@@ -462,7 +462,10 @@ A person diverts from the path of realizing the Self due to some desires.
   });
   test('content colors can be selectively customized', () {
     final contentColors = ContentColors(
-        noteBackground: Colors.blue, commentaryBackground: Colors.green, commentaryTextColor: Colors.yellow);
+        noteBackground: Colors.blue,
+        commentaryBackground: Colors.green,
+        commentaryTextColor: Colors.yellow,
+        codeTextColor: Colors.brown);
     final differentNote = contentColors.copyWith(noteBackground: Colors.teal);
     expect(differentNote.noteBackground, equals(Colors.teal));
     expect(differentNote.commentaryBackground, equals(Colors.green));
@@ -470,6 +473,8 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(differentCommBkgnd.commentaryBackground, equals(Colors.cyan));
     final differentCommText = contentColors.copyWith(commentaryTextColor: Colors.amber);
     expect(differentCommText.commentaryTextColor, equals(Colors.amber));
+    final differentCodeColor = contentColors.copyWith(codeTextColor: Colors.orange);
+    expect(differentCodeColor.codeTextColor, equals(Colors.orange));
   });
   testWidgets('accepts highlights while rendering the content', (tester) async {
     Get.put(Choices());

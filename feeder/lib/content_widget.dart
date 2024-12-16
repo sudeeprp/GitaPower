@@ -423,10 +423,10 @@ class ContentWidget extends StatelessWidget {
       }
       if (elmclass == 'language-shloka-sa') {
         return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 20, fontWeight: fontWeight);
+            color: contentColors(context)?.codeTextColor, fontSize: 20, fontWeight: fontWeight);
       } else if (tag == 'code') {
         return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 18, fontWeight: fontWeight);
+            color: contentColors(context)?.codeTextColor, fontSize: 18, fontWeight: fontWeight);
       } else if (tag == 'h1') {
         return Theme.of(context).textTheme.headlineMedium;
       } else if (tag == 'h2') {
@@ -437,7 +437,11 @@ class ContentWidget extends StatelessWidget {
       } else if (tag == 'note') {
         return TextStyle(fontSize: 14, fontWeight: fontWeight);
       } else {
-        return TextStyle(height: 1.5, fontSize: 18, fontWeight: fontWeight);
+        return TextStyle(
+            color: contentColors(context)?.commentaryTextColor,
+            height: 1.5,
+            fontSize: 18,
+            fontWeight: fontWeight);
       }
     }
 
