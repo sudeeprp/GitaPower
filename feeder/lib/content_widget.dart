@@ -284,7 +284,7 @@ Widget _buildNote(BuildContext context, Widget content) {
     elevation: 3,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
-      Image.asset('images/one-step.png'),
+      Padding(padding: const EdgeInsets.only(left: 3, top: 2, bottom: 2), child: Image.asset('images/one-step.png')),
       Expanded(child: Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
     ]),
   );
