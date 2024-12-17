@@ -1,7 +1,13 @@
 name: Flutter to apk
 
-on: workflow_dispatch
-
+on: 
+  workflow_dispatch:
+    inputs:
+      generate_screenshots:
+        description: 'Generate and upload screenshots'
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   build:
@@ -45,12 +51,14 @@ jobs:
         retention-days: 3
 
     - name: Enable KVM
+      if: ${{ inputs.generate_screenshots }}
       run: |
         echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
         sudo udevadm control --reload-rules
         sudo udevadm trigger --name-match=kvm
 
     - name: run tests
+      if: ${{ inputs.generate_screenshots }}
       uses: reactivecircus/android-emulator-runner@v2
       with:
         working-directory: ./feeder
@@ -58,12 +66,14 @@ jobs:
         script: flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart
 
     - name: Upload screenshots
+      if: ${{ inputs.generate_screenshots }}
       uses: actions/upload-artifact@v4
       with:
         name: screenshots-${{ github.run_number }}
         path: feeder/screenshots
 
     - name: Update screenshots for Fastlane
+      if: ${{ inputs.generate_screenshots }}
       working-directory: ./feeder
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
