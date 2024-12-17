@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: release-aab
-        path: feeder/build/app/outputs/bundle/release/app.aab
+        path: feeder/build/app/outputs/bundle/release/app-release.aab
         retention-days: 3
 
     - name: Enable KVM
