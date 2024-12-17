@@ -49,24 +49,31 @@ ContentColors? contentColors(BuildContext context) {
 
 ThemeData lightTheme() {
   final defaultLightTheme = ThemeData.light();
-  return defaultLightTheme.copyWith(cardColor: const Color(0xFFFFFFFF), extensions: <ThemeExtension<dynamic>>[
-    ContentColors(
-      noteBackground: Color(0xFFEDE7F6),
-      commentaryBackground: Color(0xFFEDE7F6),
-      commentaryTextColor: Color(0xFF4A4A6A),
-      codeTextColor: Color(0xFF800000),
-    ),
-  ]);
+  return defaultLightTheme.copyWith(
+    scaffoldBackgroundColor: const Color(0xFFF5F5FA),
+    cardColor: const Color(0xFFFCFCFF),
+    extensions: <ThemeExtension<dynamic>>[
+      ContentColors(
+        noteBackground: Color(0xFFEDE7F6),
+        commentaryBackground: Color(0xFFEDE7F6),
+        commentaryTextColor: Color(0xFF4A4A6A),
+        codeTextColor: Color(0xFF800000),
+      ),
+    ],
+  );
 }
 
 ThemeData darkTheme() {
   final defaultDarkTheme = ThemeData.dark();
-  return defaultDarkTheme.copyWith(cardColor: const Color(0xFF000000), extensions: <ThemeExtension<dynamic>>[
-    ContentColors(
-      noteBackground: Color(0xFF322B3B),
-      commentaryBackground: Color(0xFF28212D),
-      commentaryTextColor: Color(0xFFF4F4F4),
-      codeTextColor: Color(0xFFFE7033),
-    ),
-  ]);
+  return defaultDarkTheme.copyWith(
+    scaffoldBackgroundColor: const Color(0xFF1A1A2E),
+    cardColor: const Color(0xFF252545),
+    extensions: <ThemeExtension<dynamic>>[
+      ContentColors(
+          noteBackground: Color(0xFF322B3B),
+          commentaryBackground: Color(0xFF28212D),
+          commentaryTextColor: Color(0xFFF4F4F4),
+          codeTextColor: Color.fromARGB(255, 236, 118, 82)),
+    ],
+  );
 }

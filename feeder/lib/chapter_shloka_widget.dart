@@ -54,7 +54,11 @@ Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildC
         scrollDirection: Axis.horizontal,
         child: textPadding(Text(
           shlokas.headers[mdFilename]?['shloka'] ?? '',
-          style: TextStyle(fontSize: 20, height: 1.5, color: contentColors(context)?.codeTextColor),
+          style: TextStyle(
+              fontSize: 20,
+              height: 1.5,
+              color: contentColors(context)?.codeTextColor,
+              fontWeight: FontWeight.w300),
         )));
   } else {
     headerTextView = SingleChildScrollView(
