@@ -1,3 +1,4 @@
+import 'package:askys/content_themes.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/moving_subtitles.dart';
@@ -279,10 +280,13 @@ Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
 
 Widget _buildNote(BuildContext context, Widget content) {
   return Card(
-    elevation: 5,
+    color: contentColors(context)?.noteBackground,
+    elevation: 3,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
     child: Row(children: [
-      Image.asset('images/one-step.png'),
+      Padding(
+          padding: const EdgeInsets.only(left: 3, top: 2, bottom: 2),
+          child: Image.asset('images/one-step.png')),
       Expanded(child: Padding(padding: const EdgeInsets.only(left: 3, top: 8, bottom: 8), child: content))
     ]),
   );
@@ -329,13 +333,13 @@ List<MatterForInline> selectVisibleInlines(List<MatterForInline> inlineMatterSeq
 Widget _contentSpacing(BuildContext context, Widget w) {
   return Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surface,
+      color: contentColors(context)?.commentaryBackground,
       boxShadow: <BoxShadow>[
         BoxShadow(
             color: Colors.grey.withValues(alpha: 0.5),
-            blurRadius: 5.0,
-            spreadRadius: -15.0,
-            offset: const Offset(5.0, 25.0))
+            blurRadius: 2.0,
+            spreadRadius: -16.0,
+            offset: const Offset(5.0, 22.0))
       ],
     ),
     margin: const EdgeInsets.symmetric(vertical: 10),
@@ -421,20 +425,25 @@ class ContentWidget extends StatelessWidget {
       }
       if (elmclass == 'language-shloka-sa') {
         return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 20, fontWeight: fontWeight);
+            color: contentColors(context)?.codeTextColor, fontSize: 20, fontWeight: fontWeight);
       } else if (tag == 'code') {
         return GoogleFonts.roboto(
-            color: Theme.of(context).textTheme.labelMedium?.color, fontSize: 18, fontWeight: fontWeight);
+            color: contentColors(context)?.codeTextColor, fontSize: 18, fontWeight: fontWeight);
       } else if (tag == 'h1') {
         return Theme.of(context).textTheme.headlineMedium;
       } else if (tag == 'h2') {
         return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3);
       } else if (tag == 'em') {
-        return GoogleFonts.caveat(height: 1.5, fontSize: 24, fontWeight: fontWeight);
+        return GoogleFonts.roboto(
+            height: 1.5, fontStyle: FontStyle.italic, fontSize: 16, fontWeight: fontWeight);
       } else if (tag == 'note') {
         return TextStyle(fontSize: 14, fontWeight: fontWeight);
       } else {
-        return TextStyle(height: 1.5, fontSize: 18, fontWeight: fontWeight);
+        return TextStyle(
+            color: contentColors(context)?.commentaryTextColor,
+            height: 1.5,
+            fontSize: 18,
+            fontWeight: fontWeight);
       }
     }
 

@@ -1,4 +1,5 @@
 import 'package:askys/chaptercontent.dart';
+import 'package:askys/content_themes.dart';
 import 'package:askys/screenify.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,7 +54,11 @@ Widget? formShlokaTitle(String mdFilename, HeadPreference headPreference, BuildC
         scrollDirection: Axis.horizontal,
         child: textPadding(Text(
           shlokas.headers[mdFilename]?['shloka'] ?? '',
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 20),
+          style: TextStyle(
+              fontSize: 20,
+              height: 1.5,
+              color: contentColors(context)?.codeTextColor,
+              fontWeight: FontWeight.w300),
         )));
   } else {
     headerTextView = SingleChildScrollView(

@@ -9,7 +9,7 @@ platform :android do
     supply(
       track: "internal",
       json_key: "./.google-play/gitapower-service-account.json",
-      apk: "../build/app/outputs/apk/release/app-release.apk"
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
     )
   end
 end

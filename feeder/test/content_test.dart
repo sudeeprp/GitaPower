@@ -2,6 +2,7 @@ import 'package:askys/chaptercontent.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/content_themes.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
@@ -458,6 +459,22 @@ A person diverts from the path of realizing the Self due to some desires.
     expect(engInTranslitInlines.length, equals(1));
     expect(engInTranslitInlines[0].text, equals('[me matam]'));
     expect(engInTranslitInlines[0].presentation, equals(Presentation.normal));
+  });
+  test('content colors can be selectively customized', () {
+    final contentColors = ContentColors(
+        noteBackground: Colors.blue,
+        commentaryBackground: Colors.green,
+        commentaryTextColor: Colors.yellow,
+        codeTextColor: Colors.brown);
+    final differentNote = contentColors.copyWith(noteBackground: Colors.teal);
+    expect(differentNote.noteBackground, equals(Colors.teal));
+    expect(differentNote.commentaryBackground, equals(Colors.green));
+    final differentCommBkgnd = contentColors.copyWith(commentaryBackground: Colors.cyan);
+    expect(differentCommBkgnd.commentaryBackground, equals(Colors.cyan));
+    final differentCommText = contentColors.copyWith(commentaryTextColor: Colors.amber);
+    expect(differentCommText.commentaryTextColor, equals(Colors.amber));
+    final differentCodeColor = contentColors.copyWith(codeTextColor: Colors.orange);
+    expect(differentCodeColor.codeTextColor, equals(Colors.orange));
   });
   testWidgets('accepts highlights while rendering the content', (tester) async {
     Get.put(Choices());
