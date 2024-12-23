@@ -209,7 +209,7 @@ const headers = {
     'shloka': '''अविनाशि तु तद्विद्धि येन सर्वमिदम् ततम् ।
 विनाशम् अव्ययस्य अस्य न कश्चित् कर्तुमर्हति ॥ १७ ॥''',
     'meaning':
-        '''Know that the Self by which all this is pervaded is indestructible. Nothing is capable of destroying the indestructible Self'''
+        '''Know that the Self - by which all this is pervaded - is indestructible. Nothing is capable of destroying the indestructible Self'''
   },
   '2-18.md': {
     'shloka': '''अन्तवन्त इमे देहा नित्यस्योक्ताः शरीरिणः ।
@@ -395,7 +395,7 @@ const headers = {
     'shloka': '''बुद्धियुक्तो जहातीह उभे सुकृत दुष्कृते ।
 तस्माद्योगाय युज्यस्व योगः कर्मसु कौशलम् ॥ ५० ॥''',
     'meaning':
-        '''A person who works with the awareness of the Self will leave behind both the right and the wrong in this life itself. Hence, focus on action for the knowledge of the Self. Actions done with the knowledge of the Self yield maximum prosperity among all actions.'''
+        '''A person who works with the awareness of the Self will leave behind both the right and the wrong in the present. Hence, focus on action for the knowledge of the Self. Actions done with the knowledge of the Self yield maximum prosperity among all actions.'''
   },
   '2-51.md': {
     'shloka': '''कर्मजम् बुद्धियुक्ता हि फलम् त्यक्त्वा मनीषिणः ।
@@ -439,7 +439,7 @@ const headers = {
     'shloka': '''यस्सर्वत्र अनभिस्नेहः तत्तत् प्राप्य शुभाशुभम् ।
 नाभिनन्दति न द्वेष्टि तस्य प्रज्ञा प्रतिष्ठिता ॥ ५७ ॥''',
     'meaning':
-        '''A person is neither driven by likes nor by dislikes when he is without attachment in all respects, even on obtaining things that he likes or dislikes. His consciousness is steadfast.'''
+        '''A person is neither driven by likes nor by dislikes, when he is without attachment in all respects- Even on obtaining things that he likes or dislikes. His consciousness is steadfast.'''
   },
   '2-58.md': {
     'shloka': '''यदा सम्हरते चायम् कूर्मोऽङ्गानीव सर्वशः ।
@@ -1286,11 +1286,11 @@ const headers = {
 सुखम् अत्यन्तिकम् यत्तद् बुद्धिग्राह्यम् अतीन्द्रियम् ।
 वेत्ति यत्र न चैवायम् स्थितः चलति तत्त्वतः ॥ २१ ॥
 यम् लब्ध्वा चापरम् लाभम् मन्यते नाधिकम् ततः ।
-यस्मिन् स्थिते न दुःखेन गुरुणाऽपि विचाल्यते ॥ २२ ॥
+यस्मिन् स्थितः न दुःखेन गुरुणाऽपि विचाल्यते ॥ २२ ॥
 तम् विद्यात् दुःखसम्योग वियोगम् योग सन्ज्ञितम् ।
 स निश्चयेन योक्तव्यो योगोऽनिर्विण्ण चेतसा ॥ २३ ॥''',
     'meaning':
-        '''The state of being, in which the consciousness, controlled and focused for the purpose of realizing the Self and the Lord experiences ultimate joy, in which the consciousness sees the Self by using the mind and is content in the knowledge of the Self alone, in which it knows the unparalleled joy, which can only be grasped by knowledge , being beyond the reach of the senses and indeed, when it is situated in that state, it does not move from this ultimate reality. Further, having attained that state, it does not consider other benefits to be more valuable. While being in this state it does not get toppled even by huge difficulties and sorrows. Know that this state of being, which detaches you from bondage and sorrow is called ‘yoga’. This yoga is to be practiced with enthusiasm, without doubt.'''
+        '''The state of being, in which the consciousness, controlled and focused for the purpose of realizing the Self and the Lord experiences ultimate joy, in which the consciousness sees the Self by using the mind and is content in the knowledge of the Self alone, in which it knows the unparalleled joy, which can only be grasped by knowledge , being beyond the reach of the senses - indeed, when it is situated in that state, it does not move from this ultimate reality. Further, having attained that state, it does not consider other benefits to be more valuable. While being in this state it does not get toppled even by huge difficulties and sorrows. Know that this state of being, which detaches you from bondage and sorrow is called ‘yoga’. This yoga is to be practiced with enthusiasm, without doubt.'''
   },
   '6-24_to_6-25.md': {
     'shloka': '''सङ्कल्प प्रभवान् कामान् त्यक्त्वा सर्वान् अशेषतः ।
@@ -1358,7 +1358,7 @@ const headers = {
 असम्यतात्मना योगो दुष्ट्राप इति मे मतिः ।
 वश्यात्मना तु यतता शक्योऽवाप्तुम् उपायतः ॥ ३६ ॥''',
     'meaning':
-        '''Lord Krishna said: O one with powerful arms, there is no doubt that the mind keeps wandering and is difficult to control. However, Arjuna, by practice and by preventing oneself from being driven by desire, it can be brought under our grip. Someone who doesn’t​ have his mind under control would find it impossible to pursue the Self - this is my opinion. While this is achievable by a person who has control, who perseveres according to the described methods.'''
+        '''Lord Krishna said: O one with powerful arms, there is no doubt that the mind keeps wandering and is difficult to control. However, Arjuna, by practice and by preventing oneself from being driven by desire, it can be brought under our grip. Someone who doesn’t​ have his mind under control would find it impossible to pursue the Self - this is my opinion. On the other hand, it is achievable by a person who has control, who perseveres according to the described methods.'''
   },
   '6-37_to_6-39.md': {
     'shloka': '''अर्जुन उवाच -
@@ -1893,7 +1893,7 @@ const headers = {
     'shloka': '''पत्रम् पुष्पम् फलम् तोयम् यो मे भक्त्या प्रयच्छति ।
 तदहम् भक्त्युपहृतम् अश्नामि प्रयतात्मनः ॥ २६ ॥''',
     'meaning':
-        '''Anyone who offers a leaf, a flower, , a fruit or water to Me with devotion - I will accept whatever is offered with devotion by a person who is so dedicated to Me.'''
+        '''Anyone who offers a leaf, a flower, a fruit or water to Me with devotion - I will accept whatever is offered with devotion by a person who is so dedicated to Me.'''
   },
   '9-27.md': {
     'shloka': '''यत् करोषि यत् अश्नासि जत् जुहोषि ददासि यत् ।
@@ -3027,7 +3027,7 @@ const headers = {
 प्रकाशम् च प्रवृत्तिम् च मोहम् एव च पान्डव ।
 न द्वेष्टी सम्प्रवृत्तानि न निवृत्तानि कांक्षति ॥ २२ ॥''',
     'meaning':
-        '''The Lord said – Arjuna, in knowledge, activity and misconception, this person doesn’t loathe their presence. In their absence, he does not yearn for them either.'''
+        '''The Lord said – Arjuna, this person doesn’t loathe the presence of realization, activity, and misunderstanding. In their absence, he doesn't yearn for them either.'''
   },
   '14-23.md': {
     'shloka': '''उदासीनवत् आसीनो गुणैर्यो न विचाल्यते ।
@@ -3687,7 +3687,7 @@ const headers = {
     'shloka': '''यया धर्मम् अधर्मम् च कार्यम् च अकार्यम् एव च ।
 अयथावत् प्रजानाति बुद्धिः सा पार्थ राजसी ॥ ३१ ॥''',
     'meaning':
-        '''There is conduct that elevates us and conduct that depresses. Arjuna, the intellect by which a person gets a distorted understanding in this matter, even distorting activities that must be done and those that are forbidden - such intellect is in rajas .'''
+        '''There is conduct that elevates us and there's conduct that depresses. Arjuna, the intellect by which a person gets a distorted understanding in this matter, even distorting activities that must be done and those that are forbidden - such intellect is in rajas .'''
   },
   '18-32.md': {
     'shloka': '''अधर्मम् धर्मम् इति या मन्यते तमसावृता ।
