@@ -77,5 +77,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'gitapower.firebasestorage.app',
     measurementId: 'G-FVWXZKXT0W',
   );
-
 }
