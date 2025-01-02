@@ -103,4 +103,8 @@ jobs:
         cd feeder/android
         mkdir -p ./.google-play
         echo "$GOOGLE_PLAY_JSON_KEY" > ./.google-play/gitapower-service-account.json
-        fastlane to_internal_testing
+        if [ "${{ inputs.generate_screenshots }}" = "true" ]; then
+          fastlane to_internal_testing_with_screenshots
+        else
+          fastlane to_internal_testing
+        fi

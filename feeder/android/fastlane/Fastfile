@@ -9,7 +9,17 @@ platform :android do
     supply(
       track: "internal",
       json_key: "./.google-play/gitapower-service-account.json",
-      aab: "../build/app/outputs/bundle/release/app-release.aab"
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true
     )
   end
+  lane :to_internal_testing_with_screenshots do
+    supply(
+      track: "internal",
+      json_key: "./.google-play/gitapower-service-account.json",
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
+    )
 end

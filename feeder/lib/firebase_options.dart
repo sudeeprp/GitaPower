@@ -16,24 +16,15 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, Tar
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -53,9 +44,37 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAn9Z9BamvMFnzuH-t6v_t8INKy7YBAFiU',
-    appId: '1:351092704696:android:e2d359154bc99a50e77b4d',
+    appId: '1:351092704696:android:8554f54bbe4f9069e77b4d',
     messagingSenderId: '351092704696',
     projectId: 'gitapower',
-    storageBucket: 'gitapower.appspot.com',
+    storageBucket: 'gitapower.firebasestorage.app',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBIq1EbrAEtzo8qYGT_j9dF_kNr484276M',
+    appId: '1:351092704696:ios:0402ffc077caccf2e77b4d',
+    messagingSenderId: '351092704696',
+    projectId: 'gitapower',
+    storageBucket: 'gitapower.firebasestorage.app',
+    iosBundleId: 'com.gita.sudeep.gitahtml',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBIq1EbrAEtzo8qYGT_j9dF_kNr484276M',
+    appId: '1:351092704696:ios:0402ffc077caccf2e77b4d',
+    messagingSenderId: '351092704696',
+    projectId: 'gitapower',
+    storageBucket: 'gitapower.firebasestorage.app',
+    iosBundleId: 'com.gita.sudeep.gitahtml',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyA0-MmM5D-fKL9tq219ToVHQ4qRXNDlldc',
+    appId: '1:351092704696:web:9f5784bf8d4b3dffe77b4d',
+    messagingSenderId: '351092704696',
+    projectId: 'gitapower',
+    authDomain: 'gitapower.firebaseapp.com',
+    storageBucket: 'gitapower.firebasestorage.app',
+    measurementId: 'G-FVWXZKXT0W',
   );
 }
