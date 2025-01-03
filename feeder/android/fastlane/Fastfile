@@ -22,4 +22,5 @@ platform :android do
       json_key: "./.google-play/gitapower-service-account.json",
       aab: "../build/app/outputs/bundle/release/app-release.aab"
     )
+  end
 end
