@@ -16,7 +16,7 @@ class SearchWidget extends StatelessWidget {
               Expanded(
                 child: TextField(
                   decoration: const InputDecoration(
-                    hintText: 'Enter search term',
+                    hintText: 'What are you looking for?',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -24,7 +24,7 @@ class SearchWidget extends StatelessWidget {
               const SizedBox(width: 16),
               ElevatedButton(
                 onPressed: () {},
-                child: const Text('Search'),
+                child: const Icon(Icons.search, size: 48),
               ),
             ],
           ),

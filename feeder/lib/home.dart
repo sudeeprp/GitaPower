@@ -142,5 +142,10 @@ Widget notesChaptersChoices() {
     SizedBox(width: choiceSpacing),
     BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
   ];
-  return choicesRow(notesChaptersTabs, const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]);
+  return choicesRow(notesChaptersTabs, [
+    GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
+    SizedBox(width: choiceSpacing),
+    PersonalizeIcon(),
+    SizedBox(width: choiceSpacing)
+  ]);
 }
