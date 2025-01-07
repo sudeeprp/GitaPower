@@ -13,8 +13,7 @@ class ChoiceBinding implements Bindings {
   @override
   void dependencies() {
     const waitTimeout = Duration(seconds: 2);
-    final dio = Dio(BaseOptions(connectTimeout: waitTimeout, receiveTimeout: waitTimeout));
-    Get.put(GitHubFetcher(dio));
+    Get.put(GitHubFetcher(Dio(BaseOptions(connectTimeout: waitTimeout, receiveTimeout: waitTimeout))));
     Get.put(Choices());
     Get.put(ChaptersTOC());
     Get.put(NotesTOC());
@@ -22,7 +21,8 @@ class ChoiceBinding implements Bindings {
     Get.put(FeedContent.random());
     Get.put(ContentActions());
     Get.put(ShowWords());
-    Get.put(PhraseSearcher(dio));
+    const searchTimeout = Duration(seconds: 9);
+    Get.put(PhraseSearcher(Dio(BaseOptions(connectTimeout: searchTimeout, receiveTimeout: searchTimeout))));
     Get.lazyPut(() => PlayablesTOC(), fenix: true);
   }
 }

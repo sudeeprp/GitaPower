@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,19 +30,22 @@ class PhraseSearcher extends GetxController {
 
   Future<String> _tokenForSearch() async {
     const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
+    final entryToken = _entry();
     final tokenResponse = await dio.get(
       tokenUrl,
-      options: Options(headers: {'Authorization': 'Bearer $_entry()'}),
+      options: Options(headers: {'Authorization': 'Bearer $entryToken'}),
     );
     return tokenResponse.data['token'] as String;
   }
 
   Future<void> search(String phrase) async {
     isLoading.value = true;
+    final tokenForSearch = await _tokenForSearch();
+    final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
     final searchResponse = await dio.get(
       searchBaseUrl,
       queryParameters: {'q': phrase},
-      options: Options(headers: {'Authorization': 'Bearer $_tokenForSearch()'}),
+      options: Options(headers: header),
     );
     final responseJson = searchResponse.data as Map<String, dynamic>;
     final matches = responseJson['matches'] as List<dynamic>;
