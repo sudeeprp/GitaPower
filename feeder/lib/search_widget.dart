@@ -57,7 +57,7 @@ class PhraseSearcher extends GetxController {
       final responseJson = searchResponse.data as Map<String, dynamic>;
       final matches = responseJson['matches'] as List<dynamic>;
       top3mdFileNoext.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
-    } on DioException catch(e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         final errData = e.response?.data as Map<String, String>;
         progressMsg.value += errData.toString();
@@ -103,7 +103,8 @@ class SearchWidget extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (phraseSearcher.top3mdFileNoext.length == 3) {
-                final mdsInFeed = phraseSearcher.top3mdFileNoext.map((shlokaFile) => '$shlokaFile.md').toList();
+                final mdsInFeed =
+                    phraseSearcher.top3mdFileNoext.map((shlokaFile) => '$shlokaFile.md').toList();
                 final FeedContent feedContent = Get.find();
                 feedContent.setCuratedShlokaMDs(mdsInFeed);
                 return buildFeed();
