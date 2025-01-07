@@ -9,6 +9,7 @@ const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/g
 class PhraseSearcher extends GetxController {
   var top3mdFileNoext = <String>[].obs;
   final isLoading = false.obs;
+  final progressMsg = ''.obs;
   final Dio dio;
   final random = Random();
   final phraseInput = TextEditingController();
@@ -40,17 +41,29 @@ class PhraseSearcher extends GetxController {
 
   Future<void> search(String phrase) async {
     isLoading.value = true;
-    final tokenForSearch = await _tokenForSearch();
-    final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
-    final searchResponse = await dio.get(
-      searchBaseUrl,
-      queryParameters: {'q': phrase},
-      options: Options(headers: header),
-    );
-    final responseJson = searchResponse.data as Map<String, dynamic>;
-    final matches = responseJson['matches'] as List<dynamic>;
+    try {
+      progressMsg.value = 'Accessing...';
+      final tokenForSearch = await _tokenForSearch();
+      final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
+      progressMsg.value = 'Searching...';
+      final searchResponse = await dio.get(
+        searchBaseUrl,
+        queryParameters: {'q': phrase},
+        options: Options(headers: header),
+      );
+      progressMsg.value = '';
+      final responseJson = searchResponse.data as Map<String, dynamic>;
+      final matches = responseJson['matches'] as List<dynamic>;
+      top3mdFileNoext.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
+    } on DioException catch(e) {
+      if (e.response != null) {
+        final errData = e.response?.data as Map<String, String>;
+        progressMsg.value += errData.toString();
+      } else {
+        progressMsg.value += e.message ?? '';
+      }
+    }
     isLoading.value = false;
-    top3mdFileNoext.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
   }
 }
 
@@ -92,9 +105,9 @@ class SearchWidget extends StatelessWidget {
                     itemCount: phraseSearcher.top3mdFileNoext.length,
                     itemBuilder: (context, index) => Text(phraseSearcher.top3mdFileNoext[index]));
               } else if (phraseSearcher.isLoading.value) {
-                return const Column(
+                return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [CircularProgressIndicator()],
+                  children: [CircularProgressIndicator(), Text(phraseSearcher.progressMsg.value)],
                 );
               } else {
                 return const SizedBox.shrink();
