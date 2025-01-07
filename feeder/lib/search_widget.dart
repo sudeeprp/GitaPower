@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:askys/feed_widget.dart';
+import 'package:askys/feedcontent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -101,9 +103,10 @@ class SearchWidget extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (phraseSearcher.top3mdFileNoext.length == 3) {
-                return ListView.builder(
-                    itemCount: phraseSearcher.top3mdFileNoext.length,
-                    itemBuilder: (context, index) => Text(phraseSearcher.top3mdFileNoext[index]));
+                final mdsInFeed = phraseSearcher.top3mdFileNoext.map((shlokaFile) => '$shlokaFile.md').toList();
+                final FeedContent feedContent = Get.find();
+                feedContent.setCuratedShlokaMDs(mdsInFeed);
+                return buildFeed();
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
