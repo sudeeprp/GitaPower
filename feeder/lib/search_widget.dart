@@ -1,12 +1,63 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-const searchBaseUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
+const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
+
+class PhraseSearcher extends GetxController {
+  var top3mdFileNoext = <String>[].obs;
+  final isLoading = false.obs;
+  final Dio dio;
+  final random = Random();
+  final phraseInput = TextEditingController();
+  PhraseSearcher(this.dio);
+  String _entry() {
+    const digits = '0123456789';
+    const allChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    final length = 31 + random.nextInt(34); // 31 to 64
+    final first = allChars[random.nextInt(allChars.length)];
+    final second = digits[random.nextInt(digits.length)];
+    final remainingLength = length - 2;
+    final buffer = StringBuffer();
+    for (var i = 0; i < remainingLength; i++) {
+      buffer.write(allChars[random.nextInt(allChars.length)]);
+    }
+    return '$first$second${buffer.toString()}';
+  }
+
+  Future<String> _tokenForSearch() async {
+    const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
+    final tokenResponse = await dio.get(
+      tokenUrl,
+      options: Options(headers: {'Authorization': 'Bearer $_entry()'}),
+    );
+    return tokenResponse.data['token'] as String;
+  }
+
+  Future<void> search(String phrase) async {
+    isLoading.value = true;
+    final searchResponse = await dio.get(
+      searchBaseUrl,
+      queryParameters: {'q': phrase},
+      options: Options(headers: {'Authorization': 'Bearer $_tokenForSearch()'}),
+    );
+    final responseJson = searchResponse.data as Map<String, dynamic>;
+    final matches = responseJson['matches'] as List<dynamic>;
+    isLoading.value = false;
+    top3mdFileNoext.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
+  }
+}
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    PhraseSearcher phraseSearcher = Get.find();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -19,23 +70,34 @@ class SearchWidget extends StatelessWidget {
                     hintText: 'What are you looking for?',
                     border: OutlineInputBorder(),
                   ),
+                  controller: phraseSearcher.phraseInput,
                 ),
               ),
               const SizedBox(width: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  phraseSearcher.search(phraseSearcher.phraseInput.text);
+                },
                 child: const Icon(Icons.search, size: 48),
               ),
             ],
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: ListView.builder(
-              itemCount: 0,
-              itemBuilder: (context, index) {
+            child: Obx(() {
+              if (phraseSearcher.top3mdFileNoext.length == 3) {
+                return ListView.builder(
+                    itemCount: phraseSearcher.top3mdFileNoext.length,
+                    itemBuilder: (context, index) => Text(phraseSearcher.top3mdFileNoext[index]));
+              } else if (phraseSearcher.isLoading.value) {
+                return const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [CircularProgressIndicator()],
+                );
+              } else {
                 return const SizedBox.shrink();
-              },
-            ),
+              }
+            }),
           ),
         ],
       ),

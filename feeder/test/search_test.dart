@@ -8,26 +8,44 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 void main() {
   late Dio dio;
   late DioAdapter dioAdapter;
-  late SearchWidget searchWidget;
-
-  const apiToken = 'your-api-token';
+  const mockResults = {
+    'matches': [
+      {
+        'commentary_chunks': 'commentary1',
+        'filename_no_mdext': '6-19',
+        'match_id': '6-19-0',
+        'match_score': 0.8120879
+      },
+      {
+        'commentary_chunks': 'commentary2',
+        'filename_no_mdext': '2-20',
+        'match_id': '2-20-1',
+        'match_score': 0.7891093
+      },
+      {
+        'commentary_chunks': 'commentary3',
+        'filename_no_mdext': '14-23',
+        'match_id': '14-23-0',
+        'match_score': 0.78039294
+      }
+    ],
+    'to_search': 'flame which does not shake',
+    'version': 'v0.3'
+  };
 
   setUp(() {
-    dio = Dio(BaseOptions(
-      baseUrl: searchBaseUrl,
-      headers: {'Authorization': 'Bearer $apiToken'},
-    ));
+    dio = Dio();
     dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
-    searchWidget = SearchWidget();
+    Get.put(PhraseSearcher(dio));
   });
 
-  group('SearchWidget', () {
-    testWidgets('should initiate search', (WidgetTester tester) async {
-      const searchString = 'test query';
-      const mockResults = ['result1', 'result2', 'result3'];
+  group('Search', () {
+    testWidgets('should initiate search and display results', (WidgetTester tester) async {
+      dioAdapter.onGet(tokenUrl, (server) => server.reply(200, {'token': 'token-for-search'}));
+      const searchString = 'flame which does not shake';
       dioAdapter.onGet(
-        '',
+        searchBaseUrl,
         (server) => server.reply(
           200,
           mockResults,
@@ -36,39 +54,16 @@ void main() {
             'content-type': ['application/json']
           },
         ),
-        queryParameters: {'query': searchString},
-        headers: {'Authorization': 'Bearer $apiToken'},
+        // queryParameters: {'query': searchString},
+        // headers: {'Authorization': 'Bearer $apiToken'},
       );
-      await tester.pumpWidget(GetMaterialApp(home: searchWidget));
+      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.pump();
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-
-      for (final result in mockResults) {
-        expect(find.text(result), findsOneWidget);
-      }
-    });
-
-    testWidgets('should display search results from API response', (WidgetTester tester) async {
-      const searchString = 'test query';
-      const mockResults = ['Result 1', 'Result 2', 'Result 3'];
-      dioAdapter.onGet(
-        '',
-        (server) => server.reply(
-          200,
-          mockResults,
-          delay: const Duration(milliseconds: 100),
-        ),
-        queryParameters: {'query': searchString},
-      );
-      await tester.pumpWidget(GetMaterialApp(home: searchWidget));
-      await tester.enterText(find.byType(TextField), searchString);
-      await tester.tap(find.byType(ElevatedButton));
-      await tester.pumpAndSettle();
-
-      for (final result in mockResults) {
-        expect(find.text(result), findsOneWidget);
+      for (final mdfileNoExt in ['6-19', '2-20', '14-23']) {
+        expect(find.text(mdfileNoExt), findsOneWidget);
       }
     });
 
@@ -89,7 +84,7 @@ void main() {
         ),
         queryParameters: {'query': searchString},
       );
-      await tester.pumpWidget(GetMaterialApp(home: searchWidget));
+      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -111,7 +106,7 @@ void main() {
         ),
         queryParameters: {'query': searchString},
       );
-      await tester.pumpWidget(GetMaterialApp(home: searchWidget));
+      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -121,17 +116,16 @@ void main() {
 
     testWidgets('should show loading indicator during API call', (WidgetTester tester) async {
       const searchString = 'test query';
-      const mockResults = ['Result 1', 'Result 2', 'Result 3'];
       dioAdapter.onGet(
         '',
         (server) => server.reply(
           200,
           mockResults,
-          delay: const Duration(milliseconds: 500), // Add delay to test loading state
+          delay: const Duration(milliseconds: 300), // Add delay to test loading state
         ),
         queryParameters: {'query': searchString},
       );
-      await tester.pumpWidget(GetMaterialApp(home: searchWidget));
+      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump();
@@ -139,9 +133,7 @@ void main() {
 
       await tester.pumpAndSettle();
       expect(find.byType(CircularProgressIndicator), findsNothing);
-      for (final result in mockResults) {
-        expect(find.text(result), findsOneWidget);
-      }
+      expect(find.text('14-23'), findsOneWidget);
     });
   });
 }

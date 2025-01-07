@@ -1,5 +1,6 @@
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
+import 'package:askys/search_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
@@ -12,7 +13,8 @@ class ChoiceBinding implements Bindings {
   @override
   void dependencies() {
     const waitTimeout = Duration(seconds: 2);
-    Get.put(GitHubFetcher(Dio(BaseOptions(connectTimeout: waitTimeout, receiveTimeout: waitTimeout))));
+    final dio = Dio(BaseOptions(connectTimeout: waitTimeout, receiveTimeout: waitTimeout));
+    Get.put(GitHubFetcher(dio));
     Get.put(Choices());
     Get.put(ChaptersTOC());
     Get.put(NotesTOC());
@@ -20,6 +22,7 @@ class ChoiceBinding implements Bindings {
     Get.put(FeedContent.random());
     Get.put(ContentActions());
     Get.put(ShowWords());
+    Get.put(PhraseSearcher(dio));
     Get.lazyPut(() => PlayablesTOC(), fenix: true);
   }
 }
