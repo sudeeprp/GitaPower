@@ -140,6 +140,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(choices.script.value, equals(ScriptPreference.sahk));
   });
+  testWidgets('navigates to search', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    Get.toNamed('/search');
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Search'), findsWidgets);
+  });
   test('Shows play under content when something is playing', () {
     Get.put(FeedContent.random());
     expect(makePlayWhenPlaying(), isEmpty);

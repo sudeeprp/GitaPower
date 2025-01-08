@@ -476,6 +476,11 @@ A person diverts from the path of realizing the Self due to some desires.
     final differentCodeColor = contentColors.copyWith(codeTextColor: Colors.orange);
     expect(differentCodeColor.codeTextColor, equals(Colors.orange));
   });
+  test('does not throw exception on non-existent md file', () async {
+    final GitHubFetcher gitHubFetcher = Get.find();
+    final noMDString = await gitHubFetcher.mdString('non-existent.md');
+    expect(noMDString, isEmpty);
+  });
   testWidgets('accepts highlights while rendering the content', (tester) async {
     Get.put(Choices());
     Get.put(ContentActions());

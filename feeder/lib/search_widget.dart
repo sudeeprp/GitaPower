@@ -1,6 +1,8 @@
 import 'dart:math';
-import 'package:askys/feed_widget.dart';
+import 'package:askys/choice_selector.dart';
+import 'package:askys/choices_row.dart';
 import 'package:askys/feedcontent.dart';
+import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,13 +11,19 @@ const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
 const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
 
 class PhraseSearcher extends GetxController {
-  var top3mdFileNoext = <String>[].obs;
+  var top3mdFileNoExt = <String>[].obs;
   final isLoading = false.obs;
   final progressMsg = ''.obs;
   final Dio dio;
   final random = Random();
   final phraseInput = TextEditingController();
   PhraseSearcher(this.dio);
+  void reset() {
+    top3mdFileNoExt.value = [];
+    isLoading.value = false;
+    progressMsg.value = '';
+  }
+
   String _entry() {
     const digits = '0123456789';
     const allChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -44,10 +52,10 @@ class PhraseSearcher extends GetxController {
   Future<void> search(String phrase) async {
     isLoading.value = true;
     try {
-      progressMsg.value = 'Accessing...';
+      progressMsg.value = 'Accessing';
       final tokenForSearch = await _tokenForSearch();
       final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
-      progressMsg.value = 'Searching...';
+      progressMsg.value = 'Searching';
       final searchResponse = await dio.get(
         searchBaseUrl,
         queryParameters: {'q': phrase},
@@ -56,13 +64,13 @@ class PhraseSearcher extends GetxController {
       progressMsg.value = '';
       final responseJson = searchResponse.data as Map<String, dynamic>;
       final matches = responseJson['matches'] as List<dynamic>;
-      top3mdFileNoext.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
+      top3mdFileNoExt.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
     } on DioException catch (e) {
       if (e.response != null) {
-        final errData = e.response?.data as Map<String, String>;
-        progressMsg.value += errData.toString();
+        final errData = e.response?.data as Map<String, dynamic>;
+        progressMsg.value += ' error: ${errData.toString()} (${e.response?.statusCode.toString()})';
       } else {
-        progressMsg.value += e.message ?? '';
+        progressMsg.value += ' error: ${e.message ?? e.error.toString()}';
       }
     }
     isLoading.value = false;
@@ -84,7 +92,7 @@ class SearchWidget extends StatelessWidget {
               Expanded(
                 child: TextField(
                   decoration: const InputDecoration(
-                    hintText: 'What are you looking for?',
+                    hintText: 'Search',
                     border: OutlineInputBorder(),
                   ),
                   controller: phraseSearcher.phraseInput,
@@ -102,19 +110,20 @@ class SearchWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
-              if (phraseSearcher.top3mdFileNoext.length == 3) {
+              if (phraseSearcher.top3mdFileNoExt.length == 3) {
                 final mdsInFeed =
-                    phraseSearcher.top3mdFileNoext.map((shlokaFile) => '$shlokaFile.md').toList();
+                    phraseSearcher.top3mdFileNoExt.map((shlokaFile) => '$shlokaFile.md').toList();
                 final FeedContent feedContent = Get.find();
                 feedContent.setCuratedShlokaMDs(mdsInFeed);
-                return buildFeed();
+                WidgetsBinding.instance.addPostFrameCallback((_) => Get.toNamed('/feed'));
+                return const SizedBox.shrink();
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [CircularProgressIndicator(), Text(phraseSearcher.progressMsg.value)],
                 );
               } else {
-                return const SizedBox.shrink();
+                return Text(phraseSearcher.progressMsg.value);
               }
             }),
           ),
@@ -122,4 +131,12 @@ class SearchWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget searchPage() {
+  final PhraseSearcher phraseSearcher = Get.find();
+  phraseSearcher.reset();
+  return screenify(SearchWidget(),
+      appBar: AppBar(title: const Text('Search (beta)')),
+      choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
 }

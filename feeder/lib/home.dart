@@ -79,11 +79,7 @@ Widget makeMyHome() {
         GetPage(
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
-        GetPage(
-            name: '/search',
-            page: () => screenify(SearchWidget(),
-                appBar: AppBar(title: const Text('Search')),
-                choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]))),
+        GetPage(name: '/search', page: searchPage),
       ]);
 }
 

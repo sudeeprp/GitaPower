@@ -1,3 +1,5 @@
+import 'package:askys/content_source.dart';
+import 'package:askys/feedcontent.dart';
 import 'package:askys/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,107 +35,87 @@ void main() {
     'version': 'v0.3'
   };
 
-  setUp(() {
-    dio = Dio();
-    dioAdapter = DioAdapter(dio: dio);
-    dio.httpClientAdapter = dioAdapter;
-    Get.put(PhraseSearcher(dio));
-  });
+  void resetPhraseSearcher() {
+    final PhraseSearcher phraseSearcher = Get.find();
+    phraseSearcher.reset();
+  }
+
+  void setupAskysDiscoverMock(String phrase, {Duration? delay}) {
+    dioAdapter.onGet(tokenUrl, (server) => server.reply(200, {'token': 'token-for-search'}));
+    dioAdapter.onGet(
+      searchBaseUrl,
+      (server) => server.reply(200, mockResults, delay: delay, headers: {
+        'content-type': ['application/json']
+      }),
+      queryParameters: {'q': phrase},
+    );
+  }
 
   group('Search', () {
-    testWidgets('should initiate search and display results', (WidgetTester tester) async {
-      dioAdapter.onGet(tokenUrl, (server) => server.reply(200, {'token': 'token-for-search'}));
+    setUp(() {
+      dio = Dio();
+      dioAdapter = DioAdapter(dio: dio);
+      dio.httpClientAdapter = dioAdapter;
+      Get.put(GitHubFetcher(Dio()));
+      Get.put(PhraseSearcher(dio));
+    });
+    tearDown(() {
+      Get.delete<PhraseSearcher>();
+      Get.delete<GitHubFetcher>();
+    });
+    testWidgets('should initiate search and display results', (tester) async {
+      resetPhraseSearcher();
       const searchString = 'flame which does not shake';
-      dioAdapter.onGet(
-        searchBaseUrl,
-        (server) => server.reply(
-          200,
-          mockResults,
-          // delay: const Duration(milliseconds: 100),
-          headers: {
-            'content-type': ['application/json']
-          },
-        ),
-        // queryParameters: {'query': searchString},
-        // headers: {'Authorization': 'Bearer $apiToken'},
-      );
-      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
+      setupAskysDiscoverMock(searchString);
+      Get.put(FeedContent.random());
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SearchWidget()),
+        getPages: [GetPage(name: '/feed', page: () => const Text('feed'))],
+      ));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.pump();
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-      for (final mdfileNoExt in ['6-19', '2-20', '14-23']) {
-        expect(find.text(mdfileNoExt), findsOneWidget);
-      }
+      FeedContent feedContent = Get.find();
+      expect(feedContent.threeShlokas[0], equals('6-19.md'));
+      expect(feedContent.threeShlokas[1], equals('2-20.md'));
+      expect(feedContent.threeShlokas[2], equals('14-23.md'));
+      await tester.pumpAndSettle();
+      expect(Get.currentRoute, '/feed');
     });
 
-    testWidgets('should handle API error gracefully', (WidgetTester tester) async {
+    testWidgets('should handle API unreachable', (tester) async {
+      Get.put(FeedContent.random());
       const searchString = 'test query';
-      dioAdapter.onGet(
-        '',
-        (server) => server.throws(
-          500,
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            response: Response(
-              statusCode: 500,
-              requestOptions: RequestOptions(path: ''),
-            ),
-            type: DioExceptionType.badResponse,
-          ),
-        ),
-        queryParameters: {'query': searchString},
-      );
       await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-
-      expect(find.text('An error occurred while searching'), findsOneWidget);
+      expect(find.textContaining('error'), findsOneWidget);
     });
 
-    testWidgets('should handle network timeout', (WidgetTester tester) async {
+    testWidgets('should handle error status response from API', (tester) async {
+      dioAdapter.onGet(tokenUrl, (server) => server.reply(401, {'error': 'invalid token'}));
       const searchString = 'test query';
-      dioAdapter.onGet(
-        '',
-        (server) => server.throws(
-          408,
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            type: DioExceptionType.connectionTimeout,
-          ),
-          delay: const Duration(seconds: 2),
-        ),
-        queryParameters: {'query': searchString},
-      );
       await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-
-      expect(find.text('Connection timeout. Please try again.'), findsOneWidget);
+      expect(find.textContaining('error'), findsOneWidget);
     });
-
-    testWidgets('should show loading indicator during API call', (WidgetTester tester) async {
+    testWidgets('should show loading indicator during API call', (tester) async {
       const searchString = 'test query';
-      dioAdapter.onGet(
-        '',
-        (server) => server.reply(
-          200,
-          mockResults,
-          delay: const Duration(milliseconds: 300), // Add delay to test loading state
-        ),
-        queryParameters: {'query': searchString},
-      );
-      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
+      setupAskysDiscoverMock(searchString);
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SearchWidget()),
+        getPages: [GetPage(name: '/feed', page: () => const Text('feed'))],
+      ));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump();
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
       await tester.pumpAndSettle();
       expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.text('14-23'), findsOneWidget);
     });
   });
 }
