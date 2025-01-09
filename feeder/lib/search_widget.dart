@@ -115,7 +115,7 @@ class SearchWidget extends StatelessWidget {
                     phraseSearcher.top3mdFileNoExt.map((shlokaFile) => '$shlokaFile.md').toList();
                 final FeedContent feedContent = Get.find();
                 feedContent.setCuratedShlokaMDs(mdsInFeed);
-                WidgetsBinding.instance.addPostFrameCallback((_) => Get.toNamed('/feed'));
+                WidgetsBinding.instance.addPostFrameCallback((_) => Get.offNamed('/feed'));
                 return const SizedBox.shrink();
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
