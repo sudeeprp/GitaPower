@@ -21,7 +21,7 @@ class ChoiceBinding implements Bindings {
     Get.put(FeedContent.random());
     Get.put(ContentActions());
     Get.put(ShowWords());
-    const searchTimeout = Duration(seconds: 9);
+    const searchTimeout = Duration(seconds: 20);
     Get.put(PhraseSearcher(Dio(BaseOptions(connectTimeout: searchTimeout, receiveTimeout: searchTimeout))));
     Get.lazyPut(() => PlayablesTOC(), fenix: true);
   }
