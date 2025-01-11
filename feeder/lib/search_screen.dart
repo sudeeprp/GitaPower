@@ -96,6 +96,7 @@ class SearchWidget extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                   controller: phraseSearcher.phraseInput,
+                  onSubmitted: phraseSearcher.search,
                 ),
               ),
               const SizedBox(width: 16),
