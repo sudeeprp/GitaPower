@@ -6,7 +6,7 @@ import 'package:askys/feedplay_icon.dart';
 import 'package:askys/content_themes.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:askys/personal_widget.dart';
-import 'package:askys/search_widget.dart';
+import 'package:askys/search_screen.dart';
 import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -79,7 +79,7 @@ Widget makeMyHome() {
         GetPage(
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
-        GetPage(name: '/search', page: searchPage),
+        GetPage(name: '/search', page: searchScreen),
       ]);
 }
 

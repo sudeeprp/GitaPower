@@ -1,6 +1,6 @@
 import 'package:askys/content_source.dart';
 import 'package:askys/feedcontent.dart';
-import 'package:askys/search_widget.dart';
+import 'package:askys/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';

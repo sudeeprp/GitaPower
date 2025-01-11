@@ -1,6 +1,6 @@
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
-import 'package:askys/search_widget.dart';
+import 'package:askys/search_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';

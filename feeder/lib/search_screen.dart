@@ -133,7 +133,7 @@ class SearchWidget extends StatelessWidget {
   }
 }
 
-Widget searchPage() {
+Widget searchScreen() {
   final PhraseSearcher phraseSearcher = Get.find();
   phraseSearcher.reset();
   return screenify(SearchWidget(),
