@@ -6,6 +6,7 @@ import 'package:askys/feedplay_icon.dart';
 import 'package:askys/content_themes.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:askys/personal_widget.dart';
+import 'package:askys/search_screen.dart';
 import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,6 +79,7 @@ Widget makeMyHome() {
         GetPage(
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
+        GetPage(name: '/search', page: searchScreen),
       ]);
 }
 
@@ -136,5 +138,10 @@ Widget notesChaptersChoices() {
     SizedBox(width: choiceSpacing),
     BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
   ];
-  return choicesRow(notesChaptersTabs, const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]);
+  return choicesRow(notesChaptersTabs, [
+    GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
+    SizedBox(width: choiceSpacing),
+    PersonalizeIcon(),
+    SizedBox(width: choiceSpacing)
+  ]);
 }

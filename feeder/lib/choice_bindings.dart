@@ -1,5 +1,6 @@
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
+import 'package:askys/search_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_selector.dart';
@@ -20,6 +21,8 @@ class ChoiceBinding implements Bindings {
     Get.put(FeedContent.random());
     Get.put(ContentActions());
     Get.put(ShowWords());
+    const searchTimeout = Duration(seconds: 20);
+    Get.put(PhraseSearcher(Dio(BaseOptions(connectTimeout: searchTimeout, receiveTimeout: searchTimeout))));
     Get.lazyPut(() => PlayablesTOC(), fenix: true);
   }
 }
