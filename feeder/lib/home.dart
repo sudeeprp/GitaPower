@@ -4,6 +4,7 @@ import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/feedplay_icon.dart';
 import 'package:askys/content_themes.dart';
+import 'package:askys/guided_tour.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:askys/personal_widget.dart';
 import 'package:askys/search_screen.dart';
@@ -76,10 +77,11 @@ Widget makeMyHome() {
             page: () => screenify(
                 buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
                 choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
+        GetPage(name: '/search', page: searchScreen),
         GetPage(
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
-        GetPage(name: '/search', page: searchScreen),
+        GetPage(name: '/guided', page: guidedTourScreen)
       ]);
 }
 

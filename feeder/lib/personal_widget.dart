@@ -1,5 +1,6 @@
 import 'package:askys/build_ident_widget.dart';
 import 'package:askys/choice_selector.dart';
+import 'package:askys/guided_tour.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,10 @@ class PersonalWidget extends StatelessWidget {
           groupValue: choices.script,
           displayText: (script) => script == ScriptPreference.devanagari ? 'Devanagari' : 'Harward-Kyoto',
         ),
+        SizedBox(height: 16),
+        const Text('Trials'),
+        SizedBox(height: 16),
+        GestureDetector(onTap: guidedTour, child: Text('  Tour')),
       ],
     );
   }
