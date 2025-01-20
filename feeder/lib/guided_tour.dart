@@ -32,5 +32,4 @@ class GuidedTourWidget extends StatelessWidget {
       }
     });
   }
-
 }

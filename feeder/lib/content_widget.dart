@@ -526,7 +526,9 @@ class ContentWidget extends StatelessWidget {
     } else if (sectionType == SectionType.anchor) {
       return SizedBox.shrink(child: Text.rich(TextSpan(children: spans)));
     } else if (sectionType == SectionType.meaning) {
-      return ExpandableSpan(optimizedWidget(spans), identifier: mdFilename);
+      return ExpandableMeaning(optimizedWidget(spans), identifier: mdFilename);
+    } else if (sectionType == SectionType.shlokaSA || sectionType == SectionType.shlokaSAHK) {
+      return ExpandableShloka(optimizedWidget(spans), identifier: mdFilename);
     } else {
       return optimizedWidget(spans);
     }
