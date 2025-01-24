@@ -1,3 +1,4 @@
+import 'package:askys/content_themes.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -87,15 +88,7 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: Obx(() {
-        final Choices choices = Get.find();
-        return Image.asset(
-            choices.theme.value == ReadingTheme.light
-                ? 'images/expand_meaning_light.png'
-                : 'images/expand_meaning_dark.png',
-            width: 48,
-            height: 48);
-      }),
+      child: Image.asset(contentColors(context)!.meaningExpansionAsset, width: 48, height: 48),
     );
   }
 }
@@ -110,15 +103,7 @@ class HeaderPreferenceIcon extends StatelessWidget {
       onTap: () => choice.headPreference.value = choice.headPreference.value == HeadPreference.shloka
           ? HeadPreference.meaning
           : HeadPreference.shloka,
-      child: Obx(() {
-        final Choices choices = Get.find();
-        return Image.asset(
-            choices.theme.value == ReadingTheme.light
-                ? 'images/shloka_visible_light.png'
-                : 'images/shloka_visible_dark.png',
-            width: 48,
-            height: 48);
-      }),
+      child: Image.asset(contentColors(context)!.shlokaVisibleAsset, width: 48, height: 48),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:askys/choice_selector.dart';
+import 'package:askys/choices_row.dart';
+import 'package:askys/content_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,16 +30,21 @@ class ExpandableMeaning extends StatelessWidget {
   Widget build(BuildContext context) {
     final ExpansionController expander = Get.find(tag: identifier);
     return Obx(
-      () => expander.showMeaning.value ? meaningRichText : meaningTapper(expander),
+      () => expander.showMeaning.value ? meaningRichText : meaningTapper(expander, context),
     );
   }
 
-  Widget meaningTapper(ExpansionController expander) {
+  Widget meaningTapper(ExpansionController expander, BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          expander.showMeaning.value = !expander.showMeaning.value;
-        },
-        child: Text('translate', style: TextStyle(color: Colors.blue), textScaler: TextScaler.linear(0.8)));
+      onTap: () {
+        expander.showMeaning.value = !expander.showMeaning.value;
+      },
+      child: Row(children: [
+        Image.asset(contentColors(context)!.meaningExpansionAsset, width: 16, height: 16),
+        SizedBox(width: choiceSpacing),
+        Text('translate', style: TextStyle(color: Colors.blue), textScaler: TextScaler.linear(0.8)),
+      ]),
+    );
   }
 }
 
@@ -50,16 +57,20 @@ class ExpandableShloka extends StatelessWidget {
   Widget build(BuildContext context) {
     final ExpansionController expander = Get.find(tag: identifier);
     return Obx(
-      () => expander.showShloka.value ? shlokaText : shlokaTapper(expander),
+      () => expander.showShloka.value ? shlokaText : shlokaTapper(expander, context),
     );
   }
 
-  Widget shlokaTapper(ExpansionController expander) {
+  Widget shlokaTapper(ExpansionController expander, BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          expander.showShloka.value = !expander.showShloka.value;
-        },
-        child:
-            Text('source', style: TextStyle(color: Colors.deepOrange), textScaler: TextScaler.linear(0.8)));
+      onTap: () {
+        expander.showShloka.value = !expander.showShloka.value;
+      },
+      child: Row(children: [
+        Image.asset(contentColors(context)!.shlokaVisibleAsset, width: 16, height: 16),
+        SizedBox(width: choiceSpacing),
+        Text('source', style: TextStyle(color: Colors.deepOrange), textScaler: TextScaler.linear(0.8)),
+      ]),
+    );
   }
 }

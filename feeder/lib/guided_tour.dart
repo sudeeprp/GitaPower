@@ -10,7 +10,7 @@ void guidedTour() {
 
 Widget guidedTourScreen() {
   return screenify(GuidedTourWidget(),
-      appBar: AppBar(title: const Text('Tour (beta)')),
+      appBar: AppBar(title: const Text('Guided Tour (beta)')),
       choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
 }
 
