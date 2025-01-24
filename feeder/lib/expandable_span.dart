@@ -8,6 +8,9 @@ class ExpansionController extends GetxController {
   @override
   void onInit() {
     final Choices choices = Get.find();
+    choices.meaningMode.listen((_) {
+      showMeaning.value = true;
+    });
     if (choices.headPreference.value == HeadPreference.meaning) {
       showShloka.value = false;
       showMeaning.value = true;
