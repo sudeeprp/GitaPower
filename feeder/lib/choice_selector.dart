@@ -88,7 +88,7 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: Image.asset(contentColors(context)!.meaningExpansionAsset, width: 48, height: 48),
+      child: Image.asset('images/expand_meaning${contentAssetSuffix(context)}.png', width: 48, height: 48),
     );
   }
 }
@@ -103,7 +103,7 @@ class HeaderPreferenceIcon extends StatelessWidget {
       onTap: () => choice.headPreference.value = choice.headPreference.value == HeadPreference.shloka
           ? HeadPreference.meaning
           : HeadPreference.shloka,
-      child: Image.asset(contentColors(context)!.shlokaVisibleAsset, width: 48, height: 48),
+      child: Image.asset('images/shloka_visible${contentAssetSuffix(context)}.png', width: 48, height: 48),
     );
   }
 }

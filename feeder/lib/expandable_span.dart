@@ -40,7 +40,7 @@ class ExpandableMeaning extends StatelessWidget {
         expander.showMeaning.value = !expander.showMeaning.value;
       },
       child: Row(children: [
-        Image.asset(contentColors(context)!.meaningExpansionAsset, width: 16, height: 16),
+        Image.asset('images/expand_meaning${contentAssetSuffix(context)}.png', width: 16, height: 16),
         SizedBox(width: choiceSpacing),
         Text('translate', style: TextStyle(color: Colors.blue), textScaler: TextScaler.linear(0.8)),
       ]),
@@ -67,7 +67,7 @@ class ExpandableShloka extends StatelessWidget {
         expander.showShloka.value = !expander.showShloka.value;
       },
       child: Row(children: [
-        Image.asset(contentColors(context)!.shlokaVisibleAsset, width: 16, height: 16),
+        Image.asset('images/shloka_visible${contentAssetSuffix(context)}.png', width: 16, height: 16),
         SizedBox(width: choiceSpacing),
         Text('source', style: TextStyle(color: Colors.deepOrange), textScaler: TextScaler.linear(0.8)),
       ]),

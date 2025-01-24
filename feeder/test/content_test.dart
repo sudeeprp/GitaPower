@@ -471,8 +471,7 @@ A person diverts from the path of realizing the Self due to some desires.
         commentaryBackground: Colors.green,
         commentaryTextColor: Colors.yellow,
         codeTextColor: Colors.brown,
-        meaningExpansionAsset: 'images/expand_meaning_dark.png',
-        shlokaVisibleAsset: 'images/shloka_visible_dark.png');
+        assetSuffix: '_light');
     final differentNote = contentColors.copyWith(noteBackground: Colors.teal);
     expect(differentNote.noteBackground, equals(Colors.teal));
     expect(differentNote.commentaryBackground, equals(Colors.green));
