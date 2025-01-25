@@ -29,9 +29,15 @@ class PersonalWidget extends StatelessWidget {
           displayText: (script) => script == ScriptPreference.devanagari ? 'Devanagari' : 'Harward-Kyoto',
         ),
         SizedBox(height: 16),
+        buildEnumSelector<HeadPreference>(
+          title: 'Select Content Head:',
+          values: HeadPreference.values,
+          groupValue: choices.headPreference,
+          displayText: (headPref) => headPref == HeadPreference.shloka ? 'Shloka' : 'Meaning',
+        ),
         const Text('Trials'),
         SizedBox(height: 16),
-        GestureDetector(onTap: guidedTour, child: Text('  Tour')),
+        GestureDetector(onTap: guidedTour, child: Text('  Guided Tour')),
       ],
     );
   }
