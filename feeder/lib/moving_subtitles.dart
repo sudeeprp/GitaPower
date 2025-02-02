@@ -21,10 +21,11 @@ class MovingSubtitles extends StatelessWidget {
           }
         },
         child: Obx(() => Visibility(
-            visible: (feedContent.tour.state.value == TourState.playing ||
+            visible: (feedContent.tour.state.value == TourState.idle ||
+                feedContent.tour.state.value == TourState.playing ||
                 feedContent.tour.state.value == TourState.paused),
             child: SizedBox(
-                height: oneLineHeight() * 3.5,
+                height: oneLineHeight() * 5.5,
                 child: Container(
                   decoration: const BoxDecoration(border: Border(top: BorderSide())),
                   child: Padding(

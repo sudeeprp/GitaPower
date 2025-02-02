@@ -10,7 +10,8 @@ class PersonalWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Choices choices = Get.find();
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BuildIdentWidget(),
@@ -39,7 +40,7 @@ class PersonalWidget extends StatelessWidget {
         SizedBox(height: 16),
         GestureDetector(onTap: guidedTour, child: Text('  Guided Tour')),
       ],
-    );
+    ));
   }
 
   Widget buildEnumSelector<T>({

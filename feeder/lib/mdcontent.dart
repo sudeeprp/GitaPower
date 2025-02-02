@@ -15,5 +15,5 @@ class MDContent extends GetxController {
 
 class ShowWords extends GetxController {
   var words = <String>[].obs;
-  String? activePlayable;
+  String? mdFilenamePlaying;
 }

@@ -379,7 +379,7 @@ class ContentWidget extends StatelessWidget {
 
   List<String>? playableShows() {
     final ShowWords showWords = Get.find();
-    if (showWords.activePlayable != null) {
+    if (showWords.mdFilenamePlaying != null) {
       return showWords.words;
     }
     return null;

@@ -51,11 +51,11 @@ class TourStop {
 
 enum TourState { idle, loading, playing, paused }
 
-void setupWordShow(String? playable, List<String>? show) {
+void setupWordShow(String? mdFilenamePlaying, List<String>? show) {
   if (show != null) {
     final showWords = Get.find<ShowWords>();
     showWords.words.value = show;
-    showWords.activePlayable = playable;
+    showWords.mdFilenamePlaying = mdFilenamePlaying;
   }
 }
 
@@ -71,7 +71,7 @@ class Tour {
     stopIndex.value = (nonNullSerial - 1).clamp(0, tourStops.length - 1);
     final mdFilenameWithLink = tourStops[stopIndex.value].link;
     if (mdFilenameWithLink != null) {
-      setupWordShow(playable, tourStops[stopIndex.value].show);
+      setupWordShow(mdFilenameWithLink, tourStops[stopIndex.value].show);
       final mdLaunchPath = '/shloka/$mdFilenameWithLink';
       Get.offNamed(mdLaunchPath);
     }

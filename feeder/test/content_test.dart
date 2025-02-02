@@ -493,7 +493,7 @@ A person diverts from the path of realizing the Self due to some desires.
     Get.put(ContentNotes());
     final showWords = ShowWords();
     showWords.words.value = ['धृतिः', '[dhRtiH]', 'resolve'];
-    showWords.activePlayable = 'playable_1';
+    showWords.mdFilenamePlaying = 'playable_1';
     Get.put(showWords);
     await tester.pumpWidget(GetMaterialApp(home: buildContent('18-33-meaning-hyper.md')));
     await tester.pumpAndSettle();
