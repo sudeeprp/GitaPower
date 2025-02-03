@@ -34,7 +34,7 @@ dependencies:
   enum_to_string: 2.2.0
   float_column: 2.1.8
   app_links: ^6.3.3
-  just_audio: 0.9.43
+  just_audio: 0.9.45
   keep_screen_on:
 
 dev_dependencies:
