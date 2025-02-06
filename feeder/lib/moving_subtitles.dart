@@ -20,11 +20,7 @@ class MovingSubtitles extends StatelessWidget {
             feedContent.tour.state.value = TourState.idle;
           }
         },
-        child: Obx(() => Visibility(
-            visible: (feedContent.tour.state.value == TourState.idle ||
-                feedContent.tour.state.value == TourState.playing ||
-                feedContent.tour.state.value == TourState.paused),
-            child: SizedBox(
+        child: Obx(() => SizedBox(
                 height: oneLineHeight() * 5.5,
                 child: Container(
                   decoration: const BoxDecoration(border: Border(top: BorderSide())),
@@ -36,7 +32,7 @@ class MovingSubtitles extends StatelessWidget {
                       child: Column(children: narrationWidgets(feedContent)),
                     ),
                   ),
-                )))));
+                ))));
   }
 
   double oneLineHeight() {

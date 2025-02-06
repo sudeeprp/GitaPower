@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:askys/content_source.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/tell_if_error.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -72,8 +73,8 @@ class Tour {
     final mdFilenameWithLink = tourStops[stopIndex.value].link;
     if (mdFilenameWithLink != null) {
       setupWordShow(mdFilenameWithLink, tourStops[stopIndex.value].show);
-      final mdLaunchPath = '/shloka/$mdFilenameWithLink';
-      Get.offNamed(mdLaunchPath);
+      // final mdLaunchPath = '/shloka/$mdFilenameWithLink';
+      // Get.offNamed(mdLaunchPath);
     }
   }
 
@@ -85,10 +86,12 @@ class Tour {
       ProcessingState.ready => playerState.playing ? TourState.playing : TourState.paused,
       ProcessingState.completed => TourState.idle,
     };
-    if (state.value == TourState.playing) {
-      KeepScreenOn.turnOn();
-    } else {
-      KeepScreenOn.turnOff();
+    if (!kIsWeb) { // keep_screen_on is not supported for the web
+      if (state.value == TourState.playing) {
+        KeepScreenOn.turnOn();
+      } else {
+        KeepScreenOn.turnOff();
+      }
     }
   }
 }

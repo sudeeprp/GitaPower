@@ -12,10 +12,41 @@ void guidedTour() {
   Get.toNamed('/guided');
 }
 
+// TODO: Why can't this replace the Tour class?
+class GuidedTourController extends GetxController {
+  PageController pageTurner = PageController();
+  final mdLinksOfPages = <String>[].obs;
+  void moveTo(TourState state, int stopIndex) {
+    if (state == TourState.playing) {
+      if (pageTurner.hasClients && mdLinksOfPages.isNotEmpty) {
+        final Tour tour = Get.find<FeedContent>().tour;
+        if (tour.tourStops[stopIndex].link != null) {
+          final pageIndex = mdLinksOfPages.indexWhere((link)=> link == tour.tourStops[stopIndex].link);
+          pageTurner.animateToPage(pageIndex, duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
+        }
+      }
+    }
+  }
+  @override
+  void onInit() {
+    super.onInit();
+    initTour();
+  }
+  void initTour() {
+    final Tour tour = Get.find<FeedContent>().tour;
+    tour.state.listen((_) => moveTo(tour.state.value, tour.stopIndex.value));
+    tour.stopIndex.listen((_) => moveTo(tour.state.value, tour.stopIndex.value));
+    tour.tourStops.listen((_) {
+      mdLinksOfPages.value = tour.tourStops.where((s)=> s.link != null).map((s)=> s.link!).toList();
+    });
+  }
+}
+
 Widget guidedTourScreen() {
   final playable = Playable('Bring the best in you', '/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you',
       'bring_the_best_in_you');
   curateToFeed(playable);
+  Get.find<GuidedTourController>().initTour();
   return screenify(GuidedTourWidget(playable),
       appBar: AppBar(
           title: Column(children: [
@@ -91,10 +122,9 @@ class ShlokaSet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FeedContent feedContent = Get.find();
-    return Obx(() => Expanded(child: CarouselView.weighted(
-      flexWeights: [1, 7, 1],
-      children: feedContent.tour.tourStops.where((s)=> s.link != null).map((s)=> oneShloka(s.link!)).toList(),
+    final GuidedTourController guidedTourController = Get.find();
+    return Obx(() => Expanded(child: PageView(controller: guidedTourController.pageTurner,
+      children: guidedTourController.mdLinksOfPages.map(oneShloka).toList(),
     )));
   }
 
