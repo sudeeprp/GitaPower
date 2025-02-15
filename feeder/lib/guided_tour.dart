@@ -21,7 +21,8 @@ class GuidedTourController extends GetxController {
       if (pageTurner.hasClients && mdLinksOfPages.isNotEmpty) {
         final Tour tour = Get.find<FeedContent>().tour;
         if (tour.tourStops[stopIndex].link != null) {
-          final pageIndex = mdLinksOfPages.indexWhere((link)=> link == tour.tourStops[stopIndex].link);
+          final pageIndex = mdLinksOfPages
+              .indexWhere((link)=> link == tour.tourStops[stopIndex].link) + 1; // add 1 for the cover
           pageTurner.animateToPage(pageIndex, duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
         }
       }
@@ -123,8 +124,9 @@ class ShlokaSet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GuidedTourController guidedTourController = Get.find();
+    final mdLinksOfPages = guidedTourController.mdLinksOfPages;
     return Obx(() => Expanded(child: PageView(controller: guidedTourController.pageTurner,
-      children: guidedTourController.mdLinksOfPages.map(oneShloka).toList(),
+      children: [tourCover(mdLinksOfPages)] + mdLinksOfPages.map(oneShloka).toList(),
     )));
   }
 
@@ -142,5 +144,9 @@ class ShlokaSet extends StatelessWidget {
         return Text(link);
       }
     });
+  }
+
+  Widget tourCover(List<String> stopNames) {
+    return ListView(children: stopNames.map((md)=> Text(md)).toList());
   }
 }
