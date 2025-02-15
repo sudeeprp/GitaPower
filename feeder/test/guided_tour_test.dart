@@ -35,6 +35,7 @@ void main() {
     feedContent.tourFolder = 'bring_the_best_in_you';
     feedContent.tour.playable = 'bring_the_best_in_you';
     Get.put(feedContent);
+    Get.put(GuidedTourController());
   });
   testWidgets('guided tour displays the tour', (WidgetTester tester) async {
     await tester.pumpWidget(

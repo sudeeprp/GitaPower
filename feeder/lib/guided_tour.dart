@@ -21,24 +21,27 @@ class GuidedTourController extends GetxController {
       if (pageTurner.hasClients && mdLinksOfPages.isNotEmpty) {
         final Tour tour = Get.find<FeedContent>().tour;
         if (tour.tourStops[stopIndex].link != null) {
-          final pageIndex = mdLinksOfPages
-              .indexWhere((link)=> link == tour.tourStops[stopIndex].link) + 1; // add 1 for the cover
-          pageTurner.animateToPage(pageIndex, duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
+          final pageIndex = mdLinksOfPages.indexWhere((link) => link == tour.tourStops[stopIndex].link) +
+              1; // add 1 for the cover
+          pageTurner.animateToPage(pageIndex,
+              duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
         }
       }
     }
   }
+
   @override
   void onInit() {
     super.onInit();
     initTour();
   }
+
   void initTour() {
     final Tour tour = Get.find<FeedContent>().tour;
     tour.state.listen((_) => moveTo(tour.state.value, tour.stopIndex.value));
     tour.stopIndex.listen((_) => moveTo(tour.state.value, tour.stopIndex.value));
     tour.tourStops.listen((_) {
-      mdLinksOfPages.value = tour.tourStops.where((s)=> s.link != null).map((s)=> s.link!).toList();
+      mdLinksOfPages.value = tour.tourStops.where((s) => s.link != null).map((s) => s.link!).toList();
     });
   }
 }
@@ -125,9 +128,11 @@ class ShlokaSet extends StatelessWidget {
   Widget build(BuildContext context) {
     final GuidedTourController guidedTourController = Get.find();
     final mdLinksOfPages = guidedTourController.mdLinksOfPages;
-    return Obx(() => Expanded(child: PageView(controller: guidedTourController.pageTurner,
-      children: [tourCover(mdLinksOfPages)] + mdLinksOfPages.map(oneShloka).toList(),
-    )));
+    return Obx(() => Expanded(
+            child: PageView(
+          controller: guidedTourController.pageTurner,
+          children: [tourCover(mdLinksOfPages)] + mdLinksOfPages.map(oneShloka).toList(),
+        )));
   }
 
   Widget oneShloka(String link, {Key? oneShlokaKey}) {
@@ -137,9 +142,7 @@ class ShlokaSet extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 300) {
         return buildContent(mdFilename,
-          initialAnchor: initialAnchor,
-          onTap: () => Get.toNamed('/shloka/$mdFilename'),
-          key: oneShlokaKey);
+            initialAnchor: initialAnchor, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: oneShlokaKey);
       } else {
         return Text(link);
       }
@@ -147,6 +150,6 @@ class ShlokaSet extends StatelessWidget {
   }
 
   Widget tourCover(List<String> stopNames) {
-    return ListView(children: stopNames.map((md)=> Text(md)).toList());
+    return ListView(children: stopNames.map((md) => Text(md)).toList());
   }
 }

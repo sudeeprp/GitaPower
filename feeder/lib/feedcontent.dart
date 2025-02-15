@@ -86,7 +86,8 @@ class Tour {
       ProcessingState.ready => playerState.playing ? TourState.playing : TourState.paused,
       ProcessingState.completed => TourState.idle,
     };
-    if (!kIsWeb) { // keep_screen_on is not supported for the web
+    if (!kIsWeb) {
+      // keep_screen_on is not supported for the web
       if (state.value == TourState.playing) {
         KeepScreenOn.turnOn();
       } else {

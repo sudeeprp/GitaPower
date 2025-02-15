@@ -21,18 +21,18 @@ class MovingSubtitles extends StatelessWidget {
           }
         },
         child: Obx(() => SizedBox(
-                height: oneLineHeight() * 5.5,
-                child: Container(
-                  decoration: const BoxDecoration(border: Border(top: BorderSide())),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: SingleChildScrollView(
-                      key: const Key('feed/subtitles'),
-                      scrollDirection: Axis.vertical,
-                      child: Column(children: narrationWidgets(feedContent)),
-                    ),
-                  ),
-                ))));
+            height: oneLineHeight() * 5.5,
+            child: Container(
+              decoration: const BoxDecoration(border: Border(top: BorderSide())),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: SingleChildScrollView(
+                  key: const Key('feed/subtitles'),
+                  scrollDirection: Axis.vertical,
+                  child: Column(children: narrationWidgets(feedContent)),
+                ),
+              ),
+            ))));
   }
 
   double oneLineHeight() {
