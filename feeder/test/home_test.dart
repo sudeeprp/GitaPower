@@ -111,21 +111,22 @@ void main() {
     expect(Get.currentRoute, '/tour');
     await tester.tap(find.byKey(const Key('bring_the_best_in_you')));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/feed');
+    expect(Get.currentRoute, '/guided/bring_the_best_in_you');
   });
   testWidgets('Navigates an app link', (tester) async {
     // To test manually, use:
     // adb shell am start -a android.intent.action.VIEW   -c android.intent.category.BROWSABLE \
-    //   -d "https://rapalearning.com/gitapower/feed/1-1.2-1.3-1"
+    //   -d "https://rapalearning.com/gitapower/feed/1-1.2-1.3-1.bring_the_best_in_you"
+    Get.put(FeedContent.random());
     await tester.pumpWidget(GetMaterialApp(
         home: const Scaffold(body: Text('Start page')),
-        getPages: [GetPage(name: '/feed', page: () => const Text('reached'))]));
+        getPages: [GetPage(name: '/guided/bring_the_best_in_you', page: () => const Text('reached'))]));
     navigateApplink(null);
     await tester.pumpAndSettle();
     const shlokas = '11-34.15-17.18-51_to_18-53';
-    navigateApplink(Uri.parse('/gitapower/feed/$shlokas'));
+    navigateApplink(Uri.parse('/gitapower/feed/$shlokas.bring_the_best_in_you'));
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/feed');
+    expect(Get.currentRoute, '/guided/bring_the_best_in_you');
   });
   testWidgets('sets app-wide preferences', (tester) async {
     await tester.pumpWidget(makeMyHome());

@@ -8,8 +8,8 @@ import 'package:askys/screenify.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void guidedTour() {
-  Get.toNamed('/guided');
+void openPlayable(Playable playable) {
+  Get.toNamed('/guided/${playable.tourFolder}');
 }
 
 // TODO: Why can't this replace the Tour class?
@@ -46,21 +46,36 @@ class GuidedTourController extends GetxController {
   }
 }
 
-Widget guidedTourScreen() {
+// TODO: Remove this function and curateToFeed
+Widget tryGuidedTourScreen() {
   final playable = Playable('Bring the best in you', '/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you',
       'bring_the_best_in_you');
   curateToFeed(playable);
+  return guidedTourScreen('bring_the_best_in_you');
+}
+
+Widget guidedTourScreen(String tourFolder) {
   Get.find<GuidedTourController>().initTour();
-  return screenify(GuidedTourWidget(playable),
-      appBar: AppBar(
-          title: Column(children: [
-        const Text(
-          'Guided Tour (beta)',
-          textScaler: TextScaler.linear(0.75),
-        ),
-        Text(playable.title),
-      ])),
-      choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
+  return Obx(() {
+    final PlayablesTOC playablesTOC = Get.find();
+    final nullPlayable = Playable('', '', '');
+    final playable =
+        playablesTOC.playables.firstWhere((p) => p.tourFolder == tourFolder, orElse: () => nullPlayable);
+    if (playable != nullPlayable) {
+      return screenify(GuidedTourWidget(playable),
+          appBar: AppBar(
+              title: Column(children: [
+            const Text(
+              'Guided Tour (beta)',
+              textScaler: TextScaler.linear(0.75),
+            ),
+            Text(playable.title),
+          ])),
+          choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
+    } else {
+      return screenify(const Text('Loading tour...'));
+    }
+  });
 }
 
 void curateToFeed(Playable playable) {

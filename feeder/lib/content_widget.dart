@@ -571,5 +571,7 @@ Widget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}
 }
 
 ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
-  return buildContent(mdFilename, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: key);
+  return buildContent(mdFilename, onTap: () {
+    Get.toNamed('/shloka/$mdFilename');
+  }, key: key);
 }

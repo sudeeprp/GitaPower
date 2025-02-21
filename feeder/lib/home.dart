@@ -34,13 +34,13 @@ void navigateApplink(Uri? uri) {
         final filesWithoutExtn = curation.sublist(0, 3);
         if (curation.length == 4) {
           tourFolder = curation[3];
+          final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
+          final FeedContent feedContent = Get.find();
+          feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
+          Get.toNamed('/guided/$tourFolder');
         }
-        final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
-        final FeedContent feedContent = Get.find();
-        feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
       }
     }
-    Get.toNamed('/feed');
   }
 }
 
@@ -81,7 +81,7 @@ Widget makeMyHome() {
         GetPage(
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
-        GetPage(name: '/guided', page: guidedTourScreen)
+        GetPage(name: '/guided/:tourFolder', page: () => guidedTourScreen(Get.parameters['tourFolder']!)),
       ]);
 }
 

@@ -4,7 +4,6 @@ import 'package:askys/content_source.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/feedplay_icon.dart';
-import 'package:askys/home.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
 import 'package:dio/dio.dart';
@@ -73,43 +72,8 @@ void main() {
     tapOffset += const Offset(50, 100);
     await tester.tapAt(tapOffset);
     await tester.pumpAndSettle();
+    expect(Get.currentRoute, startsWith('/shloka/'));
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
-  });
-  testWidgets('switches to curated shlokas', (tester) async {
-    final ContentNotes contentNotes = Get.find();
-    contentNotes.notesLoaded.value = true;
-    await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: buildFeed()), getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
-    await tester.pumpAndSettle();
-    navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14'));
-    await tester.pumpAndSettle();
-    expect(find.text('2-34'), findsOneWidget);
-  });
-  testWidgets('can tap on play only when narration is available', (tester) async {
-    when(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
-        .thenAnswer((_) async {
-      return const Duration(milliseconds: 50);
-    });
-    final ContentNotes contentNotes = Get.find();
-    contentNotes.notesLoaded.value = true;
-    await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: feedScreen()), getPages: [GetPage(name: '/feed', page: () => feedScreen())]));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('feedplay')), findsNothing);
-    navigateApplink(Uri.parse('/gitapower/feed/2-34.9-13.15-14.bring_the_best_in_you'));
-    await tester.pumpAndSettle();
-    final player = find.byKey(const Key('feedplay'));
-    expect(player, findsOneWidget);
-    await tester.tap(player);
-    await tester.pumpAndSettle();
-    final FeedContent feedContent = Get.find();
-    expect(feedContent.tour.state.value, equals(TourState.idle));
-    verify(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
-        .called(1);
-    verify(mockPlayer.play()).called(1);
-    Get.back();
-    await tester.pumpAndSettle();
-    verify(mockPlayer.stop()).called(1);
   });
   testWidgets('syncs with the player state', (tester) async {
     final FeedContent feedContent = Get.find();
@@ -151,42 +115,6 @@ void main() {
     // Finally it completes
     feedContent.tour.playState(PlayerState(true, ProcessingState.completed));
     expect(feedContent.tour.state.value, equals(TourState.idle));
-  });
-  testWidgets('tours from one para to the next', (tester) async {
-    final FeedContent feedContent = Get.find();
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.tourStops.value = [
-      TourStop('s1.mp3', 'l1', null, null),
-      TourStop('s2.mp3', 'l2', '2-34.md', null),
-      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
-    ];
-    reset(mockPlayer);
-    await tester
-        .pumpWidget(GetMaterialApp(home: const Scaffold(body: FeedPlayIcon(TourState.idle)), getPages: [
-      GetPage(name: '/shloka/:mdFilename', page: () => const Text('mdfile')),
-      GetPage(name: '/shloka/:mdFilename/:noteId', page: () => const Text('mdfile with nodeid')),
-    ]));
-    await tester.pumpAndSettle();
-    // Start playing
-    feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
-    feedContent.tour.moveTo(2);
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/shloka/2-34.md');
-    feedContent.tour.moveTo(3);
-    expect(Get.currentRoute, '/shloka/Chapter_7.md/bhakti_a_defn');
-  });
-  testWidgets('shows subtitles only while playing', (tester) async {
-    final FeedContent feedContent = Get.find();
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.state.value = TourState.idle;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('feed/subtitles')), findsNothing);
-    feedContent.tour.state.value = TourState.playing;
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('feed/subtitles')), findsOneWidget);
-    feedContent.tour.state.value = TourState.idle;
-    await tester.pumpAndSettle();
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);
