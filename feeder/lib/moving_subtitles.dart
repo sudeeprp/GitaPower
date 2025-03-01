@@ -12,14 +12,7 @@ class MovingSubtitles extends StatelessWidget {
       syncWithTheTour(feedContent);
     });
     return PopScope(
-        onPopInvokedWithResult: (popped, _) async {
-          if (popped) {
-            await feedContent.audioPlayer.stop();
-            await feedContent.audioPlayer.seek(Duration(milliseconds: 0), index: 0);
-            feedContent.tour.stopIndex.value = 0;
-            feedContent.tour.state.value = TourState.idle;
-          }
-        },
+        onPopInvokedWithResult: resetTour,
         child: Obx(() => SizedBox(
             height: oneLineHeight() * 5.5,
             child: Container(
@@ -65,5 +58,15 @@ class MovingSubtitles extends StatelessWidget {
 
     scrollTo(feedContent.tour.stopIndex.value);
     feedContent.tour.stopIndex.listen((newIndex) => scrollTo(newIndex));
+  }
+
+  void resetTour(popped, _) async {
+    if (popped) {
+      final FeedContent feedContent = Get.find();
+      await feedContent.audioPlayer.stop();
+      await feedContent.audioPlayer.seek(Duration(milliseconds: 0), index: 0);
+      feedContent.tour.stopIndex.value = 0;
+      feedContent.tour.state.value = TourState.idle;
+    }
   }
 }

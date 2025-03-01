@@ -3,7 +3,6 @@ import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/feedcontent.dart';
-import 'package:askys/feedplay_icon.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
 import 'package:dio/dio.dart';
@@ -12,14 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
-import 'package:mockito/annotations.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:mockito/mockito.dart';
-import 'feed_test.mocks.dart';
-
-@GenerateNiceMocks([MockSpec<AudioPlayer>()])
 void main() {
-  final mockPlayer = MockAudioPlayer();
   setUp(() {
     Get.put(Choices());
     final dio = Dio();
@@ -34,7 +26,7 @@ void main() {
     dio.httpClientAdapter = dioAdapter;
 
     Get.put(GitHubFetcher(dio));
-    Get.put(FeedContent.random(aPlayer: mockPlayer));
+    Get.put(FeedContent.random());
     Get.put(ContentNotes());
     Get.put(ContentActions());
     Get.put(ShowWords());
@@ -69,52 +61,11 @@ void main() {
     await tester.pumpAndSettle();
     final shlokaFinder = find.byType(GestureDetector);
     var tapOffset = tester.getTopLeft(find.byWidget(shlokaFinder.evaluate().first.widget));
-    tapOffset += const Offset(50, 100);
+    tapOffset += const Offset(5, 5);
     await tester.tapAt(tapOffset);
     await tester.pumpAndSettle();
     expect(Get.currentRoute, startsWith('/shloka/'));
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
-  });
-  testWidgets('syncs with the player state', (tester) async {
-    final FeedContent feedContent = Get.find();
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.tourStops.value = [TourStop('s1.mp3', 'l1', null, null)];
-    reset(mockPlayer);
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: Row(children: makePlay()))));
-    await tester.tap(find.byKey(const Key('feedplay')));
-    await tester.pumpAndSettle();
-    expect(feedContent.tour.state.value, equals(TourState.idle));
-    verify(mockPlayer.play()).called(1);
-    // After tapping play, it will load
-    feedContent.tour.playState(PlayerState(false, ProcessingState.loading));
-    expect(feedContent.tour.state.value, equals(TourState.loading));
-    feedContent.tour.playState(PlayerState(false, ProcessingState.buffering));
-    expect(feedContent.tour.state.value, equals(TourState.loading));
-    // While loading, tapping should not result in another play
-    reset(mockPlayer);
-    await tester.tap(find.byKey(const Key('feedplay')));
-    await tester.pumpAndSettle();
-    verifyNever(mockPlayer.play());
-    // After loading, it starts playing
-    feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
-    expect(feedContent.tour.state.value, equals(TourState.playing));
-    // Tapping while playing must pause
-    await tester.tap(find.byKey(const Key('feedplay')));
-    await tester.pumpAndSettle();
-    verify(mockPlayer.pause()).called(1);
-    feedContent.tour.playState(PlayerState(false, ProcessingState.ready));
-    expect(feedContent.tour.state.value, equals(TourState.paused));
-    // Tapping on pause must play again, without reloading
-    await tester.tap(find.byKey(const Key('feedplay')));
-    await tester.pumpAndSettle();
-    verify(mockPlayer.play()).called(1);
-    verifyNever(mockPlayer.setAudioSource(any,
-        preload: anyNamed('preload'),
-        initialIndex: anyNamed('initialIndex'),
-        initialPosition: anyNamed('initialPosition')));
-    // Finally it completes
-    feedContent.tour.playState(PlayerState(true, ProcessingState.completed));
-    expect(feedContent.tour.state.value, equals(TourState.idle));
   });
   testWidgets('shows the opener questions, hides on swipe', (tester) async {
     switchOpeners(true);

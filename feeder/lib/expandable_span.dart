@@ -36,6 +36,7 @@ class ExpandableMeaning extends StatelessWidget {
 
   Widget meaningTapper(ExpansionController expander, BuildContext context) {
     return GestureDetector(
+      key: Key('meaning_tapper/$identifier'),
       onTap: () {
         expander.showMeaning.value = !expander.showMeaning.value;
       },
@@ -63,6 +64,7 @@ class ExpandableShloka extends StatelessWidget {
 
   Widget shlokaTapper(ExpansionController expander, BuildContext context) {
     return GestureDetector(
+      key: Key('shloka_tapper/$identifier'),
       onTap: () {
         expander.showShloka.value = !expander.showShloka.value;
       },

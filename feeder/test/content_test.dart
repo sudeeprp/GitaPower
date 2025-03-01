@@ -102,6 +102,12 @@ Arjuna says to Krishna - how do we think of You? [See here](10-11-shloka.md#why-
     dioAdapter.onGet('${GitHubFetcher.mdPath}/10-13-prenote.md', (server) => server.reply(200, '''
 Arjuna says to Krishna - how do we think of You?
 '''));
+    dioAdapter.onGet('${GitHubFetcher.mdPath}/10-14-shloka-with-meaning.md', (server) => server.reply(200, '''
+```shloka-sa
+तेषाम् एव अनुकम्पार्थम्
+```
+`अनुकम्पार्थम् एव` `[anukampArtham eva]` just for compassion towards `तेषाम्` `[teSAm]` those who worship Me
+'''));
     dioAdapter.onGet(
         '${GitHubFetcher.mdPath}/18-33-meaning-hyper.md',
         (server) => server.reply(200,
@@ -502,18 +508,30 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle();
     expect(find.textContaining('resolve', findRichText: true), findsOneWidget);
   });
-  // testWidgets('renders meaning with spaces', (tester) async {
-  //   Get.put(Choices());
-  //   Get.put(ContentActions());
-  //   Get.put(ContentNotes());
-  //   final showWords = ShowWords();
-  //   showWords.words.value = ['worship'];
-  //   showWords.activePlayable = 'playable_1';
-  //   Get.put(showWords);
-  //   await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-10-meaning.md'))));
-  //   final ExpansionController expandMeaning = Get.find(tag: '10-10-meaning.md');
-  //   expandMeaning.showMeaning.value = true;
-  //   await tester.pumpAndSettle();
-  //   expect(find.textContaining('who worship Me to be with Me always', findRichText: true), findsOneWidget);
-  // });
+  testWidgets('Hides meaning when preference is for the shloka and shows on tapping', (tester) async {
+    Get.delete<ExpansionController>(tag: '10-14-shloka-with-meaning.md');
+    putContentControllers();
+    Get.find<Choices>().headPreference.value = HeadPreference.shloka;
+    await tester
+        .pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-14-shloka-with-meaning.md'))));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('तेषाम् एव अनुकम्पार्थम्', findRichText: true), findsOneWidget);
+    expect(find.textContaining('just for compassion', findRichText: true), findsNothing);
+    await tester.tap(find.text('translate'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('compassion', findRichText: true), findsOneWidget);
+  });
+  testWidgets('Hides shloka when preference is for the translation and shows on tapping', (tester) async {
+    Get.delete<ExpansionController>(tag: '10-14-shloka-with-meaning.md');
+    putContentControllers();
+    Get.find<Choices>().headPreference.value = HeadPreference.meaning;
+    await tester
+        .pumpWidget(GetMaterialApp(home: Scaffold(body: buildContent('10-14-shloka-with-meaning.md'))));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('तेषाम् एव अनुकम्पार्थम्', findRichText: true), findsNothing);
+    expect(find.textContaining('just for compassion', findRichText: true), findsOneWidget);
+    await tester.tap(find.text('source'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('तेषाम् एव अनुकम्पार्थम्', findRichText: true), findsOneWidget);
+  });
 }

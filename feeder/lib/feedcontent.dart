@@ -73,8 +73,6 @@ class Tour {
     final mdFilenameWithLink = tourStops[stopIndex.value].link;
     if (mdFilenameWithLink != null) {
       setupWordShow(mdFilenameWithLink, tourStops[stopIndex.value].show);
-      // final mdLaunchPath = '/shloka/$mdFilenameWithLink';
-      // Get.offNamed(mdLaunchPath);
     }
   }
 

@@ -8,10 +8,6 @@ import 'package:askys/screenify.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void openPlayable(Playable playable) {
-  Get.toNamed('/guided/${playable.tourFolder}');
-}
-
 // TODO: Why can't this replace the Tour class?
 class GuidedTourController extends GetxController {
   PageController pageTurner = PageController();
@@ -40,18 +36,13 @@ class GuidedTourController extends GetxController {
     final Tour tour = Get.find<FeedContent>().tour;
     tour.state.listen((_) => moveTo(tour.state.value, tour.stopIndex.value));
     tour.stopIndex.listen((_) => moveTo(tour.state.value, tour.stopIndex.value));
-    tour.tourStops.listen((_) {
+    void fillLinksOfPages(_) {
       mdLinksOfPages.value = tour.tourStops.where((s) => s.link != null).map((s) => s.link!).toList();
-    });
-  }
-}
+    }
 
-// TODO: Remove this function and curateToFeed
-Widget tryGuidedTourScreen() {
-  final playable = Playable('Bring the best in you', '/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you',
-      'bring_the_best_in_you');
-  curateToFeed(playable);
-  return guidedTourScreen('bring_the_best_in_you');
+    fillLinksOfPages(true);
+    tour.tourStops.listen(fillLinksOfPages);
+  }
 }
 
 Widget guidedTourScreen(String tourFolder) {
@@ -98,20 +89,22 @@ class GuidedTourWidget extends StatelessWidget {
     //   - Use a Wrap Widget
     //   - combine LayoutBuilder with either GridView or Wrap
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > constraints.maxHeight) {
-        return landscapeLayout(constraints);
-      } else {
-        return portraitLayout(constraints);
-      }
+      return portraitLayout(constraints);
+      // TODO: Build landscape layout
+      // if (constraints.maxWidth > constraints.maxHeight) {
+      //   return landscapeLayout(constraints);
+      // } else {
+      //   return portraitLayout(constraints);
+      // }
     });
   }
 
-  Widget landscapeLayout(BoxConstraints constraints) {
-    return Column(children: [
-      Text('Landscape (${constraints.maxWidth} x ${constraints.maxHeight})'),
-      MovingSubtitles(),
-    ]);
-  }
+  // Widget landscapeLayout(BoxConstraints constraints) {
+  //   return Column(children: [
+  //     Text('Landscape (${constraints.maxWidth} x ${constraints.maxHeight})'),
+  //     MovingSubtitles(),
+  //   ]);
+  // }
 
   Widget portraitLayout(BoxConstraints constraints) {
     return Column(children: [
@@ -154,14 +147,16 @@ class ShlokaSet extends StatelessWidget {
     final parts = link.split('/');
     final mdFilename = parts[0];
     final initialAnchor = parts.length > 1 ? parts[1] : null;
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 300) {
-        return buildContent(mdFilename,
-            initialAnchor: initialAnchor, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: oneShlokaKey);
-      } else {
-        return Text(link);
-      }
-    });
+    return buildContent(mdFilename,
+        initialAnchor: initialAnchor, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: oneShlokaKey);
+    // return LayoutBuilder(builder: (context, constraints) {
+    //   if (constraints.maxWidth > 300) {
+    //     return buildContent(mdFilename,
+    //         initialAnchor: initialAnchor, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: oneShlokaKey);
+    //   } else {
+    //     return Text(link);
+    //   }
+    // });
   }
 
   Widget tourCover(List<String> stopNames) {
