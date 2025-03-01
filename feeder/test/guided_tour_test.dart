@@ -25,6 +25,17 @@ const playablesTOC = '''# Playable feeds
 @GenerateNiceMocks([MockSpec<AudioPlayer>()])
 void main() {
   final mockPlayer = MockAudioPlayer();
+  void fillTour(FeedContent feedContent) {
+    feedContent.tour.tourStops.value = [
+      TourStop('s1.mp3', 'l1', null, null),
+      TourStop('s2.mp3', 'l2', '2-34.md', null),
+      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
+      TourStop('s4.mp3', 'l4', null, null),
+      TourStop('s5.mp3', 'l5', null, null),
+    ];
+    feedContent.tourFolder = 'bring_the_best_in_you';
+    feedContent.tour.playable = 'bring_the_best_in_you';
+  }
 
   // TODO: Remove this duplicate - it's also present in moving_subtitles
   setUp(() {
@@ -43,15 +54,7 @@ void main() {
     Get.put(GitHubFetcher(dio));
 
     final feedContent = FeedContent.random(aPlayer: mockPlayer);
-    feedContent.tour.tourStops.value = [
-      TourStop('s1.mp3', 'l1', null, null),
-      TourStop('s2.mp3', 'l2', '2-34.md', null),
-      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
-      TourStop('s4.mp3', 'l4', null, null),
-      TourStop('s5.mp3', 'l5', null, null),
-    ];
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.playable = 'bring_the_best_in_you';
+    fillTour(feedContent);
     Get.put(feedContent);
     Get.put(Choices());
     Get.put(ContentNotes());
@@ -99,12 +102,7 @@ void main() {
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
     final FeedContent feedContent = Get.find();
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.tourStops.value = [
-      TourStop('s1.mp3', 'l1', null, null),
-      TourStop('s2.mp3', 'l2', '2-34.md', null),
-      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
-    ];
+    fillTour(feedContent);
     reset(mockPlayer);
     await tester.pumpWidget(GetMaterialApp(home: guidedTourScreen('bring_the_best_in_you')));
     await tester.pumpAndSettle();
@@ -164,12 +162,7 @@ void main() {
     final ContentNotes contentNotes = Get.find();
     contentNotes.notesLoaded.value = true;
     final FeedContent feedContent = Get.find();
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.tourStops.value = [
-      TourStop('s1.mp3', 'l1', null, null),
-      TourStop('s2.mp3', 'l2', '2-34.md', null),
-      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['sho1', 'sho2']),
-    ];
+    fillTour(feedContent);
     reset(mockPlayer);
     await tester.pumpWidget(GetMaterialApp(
       home: guidedTourScreen('bring_the_best_in_you'),
