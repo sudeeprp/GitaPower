@@ -27,6 +27,7 @@ if (flutterVersionName == null) {
 }
 
 android {
+    namespace 'com.gita.sudeep.gitahtml'
     compileSdkVersion 35
     ndkVersion flutter.ndkVersion
 
