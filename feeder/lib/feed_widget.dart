@@ -1,5 +1,4 @@
 import 'package:askys/content_widget.dart';
-import 'package:askys/moving_subtitles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'feedcontent.dart';
@@ -58,22 +57,21 @@ class FeedWidget extends StatelessWidget {
         int count = 1;
         return Column(
             children: feedContent.threeShlokas
-                    .map((filename) => Expanded(
-                            child: Container(
-                          decoration: BoxDecoration(
-                              border: const Border(bottom: BorderSide(color: Colors.black)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withValues(alpha: 0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, -5))
-                              ],
-                              color: Theme.of(context).cardColor),
-                          child: contentWithOpenerPane(filename, count++),
-                        )) as Widget)
-                    .toList() +
-                [const MovingSubtitles()]);
+                .map((filename) => Expanded(
+                        child: Container(
+                      decoration: BoxDecoration(
+                          border: const Border(bottom: BorderSide(color: Colors.black)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withValues(alpha: 0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, -5))
+                          ],
+                          color: Theme.of(context).cardColor),
+                      child: contentWithOpenerPane(filename, count++),
+                    )) as Widget)
+                .toList());
       } else {
         return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
