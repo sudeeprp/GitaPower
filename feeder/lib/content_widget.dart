@@ -2,7 +2,6 @@ import 'package:askys/content_themes.dart';
 import 'package:askys/expandable_span.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
-import 'package:askys/moving_subtitles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -553,10 +552,7 @@ class ShlokaContentReader extends StatelessWidget {
         key: key);
     var contentActions = Get.find<ContentActions>();
     contentActions.initialShowForAWhile();
-    return Stack(children: [
-      Column(children: [Expanded(child: contentWidget), const MovingSubtitles()]),
-      ...navigationButtons(context, mdFilename, nextmd, prevmd)
-    ]);
+    return Stack(children: [contentWidget, ...navigationButtons(context, mdFilename, nextmd, prevmd)]);
   }
 }
 
