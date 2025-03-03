@@ -121,7 +121,7 @@ void main() {
     feedContent.tour.tourStops.value = [TourStop('s1.mp3', 'l1', null, null)];
     feedContent.tour.state.value = TourState.idle;
     reset(mockPlayer);
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: Row(children: makePlay()))));
+    await tester.pumpWidget(MaterialApp(home: Scaffold(body: FeedPlayIcon(key: const Key('feedplay')))));
     await tester.tap(find.byKey(const Key('feedplay')));
     await tester.pumpAndSettle();
     expect(feedContent.tour.state.value, equals(TourState.idle));

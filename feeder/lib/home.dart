@@ -2,7 +2,6 @@ import 'package:app_links/app_links.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
-import 'package:askys/feedplay_icon.dart';
 import 'package:askys/content_themes.dart';
 import 'package:askys/guided_tour.dart';
 import 'package:askys/notes_widget.dart';
@@ -71,12 +70,12 @@ Widget makeMyHome() {
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
-                choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
+                choicesRow: choicesRow([], choicesForContent()))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
             page: () => screenify(
                 buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
-                choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
+                choicesRow: choicesRow([], choicesForContent()))),
         GetPage(name: '/search', page: searchScreen),
         GetPage(
             name: '/personalize',
@@ -86,7 +85,7 @@ Widget makeMyHome() {
 }
 
 Widget feedScreen() {
-  return screenify(buildFeed(), choicesRow: choicesRow(makePlay(), choicesForFeed()));
+  return screenify(buildFeed(), choicesRow: choicesRow([], choicesForFeed()));
 }
 
 Widget browsingScreen() {
@@ -111,14 +110,6 @@ class Home extends StatelessWidget {
           [], const [PersonalizeIcon(key: Key('choice/preferences')), SizedBox(width: choiceSpacing)]),
     );
   }
-}
-
-List<Widget> makePlayWhenPlaying() {
-  final FeedContent feedContent = Get.find();
-  if (feedContent.tour.state.value == TourState.playing) {
-    return makePlay();
-  }
-  return [];
 }
 
 List<Widget> choicesForContent() {

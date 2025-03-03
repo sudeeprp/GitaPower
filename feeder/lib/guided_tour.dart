@@ -108,7 +108,7 @@ class GuidedTourWidget extends StatelessWidget {
 
   Widget portraitLayout(BoxConstraints constraints) {
     return Column(children: [
-      Text('Portrait (${constraints.maxWidth} x ${constraints.maxHeight})'),
+      // Text('Portrait (${constraints.maxWidth} x ${constraints.maxHeight})'),
       FollowAlongWidget(),
       MovingSubtitles(),
       ShlokaSet(),
@@ -121,10 +121,9 @@ class FollowAlongWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FeedContent feedContent = Get.find();
     return Row(children: [
       Text('Follow Along'),
-      FeedPlayIcon(feedContent.tour.state.value, key: const Key('guided/feedplay')),
+      FeedPlayIcon(key: const Key('guided/feedplay')),
     ]);
   }
 }

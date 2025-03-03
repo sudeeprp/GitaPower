@@ -147,14 +147,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('Search'), findsWidgets);
   });
-  test('Shows play under content when something is playing', () {
-    Get.put(FeedContent.random());
-    expect(makePlayWhenPlaying(), isEmpty);
-    final FeedContent feedContent = Get.find();
-    feedContent.tourFolder = 'bring_the_best_in_you';
-    feedContent.tour.state.value = TourState.playing;
-    expect(makePlayWhenPlaying(), isNotEmpty);
-  });
   test('Converts uri to navigation path', () {
     expect(uriPointsToFeed(Uri.parse('/gitapower/feed/1-1.2-2.3-3')), isTrue);
 
