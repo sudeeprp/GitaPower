@@ -32,7 +32,7 @@ dependencies:
   firebase_core: ^3.11.0
   shared_preferences: 2.5.2
   enum_to_string: 2.2.0
-  float_column: 3.0.0
+  float_column: 4.0.1
   app_links: ^6.3.3
   just_audio: 0.9.46
   keep_screen_on: 4.0.0
