@@ -386,10 +386,10 @@ packages:
     dependency: "direct main"
     description:
       name: float_column
-      sha256: "58d1adc38d2a1696ca5093610b8a28c2f6a5e917ede2c845e562dddc3af19bfd"
+      sha256: e19fff548525630386f702bc96f897df35b8cb6c1c2d2a1e0cc05a7efe6df1bc
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
