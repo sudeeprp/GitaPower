@@ -55,13 +55,14 @@ Widget guidedTourScreen(String tourFolder) {
     if (playable != nullPlayable) {
       return screenify(GuidedTourWidget(playable),
           appBar: AppBar(
-              title: Column(children: [
-            const Text(
-              'Guided Tour (beta)',
-              textScaler: TextScaler.linear(0.75),
+            backgroundColor: Colors.deepPurple.shade100,
+            title: const Text(
+              'Bring the best in you',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text(playable.title),
-          ])),
+            centerTitle: true,
+            leading: Icon(Icons.arrow_back),
+          ),
           choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
     } else {
       return screenify(const Text('Loading tour...'));
@@ -121,10 +122,23 @@ class FollowAlongWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Text('Follow Along'),
-      FeedPlayIcon(key: const Key('guided/feedplay')),
-    ]);
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      color: Colors.white,
+      child: Row(
+        children: [
+          FeedPlayIcon(key: const Key('guided/feedplay')),
+          SizedBox(width: 12),
+          Expanded(
+            child: LinearProgressIndicator(
+              value: 0.3, // example progress
+              color: Colors.deepPurple,
+              backgroundColor: Colors.deepPurple.shade100,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -159,6 +173,21 @@ class ShlokaSet extends StatelessWidget {
   }
 
   Widget tourCover(List<String> stopNames) {
-    return ListView(children: stopNames.map((md) => Text(md)).toList());
+    return ListView.separated(
+      padding: EdgeInsets.all(16),
+      itemCount: stopNames.length,
+      separatorBuilder: (_, __) => SizedBox(height: 4),
+      itemBuilder: (context, index) {
+        return Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          elevation: 2,
+          child: ListTile(
+            leading: Icon(Icons.menu_book, color: Colors.deepPurple),
+            title: Text(stopNames[index]),
+            // subtitle: Text(chapter['file']!),
+          ),
+        );
+      },
+    );
   }
 }

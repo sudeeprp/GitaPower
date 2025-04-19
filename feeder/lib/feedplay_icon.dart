@@ -23,9 +23,10 @@ class FeedPlayIcon extends StatelessWidget {
             TourState.idle => Icons.play_arrow,
             TourState.paused => Icons.play_arrow,
             TourState.loading => Icons.hourglass_top,
-            TourState.playing => Icons.pause,
+            TourState.playing => Icons.pause_circle_filled,
           },
-          size: 48)),
+          size: 36,
+          color: Colors.deepPurple)),
     );
   }
 }

@@ -3,6 +3,7 @@
         "askys",
         "cupertino",
         "defn",
+        "Extn",
         "feedcontent",
         "feedplay",
         "Getx",
@@ -13,6 +14,7 @@
         "notecontent",
         "playables",
         "playablestoc",
+        "screenify",
         "shloka",
         "Shlokas"
     ]
