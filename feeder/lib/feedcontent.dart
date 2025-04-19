@@ -22,8 +22,8 @@ class ShlokaRef {
 
 ShlokaRef mdFilenameToShlokaNumber(String mdFilename) {
   final shlokaRefPart = mdFilename.split('.')[0].split('_')[0];
-  final shlokaRefIntstrs = shlokaRefPart.split('-');
-  return ShlokaRef(int.parse(shlokaRefIntstrs[0]), int.parse(shlokaRefIntstrs[1]));
+  final shlokaRefIntStrings = shlokaRefPart.split('-');
+  return ShlokaRef(int.parse(shlokaRefIntStrings[0]), int.parse(shlokaRefIntStrings[1]));
 }
 
 List<String> createRandomFeed(List<String> shlokaMDs) {
@@ -169,12 +169,14 @@ class FeedContent extends GetxController {
           .map(
               (tourStop) => Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
           .toList();
-      final playlist = ConcatenatingAudioSource(
-          children: [AudioSource.asset('audio/background.m4a')] +
-              uriList.map((uri) => AudioSource.uri(uri)).toList());
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
-      await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
+      await audioPlayer.setAudioSources(
+        [AudioSource.asset('audio/background.m4a')] + uriList.map((uri) => AudioSource.uri(uri)).toList(),
+        preload: true,
+        initialIndex: 0,
+        initialPosition: Duration.zero,
+      );
       await audioPlayer.play();
     });
   }

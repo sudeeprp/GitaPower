@@ -15,7 +15,7 @@ Widget contentWithOpenerPane(String filename, int count) {
         children: [
           buildContentFeed(filename, key: Key('feed/$count')),
           Dismissible(
-              key: Key('overq/$count'),
+              key: Key('opener/$count'),
               onDismissed: (direction) => hideOpener(),
               child: GestureDetector(
                   onTap: hideOpener,

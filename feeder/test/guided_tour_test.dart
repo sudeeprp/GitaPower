@@ -12,7 +12,7 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/mdcontent.dart';
 
-import 'feed_test.mocks.dart';
+import 'guided_tour_test.mocks.dart';
 import 'package:mockito/annotations.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mockito/mockito.dart';
@@ -78,7 +78,7 @@ void main() {
   });
   testWidgets('tapping on play starts the narration', (tester) async {
     Get.put(PlayablesTOC());
-    when(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
+    when(mockPlayer.setAudioSources(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
         .thenAnswer((_) async {
       return const Duration(milliseconds: 50);
     });
@@ -93,7 +93,7 @@ void main() {
     await tester.tap(player);
     await tester.pumpAndSettle();
     expect(feedContent.tour.state.value, equals(TourState.idle));
-    verify(mockPlayer.setAudioSource(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
+    verify(mockPlayer.setAudioSources(any, preload: true, initialIndex: 0, initialPosition: Duration.zero))
         .called(1);
     verify(mockPlayer.play()).called(1);
   });
@@ -149,7 +149,7 @@ void main() {
     await tester.tap(find.byKey(const Key('feedplay')));
     await tester.pumpAndSettle();
     verify(mockPlayer.play()).called(1);
-    verifyNever(mockPlayer.setAudioSource(any,
+    verifyNever(mockPlayer.setAudioSources(any,
         preload: anyNamed('preload'),
         initialIndex: anyNamed('initialIndex'),
         initialPosition: anyNamed('initialPosition')));

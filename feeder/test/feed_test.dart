@@ -81,11 +81,11 @@ void main() {
     expect(find.text(feedContent.openerQs[0].value), findsWidgets);
     expect(find.text(feedContent.openerQs[1].value), findsWidgets);
     expect(find.text(feedContent.openerQs[2].value), findsWidgets);
-    const overqPos = 1;
-    final firstOpener = find.byKey(const Key('overq/$overqPos'));
+    const openerPos = 1;
+    final firstOpener = find.byKey(const Key('opener/$openerPos'));
     await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));
     await tester.pumpAndSettle();
-    expect(feedContent.openerCovers[overqPos - 1].value, equals(false));
+    expect(feedContent.openerCovers[openerPos - 1].value, equals(false));
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();

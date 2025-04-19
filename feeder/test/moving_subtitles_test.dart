@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'feed_test.mocks.dart';
+import 'guided_tour_test.mocks.dart';
 
 void main() {
   setUp(() {
