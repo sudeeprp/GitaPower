@@ -16,7 +16,9 @@ class GuidedTourController extends GetxController {
     if (state == TourState.playing) {
       if (pageTurner.hasClients && mdLinksOfPages.isNotEmpty) {
         final Tour tour = Get.find<FeedContent>().tour;
-        if (tour.tourStops[stopIndex].link != null) {
+        if (stopIndex == 0) {
+          pageTurner.jumpToPage(0); // go to cover page
+        } else if (tour.tourStops[stopIndex].link != null) {
           final pageIndex = mdLinksOfPages.indexWhere((link) => link == tour.tourStops[stopIndex].link) +
               1; // add 1 for the cover
           pageTurner.animateToPage(pageIndex,
@@ -55,13 +57,10 @@ Widget guidedTourScreen(String tourFolder) {
     if (playable != nullPlayable) {
       return screenify(GuidedTourWidget(playable),
           appBar: AppBar(
-            backgroundColor: Colors.deepPurple.shade100,
             title: const Text(
               'Bring the best in you',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            centerTitle: true,
-            leading: Icon(Icons.arrow_back),
           ),
           choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
     } else {
@@ -122,23 +121,28 @@ class FollowAlongWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      color: Colors.white,
-      child: Row(
-        children: [
-          FeedPlayIcon(key: const Key('guided/feedplay')),
-          SizedBox(width: 12),
-          Expanded(
-            child: LinearProgressIndicator(
-              value: 0.3, // example progress
-              color: Colors.deepPurple,
-              backgroundColor: Colors.deepPurple.shade100,
-            ),
+    return Obx(() => Container(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          color: Colors.white,
+          child: Row(
+            children: [
+              FeedPlayIcon(key: const Key('guided/feedplay')),
+              SizedBox(width: 12),
+              Expanded(
+                child: LinearProgressIndicator(
+                  value: computeProgress(),
+                  color: Colors.deepPurple,
+                  backgroundColor: Colors.deepPurple.shade100,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
+  }
+  double computeProgress() {
+    FeedContent feedContent = Get.find();
+    return feedContent.tour.tourStops.isNotEmpty ?
+      (feedContent.tour.stopIndex.value + 1) / feedContent.tour.tourStops.length : 0.0;
   }
 }
 
