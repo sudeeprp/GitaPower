@@ -139,10 +139,12 @@ class FollowAlongWidget extends StatelessWidget {
           ),
         ));
   }
+
   double computeProgress() {
     FeedContent feedContent = Get.find();
-    return feedContent.tour.tourStops.isNotEmpty ?
-      (feedContent.tour.stopIndex.value + 1) / feedContent.tour.tourStops.length : 0.0;
+    return feedContent.tour.tourStops.isNotEmpty
+        ? (feedContent.tour.stopIndex.value + 1) / feedContent.tour.tourStops.length
+        : 0.0;
   }
 }
 
