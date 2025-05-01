@@ -28,8 +28,8 @@ Future<void> storePreferences(ReadingTheme theme, ScriptPreference script, Meani
 T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
   try {
     if (storedValue != null) {
-      final storedEnumd = EnumToString.fromString(enumValues, storedValue);
-      return storedEnumd ?? defaultValue;
+      final storedEnum = EnumToString.fromString(enumValues, storedValue);
+      return storedEnum ?? defaultValue;
     }
   } finally {}
   return defaultValue;

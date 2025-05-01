@@ -53,11 +53,24 @@ class MovingSubtitles extends StatelessWidget {
                   tourStop.line,
                   style: const TextStyle(color: Colors.black54),
                   textAlign: TextAlign.center,
+                  textScaler: computeScaleToFit(tourStop.line, context),
                 ),
               ),
             ));
       },
     );
+  }
+
+  TextScaler? computeScaleToFit(String textInWidget, BuildContext context) {
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: textInWidget,
+        style: const TextStyle(color: Colors.black54),
+      ),
+      maxLines: 3,
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: MediaQuery.of(context).size.width - 64);
+    return textPainter.didExceedMaxLines? TextScaler.linear(0.8) : null;
   }
 
   void syncWithTheTour(FeedContent feedContent) {
