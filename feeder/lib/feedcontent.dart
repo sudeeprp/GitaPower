@@ -4,7 +4,6 @@ import 'package:askys/content_source.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/tell_if_error.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'shloka_headers.dart' as shlokas;
@@ -42,12 +41,11 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 }
 
 class TourStop {
-  TourStop(this.speechFilename, this.line, this.link, this.show) : globalKey = GlobalKey();
+  TourStop(this.speechFilename, this.line, this.link, this.show);
   final String speechFilename;
   final String line;
   final String? link;
   final List<String>? show;
-  final GlobalKey globalKey;
 }
 
 enum TourState { idle, loading, playing, paused }

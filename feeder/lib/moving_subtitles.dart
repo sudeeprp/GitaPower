@@ -70,7 +70,7 @@ class MovingSubtitles extends StatelessWidget {
       maxLines: 3,
       textDirection: TextDirection.ltr,
     )..layout(maxWidth: MediaQuery.of(context).size.width - 64);
-    return textPainter.didExceedMaxLines? TextScaler.linear(0.8) : null;
+    return textPainter.didExceedMaxLines ? TextScaler.linear(0.8) : null;
   }
 
   void syncWithTheTour(FeedContent feedContent) {

@@ -162,7 +162,7 @@ class ShlokaSet extends StatelessWidget {
     return Obx(() => Expanded(
             child: PageView(
           controller: guidedTourController.pageTurner,
-          children: [tourCover(mdLinksOfPages)] + mdLinksOfPages.map(oneShloka).toList(),
+          children: [tourCover()] + mdLinksOfPages.map(oneShloka).toList(),
         )));
   }
 
@@ -182,22 +182,74 @@ class ShlokaSet extends StatelessWidget {
     // });
   }
 
-  Widget tourCover(List<String> stopNames) {
-    return ListView.separated(
-      padding: EdgeInsets.all(16),
-      itemCount: stopNames.length,
-      separatorBuilder: (_, __) => SizedBox(height: 4),
-      itemBuilder: (context, index) {
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          elevation: 2,
-          child: ListTile(
-            leading: Icon(Icons.menu_book, color: Colors.deepPurple),
-            title: Text(stopNames[index]),
-            // subtitle: Text(chapter['file']!),
-          ),
-        );
-      },
-    );
+  Widget tourCover() {
+    FeedContent feedContent = Get.find();
+    return Obx(() {
+      final List<List<String>> showsForThreeShlokas = [[], [], []];
+      int currentShloka = -1;
+      for (var tourStop in feedContent.tour.tourStops) {
+        if (RegExp(r'^Chapter \d+, Shloka \d+$').hasMatch(tourStop.line)) {
+          currentShloka++;
+        }
+        if (currentShloka >= 0 && tourStop.show != null) {
+          showsForThreeShlokas[currentShloka].addAll(tourStop.show!);
+        }
+      }
+      return Column(children: [
+        Expanded(
+            child: Row(children: [
+          Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
+          Expanded(child: coverStop(showsForThreeShlokas[0]))
+        ])),
+        Expanded(
+            child: Row(children: [
+          Expanded(child: coverStop(showsForThreeShlokas[1])),
+          Icon(Icons.menu_book, color: Colors.deepPurple, size: 64)
+        ])),
+        Expanded(
+            child: Row(children: [
+          Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
+          Expanded(child: coverStop(showsForThreeShlokas[2]))
+        ])),
+      ]);
+    });
+  }
+
+  Widget coverStop(List<String> coverStopWords) {
+    return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 2,
+        child: coverStopWords.isNotEmpty
+            ? TourStopWords(coverStopWords)
+            : Center(
+                child: Text('...'),
+              ));
+  }
+}
+
+class TourStopWords extends StatelessWidget {
+  final List<String> coverStopWords;
+  const TourStopWords(this.coverStopWords, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselView.weighted(
+        flexWeights: [1, 3, 5, 3, 1],
+        scrollDirection: Axis.vertical,
+        children: coverStopWords.map((word) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  word,
+                  style: const TextStyle(color: Colors.black54),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          );
+        }).toList());
   }
 }
