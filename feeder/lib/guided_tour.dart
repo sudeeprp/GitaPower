@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 class GuidedTourController extends GetxController {
   PageController pageTurner = PageController();
   PageController followTurner = PageController();
+  List<CarouselController> showWordsScroller = [CarouselController(), CarouselController(), CarouselController()];
   final mdLinksOfPages = <String>[].obs;
   void moveTo(TourState state, int stopIndex) {
     if (state == TourState.playing) {
@@ -195,32 +196,40 @@ class ShlokaSet extends StatelessWidget {
           showsForThreeShlokas[currentShloka].addAll(tourStop.show!);
         }
       }
+      GuidedTourController guidedTourController = Get.find();
+      for (var i = 0; i < 3; i++) {
+        final scroller = guidedTourController.showWordsScroller[i];
+        Future.delayed(Duration(milliseconds: 500 + i * 4000), () {
+          scroller.animateTo(scroller.position.maxScrollExtent, duration: Duration(seconds: 6), curve: Curves.ease);
+        });
+      }
+
       return Column(children: [
         Expanded(
             child: Row(children: [
           Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
-          Expanded(child: coverStop(showsForThreeShlokas[0]))
+          Expanded(child: coverStop(showsForThreeShlokas[0], guidedTourController.showWordsScroller[0]))
         ])),
         Expanded(
             child: Row(children: [
-          Expanded(child: coverStop(showsForThreeShlokas[1])),
+          Expanded(child: coverStop(showsForThreeShlokas[1], guidedTourController.showWordsScroller[1])),
           Icon(Icons.menu_book, color: Colors.deepPurple, size: 64)
         ])),
         Expanded(
             child: Row(children: [
           Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
-          Expanded(child: coverStop(showsForThreeShlokas[2]))
+          Expanded(child: coverStop(showsForThreeShlokas[2], guidedTourController.showWordsScroller[2]))
         ])),
       ]);
     });
   }
 
-  Widget coverStop(List<String> coverStopWords) {
+  Widget coverStop(List<String> coverStopWords, CarouselController scroller) {
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 2,
         child: coverStopWords.isNotEmpty
-            ? TourStopWords(coverStopWords)
+            ? TourStopWords(coverStopWords, scroller)
             : Center(
                 child: Text('...'),
               ));
@@ -229,13 +238,15 @@ class ShlokaSet extends StatelessWidget {
 
 class TourStopWords extends StatelessWidget {
   final List<String> coverStopWords;
-  const TourStopWords(this.coverStopWords, {super.key});
+  final CarouselController scroller;
+  const TourStopWords(this.coverStopWords, this.scroller, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return CarouselView.weighted(
         flexWeights: [1, 3, 5, 3, 1],
         scrollDirection: Axis.vertical,
+        controller: scroller,
         children: coverStopWords.map((word) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
