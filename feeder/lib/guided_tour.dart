@@ -12,7 +12,11 @@ import 'package:get/get.dart';
 class GuidedTourController extends GetxController {
   PageController pageTurner = PageController();
   PageController followTurner = PageController();
-  List<CarouselController> showWordsScroller = [CarouselController(), CarouselController(), CarouselController()];
+  List<CarouselController> showWordsScroller = [
+    CarouselController(),
+    CarouselController(),
+    CarouselController()
+  ];
   final mdLinksOfPages = <String>[].obs;
   void moveTo(TourState state, int stopIndex) {
     if (state == TourState.playing) {
@@ -182,58 +186,61 @@ class ShlokaSet extends StatelessWidget {
     //   }
     // });
   }
+}
 
-  Widget tourCover() {
-    FeedContent feedContent = Get.find();
-    return Obx(() {
-      final List<List<String>> showsForThreeShlokas = [[], [], []];
-      int currentShloka = -1;
-      for (var tourStop in feedContent.tour.tourStops) {
-        if (RegExp(r'^Chapter \d+, Shloka \d+$').hasMatch(tourStop.line)) {
-          currentShloka++;
-        }
-        if (currentShloka >= 0 && tourStop.show != null) {
-          showsForThreeShlokas[currentShloka].addAll(tourStop.show!);
-        }
+Widget tourCover() {
+  FeedContent feedContent = Get.find();
+  return Obx(() {
+    final List<List<String>> showsForThreeShlokas = [[], [], []];
+    int currentShloka = -1;
+    for (var tourStop in feedContent.tour.tourStops) {
+      if (RegExp(r'^Chapter \d+, Shloka \d+$').hasMatch(tourStop.line)) {
+        currentShloka++;
       }
-      GuidedTourController guidedTourController = Get.find();
-      for (var i = 0; i < 3; i++) {
-        final scroller = guidedTourController.showWordsScroller[i];
-        Future.delayed(Duration(milliseconds: 500 + i * 4000), () {
-          scroller.animateTo(scroller.position.maxScrollExtent, duration: Duration(seconds: 6), curve: Curves.ease);
-        });
+      if (currentShloka >= 0 && tourStop.show != null) {
+        final englishWords = tourStop.show!
+            .where((word) => !RegExp('^[\u0900-\u097F]+').hasMatch(word) && !word.startsWith('['));
+        showsForThreeShlokas[currentShloka].addAll(englishWords);
       }
+    }
+    GuidedTourController guidedTourController = Get.find();
+    // for (var i = 0; i < 3; i++) {
+    //   final scroller = guidedTourController.showWordsScroller[i];
+    //   Future.delayed(Duration(milliseconds: 500 + i * 4000), () {
+    //     scroller.animateTo(scroller.position.maxScrollExtent,
+    //         duration: Duration(seconds: 6), curve: Curves.ease);
+    //   });
+    // }
 
-      return Column(children: [
-        Expanded(
-            child: Row(children: [
-          Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
-          Expanded(child: coverStop(showsForThreeShlokas[0], guidedTourController.showWordsScroller[0]))
-        ])),
-        Expanded(
-            child: Row(children: [
-          Expanded(child: coverStop(showsForThreeShlokas[1], guidedTourController.showWordsScroller[1])),
-          Icon(Icons.menu_book, color: Colors.deepPurple, size: 64)
-        ])),
-        Expanded(
-            child: Row(children: [
-          Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
-          Expanded(child: coverStop(showsForThreeShlokas[2], guidedTourController.showWordsScroller[2]))
-        ])),
-      ]);
-    });
-  }
+    return Column(children: [
+      Expanded(
+          child: Row(children: [
+        Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
+        Expanded(child: coverStop(showsForThreeShlokas[0], guidedTourController.showWordsScroller[0]))
+      ])),
+      Expanded(
+          child: Row(children: [
+        Expanded(child: coverStop(showsForThreeShlokas[1], guidedTourController.showWordsScroller[1])),
+        Icon(Icons.menu_book, color: Colors.deepPurple, size: 64)
+      ])),
+      Expanded(
+          child: Row(children: [
+        Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
+        Expanded(child: coverStop(showsForThreeShlokas[2], guidedTourController.showWordsScroller[2]))
+      ])),
+    ]);
+  });
+}
 
-  Widget coverStop(List<String> coverStopWords, CarouselController scroller) {
-    return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 2,
-        child: coverStopWords.isNotEmpty
-            ? TourStopWords(coverStopWords, scroller)
-            : Center(
-                child: Text('...'),
-              ));
-  }
+Widget coverStop(List<String> coverStopWords, CarouselController scroller) {
+  return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 2,
+      child: coverStopWords.isNotEmpty
+          ? TourStopWords(coverStopWords, scroller)
+          : Center(
+              child: Text('...'),
+            ));
 }
 
 class TourStopWords extends StatelessWidget {

@@ -177,4 +177,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, equals('/shloka/2-34.md'));
   });
+  testWidgets('cover page shows tour stop words', (tester) async {
+    final FeedContent feedContent = Get.find();
+    feedContent.tour.tourStops.value = [
+      TourStop('s1.mp3', 'l1', null, ['intro']),
+      TourStop('s2.mp3', 'Chapter 12, Shloka 2', null, null),
+      TourStop('s3.mp3', 'l3', 'Chapter_7.md/bhakti_a_defn', ['first1', '[first2]']),
+      TourStop('s4.mp3', 'Chapter 14, Shloka 3', null, null),
+      TourStop('s5.mp3', 'l5', null, ['second1', 'एव']),
+    ];
+    await tester.pumpWidget(GetMaterialApp(home: tourCover()));
+    await tester.pumpAndSettle();
+    expect(find.text('first1'), findsOneWidget);
+    expect(find.text('[first2]'), findsNothing);
+    expect(find.text('second1'), findsOneWidget);
+    expect(find.text('एव'), findsNothing);
+  });
 }
