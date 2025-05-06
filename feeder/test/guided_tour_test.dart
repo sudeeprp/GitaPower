@@ -64,10 +64,6 @@ void main() {
   });
   testWidgets('guided tour displays the tour', (WidgetTester tester) async {
     Get.put(PlayablesTOC());
-    final playable = Playable('Bring the best in you', '/gitapower/feed/8-25.14-1.18-1.bring_the_best_in_you',
-        'bring_the_best_in_you');
-    // TODO: Remove curateToFeed
-    curateToFeed(playable);
 
     await tester.pumpWidget(GetMaterialApp(home: guidedTourScreen('bring_the_best_in_you')));
     await tester.pumpAndSettle();

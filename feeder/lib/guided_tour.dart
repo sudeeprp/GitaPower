@@ -75,14 +75,6 @@ Widget guidedTourScreen(String tourFolder) {
   });
 }
 
-void curateToFeed(Playable playable) {
-  final FeedContent feedContent = Get.find();
-  final uriComponents = playable.url.split('/');
-  final filesWithoutExtn = uriComponents.last.split('.').sublist(0, 3);
-  final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
-  feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: playable.tourFolder);
-}
-
 class GuidedTourWidget extends StatelessWidget {
   const GuidedTourWidget(this.playable, {super.key});
   final Playable playable;
@@ -215,21 +207,43 @@ Widget tourCover() {
     return Column(children: [
       Expanded(
           child: Row(children: [
-        Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
-        Expanded(child: coverStop(showsForThreeShlokas[0], guidedTourController.showWordsScroller[0]))
+        Expanded(flex: 2, child: coverQuestion(feedContent.openerQs[0].value)),
+        Expanded(child: coverStop(showsForThreeShlokas[0], guidedTourController.showWordsScroller[0])),
       ])),
       Expanded(
           child: Row(children: [
         Expanded(child: coverStop(showsForThreeShlokas[1], guidedTourController.showWordsScroller[1])),
-        Icon(Icons.menu_book, color: Colors.deepPurple, size: 64)
+        Expanded(flex: 2, child: coverQuestion(feedContent.openerQs[1].value)),
       ])),
       Expanded(
           child: Row(children: [
-        Icon(Icons.menu_book, color: Colors.deepPurple, size: 64),
-        Expanded(child: coverStop(showsForThreeShlokas[2], guidedTourController.showWordsScroller[2]))
+        Expanded(flex: 2, child: coverQuestion(feedContent.openerQs[2].value)),
+        Expanded(child: coverStop(showsForThreeShlokas[2], guidedTourController.showWordsScroller[2])),
       ])),
     ]);
   });
+}
+
+Widget coverQuestion(String openerQ) {
+  return Stack(
+    alignment: Alignment.center,
+    children: [
+      Icon(
+        Icons.menu_book,
+        color: Colors.grey.shade300,
+        size: 128,
+      ),
+      Text(
+        openerQ,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    ],
+  );
 }
 
 Widget coverStop(List<String> coverStopWords, CarouselController scroller) {
