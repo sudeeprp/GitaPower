@@ -25,7 +25,7 @@ class FeedPlayIcon extends StatelessWidget {
             TourState.loading => Icons.hourglass_top,
             TourState.playing => Icons.pause_circle_filled,
           },
-          size: 36,
+          size: 42,
           color: Colors.deepPurple)),
     );
   }

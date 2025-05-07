@@ -476,6 +476,7 @@ A person diverts from the path of realizing the Self due to some desires.
         noteBackground: Colors.blue,
         commentaryBackground: Colors.green,
         commentaryTextColor: Colors.yellow,
+        subtitleTextColor: Colors.purple,
         codeTextColor: Colors.brown,
         assetSuffix: '_light');
     final differentNote = contentColors.copyWith(noteBackground: Colors.teal);

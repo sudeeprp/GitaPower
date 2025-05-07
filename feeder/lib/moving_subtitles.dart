@@ -1,3 +1,4 @@
+import 'package:askys/content_themes.dart';
 import 'package:askys/guided_tour.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class MovingSubtitles extends StatelessWidget {
         child: Obx(
           () => Container(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            color: Colors.deepPurple.shade50,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: SizedBox(
               height: oneLineHeight() * 5.5,
               child: narrationWidgets(feedContent),
@@ -45,13 +46,14 @@ class MovingSubtitles extends StatelessWidget {
         final tourStop = feedContent.tour.tourStops[index];
         return Card(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            color: Theme.of(context).cardColor,
             elevation: 2,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
                   tourStop.line,
-                  style: const TextStyle(color: Colors.black54),
+                  style: TextStyle(color: contentColors(context)?.subtitleTextColor),
                   textAlign: TextAlign.center,
                   textScaler: computeScaleToFit(tourStop.line, context),
                 ),
