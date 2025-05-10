@@ -9,7 +9,6 @@ import 'package:askys/screenify.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// TODO: Why can't this replace the Tour class?
 class GuidedTourController extends GetxController {
   PageController pageTurner = PageController();
   PageController followTurner = PageController();
