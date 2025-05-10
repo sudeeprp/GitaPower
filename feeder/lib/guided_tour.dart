@@ -273,7 +273,7 @@ class TourStopWords extends StatelessWidget {
         backgroundColor: contentColors(context)?.commentaryBackground,
         children: coverStopWords.map((word) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Center(
                 child: Padding(
               padding: EdgeInsets.all(4),

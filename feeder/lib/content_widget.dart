@@ -434,7 +434,7 @@ class ContentWidget extends StatelessWidget {
       } else {
         return TextStyle(
             color: contentColors(context)?.commentaryTextColor,
-            height: 1.5,
+            height: 1.75,
             fontSize: 18,
             fontWeight: fontWeight);
       }
