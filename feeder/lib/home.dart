@@ -2,8 +2,8 @@ import 'package:app_links/app_links.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
-import 'package:askys/feedplay_icon.dart';
 import 'package:askys/content_themes.dart';
+import 'package:askys/guided_tour.dart';
 import 'package:askys/notes_widget.dart';
 import 'package:askys/personal_widget.dart';
 import 'package:askys/search_screen.dart';
@@ -33,13 +33,13 @@ void navigateApplink(Uri? uri) {
         final filesWithoutExtn = curation.sublist(0, 3);
         if (curation.length == 4) {
           tourFolder = curation[3];
+          final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
+          final FeedContent feedContent = Get.find();
+          feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
+          Get.toNamed('/guided/$tourFolder');
         }
-        final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
-        final FeedContent feedContent = Get.find();
-        feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
       }
     }
-    Get.toNamed('/feed');
   }
 }
 
@@ -70,21 +70,22 @@ Widget makeMyHome() {
         GetPage(
             name: '/shloka/:mdFilename',
             page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
-                choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
+                choicesRow: choicesRow([], choicesForContent()))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
             page: () => screenify(
                 buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
-                choicesRow: choicesRow(makePlayWhenPlaying(), choicesForContent()))),
+                choicesRow: choicesRow([], choicesForContent()))),
+        GetPage(name: '/search', page: searchScreen),
         GetPage(
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
-        GetPage(name: '/search', page: searchScreen),
+        GetPage(name: '/guided/:tourFolder', page: () => guidedTourScreen(Get.parameters['tourFolder']!)),
       ]);
 }
 
 Widget feedScreen() {
-  return screenify(buildFeed(), choicesRow: choicesRow(makePlay(), choicesForFeed()));
+  return screenify(buildFeed(), choicesRow: choicesRow([], choicesForFeed()));
 }
 
 Widget browsingScreen() {
@@ -109,14 +110,6 @@ class Home extends StatelessWidget {
           [], const [PersonalizeIcon(key: Key('choice/preferences')), SizedBox(width: choiceSpacing)]),
     );
   }
-}
-
-List<Widget> makePlayWhenPlaying() {
-  final FeedContent feedContent = Get.find();
-  if (feedContent.tour.state.value == TourState.playing) {
-    return makePlay();
-  }
-  return [];
 }
 
 List<Widget> choicesForContent() {

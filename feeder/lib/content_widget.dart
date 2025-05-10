@@ -1,7 +1,7 @@
 import 'package:askys/content_themes.dart';
+import 'package:askys/expandable_span.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
-import 'package:askys/moving_subtitles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:float_column/float_column.dart';
-
 import 'chaptercontent.dart';
 import 'notecontent.dart';
 import 'matter_forinline.dart';
@@ -196,14 +195,8 @@ bool _isSAHK(String? content) {
   return content != null && content.isNotEmpty && content[0] == '[';
 }
 
-Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
-  if (spans.isEmpty) {
-    return const Text('');
-  } else if (sectionType == SectionType.commentary) {
-    return constructCommentary(spans);
-  } else if (sectionType == SectionType.anchor) {
-    return SizedBox.shrink(child: Text.rich(TextSpan(children: spans)));
-  } else if (spans.length == 1) {
+Widget optimizedWidget(List<InlineSpan> spans) {
+  if (spans.length == 1) {
     return Text.rich(spans[0]);
   } else {
     return Text.rich(TextSpan(children: spans));
@@ -385,7 +378,7 @@ class ContentWidget extends StatelessWidget {
 
   List<String>? playableShows() {
     final ShowWords showWords = Get.find();
-    if (showWords.activePlayable != null) {
+    if (showWords.mdFilenamePlaying != null) {
       return showWords.words;
     }
     return null;
@@ -441,7 +434,7 @@ class ContentWidget extends StatelessWidget {
       } else {
         return TextStyle(
             color: contentColors(context)?.commentaryTextColor,
-            height: 1.5,
+            height: 1.75,
             fontSize: 18,
             fontWeight: fontWeight);
       }
@@ -523,6 +516,22 @@ class ContentWidget extends StatelessWidget {
       ),
     ));
   }
+
+  Widget _spansToText(List<TextSpan> spans, SectionType sectionType) {
+    if (spans.isEmpty) {
+      return const Text('');
+    } else if (sectionType == SectionType.commentary) {
+      return constructCommentary(spans);
+    } else if (sectionType == SectionType.anchor) {
+      return SizedBox.shrink(child: Text.rich(TextSpan(children: spans)));
+    } else if (sectionType == SectionType.meaning) {
+      return ExpandableMeaning(optimizedWidget(spans), identifier: mdFilename);
+    } else if (sectionType == SectionType.shlokaSA || sectionType == SectionType.shlokaSAHK) {
+      return ExpandableShloka(optimizedWidget(spans), identifier: mdFilename);
+    } else {
+      return optimizedWidget(spans);
+    }
+  }
 }
 
 class ShlokaContentReader extends StatelessWidget {
@@ -543,15 +552,13 @@ class ShlokaContentReader extends StatelessWidget {
         key: key);
     var contentActions = Get.find<ContentActions>();
     contentActions.initialShowForAWhile();
-    return Stack(children: [
-      Column(children: [Expanded(child: contentWidget), const MovingSubtitles()]),
-      ...navigationButtons(context, mdFilename, nextmd, prevmd)
-    ]);
+    return Stack(children: [contentWidget, ...navigationButtons(context, mdFilename, nextmd, prevmd)]);
   }
 }
 
 ContentWidget buildContent(String mdFilename,
     {String? initialAnchor, String? prevmd, String? nextmd, void Function()? onTap, Key? key}) {
+  Get.put(ExpansionController(), tag: mdFilename);
   return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd, onTap: onTap, key: key);
 }
 
@@ -560,5 +567,7 @@ Widget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}
 }
 
 ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
-  return buildContent(mdFilename, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: key);
+  return buildContent(mdFilename, onTap: () {
+    Get.toNamed('/shloka/$mdFilename');
+  }, key: key);
 }

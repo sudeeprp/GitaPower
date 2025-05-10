@@ -4,6 +4,9 @@ gita-begin/compile
 gita-begin/gita
 android/.google-play
 screenshots/
+**/.cxx/
+**/.externalNativeBuild/
+**/.generated/
 
 # Till we need these builds
 linux/

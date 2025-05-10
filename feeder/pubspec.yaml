@@ -23,9 +23,7 @@ dependencies:
     sdk: flutter
   get: ^4.7.2
   dio: ^5.8.0+1
-  card_settings: ^3.5.0
   markdown: ^7.3.0
-  stack: ^0.2.2
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.8
   firebase_crashlytics: ^4.3.5
@@ -34,12 +32,13 @@ dependencies:
   enum_to_string: 2.2.1
   float_column: 4.0.3
   app_links: ^6.4.0
-  just_audio: 0.9.46
+  just_audio: ^0.10.0
   keep_screen_on: 4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  analyzer: 7.4.5
   test_cov_console: ^0.2.2
   flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0

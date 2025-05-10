@@ -5,7 +5,7 @@ Widget screenify(Widget body, {AppBar? appBar, Widget? choicesRow}) {
   return Scaffold(
     key: scaffoldKey,
     appBar: appBar,
-    body: SafeArea(child: body),
+    body: SafeArea(child: ConstrainedBox(constraints: BoxConstraints(maxWidth: 700), child: body)),
     bottomNavigationBar: choicesRow,
   );
 }

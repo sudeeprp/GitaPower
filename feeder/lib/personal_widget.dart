@@ -9,7 +9,8 @@ class PersonalWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Choices choices = Get.find();
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BuildIdentWidget(),
@@ -27,8 +28,15 @@ class PersonalWidget extends StatelessWidget {
           groupValue: choices.script,
           displayText: (script) => script == ScriptPreference.devanagari ? 'Devanagari' : 'Harward-Kyoto',
         ),
+        SizedBox(height: 16),
+        buildEnumSelector<HeadPreference>(
+          title: 'Select Content Head:',
+          values: HeadPreference.values,
+          groupValue: choices.headPreference,
+          displayText: (headPref) => headPref == HeadPreference.shloka ? 'Shloka' : 'Meaning',
+        ),
       ],
-    );
+    ));
   }
 
   Widget buildEnumSelector<T>({

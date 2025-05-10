@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:askys/content_source.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/tell_if_error.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'shloka_headers.dart' as shlokas;
@@ -21,8 +21,8 @@ class ShlokaRef {
 
 ShlokaRef mdFilenameToShlokaNumber(String mdFilename) {
   final shlokaRefPart = mdFilename.split('.')[0].split('_')[0];
-  final shlokaRefIntstrs = shlokaRefPart.split('-');
-  return ShlokaRef(int.parse(shlokaRefIntstrs[0]), int.parse(shlokaRefIntstrs[1]));
+  final shlokaRefIntStrings = shlokaRefPart.split('-');
+  return ShlokaRef(int.parse(shlokaRefIntStrings[0]), int.parse(shlokaRefIntStrings[1]));
 }
 
 List<String> createRandomFeed(List<String> shlokaMDs) {
@@ -41,21 +41,20 @@ List<String> createRandomFeed(List<String> shlokaMDs) {
 }
 
 class TourStop {
-  TourStop(this.speechFilename, this.line, this.link, this.show) : globalKey = GlobalKey();
+  TourStop(this.speechFilename, this.line, this.link, this.show);
   final String speechFilename;
   final String line;
   final String? link;
   final List<String>? show;
-  final GlobalKey globalKey;
 }
 
 enum TourState { idle, loading, playing, paused }
 
-void setupWordShow(String? playable, List<String>? show) {
+void setupWordShow(String? mdFilenamePlaying, List<String>? show) {
   if (show != null) {
     final showWords = Get.find<ShowWords>();
     showWords.words.value = show;
-    showWords.activePlayable = playable;
+    showWords.mdFilenamePlaying = mdFilenamePlaying;
   }
 }
 
@@ -71,9 +70,7 @@ class Tour {
     stopIndex.value = (nonNullSerial - 1).clamp(0, tourStops.length - 1);
     final mdFilenameWithLink = tourStops[stopIndex.value].link;
     if (mdFilenameWithLink != null) {
-      setupWordShow(playable, tourStops[stopIndex.value].show);
-      final mdLaunchPath = '/shloka/$mdFilenameWithLink';
-      Get.offNamed(mdLaunchPath);
+      setupWordShow(mdFilenameWithLink, tourStops[stopIndex.value].show);
     }
   }
 
@@ -85,10 +82,13 @@ class Tour {
       ProcessingState.ready => playerState.playing ? TourState.playing : TourState.paused,
       ProcessingState.completed => TourState.idle,
     };
-    if (state.value == TourState.playing) {
-      KeepScreenOn.turnOn();
-    } else {
-      KeepScreenOn.turnOff();
+    if (!kIsWeb) {
+      // keep_screen_on is not supported for the web
+      if (state.value == TourState.playing) {
+        KeepScreenOn.turnOn();
+      } else {
+        KeepScreenOn.turnOff();
+      }
     }
   }
 }
@@ -167,12 +167,14 @@ class FeedContent extends GetxController {
           .map(
               (tourStop) => Uri.parse('${GitHubFetcher.playablesUrl}/$tourFolder/${tourStop.speechFilename}'))
           .toList();
-      final playlist = ConcatenatingAudioSource(
-          children: [AudioSource.asset('audio/background.m4a')] +
-              uriList.map((uri) => AudioSource.uri(uri)).toList());
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
-      await audioPlayer.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
+      await audioPlayer.setAudioSources(
+        [AudioSource.asset('audio/background.m4a')] + uriList.map((uri) => AudioSource.uri(uri)).toList(),
+        preload: true,
+        initialIndex: 0,
+        initialPosition: Duration.zero,
+      );
       await audioPlayer.play();
     });
   }

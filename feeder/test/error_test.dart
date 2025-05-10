@@ -13,7 +13,7 @@ void main() {
       }, durationToShow: const Duration(milliseconds: 50));
     }
 
-    testError(PlayerException(500, 'player exception'));
+    testError(PlayerException(500, 'player exception', 0));
     testError(PlayerInterruptedException('player exception'));
     testError('some unknown exception');
     await tester.pumpAndSettle();

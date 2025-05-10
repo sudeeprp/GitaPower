@@ -1,3 +1,4 @@
+import 'package:askys/content_themes.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ Future<void> storePreferences(ReadingTheme theme, ScriptPreference script, Meani
 T _fromStored<T>(List<T> enumValues, String? storedValue, T defaultValue) {
   try {
     if (storedValue != null) {
-      final storedEnumd = EnumToString.fromString(enumValues, storedValue);
-      return storedEnumd ?? defaultValue;
+      final storedEnum = EnumToString.fromString(enumValues, storedValue);
+      return storedEnum ?? defaultValue;
     }
   } finally {}
   return defaultValue;
@@ -87,15 +88,7 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: Obx(() {
-        final Choices choices = Get.find();
-        return Image.asset(
-            choices.theme.value == ReadingTheme.light
-                ? 'images/expand_meaning_light.png'
-                : 'images/expand_meaning_dark.png',
-            width: 48,
-            height: 48);
-      }),
+      child: Image.asset('images/expand_meaning${contentAssetSuffix(context)}.png', width: 48, height: 48),
     );
   }
 }
@@ -110,15 +103,7 @@ class HeaderPreferenceIcon extends StatelessWidget {
       onTap: () => choice.headPreference.value = choice.headPreference.value == HeadPreference.shloka
           ? HeadPreference.meaning
           : HeadPreference.shloka,
-      child: Obx(() {
-        final Choices choices = Get.find();
-        return Image.asset(
-            choices.theme.value == ReadingTheme.light
-                ? 'images/shloka_visible_light.png'
-                : 'images/shloka_visible_dark.png',
-            width: 48,
-            height: 48);
-      }),
+      child: Image.asset('images/shloka_visible${contentAssetSuffix(context)}.png', width: 48, height: 48),
     );
   }
 }

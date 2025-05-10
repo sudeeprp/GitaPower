@@ -1,22 +1,9 @@
 import 'package:askys/feedcontent.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'choices_row.dart';
-
-List<Widget> makePlay() {
-  final FeedContent feedContent = Get.find();
-  return [
-    Obx(() => Visibility(
-        visible: feedContent.tour.tourStops.isNotEmpty,
-        child: FeedPlayIcon(feedContent.tour.state.value, key: const Key('feedplay')))),
-    Obx(() => Visibility(
-        visible: feedContent.tour.tourStops.isNotEmpty, child: const SizedBox(width: choiceSpacing))),
-  ];
-}
 
 class FeedPlayIcon extends StatelessWidget {
-  const FeedPlayIcon(this.state, {super.key});
-  final TourState state;
+  const FeedPlayIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +18,15 @@ class FeedPlayIcon extends StatelessWidget {
           feedContent.pause();
         }
       },
-      child: Icon(
-          switch (state) {
+      child: Obx(() => Icon(
+          switch (feedContent.tour.state.value) {
             TourState.idle => Icons.play_arrow,
             TourState.paused => Icons.play_arrow,
             TourState.loading => Icons.hourglass_top,
-            TourState.playing => Icons.pause,
+            TourState.playing => Icons.pause_circle_filled,
           },
-          size: 48),
+          size: 42,
+          color: Colors.deepPurple)),
     );
   }
 }

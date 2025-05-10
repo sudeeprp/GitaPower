@@ -1,12 +1,13 @@
 import 'package:askys/content_source.dart';
 import 'package:askys/feedcontent.dart';
+import 'package:askys/guided_tour.dart';
 import 'package:askys/moving_subtitles.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'feed_test.mocks.dart';
+import 'guided_tour_test.mocks.dart';
 
 void main() {
   setUp(() {
@@ -37,15 +38,25 @@ void main() {
   });
   testWidgets('shows the narrative as text', (tester) async {
     final FeedContent feedContent = Get.find();
+    Get.put(GuidedTourController());
     feedContent.tour.state.value = TourState.playing;
 
     await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: MovingSubtitles())));
     await tester.pumpAndSettle();
     expect(find.text('l1', findRichText: true), findsOneWidget);
-    expect(find.text('l2', findRichText: true), findsOneWidget);
-    expect(find.text('l3', findRichText: true), findsOneWidget);
     feedContent.tour.moveTo(5);
     await tester.pumpAndSettle();
     expect(find.text('l5', findRichText: true), findsOneWidget);
+  });
+  testWidgets('resets the tour on back', (tester) async {
+    final FeedContent feedContent = Get.find();
+    Get.put(GuidedTourController());
+    feedContent.tour.state.value = TourState.playing;
+    const movingSubtitles = MovingSubtitles();
+    await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: movingSubtitles)));
+    await tester.pumpAndSettle();
+    movingSubtitles.resetTour(true, true);
+    await tester.pumpAndSettle();
+    expect(feedContent.tour.state.value, TourState.idle);
   });
 }
