@@ -82,32 +82,7 @@ class GuidedTourWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    // Choices:
-    //   - ResponsiveGridList
-    //   - GridView with SliverGridDelegateWithMaxCrossAxisExtent
-    //   - Use a Wrap Widget
-    //   - combine LayoutBuilder with either GridView or Wrap
-    return LayoutBuilder(builder: (context, constraints) {
-      return portraitLayout(constraints);
-      // TODO: Build landscape layout
-      // if (constraints.maxWidth > constraints.maxHeight) {
-      //   return landscapeLayout(constraints);
-      // } else {
-      //   return portraitLayout(constraints);
-      // }
-    });
-  }
-
-  // Widget landscapeLayout(BoxConstraints constraints) {
-  //   return Column(children: [
-  //     Text('Landscape (${constraints.maxWidth} x ${constraints.maxHeight})'),
-  //     MovingSubtitles(),
-  //   ]);
-  // }
-
-  Widget portraitLayout(BoxConstraints constraints) {
     return Column(children: [
-      // Text('Portrait (${constraints.maxWidth} x ${constraints.maxHeight})'),
       FollowAlongWidget(),
       MovingSubtitles(),
       ShlokaSet(),
@@ -166,14 +141,6 @@ class ShlokaSet extends StatelessWidget {
     final initialAnchor = parts.length > 1 ? parts[1] : null;
     return buildContent(mdFilename,
         initialAnchor: initialAnchor, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: oneShlokaKey);
-    // return LayoutBuilder(builder: (context, constraints) {
-    //   if (constraints.maxWidth > 300) {
-    //     return buildContent(mdFilename,
-    //         initialAnchor: initialAnchor, onTap: () => Get.toNamed('/shloka/$mdFilename'), key: oneShlokaKey);
-    //   } else {
-    //     return Text(link);
-    //   }
-    // });
   }
 }
 
