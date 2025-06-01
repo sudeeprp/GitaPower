@@ -89,7 +89,7 @@ class MovingSubtitles extends StatelessWidget {
     feedContent.tour.stopIndex.listen((newIndex) => scrollTo(newIndex));
   }
 
-  void resetTour(popped, _) async {
+  void resetTour(bool popped, _) async {
     if (popped) {
       final FeedContent feedContent = Get.find();
       await feedContent.audioPlayer.stop();

@@ -46,7 +46,7 @@ class ParseRecords {
   List<WidgetMade> widgetsMade = [];
 }
 
-ParseRecords recordParseActions(mdContent, {List<String>? showPatterns}) {
+ParseRecords recordParseActions(String mdContent, {List<String>? showPatterns}) {
   var parseRecords = ParseRecords();
   List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
     parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType, inlineMatter.tag,

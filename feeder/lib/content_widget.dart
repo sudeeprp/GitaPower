@@ -153,7 +153,7 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  bool _isSeparate(elementTag) {
+  bool _isSeparate(String elementTag) {
     const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
     return widgetSeparators.contains(elementTag) &&
         (elementForCurrentText.isEmpty || elementForCurrentText.last.mdElement.tag != 'blockquote');
