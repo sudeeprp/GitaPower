@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choices_row.dart';
-import 'package:askys/feedcontent.dart';
+import 'package:askys/content_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -111,13 +111,9 @@ class SearchWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
-              if (phraseSearcher.top3mdFileNoExt.length == 3) {
-                final mdsInFeed =
-                    phraseSearcher.top3mdFileNoExt.map((shlokaFile) => '$shlokaFile.md').toList();
-                final FeedContent feedContent = Get.find();
-                feedContent.setCuratedShlokaMDs(mdsInFeed);
-                WidgetsBinding.instance.addPostFrameCallback((_) => Get.offNamed('/feed'));
-                return const SizedBox.shrink();
+              if (phraseSearcher.top3mdFileNoExt.isNotEmpty) {
+                final topmdFileNoExt = phraseSearcher.top3mdFileNoExt.first;
+                return buildContentWithNote('$topmdFileNoExt.md');
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,

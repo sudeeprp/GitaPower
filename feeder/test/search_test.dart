@@ -1,5 +1,9 @@
+import 'package:askys/chaptercontent.dart';
+import 'package:askys/choice_selector.dart';
+import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
-import 'package:askys/feedcontent.dart';
+import 'package:askys/mdcontent.dart';
+import 'package:askys/notecontent.dart';
 import 'package:askys/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -63,29 +67,25 @@ void main() {
       Get.delete<PhraseSearcher>();
       Get.delete<GitHubFetcher>();
     });
-    testWidgets('should initiate search and display results', (tester) async {
+    testWidgets('should initiate search and display the top result', (tester) async {
       resetPhraseSearcher();
+      Get.put(ChaptersTOC());
+      Get.put(ContentActions());
+      Get.put(Choices());
+      Get.put(ShowWords());
+      Get.put(ContentNotes());
       const searchString = 'flame which does not shake';
       setupAskysDiscoverMock(searchString);
-      Get.put(FeedContent.random());
-      await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: SearchWidget()),
-        getPages: [GetPage(name: '/feed', page: () => const Text('feed'))],
-      ));
+      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.pump();
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-      FeedContent feedContent = Get.find();
-      expect(feedContent.threeShlokas[0], equals('6-19.md'));
-      expect(feedContent.threeShlokas[1], equals('2-20.md'));
-      expect(feedContent.threeShlokas[2], equals('14-23.md'));
+      expect(find.text('6-19'), findsOneWidget);
       await tester.pumpAndSettle();
-      expect(Get.currentRoute, '/feed');
     });
 
     testWidgets('should handle API unreachable', (tester) async {
-      Get.put(FeedContent.random());
       const searchString = 'test query';
       await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
@@ -106,10 +106,7 @@ void main() {
     testWidgets('should show loading indicator during API call', (tester) async {
       const searchString = 'test query';
       setupAskysDiscoverMock(searchString);
-      await tester.pumpWidget(GetMaterialApp(
-        home: Scaffold(body: SearchWidget()),
-        getPages: [GetPage(name: '/feed', page: () => const Text('feed'))],
-      ));
+      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump();
