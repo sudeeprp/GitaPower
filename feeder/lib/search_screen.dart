@@ -18,6 +18,12 @@ class PhraseSearcher extends GetxController {
   final random = Random();
   final phraseInput = TextEditingController();
   PhraseSearcher(this.dio);
+
+  Future<void> research(String phrase) async {
+    reset();
+    await search(phrase);
+  }
+
   void reset() {
     top3mdFileNoExt.value = [];
     isLoading.value = false;
@@ -91,19 +97,18 @@ class SearchWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
+                  textInputAction: TextInputAction.search,
                   decoration: const InputDecoration(
                     hintText: 'Search',
                     border: OutlineInputBorder(),
                   ),
                   controller: phraseSearcher.phraseInput,
-                  onSubmitted: phraseSearcher.search,
+                  onSubmitted: phraseSearcher.research,
                 ),
               ),
               const SizedBox(width: 16),
               ElevatedButton(
-                onPressed: () {
-                  phraseSearcher.search(phraseSearcher.phraseInput.text);
-                },
+                onPressed: () => phraseSearcher.research(phraseSearcher.phraseInput.text),
                 child: const Icon(Icons.search, size: 48),
               ),
             ],
@@ -113,7 +118,7 @@ class SearchWidget extends StatelessWidget {
             child: Obx(() {
               if (phraseSearcher.top3mdFileNoExt.isNotEmpty) {
                 final topmdFileNoExt = phraseSearcher.top3mdFileNoExt.first;
-                return buildContentWithNote('$topmdFileNoExt.md');
+                return buildContentFeed('$topmdFileNoExt.md');
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
