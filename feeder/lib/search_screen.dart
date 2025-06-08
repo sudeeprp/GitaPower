@@ -10,8 +10,14 @@ import 'package:get/get.dart';
 const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
 const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
 
+class SearchedPara {
+  String mdFileNoExt;
+  String content;
+  SearchedPara({this.mdFileNoExt = '', this.content = ''});
+}
+
 class PhraseSearcher extends GetxController {
-  var top3mdFileNoExt = <String>[].obs;
+  var topResult = SearchedPara().obs;
   final isLoading = false.obs;
   final progressMsg = ''.obs;
   final Dio dio;
@@ -25,7 +31,7 @@ class PhraseSearcher extends GetxController {
   }
 
   void reset() {
-    top3mdFileNoExt.value = [];
+    topResult.value = SearchedPara();
     isLoading.value = false;
     progressMsg.value = '';
   }
@@ -70,7 +76,10 @@ class PhraseSearcher extends GetxController {
       progressMsg.value = '';
       final responseJson = searchResponse.data as Map<String, dynamic>;
       final matches = responseJson['matches'] as List<dynamic>;
-      top3mdFileNoExt.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
+      topResult.value = SearchedPara(
+        mdFileNoExt: matches[0]['filename_no_mdext'] as String,
+        content: matches[0]['match_text'] as String,
+      );
     } on DioException catch (e) {
       if (e.response != null) {
         final errData = e.response?.data as Map<String, dynamic>;
@@ -116,9 +125,9 @@ class SearchWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
-              if (phraseSearcher.top3mdFileNoExt.isNotEmpty) {
-                final topmdFileNoExt = phraseSearcher.top3mdFileNoExt.first;
-                return buildContentFeed('$topmdFileNoExt.md');
+              final topResult = phraseSearcher.topResult.value;
+              if (topResult.mdFileNoExt.isNotEmpty) {
+                return buildContentFeed('${topResult.mdFileNoExt}.md', searchPhrase: topResult.content);
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,

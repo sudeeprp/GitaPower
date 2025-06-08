@@ -17,19 +17,19 @@ void main() {
   const mockResults = {
     'matches': [
       {
-        'commentary_chunks': 'commentary1',
+        'match_text': 'commentary1',
         'filename_no_mdext': '6-19',
         'match_id': '6-19-0',
         'match_score': 0.8120879
       },
       {
-        'commentary_chunks': 'commentary2',
+        'match_text': 'commentary2',
         'filename_no_mdext': '2-20',
         'match_id': '2-20-1',
         'match_score': 0.7891093
       },
       {
-        'commentary_chunks': 'commentary3',
+        'match_text': 'commentary3',
         'filename_no_mdext': '14-23',
         'match_id': '14-23-0',
         'match_score': 0.78039294
