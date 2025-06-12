@@ -34,8 +34,9 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
     {String? elmclass, String? link, List<String>? showPatterns, String? searchPhrase}) {
   bool checkSearchRelevance(String currentText) {
     if (searchPhrase != null && searchPhrase.isNotEmpty && currentText.isNotEmpty) {
-      final searchWords = searchPhrase.toLowerCase().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toSet();
-      final textWords = currentText.toLowerCase().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toSet();
+      final delimiters = RegExp(r'[^\w\s]|\s+|_|\[|\]["`' r"']");
+      final searchWords = searchPhrase.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
+      final textWords = currentText.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
       if (searchWords.isEmpty) return false;
       int matchCount = 0;
       for (String word in searchWords) {
@@ -43,7 +44,7 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
           matchCount++;
         }
       }
-      return matchCount * 2 > searchWords.length; // More than half the words match
+      return matchCount * 4 > searchWords.length; // More than a quarter of the words match
     }
     return false;
   }

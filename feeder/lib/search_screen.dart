@@ -98,6 +98,11 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PhraseSearcher phraseSearcher = Get.find();
+    void unfocusAndSubmit(String phrase) {
+      FocusScope.of(context).unfocus();
+      phraseSearcher.research(phrase);
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -112,12 +117,12 @@ class SearchWidget extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                   controller: phraseSearcher.phraseInput,
-                  onSubmitted: phraseSearcher.research,
+                  onSubmitted: unfocusAndSubmit,
                 ),
               ),
               const SizedBox(width: 16),
               ElevatedButton(
-                onPressed: () => phraseSearcher.research(phraseSearcher.phraseInput.text),
+                onPressed: () => unfocusAndSubmit(phraseSearcher.phraseInput.text),
                 child: const Icon(Icons.search, size: 48),
               ),
             ],
