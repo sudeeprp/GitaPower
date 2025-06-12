@@ -16,13 +16,13 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:askys/matter_forinline.dart';
 
 List<TextSpan> oneTextMaker(MatterForInline inlineMatter) => [TextSpan(text: inlineMatter.text)];
-List<Widget> simpleTextRichMaker(List<TextSpan> spans, SectionType sectionType) {
-  if (spans.isEmpty) {
+List<Widget> simpleTextRichMaker(SectionContent sectionContent, SectionType sectionType) {
+  if (sectionContent.spans.isEmpty) {
     return [];
-  } else if (spans.length == 1) {
-    return [Text.rich(spans[0])];
+  } else if (sectionContent.spans.length == 1) {
+    return [Text.rich(sectionContent.spans[0])];
   } else {
-    return [Text.rich(TextSpan(children: spans))];
+    return [Text.rich(TextSpan(children: sectionContent.spans))];
   }
 }
 
@@ -54,8 +54,8 @@ ParseRecords recordParseActions(String mdContent, {List<String>? showPatterns}) 
     return [];
   }
 
-  List<Widget> widgetMaker(List<TextSpan> spans, SectionType sectionType) {
-    parseRecords.widgetsMade.add(WidgetMade(spans, sectionType));
+  List<Widget> widgetMaker(SectionContent sectionContent, SectionType sectionType) {
+    parseRecords.widgetsMade.add(WidgetMade(sectionContent.spans, sectionType));
     return [];
   }
 

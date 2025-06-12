@@ -15,14 +15,14 @@ enum Presentation { normal, emphasis }
 
 class MatterForInline {
   MatterForInline(this.text, this.sectionType, this.tag,
-      {this.elmclass, this.link, this.presentation, this.isSearchRelevant = false});
+      {this.elmclass, this.link, this.presentation, this.isRelevantToSearch = false});
   String text;
   SectionType sectionType;
   String tag;
   Presentation? presentation;
   String? elmclass;
   String? link;
-  bool isSearchRelevant;
+  bool isRelevantToSearch;
 }
 
 final devanagari = RegExp('^[\u0900-\u097F]+');
@@ -53,7 +53,7 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
         elmclass: elmclass,
         link: link,
         presentation: presentation,
-        isSearchRelevant: checkSearchRelevance(text));
+        isRelevantToSearch: checkSearchRelevance(text));
   }
 
   MatterForInline emphasizeOnExactMatch(List<String> matchWords) {

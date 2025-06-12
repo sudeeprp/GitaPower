@@ -25,7 +25,7 @@ class CurrentTextElement {
 
 class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(MatterForInline matterForInline) _inlineMaker;
-  final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
+  final List<Widget> Function(SectionContent, SectionType) _widgetMaker;
   final List<String>? showPatterns;
   final String? searchPhrase;
   SectionType? _previousSectionType;
@@ -90,14 +90,15 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  List<TextSpan> _collectedElements(SectionType sectionType) {
+  SectionContent _collectedElements(SectionType sectionType) {
     List<TextSpan> collectedElements = [];
     final visibleInlines = selectVisibleInlines(collectedInlines, sectionType);
     final inlinesForDisplay = removeConsecutiveSpaces(visibleInlines);
     for (final inlineMatter in inlinesForDisplay) {
       collectedElements.addAll(_inlineMaker(inlineMatter));
     }
-    return collectedElements;
+    final isRelevantToSearch = collectedInlines.any((inline) => inline.isRelevantToSearch);
+    return SectionContent(collectedElements, isRelevantToSearch);
   }
 
   @override
@@ -366,6 +367,12 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   return _contentSpacing(context, _horizontalScrollForOneLiners(sectionType, content));
 }
 
+class SectionContent {
+  List<TextSpan> spans;
+  bool isRelevantToSearch;
+  SectionContent(this.spans, this.isRelevantToSearch);
+}
+
 class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
       {this.onTap, this.searchPhrase, super.key}) {
@@ -390,7 +397,7 @@ class ContentWidget extends StatelessWidget {
   @override
   Widget build(context) {
     Map<String, GlobalKey> anchorKeys = {};
-    List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
+    List<Widget> textRichMaker(SectionContent sectionContent, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
         return []; // Shloka number is now on the top-right
       }
@@ -401,27 +408,42 @@ class ContentWidget extends StatelessWidget {
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child:
-                    Text.rich(TextSpan(children: spans), style: Theme.of(context).textTheme.headlineSmall)),
+                child: Text.rich(TextSpan(children: sectionContent.spans),
+                    style: Theme.of(context).textTheme.headlineSmall)),
           )
         ];
       }
       return [
-        Obx(() => Visibility(
-              visible: _isVisible(sectionType),
-              child: _sectionContainer(context, sectionType, _spansToText(spans, sectionType)),
-            ))
+        Obx(() {
+          GlobalKey? searchKey;
+          bool visibility = _isVisible(sectionType);
+          if (sectionContent.isRelevantToSearch) {
+            searchKey = GlobalKey();
+            visibility = true;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (searchKey!.currentContext != null) {
+                Scrollable.ensureVisible(searchKey.currentContext!,
+                    duration: const Duration(milliseconds: 300));
+              }
+            });
+          }
+          return Visibility(
+            key: searchKey,
+            visible: visibility,
+            child: _sectionContainer(context, sectionType, _spansToText(sectionContent.spans, sectionType)),
+          );
+        }),
       ];
     }
 
     TextStyle? styleFor(String tag,
-        {String? elmclass, Presentation? presentation, bool isSearchRelevant = false}) {
+        {String? elmclass, Presentation? presentation, bool isRelevantToSearch = false}) {
       FontWeight? fontWeight;
       if (presentation != null && presentation == Presentation.emphasis) {
         fontWeight = FontWeight.bold;
       }
       Color? backgroundColor;
-      if (isSearchRelevant) {
+      if (isRelevantToSearch) {
         backgroundColor = Colors.yellow.withValues(alpha: 0.5);
       }
       if (elmclass == 'language-shloka-sa') {
@@ -481,7 +503,7 @@ class ContentWidget extends StatelessWidget {
           style: styleFor(inlineMatter.tag,
               elmclass: inlineMatter.elmclass,
               presentation: inlineMatter.presentation,
-              isSearchRelevant: inlineMatter.isSearchRelevant),
+              isRelevantToSearch: inlineMatter.isRelevantToSearch),
         )
       ];
     }

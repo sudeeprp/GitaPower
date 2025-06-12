@@ -66,7 +66,7 @@ void main() {
     bool searchRelevanceMarked(String text, String searchPhrase) {
       return makeMatterForInlines(text, SectionType.commentary, 'atag', searchPhrase: searchPhrase)
           .first
-          .isSearchRelevant;
+          .isRelevantToSearch;
     }
 
     test('marks the text relevant when more than half the words of the search phrase are found', () {
