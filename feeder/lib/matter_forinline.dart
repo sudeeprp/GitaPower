@@ -14,13 +14,15 @@ enum SectionType {
 enum Presentation { normal, emphasis }
 
 class MatterForInline {
-  MatterForInline(this.text, this.sectionType, this.tag, {this.elmclass, this.link, this.presentation});
+  MatterForInline(this.text, this.sectionType, this.tag,
+      {this.elmclass, this.link, this.presentation, this.isRelevantToSearch = false});
   String text;
   SectionType sectionType;
   String tag;
   Presentation? presentation;
   String? elmclass;
   String? link;
+  bool isRelevantToSearch;
 }
 
 final devanagari = RegExp('^[\u0900-\u097F]+');
@@ -29,10 +31,30 @@ bool isDevanOrTranslit(String word) {
 }
 
 List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType, String tag,
-    {String? elmclass, String? link, List<String>? showPatterns}) {
+    {String? elmclass, String? link, List<String>? showPatterns, String? searchPhrase}) {
+  bool checkSearchRelevance(String currentText) {
+    if (searchPhrase != null && searchPhrase.isNotEmpty && currentText.isNotEmpty) {
+      final delimiters = RegExp(r'[^\w\s]|\s+|_|\[|\]["`' r"']");
+      final searchWords = searchPhrase.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
+      final textWords = currentText.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
+      if (searchWords.isEmpty) return false;
+      int matchCount = 0;
+      for (String word in searchWords) {
+        if (textWords.contains(word)) {
+          matchCount++;
+        }
+      }
+      return matchCount * 3 > searchWords.length; // More than a third of the words match
+    }
+    return false;
+  }
+
   MatterForInline oneMatterForInline(String text, Presentation presentation) {
     return MatterForInline(text, sectionType, tag,
-        elmclass: elmclass, link: link, presentation: presentation);
+        elmclass: elmclass,
+        link: link,
+        presentation: presentation,
+        isRelevantToSearch: checkSearchRelevance(text));
   }
 
   MatterForInline emphasizeOnExactMatch(List<String> matchWords) {

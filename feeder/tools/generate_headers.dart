@@ -78,7 +78,7 @@ HeaderSectionType _detectSectionType(md.Element element, HeaderSectionType prevS
   return HeaderSectionType.other;
 }
 
-bool _isSeparate(elementTag) {
+bool _isSeparate(String elementTag) {
   const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
   return widgetSeparators.contains(elementTag);
 }

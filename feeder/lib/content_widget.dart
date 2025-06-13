@@ -25,14 +25,15 @@ class CurrentTextElement {
 
 class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(MatterForInline matterForInline) _inlineMaker;
-  final List<Widget> Function(List<TextSpan>, SectionType) _widgetMaker;
+  final List<Widget> Function(SectionContent, SectionType) _widgetMaker;
   final List<String>? showPatterns;
+  final String? searchPhrase;
   SectionType? _previousSectionType;
   List<CurrentTextElement> elementForCurrentText = [];
   List<String> noteIdsInPage = [];
   List<Widget> collectedWidgets = [];
   List<MatterForInline> collectedInlines = [];
-  WidgetMaker(this._widgetMaker, this._inlineMaker, {this.showPatterns});
+  WidgetMaker(this._widgetMaker, this._inlineMaker, {this.showPatterns, this.searchPhrase});
 
   List<Widget> parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
@@ -89,14 +90,15 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  List<TextSpan> _collectedElements(SectionType sectionType) {
+  SectionContent _collectedElements(SectionType sectionType) {
     List<TextSpan> collectedElements = [];
     final visibleInlines = selectVisibleInlines(collectedInlines, sectionType);
     final inlinesForDisplay = removeConsecutiveSpaces(visibleInlines);
     for (final inlineMatter in inlinesForDisplay) {
       collectedElements.addAll(_inlineMaker(inlineMatter));
     }
-    return collectedElements;
+    final isRelevantToSearch = collectedInlines.any((inline) => inline.isRelevantToSearch);
+    return SectionContent(collectedElements, isRelevantToSearch);
   }
 
   @override
@@ -148,12 +150,12 @@ class WidgetMaker implements md.NodeVisitor {
     final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
       final inlineMatters = makeMatterForInlines(processedText, element.sectionType, tag,
-          elmclass: elmclass, link: link, showPatterns: showPatterns);
+          elmclass: elmclass, link: link, showPatterns: showPatterns, searchPhrase: searchPhrase);
       collectedInlines.addAll(inlineMatters);
     }
   }
 
-  bool _isSeparate(elementTag) {
+  bool _isSeparate(String elementTag) {
     const widgetSeparators = ['h1', 'h2', 'p', 'pre', 'blockquote'];
     return widgetSeparators.contains(elementTag) &&
         (elementForCurrentText.isEmpty || elementForCurrentText.last.mdElement.tag != 'blockquote');
@@ -365,8 +367,15 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   return _contentSpacing(context, _horizontalScrollForOneLiners(sectionType, content));
 }
 
+class SectionContent {
+  List<TextSpan> spans;
+  bool isRelevantToSearch;
+  SectionContent(this.spans, this.isRelevantToSearch);
+}
+
 class ContentWidget extends StatelessWidget {
-  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd, {this.onTap, super.key}) {
+  ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
+      {this.onTap, this.searchPhrase, super.key}) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
@@ -375,6 +384,7 @@ class ContentWidget extends StatelessWidget {
   final String? nextmd;
   final String? prevmd;
   final void Function()? onTap;
+  final String? searchPhrase;
 
   List<String>? playableShows() {
     final ShowWords showWords = Get.find();
@@ -387,7 +397,7 @@ class ContentWidget extends StatelessWidget {
   @override
   Widget build(context) {
     Map<String, GlobalKey> anchorKeys = {};
-    List<Widget> textRichMaker(List<TextSpan> spans, SectionType sectionType) {
+    List<Widget> textRichMaker(SectionContent sectionContent, SectionType sectionType) {
       if (sectionType == SectionType.shlokaNumber) {
         return []; // Shloka number is now on the top-right
       }
@@ -398,45 +408,79 @@ class ContentWidget extends StatelessWidget {
             decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
             child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child:
-                    Text.rich(TextSpan(children: spans), style: Theme.of(context).textTheme.headlineSmall)),
+                child: Text.rich(TextSpan(children: sectionContent.spans),
+                    style: Theme.of(context).textTheme.headlineSmall)),
           )
         ];
       }
       return [
-        Obx(() => Visibility(
-              visible: _isVisible(sectionType),
-              child: _sectionContainer(context, sectionType, _spansToText(spans, sectionType)),
-            ))
+        Obx(() {
+          GlobalKey? searchKey;
+          bool visibility = _isVisible(sectionType);
+          if (sectionContent.isRelevantToSearch) {
+            searchKey = GlobalKey();
+            visibility = true;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (searchKey!.currentContext != null) {
+                Scrollable.ensureVisible(searchKey.currentContext!,
+                    duration: const Duration(milliseconds: 300));
+              }
+            });
+          }
+          return Visibility(
+            key: searchKey,
+            visible: visibility,
+            child: _sectionContainer(context, sectionType, _spansToText(sectionContent.spans, sectionType)),
+          );
+        }),
       ];
     }
 
-    TextStyle? styleFor(String tag, {String? elmclass, Presentation? presentation}) {
+    TextStyle? styleFor(String tag,
+        {String? elmclass, Presentation? presentation, bool isRelevantToSearch = false}) {
       FontWeight? fontWeight;
       if (presentation != null && presentation == Presentation.emphasis) {
         fontWeight = FontWeight.bold;
       }
+      Color? backgroundColor;
+      if (isRelevantToSearch) {
+        backgroundColor = Colors.yellow.withValues(alpha: 0.5);
+      }
       if (elmclass == 'language-shloka-sa') {
         return GoogleFonts.roboto(
-            color: contentColors(context)?.codeTextColor, fontSize: 20, fontWeight: fontWeight);
+            color: contentColors(context)?.codeTextColor,
+            fontSize: 20,
+            fontWeight: fontWeight,
+            backgroundColor: backgroundColor);
       } else if (tag == 'code') {
         return GoogleFonts.roboto(
-            color: contentColors(context)?.codeTextColor, fontSize: 18, fontWeight: fontWeight);
+            color: contentColors(context)?.codeTextColor,
+            fontSize: 18,
+            fontWeight: fontWeight,
+            backgroundColor: backgroundColor);
       } else if (tag == 'h1') {
         return Theme.of(context).textTheme.headlineMedium;
       } else if (tag == 'h2') {
-        return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3);
+        return Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(height: 3, backgroundColor: backgroundColor);
       } else if (tag == 'em') {
         return GoogleFonts.roboto(
-            height: 1.5, fontStyle: FontStyle.italic, fontSize: 16, fontWeight: fontWeight);
+            height: 1.5,
+            fontStyle: FontStyle.italic,
+            fontSize: 16,
+            fontWeight: fontWeight,
+            backgroundColor: backgroundColor);
       } else if (tag == 'note') {
-        return TextStyle(fontSize: 14, fontWeight: fontWeight);
+        return TextStyle(fontSize: 14, fontWeight: fontWeight, backgroundColor: backgroundColor);
       } else {
         return TextStyle(
             color: contentColors(context)?.commentaryTextColor,
             height: 1.75,
             fontSize: 18,
-            fontWeight: fontWeight);
+            fontWeight: fontWeight,
+            backgroundColor: backgroundColor);
       }
     }
 
@@ -457,7 +501,9 @@ class ContentWidget extends StatelessWidget {
         TextSpan(
           text: inlineMatter.text,
           style: styleFor(inlineMatter.tag,
-              elmclass: inlineMatter.elmclass, presentation: inlineMatter.presentation),
+              elmclass: inlineMatter.elmclass,
+              presentation: inlineMatter.presentation,
+              isRelevantToSearch: inlineMatter.isRelevantToSearch),
         )
       ];
     }
@@ -493,7 +539,8 @@ class ContentWidget extends StatelessWidget {
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
         child: Obx(() {
-          final widgetMaker = WidgetMaker(textRichMaker, formatMaker, showPatterns: playableShows());
+          final widgetMaker = WidgetMaker(textRichMaker, formatMaker,
+              showPatterns: playableShows(), searchPhrase: searchPhrase);
           final widgetsMade = widgetMaker.parse(md.mdContent.value);
           insertContentNote(widgetsMade);
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -557,17 +604,23 @@ class ShlokaContentReader extends StatelessWidget {
 }
 
 ContentWidget buildContent(String mdFilename,
-    {String? initialAnchor, String? prevmd, String? nextmd, void Function()? onTap, Key? key}) {
+    {String? initialAnchor,
+    String? prevmd,
+    String? nextmd,
+    void Function()? onTap,
+    String? searchPhrase,
+    Key? key}) {
   Get.put(ExpansionController(), tag: mdFilename);
-  return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd, onTap: onTap, key: key);
+  return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd,
+      onTap: onTap, searchPhrase: searchPhrase, key: key);
 }
 
 Widget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   return ShlokaContentReader(mdFilename, initialAnchor: initialAnchor);
 }
 
-ContentWidget buildContentFeed(String mdFilename, {Key? key}) {
+ContentWidget buildContentFeed(String mdFilename, {Key? key, String? searchPhrase}) {
   return buildContent(mdFilename, onTap: () {
     Get.toNamed('/shloka/$mdFilename');
-  }, key: key);
+  }, searchPhrase: searchPhrase, key: key);
 }

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choices_row.dart';
-import 'package:askys/feedcontent.dart';
+import 'package:askys/content_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +10,28 @@ import 'package:get/get.dart';
 const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
 const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
 
+class SearchedPara {
+  String mdFileNoExt;
+  String content;
+  SearchedPara({this.mdFileNoExt = '', this.content = ''});
+}
+
 class PhraseSearcher extends GetxController {
-  var top3mdFileNoExt = <String>[].obs;
+  var topResult = SearchedPara().obs;
   final isLoading = false.obs;
   final progressMsg = ''.obs;
   final Dio dio;
   final random = Random();
   final phraseInput = TextEditingController();
   PhraseSearcher(this.dio);
+
+  Future<void> research(String phrase) async {
+    reset();
+    await search(phrase);
+  }
+
   void reset() {
-    top3mdFileNoExt.value = [];
+    topResult.value = SearchedPara();
     isLoading.value = false;
     progressMsg.value = '';
   }
@@ -64,7 +76,10 @@ class PhraseSearcher extends GetxController {
       progressMsg.value = '';
       final responseJson = searchResponse.data as Map<String, dynamic>;
       final matches = responseJson['matches'] as List<dynamic>;
-      top3mdFileNoExt.value = matches.map((match) => match['filename_no_mdext'] as String).toList();
+      topResult.value = SearchedPara(
+        mdFileNoExt: matches[0]['filename_no_mdext'] as String,
+        content: matches[0]['match_text'] as String,
+      );
     } on DioException catch (e) {
       if (e.response != null) {
         final errData = e.response?.data as Map<String, dynamic>;
@@ -83,6 +98,11 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PhraseSearcher phraseSearcher = Get.find();
+    void unfocusAndSubmit(String phrase) {
+      FocusScope.of(context).unfocus();
+      phraseSearcher.research(phrase);
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -91,19 +111,18 @@ class SearchWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
+                  textInputAction: TextInputAction.search,
                   decoration: const InputDecoration(
                     hintText: 'Search',
                     border: OutlineInputBorder(),
                   ),
                   controller: phraseSearcher.phraseInput,
-                  onSubmitted: phraseSearcher.search,
+                  onSubmitted: unfocusAndSubmit,
                 ),
               ),
               const SizedBox(width: 16),
               ElevatedButton(
-                onPressed: () {
-                  phraseSearcher.search(phraseSearcher.phraseInput.text);
-                },
+                onPressed: () => unfocusAndSubmit(phraseSearcher.phraseInput.text),
                 child: const Icon(Icons.search, size: 48),
               ),
             ],
@@ -111,13 +130,9 @@ class SearchWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
-              if (phraseSearcher.top3mdFileNoExt.length == 3) {
-                final mdsInFeed =
-                    phraseSearcher.top3mdFileNoExt.map((shlokaFile) => '$shlokaFile.md').toList();
-                final FeedContent feedContent = Get.find();
-                feedContent.setCuratedShlokaMDs(mdsInFeed);
-                WidgetsBinding.instance.addPostFrameCallback((_) => Get.offNamed('/feed'));
-                return const SizedBox.shrink();
+              final topResult = phraseSearcher.topResult.value;
+              if (topResult.mdFileNoExt.isNotEmpty) {
+                return buildContentFeed('${topResult.mdFileNoExt}.md', searchPhrase: topResult.content);
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
