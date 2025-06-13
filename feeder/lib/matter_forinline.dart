@@ -44,7 +44,7 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
           matchCount++;
         }
       }
-      return matchCount * 4 > searchWords.length; // More than a quarter of the words match
+      return matchCount * 3 > searchWords.length; // More than a third of the words match
     }
     return false;
   }
