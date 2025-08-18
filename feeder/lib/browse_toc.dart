@@ -159,6 +159,7 @@ class BrowseToc extends StatelessWidget {
                 )),
             contentPadding: const EdgeInsets.only(left: 6),
             onTap: browseItem.expandItem,
+            visualDensity: browseItem.magFactor() < 1 ? VisualDensity(vertical: -4) : VisualDensity.standard,
           ));
         }
       }
