@@ -25,6 +25,7 @@ class ChapterEntry extends BrowseItem {
   @override
   void enterItem() {
     Get.toNamed('/shlokaheaders/$mdFilename');
+    choices.browsingPreference.value = BrowsingPreference.chapters;
   }
 
   @override
@@ -41,11 +42,13 @@ class OpenerEntry extends BrowseItem {
   @override
   void enterItem() {
     Get.toNamed('/shloka/$mdFilename/$noteId');
+    choices.browsingPreference.value = BrowsingPreference.notes;
   }
 
   @override
   void expandItem() {
     isOpened.value = !isOpened.value;
+    choices.browsingPreference.value = BrowsingPreference.notes;
   }
 
   @override
@@ -67,6 +70,7 @@ class NoteEntry extends BrowseItem {
   @override
   void enterItem() {
     Get.toNamed('/shloka/$mdFilename/$noteId');
+    choices.browsingPreference.value = BrowsingPreference.notes;
   }
 
   @override

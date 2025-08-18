@@ -119,12 +119,7 @@ List<Widget> choicesForFeed() {
 }
 
 Widget notesChaptersChoices() {
-  const notesChaptersTabs = [
-    BrowsingPreferenceIcon(BrowsingPreference.chapters, 'images/begin-chapters.png'),
-    SizedBox(width: choiceSpacing),
-    BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
-  ];
-  return choicesRow(notesChaptersTabs, [
+  return choicesRow([], [
     GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
     SizedBox(width: choiceSpacing),
     PersonalizeIcon(),

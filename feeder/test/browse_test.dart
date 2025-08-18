@@ -1,4 +1,5 @@
 import 'package:askys/browse_toc.dart';
+import 'package:askys/choice_selector.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
@@ -36,6 +37,7 @@ void main() {
     dioAdapter.onGet(
         '${GitHubFetcher.compiledPath}/notes_compiled.json', (server) => server.reply(200, notesCompiled));
     Get.put(GitHubFetcher(dio));
+    Get.put(Choices());
   });
   test('initializes openers in line with chapters', () async {
     final controller = Get.put(BrowseController());
