@@ -1,3 +1,4 @@
+import 'package:askys/browse_toc.dart';
 import 'package:askys/guided_tour.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
@@ -26,5 +27,6 @@ class ChoiceBinding implements Bindings {
     Get.put(PhraseSearcher(Dio(BaseOptions(connectTimeout: searchTimeout, receiveTimeout: searchTimeout))));
     Get.lazyPut(() => PlayablesTOC(), fenix: true);
     Get.put(GuidedTourController());
+    Get.put(BrowseController());
   }
 }

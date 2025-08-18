@@ -1,20 +1,24 @@
+import 'package:askys/notecontent.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/chaptercontent.dart';
-import 'package:askys/chapter_headers.dart' as chapters;
 
 class ChaptersWidget extends StatelessWidget {
   const ChaptersWidget({super.key});
 
   @override
   Widget build(context) {
-    final ChaptersTOC toc = Get.find();
+    final ChaptersTOC chapToc = Get.find();
+    final NotesTOC notesToc = Get.find();
     return Obx(() {
-      if (toc.chaptersLoaded.value) {
-        List<Widget> tocListElements = toc.chapters
-            .map((chapter) => _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)))
-            .toList();
-        return Scaffold(body: ListView(children: tocListElements));
+      if (chapToc.chaptersLoaded.value && notesToc.notesLoaded.value) {
+        return Scaffold(
+            body: SingleChildScrollView(
+                child: Column(
+                    children: chapToc.chapters
+                        .map((chapter) =>
+                            _formChapterTitle(chapter.title, Chapter.titleToFilename(chapter.title)))
+                        .toList())));
       } else {
         return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -25,11 +29,13 @@ class ChaptersWidget extends StatelessWidget {
   }
 
   Widget _formChapterTitle(String chapterHeading, String mdFilename) {
-    final headerText = chapters.headers[mdFilename] ?? '';
     return ListTile(
       leading: Image.asset('images/begin-chapters.png', width: 30, height: 30),
       title: Text(chapterHeading),
-      subtitle: Text(headerText),
+      subtitle: Column(children: [
+        Text('one'),
+        Text('two'),
+      ]),
       onTap: () => Get.toNamed('/shlokaheaders/$mdFilename'),
     );
   }
