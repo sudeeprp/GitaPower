@@ -59,6 +59,15 @@ void main() {
     // sampled up to 1-12.md
     Get.delete<BrowseController>();
   });
+  testWidgets('chapter entry does not throw error when leading pic does not exist', (tester) async {
+    await tester.pumpWidget(
+      Builder(builder: (BuildContext context) {
+        final chapterEntry = ChapterEntry('non existing chapter', 'non-exist.md', Choices());
+        expect(chapterEntry.defaultImage(context, Error(), null), isA<Image>());
+        return Placeholder();
+      }),
+    );
+  });
   testWidgets('browses chapters, openers, notes in openers', (tester) async {
     Get.put(BrowseController());
     await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: BrowseToc())));
@@ -73,5 +82,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('What shall I do...'), findsOneWidget);
     Get.delete<BrowseController>();
+  });
+  testWidgets('navigates to opener when arrow is tapped', (tester) async {
+    Get.put(BrowseController());
+    await tester.pumpWidget(GetMaterialApp(
+      home: Scaffold(body: BrowseToc()),
+      getPages: [
+        GetPage(name: '/shloka/Back-to-Basics.md/applopener_1', page: () => const Text('opened')),
+      ],
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('Back-to-Basics'), findsOneWidget);
+    expect(find.text('Who am I?'), findsOneWidget); // This is the opener
+    await tester.tap(find.byKey(const Key('opener_nav/Back-to-Basics.md/applopener_1')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shloka/Back-to-Basics.md/applopener_1');
   });
 }

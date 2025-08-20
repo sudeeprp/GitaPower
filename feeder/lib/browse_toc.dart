@@ -4,18 +4,19 @@ import 'package:askys/content_source.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BrowseItem {
+abstract class BrowseItem {
   BrowseItem(this.titleText, this.mdFilename);
   bool isVisible() => true;
-  void enterItem() {}
+  void enterItem();
   void expandItem() {
     enterItem();
   }
 
   int indentAt() => 0;
-  double magFactor() => 1.0;
-
-  String leadingPic() => '';
+  double magFactor();
+  double picSize() => magFactor() * 24;
+  Key? navWidgetKey() => null;
+  Widget leadingPic();
   String titleText;
   String mdFilename;
 }
@@ -28,8 +29,19 @@ class ChapterEntry extends BrowseItem {
     choices.browsingPreference.value = BrowsingPreference.chapters;
   }
 
+  Widget defaultImage(BuildContext context, Object error, StackTrace? stackTrace) {
+    return Image.asset('images/sunidhi-krishna.png', width: picSize(), height: picSize());
+  }
+
   @override
-  String leadingPic() => mdFilename.replaceFirst('.md', '.png');
+  Widget leadingPic() {
+    return Image.asset(
+      'images/${mdFilename.replaceFirst('.md', '.png')}',
+      width: picSize(),
+      height: picSize(),
+      errorBuilder: defaultImage,
+    );
+  }
 
   @override
   double magFactor() => choices.browsingPreference.value == BrowsingPreference.chapters ? 1 : 0.75;
@@ -39,6 +51,9 @@ class ChapterEntry extends BrowseItem {
 
 class OpenerEntry extends BrowseItem {
   OpenerEntry(super.titleText, super.mdFilename, this.noteId, this.choices);
+  @override
+  Key? navWidgetKey() => Key('opener_nav/$mdFilename/$noteId');
+
   @override
   void enterItem() {
     Get.toNamed('/shloka/$mdFilename/$noteId');
@@ -52,7 +67,13 @@ class OpenerEntry extends BrowseItem {
   }
 
   @override
-  String leadingPic() => isOpened.value ? 'one-step.png' : 'bothfeet.png';
+  Widget leadingPic() {
+    return Image.asset(
+      'images/${isOpened.value ? 'one-step.png' : 'bothfeet.png'}',
+      width: picSize(),
+      height: picSize(),
+    );
+  }
 
   @override
   double magFactor() => choices.browsingPreference.value == BrowsingPreference.notes ? 1 : 0.75;
@@ -74,8 +95,12 @@ class NoteEntry extends BrowseItem {
   }
 
   @override
-  String leadingPic() {
-    return noteId.codeUnitAt(noteId.length - 1) % 2 == 0 ? 'left-foot.png' : 'right-foot.png';
+  Widget leadingPic() {
+    return Image.asset(
+      'images/${noteId.codeUnitAt(noteId.length - 1) % 2 == 0 ? 'left-foot.png' : 'right-foot.png'}',
+      width: picSize(),
+      height: picSize(),
+    );
   }
 
   @override
@@ -96,7 +121,9 @@ class BrowseController extends GetxController {
     List<Map<String, String>> notesCompiled,
   ) {
     String textOfNote(String noteId) {
-      return notesCompiled.firstWhere((note) => note['note_id'] == noteId)['text'] ?? '';
+      return notesCompiled.firstWhere((note) => note['note_id'] == noteId,
+              orElse: () => {'text': ''})['text'] ??
+          '';
     }
 
     List<BrowseItem> itemSequence = [];
@@ -143,19 +170,19 @@ class BrowseToc extends StatelessWidget {
       final controller = Get.find<BrowseController>();
       final List<ListTile> listTiles = [];
       for (final browseItem in controller.browseItems) {
-        double picSize = browseItem.magFactor() * 24;
         if (browseItem.isVisible()) {
           listTiles.add(ListTile(
             leading: Padding(
               padding: EdgeInsetsGeometry.only(left: browseItem.indentAt() * 12),
-              child: Image.asset('images/${browseItem.leadingPic()}', width: picSize, height: picSize),
+              child: browseItem.leadingPic(),
             ),
             title: Text(browseItem.titleText, textScaler: TextScaler.linear(browseItem.magFactor())),
             trailing: GestureDetector(
                 onTap: browseItem.enterItem,
                 child: Padding(
                   padding: EdgeInsets.only(right: 24),
-                  child: Icon(Icons.arrow_forward_rounded, size: picSize),
+                  child: Icon(Icons.arrow_forward_rounded,
+                      key: browseItem.navWidgetKey(), size: browseItem.magFactor() * 24),
                 )),
             contentPadding: const EdgeInsets.only(left: 6),
             onTap: browseItem.expandItem,
