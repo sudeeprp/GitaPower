@@ -45,7 +45,14 @@ class PersonalWidget extends StatelessWidget {
     required Rx<T> groupValue,
     required String Function(T) displayText,
   }) {
-    return Obx(() => Column(
+    return Obx(() => RadioGroup(
+        groupValue: groupValue.value,
+        onChanged: (T? newValue) {
+          if (newValue != null) {
+            groupValue.value = newValue;
+          }
+        },
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -54,15 +61,9 @@ class PersonalWidget extends StatelessWidget {
             ...values.map((value) => RadioListTile<T>(
                   title: Text(displayText(value)),
                   value: value,
-                  groupValue: groupValue.value,
-                  onChanged: (T? newValue) {
-                    if (newValue != null) {
-                      groupValue.value = newValue;
-                    }
-                  },
                 )),
             Divider(height: 16, indent: 16),
           ],
-        ));
+        )));
   }
 }
