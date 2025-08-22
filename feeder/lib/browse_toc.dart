@@ -14,7 +14,7 @@ abstract class BrowseItem {
 
   int indentAt() => 0;
   double magFactor();
-  double picSize() => magFactor() * 24;
+  double picSize() => magFactor() * 28;
   Key? navWidgetKey() => null;
   Widget leadingPic();
   String titleText;
@@ -44,7 +44,7 @@ class ChapterEntry extends BrowseItem {
   }
 
   @override
-  double magFactor() => choices.browsingPreference.value == BrowsingPreference.chapters ? 1 : 0.75;
+  double magFactor() => choices.browsingPreference.value == BrowsingPreference.chapters ? 1.2 : 0.75;
 
   Choices choices;
 }
@@ -106,7 +106,7 @@ class NoteEntry extends BrowseItem {
   @override
   int indentAt() => 1;
   @override
-  double magFactor() => 0.75;
+  double magFactor() => 0.8;
 
   String noteId;
   Choices choices;
