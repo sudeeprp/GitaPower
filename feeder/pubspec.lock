@@ -169,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  check_coverage:
+    dependency: "direct dev"
+    description:
+      name: check_coverage
+      sha256: "22b39e62ba215d0bc454d8e16604614253aa0cc4255340b3a2bda16dc858abf6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.8"
   checked_yaml:
     dependency: transitive
     description:
@@ -535,6 +543,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  lcov_tracefile:
+    dependency: transitive
+    description:
+      name: lcov_tracefile
+      sha256: a8b9e19669df7a6944220f14b616f6dc56f38f3a3a7fd4a422bf3a1c67e777c5
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   leak_tracker:
     dependency: transitive
     description:
