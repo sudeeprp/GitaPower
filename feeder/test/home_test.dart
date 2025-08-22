@@ -9,7 +9,7 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:askys/content_source.dart';
 
 const compiledMDtoNoteIds = '''
-[{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter 1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
+[{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter_1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
 ''';
 const sampleBasics = '''
 ```shloka-sa
@@ -78,6 +78,7 @@ void main() {
     expect(Get.currentRoute, '/browse');
     await tester.tap(find.text('Chapter 1')); // tap #2
     await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/shlokaheaders/Chapter_1.md');
     await tester.tap(find.text('1-1')); // tap #3
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/shloka/1-1.md');

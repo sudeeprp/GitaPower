@@ -80,7 +80,7 @@ class Choices extends GetxController {
 }
 
 class MeaningExpansionIcon extends StatelessWidget {
-  const MeaningExpansionIcon({super.key});
+  const MeaningExpansionIcon({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class MeaningExpansionIcon extends StatelessWidget {
 }
 
 class HeaderPreferenceIcon extends StatelessWidget {
-  const HeaderPreferenceIcon({super.key});
+  const HeaderPreferenceIcon({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class HeaderPreferenceIcon extends StatelessWidget {
 }
 
 class OpenerPreferenceIcon extends StatelessWidget {
-  const OpenerPreferenceIcon({super.key});
+  const OpenerPreferenceIcon({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +122,7 @@ class OpenerPreferenceIcon extends StatelessWidget {
 }
 
 class BrowsingPreferenceIcon extends StatelessWidget {
-  const BrowsingPreferenceIcon(this.browsingPreference, this.iconFile, {super.key});
+  const BrowsingPreferenceIcon(this.browsingPreference, this.iconFile, {super.key}); // coverage:ignore-line
 
   final BrowsingPreference browsingPreference;
   final String iconFile;

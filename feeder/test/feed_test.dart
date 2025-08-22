@@ -61,7 +61,7 @@ void main() {
     await tester.pumpAndSettle();
     final shlokaFinder = find.byType(GestureDetector);
     var tapOffset = tester.getTopLeft(find.byWidget(shlokaFinder.evaluate().first.widget));
-    tapOffset += const Offset(5, 5);
+    tapOffset += const Offset(15, 15);
     await tester.tapAt(tapOffset);
     await tester.pumpAndSettle();
     expect(Get.currentRoute, startsWith('/shloka/'));

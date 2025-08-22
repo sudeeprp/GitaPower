@@ -1,10 +1,10 @@
 import 'package:app_links/app_links.dart';
+import 'package:askys/browse_toc.dart';
 import 'package:askys/chapter_shloka_widget.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/content_themes.dart';
 import 'package:askys/guided_tour.dart';
-import 'package:askys/notes_widget.dart';
 import 'package:askys/personal_widget.dart';
 import 'package:askys/search_screen.dart';
 import 'package:askys/tours_widget.dart';
@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:askys/choice_bindings.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/begin_widget.dart';
-import 'package:askys/chapters_widget.dart';
 import 'package:askys/feed_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:askys/choices_row.dart';
@@ -89,13 +88,7 @@ Widget feedScreen() {
 }
 
 Widget browsingScreen() {
-  Choices choices = Get.find();
-  return Obx(() => screenify(
-        choices.browsingPreference.value == BrowsingPreference.chapters
-            ? const ChaptersWidget(key: Key('toc'))
-            : const NotesWidget(),
-        choicesRow: notesChaptersChoices(),
-      ));
+  return screenify(BrowseToc(), choicesRow: notesChaptersChoices());
 }
 
 class Home extends StatelessWidget {
@@ -126,12 +119,7 @@ List<Widget> choicesForFeed() {
 }
 
 Widget notesChaptersChoices() {
-  const notesChaptersTabs = [
-    BrowsingPreferenceIcon(BrowsingPreference.chapters, 'images/begin-chapters.png'),
-    SizedBox(width: choiceSpacing),
-    BrowsingPreferenceIcon(BrowsingPreference.notes, 'images/one-step.png'),
-  ];
-  return choicesRow(notesChaptersTabs, [
+  return choicesRow([], [
     GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
     SizedBox(width: choiceSpacing),
     PersonalizeIcon(),
