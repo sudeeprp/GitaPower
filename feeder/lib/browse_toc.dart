@@ -173,7 +173,7 @@ class BrowseToc extends StatelessWidget {
         if (browseItem.isVisible()) {
           listTiles.add(ListTile(
             leading: Padding(
-              padding: EdgeInsetsGeometry.only(left: browseItem.indentAt() * 12),
+              padding: EdgeInsets.only(left: browseItem.indentAt() * 12),
               child: browseItem.leadingPic(),
             ),
             title: Text(browseItem.titleText, textScaler: TextScaler.linear(browseItem.magFactor())),
