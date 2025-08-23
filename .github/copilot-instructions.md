@@ -45,7 +45,7 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Testing Requirements:
 - 100% test coverage is **strictly enforced** - the CI will fail if coverage drops below 100%
-- All unit tests must pass: `flutter test`
+- All unit tests must pass: `flutter test --dart-define=actionHideInSecs=0`
 - Widget tests use GetX dependency injection - see test files for mocking patterns
 - Integration tests via: `flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart`
 - Mock generation required: `dart run build_runner build` (generates .mocks.dart files)
@@ -108,7 +108,7 @@ cd feeder/
 bash gita-begin-offline.sh  # Setup content (first time only)
 flutter pub get              # Get dependencies  
 dart run build_runner build  # Generate mocks
-flutter test                 # Run tests
+flutter test --dart-define=actionHideInSecs=0    # Run tests
 dart format -l 110 .        # Format code
 flutter analyze             # Static analysis
 ```
@@ -182,7 +182,7 @@ flutter build appbundle --release --build-name 1.0.0 --build-number 1
 - Content setup (`gita-begin-offline.sh`): 1-2 minutes
 - Dependencies (`flutter pub get`): 2-5 minutes  
 - Mock generation (`dart run build_runner build`): 5-10 minutes
-- Full test suite (`flutter test`): 15-30 minutes
+- Full test suite (`flutter test --dart-define=actionHideInSecs=0`): 15-30 minutes
 - Complete validation (`checkmycode.sh`): 20-40 minutes  
 - Release build (`flutter build appbundle`): 45-90 minutes
 - CI pipeline complete: 60-120 minutes
