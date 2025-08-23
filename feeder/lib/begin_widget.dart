@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:askys/tours_widget.dart';
 
 Widget titleTextContainer(String title, String about) {
   final titleText = Padding(
@@ -35,8 +36,8 @@ class BeginWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return Column(children: [
-      beginItem('tour', 'Play a feed', Image.asset('images/begin-feed3.png')),
       beginItem('browse', 'Browse topics', Image.asset('images/begin-chapters.png')),
+      Expanded(child: ToursListWidget()),
     ]);
   }
 }

@@ -8,9 +8,18 @@ class ToursWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+            body: ToursListWidget());
+  }
+}
+
+class ToursListWidget extends StatelessWidget {
+  const ToursListWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     PlayablesTOC playablesTOC = Get.find();
-    return Obx(() => Scaffold(
-            body: ListView(
+    return Obx(() => ListView(
           children: [
                 ListTile(
                     key: const Key('tour/random'),
@@ -30,6 +39,6 @@ class ToursWidget extends StatelessWidget {
                         onTap: () => navigateApplink(Uri.parse(playable.url)),
                       ))
                   .toList(),
-        )));
+        ));
   }
 }

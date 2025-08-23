@@ -64,9 +64,6 @@ void main() {
   });
   testWidgets('Navigates to journey tours from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/tour')));
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/tour');
     await tester.tap(find.byKey(const Key('tour/random')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
@@ -107,9 +104,6 @@ void main() {
   });
   testWidgets('Navigates to curated tours from the home screen', (tester) async {
     await tester.pumpWidget(makeMyHome());
-    await tester.tap(find.byKey(const Key('begin/tour')));
-    await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/tour');
     await tester.tap(find.byKey(const Key('bring_the_best_in_you')));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/guided/bring_the_best_in_you');
