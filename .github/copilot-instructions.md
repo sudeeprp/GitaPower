@@ -33,19 +33,31 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Essential User Scenarios to Test:
 1. **App Launch and Tour**: 
-   - Launch app → Select "Take a tour" → Play narrated content → Verify audio plays and subtitles appear
+   - Launch app → Select "Take a tour" → Select a guided tour → Play narrated content → Verify audio plays and subtitles appear → Test pause/resume functionality
 2. **Chapter Browse**:
-   - Launch app → Select "Start chapter by chapter" → Browse chapters → Open a specific shloka → Verify content loads
+   - Launch app → Select "Start chapter by chapter" → Browse chapters → Open a specific shloka (e.g., Chapter 2, Shloka 47) → Verify markdown content renders correctly → Test navigation between shlokas
 3. **Search Functionality**:
-   - From main screen → Use search → Enter keywords → Verify results appear and are navigable
+   - From main screen → Use search → Enter keywords like "dharma" or "karma" → Verify results appear → Tap result → Verify navigation to correct content
 4. **Offline Content**:
-   - Verify app works without network after initial setup → All content should load from local storage
+   - Verify app works without network after initial setup → All content should load from local storage → Test that tours, chapters, and search all work offline
+5. **Content Navigation**:
+   - Test back/forward navigation → Verify proper state management → Test deep linking if app supports it
 
 ### Testing Requirements:
 - 100% test coverage is **strictly enforced** - the CI will fail if coverage drops below 100%
 - All unit tests must pass: `flutter test`
+- Widget tests use GetX dependency injection - see test files for mocking patterns
 - Integration tests via: `flutter drive --driver=test_driver/screenshot_driver.dart --target=integration_test/integ_test.dart`
+- Mock generation required: `dart run build_runner build` (generates .mocks.dart files)
+- Test coverage report: `dart run test_cov_console --csv` with exclusions for generated files
 - **Manual validation required**: Run through the user scenarios above after any UI changes
+
+### Test Patterns in this Codebase:
+- Uses `mockito` for mocking dependencies (see `guided_tour_test.mocks.dart`)
+- GetX dependency injection with `Get.put()` and `Get.find()` patterns  
+- Widget testing with `flutter_test` framework
+- DioAdapter for mocking HTTP requests in tests
+- Audio player mocking for tour functionality tests
 
 ## Project Structure
 
@@ -58,11 +70,14 @@ Always reference these instructions first and fallback to search or bash command
 - `/feeder/gita-begin/` - Offline content (setup via gita-begin-offline.sh)
 
 ### Key Files to Know:
-- `/feeder/pubspec.yaml` - Dependencies and app configuration
-- `/feeder/lib/main.dart` - Application entry point
-- `/feeder/lib/home.dart` - Main app navigation
-- `/feeder/lib/feedcontent.dart` - Content management and tour functionality  
-- `/feeder/checkmycode.sh` - Comprehensive validation script
+- `/feeder/pubspec.yaml` - Dependencies and app configuration (Flutter 3.5+, key packages: get, dio, firebase)
+- `/feeder/lib/main.dart` - Application entry point with Firebase initialization
+- `/feeder/lib/home.dart` - Main app navigation and routing setup
+- `/feeder/lib/feedcontent.dart` - Content management, tour functionality, and audio player integration
+- `/feeder/lib/content_source.dart` - GitHub content fetching and caching logic
+- `/feeder/lib/guided_tour.dart` - Tour UI and narration controls
+- `/feeder/lib/mdcontent.dart` - Markdown content rendering
+- `/feeder/checkmycode.sh` - Comprehensive validation script (format, analyze, test, coverage)
 - `/feeder/gita-begin-offline.sh` - Required content setup script
 
 ### Build Configuration:
@@ -98,11 +113,29 @@ dart format -l 110 .        # Format code
 flutter analyze             # Static analysis
 ```
 
+### Full Validation Workflow:
+```bash
+cd feeder/
+bash checkmycode.sh         # Complete validation (20-40 minutes)
+```
+
+### Release Build Workflow:
+```bash
+cd feeder/
+flutter build appbundle --release --build-name 1.0.0 --build-number 1
+```
+
 ### Content Management:
 - Content is fetched from https://github.com/rapalearning/gita-begin
 - Offline setup must be run first: `bash gita-begin-offline.sh`
-- Content includes compiled JSON files and markdown chapters
-- Tour content includes narrated audio files
+- Content includes compiled JSON files and markdown chapters in `gita-begin/gita/`
+- Compiled metadata in `gita-begin/compile/` includes opener questions and navigation data
+- Tour content includes narrated audio files served from GitHub CDN
+
+### Generated Files (Do Not Edit Manually):
+- `lib/shloka_headers.dart` - Generated from tools/generate_headers.sh
+- Test mock files - Generated via `dart run build_runner build`
+- Firebase configuration files - Generated via FlutterFire CLI
 
 ### Release Process:
 - Code formatting and tests must pass
@@ -118,6 +151,18 @@ flutter analyze             # Static analysis
 - **Test failures**: Check that all mocks are generated via `dart run build_runner build`
 - **Format failures**: Run `dart format -l 110 .` with exactly 110 character line length
 - **Coverage failures**: Add tests for any new code - 100% coverage is strictly required
+- **Flutter version issues**: CI uses Flutter stable via `subosito/flutter-action@v2`
+- **Android build issues**: Ensure Java 17+ and Android SDK are properly configured
+
+### Content Issues:
+- **Missing audio**: Audio files are served from GitHub CDN, ensure network access during runtime
+- **Missing chapters**: Verify gita-begin content was properly cloned and compiled JSON exists
+- **Navigation issues**: Check that prior/next navigation data in compiled JSON is valid
+
+### Performance Issues:
+- **Slow app start**: Normal due to offline content loading and Firebase initialization
+- **Memory issues**: Large content dataset - verify efficient loading in feedcontent.dart
+- **Build slowness**: Dart compilation and test coverage analysis are intensive operations
 
 ### Network Dependencies:
 - Initial content setup requires GitHub access
@@ -147,9 +192,24 @@ flutter analyze             # Static analysis
 ## Development Environment Notes
 
 This is a mature Flutter application with:
-- Comprehensive test coverage requirements (100%)
-- Established CI/CD pipeline with Google Play Store integration
-- Firebase crash reporting and analytics
-- Offline-first content approach
-- Narrated tour functionality with audio
-- Multi-language support infrastructure
+- **Architecture**: GetX state management with reactive programming patterns
+- **Content Strategy**: Offline-first with GitHub-hosted markdown and audio content
+- **Audio Integration**: just_audio package for narrated tours with background music
+- **UI Framework**: Material Design with custom theming and Google Fonts
+- **Backend**: Firebase for crash reporting and analytics (no authentication required)
+- **Testing**: Comprehensive test coverage requirements (100%) with widget and integration tests
+- **CI/CD**: Established pipeline with Google Play Store integration via fastlane
+- **Content Management**: External content repository (rapalearning/gita-begin) with automated synchronization
+- **Navigation**: GetX routing with deep link support for content pages
+- **Localization**: Infrastructure present for multi-language support
+- **Performance**: Optimized for offline usage with efficient content caching
+
+### Technical Stack:
+- **State Management**: GetX (reactive programming)
+- **HTTP Client**: Dio with mock adapters for testing
+- **Audio**: just_audio with playlist support
+- **Markdown**: Flutter markdown rendering
+- **Fonts**: Google Fonts with local caching
+- **Icons**: Cupertino icons with custom launcher icons
+- **Testing**: mockito + flutter_test + integration_test
+- **Build**: Standard Flutter build tools with fastlane deployment
