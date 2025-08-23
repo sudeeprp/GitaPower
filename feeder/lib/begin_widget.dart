@@ -25,8 +25,8 @@ Widget beginItem(String title, String about, Image image, {Key? key}) {
           child: Row(children: [
             Expanded(key: key, child: titleTextContainer(title, about)),
             Expanded(
-                child:
-                    Padding(padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: image)),
           ])));
 }
 

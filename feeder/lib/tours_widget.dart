@@ -8,8 +8,7 @@ class ToursWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-            body: ToursListWidget());
+    return Scaffold(body: ToursListWidget());
   }
 }
 

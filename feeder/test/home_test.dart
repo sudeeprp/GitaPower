@@ -9,7 +9,8 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:askys/content_source.dart';
 
 const compiledMDtoNoteIds = '''
-[{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter_1.md": []}, {"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
+[{"Back-to-Basics.md": ["applnote_10", "applopener_11"]}, {"Chapter_1.md": []}, 
+{"1-1.md": ["applnote_13"]}, {"1-12.md": ["applnote_14"]}, {"1-13.md": []}]
 ''';
 const sampleBasics = '''
 ```shloka-sa
@@ -37,7 +38,8 @@ const sampleShloka = '''
 आपूर्यमाणम्
 ```''';
 const compiledNotes = '''
-[{"note_id": "applopener_11", "text": "Is there a different way?", "file": "Back-to-Basics.md"}, {"note_id": "applnote_13", "text": "We often doubt", "file": "1-1.md"}]
+[{"note_id": "applopener_11", "text": "Is there a different way?", "file": "Back-to-Basics.md"}, 
+{"note_id": "applnote_13", "text": "We often doubt", "file": "1-1.md"}]
 ''';
 const playablesTOC = '''# Playable feeds
 
