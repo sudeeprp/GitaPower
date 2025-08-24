@@ -7,7 +7,6 @@ import 'package:askys/content_themes.dart';
 import 'package:askys/guided_tour.dart';
 import 'package:askys/personal_widget.dart';
 import 'package:askys/search_screen.dart';
-import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:askys/choice_bindings.dart';
@@ -57,12 +56,6 @@ Widget makeMyHome() {
       home: const Home(),
       debugShowCheckedModeBanner: false,
       getPages: [
-        GetPage(
-            name: '/tour',
-            page: () => screenify(const ToursWidget(),
-                appBar: AppBar(
-                    toolbarHeight: 150, title: Image.asset('images/once-again.png', fit: BoxFit.contain)),
-                choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]))),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),

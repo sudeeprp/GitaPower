@@ -3,15 +3,6 @@ import 'package:askys/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ToursWidget extends StatelessWidget {
-  const ToursWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: ToursListWidget());
-  }
-}
-
 class ToursListWidget extends StatelessWidget {
   const ToursListWidget({super.key});
 
