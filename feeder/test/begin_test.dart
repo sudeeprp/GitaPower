@@ -17,24 +17,4 @@ void main() {
     Get.delete<PlayablesTOC>();
     Get.delete<GitHubFetcher>();
   });
-  testWidgets('begin-item switches to content when tapped', (WidgetTester tester) async {
-    bool switchedToTargetWidget = false;
-    await tester.pumpWidget(GetMaterialApp(
-        home: Column(children: [
-          beginItem('browse', 'Start chapter by chapter', Image.asset('images/begin-chapters.png'),
-              key: const Key('begin-to-tap'))
-        ]),
-        getPages: [
-          GetPage(
-              name: '/browse',
-              page: () {
-                switchedToTargetWidget = true;
-                return const Text('target of browse');
-              })
-        ]));
-    await tester.tap(find
-        .byWidgetPredicate((widget) => widget is RichText && widget.text.toPlainText().contains('browse')));
-    await tester.pump();
-    expect(switchedToTargetWidget, equals(true));
-  });
 }

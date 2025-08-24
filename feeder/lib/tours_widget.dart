@@ -8,6 +8,7 @@ class ToursListWidget extends StatelessWidget {
 
   Widget _buildTourCard({
     required Key key,
+    required BuildContext context,
     required IconData icon,
     required String title,
     required VoidCallback onTap,
@@ -16,9 +17,15 @@ class ToursListWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[300]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blueGrey.withValues(alpha: 0.5),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: ListTile(
         key: key,
@@ -52,6 +59,7 @@ class ToursListWidget extends StatelessWidget {
           children: [
                 _buildTourCard(
                   key: const Key('tour/random'),
+                  context: context,
                   icon: Icons.star_rounded,
                   title: 'Explore Yourself',
                   iconColor: Colors.orange,
@@ -65,6 +73,7 @@ class ToursListWidget extends StatelessWidget {
               playablesTOC.playables
                   .map((playable) => _buildTourCard(
                         key: Key(playable.tourFolder),
+                        context: context,
                         icon: Icons.play_arrow,
                         title: playable.title,
                         onTap: () => navigateApplink(Uri.parse(playable.url)),
