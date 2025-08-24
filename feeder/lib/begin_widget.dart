@@ -39,16 +39,61 @@ class BeginWidget extends StatelessWidget {
       beginItem('browse', 'Browse topics', Image.asset('images/begin-chapters.png')),
       Expanded(
         key: const Key('begin/guides'),
-        child: Row(children: [
-          Expanded(flex: 2, child: ToursListWidget()),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Image.asset('images/look-listen.png', fit: BoxFit.contain),
-            ),
+        child: Container(
+          margin: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[50],
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.play_circle_filled, size: 32, color: Colors.blue),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Guided Tours',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      height: 40,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: const DecorationImage(
+                          image: AssetImage('images/look-listen.png'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: ToursListWidget(),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     ]);
   }
