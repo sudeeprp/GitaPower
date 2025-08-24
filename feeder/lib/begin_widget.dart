@@ -37,7 +37,19 @@ class BeginWidget extends StatelessWidget {
   Widget build(context) {
     return Column(children: [
       beginItem('browse', 'Browse topics', Image.asset('images/begin-chapters.png')),
-      Expanded(key: const Key('begin/guides'), child: ToursListWidget()),
+      Expanded(
+        key: const Key('begin/guides'),
+        child: Row(children: [
+          Expanded(flex: 2, child: ToursListWidget()),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.asset('images/look-listen.png', fit: BoxFit.contain),
+            ),
+          ),
+        ]),
+      ),
     ]);
   }
 }
