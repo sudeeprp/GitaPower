@@ -221,11 +221,15 @@ class PlayablesTOC extends GetxController {
   final playables = <Playable>[].obs;
   @override
   void onInit() async {
+    await extractPlayables();
+    super.onInit();
+  }
+
+  Future<void> extractPlayables() async {
     final GitHubFetcher contentSource = Get.find();
     final playablesTocMD = await contentSource.playablesTocMD();
     if (playablesTocMD != null) {
       playables.value = extractPlayablesFromTOC(playablesTocMD.split('\n'));
     }
-    super.onInit();
   }
 }

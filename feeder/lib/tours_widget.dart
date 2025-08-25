@@ -51,34 +51,48 @@ class ToursListWidget extends StatelessWidget {
     );
   }
 
+  List<Widget> _onlinePlayables(BuildContext context) {
+    PlayablesTOC playablesTOC = Get.find();
+    if (playablesTOC.playables.isEmpty) {
+      return [
+        Center(
+            child: IconButton(
+                icon: const Icon(Icons.refresh, size: 32, color: Colors.blueGrey),
+                tooltip: 'Refresh tours',
+                onPressed: () {
+                  playablesTOC.extractPlayables();
+                }))
+      ];
+    }
+    return playablesTOC.playables
+        .map((playable) => _buildTourCard(
+              key: Key(playable.tourFolder),
+              context: context,
+              icon: Icons.play_arrow,
+              title: playable.title,
+              onTap: () => navigateApplink(Uri.parse(playable.url)),
+            ))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    PlayablesTOC playablesTOC = Get.find();
     return Obx(() => ListView(
-          padding: EdgeInsets.zero,
-          children: [
-                _buildTourCard(
-                  key: const Key('tour/random'),
-                  context: context,
-                  icon: Icons.star_rounded,
-                  title: 'Explore Yourself',
-                  iconColor: Colors.orange,
-                  onTap: () {
-                    final FeedContent feedContent = Get.find();
-                    feedContent.resetToRandom();
-                    Get.toNamed('/feed');
-                  },
-                ),
-              ] +
-              playablesTOC.playables
-                  .map((playable) => _buildTourCard(
-                        key: Key(playable.tourFolder),
-                        context: context,
-                        icon: Icons.play_arrow,
-                        title: playable.title,
-                        onTap: () => navigateApplink(Uri.parse(playable.url)),
-                      ))
-                  .toList(),
-        ));
+        padding: EdgeInsets.zero,
+        children: [
+              _buildTourCard(
+                key: const Key('tour/random'),
+                context: context,
+                icon: Icons.star_rounded,
+                title: 'Explore Yourself',
+                iconColor: Colors.orange,
+                onTap: () {
+                  final FeedContent feedContent = Get.find();
+                  feedContent.resetToRandom();
+                  Get.toNamed('/feed');
+                },
+              ),
+            ] +
+            _onlinePlayables(context)));
   }
 }

@@ -29,12 +29,15 @@ void navigateApplink(Uri? uri) {
       final curation = uri.pathSegments[2].split('.');
       if (curation.length >= 3) {
         final filesWithoutExtn = curation.sublist(0, 3);
+        final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
+        final FeedContent feedContent = Get.find();
         if (curation.length == 4) {
           tourFolder = curation[3];
-          final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
-          final FeedContent feedContent = Get.find();
           feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
           Get.toNamed('/guided/$tourFolder');
+        } else {
+          feedContent.setCuratedShlokaMDs(mdsInFeed);
+          Get.toNamed('/feed');
         }
       }
     }
