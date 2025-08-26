@@ -1,6 +1,7 @@
 import 'package:askys/choice_selector.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/home.dart';
+import 'package:askys/tours_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -110,7 +111,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/guided/bring_the_best_in_you');
   });
-  testWidgets('Navigates an app link', (tester) async {
+  testWidgets('Provides option to refresh when tours were not fetched', (tester) async {
+    Get.put(PlayablesTOC());
+    await tester.pumpAndSettle();
+    final playablesTOC = Get.find<PlayablesTOC>();
+    playablesTOC.playables.value = [];
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: ToursListWidget())));
+    await tester.pumpAndSettle();
+    final refreshButton = find.byKey(const Key('tours/refresh'));
+    expect(refreshButton, findsOneWidget);
+    await tester.tap(refreshButton);
+    await tester.pumpAndSettle();
+    Get.delete<PlayablesTOC>();
+  });
+  testWidgets('Navigates an app link with an associated tour', (tester) async {
     // To test manually, use:
     // adb shell am start -a android.intent.action.VIEW   -c android.intent.category.BROWSABLE \
     //   -d "https://rapalearning.com/gitapower/feed/1-1.2-1.3-1.bring_the_best_in_you"
@@ -124,6 +138,18 @@ void main() {
     navigateApplink(Uri.parse('/gitapower/feed/$shlokas.bring_the_best_in_you'));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/guided/bring_the_best_in_you');
+  });
+  testWidgets('Navigates an app link having no tour', (tester) async {
+    Get.put(FeedContent.random());
+    await tester.pumpWidget(GetMaterialApp(
+        home: const Scaffold(body: Text('Start page')),
+        getPages: [GetPage(name: '/feed', page: () => const Text('reached'))]));
+    navigateApplink(null);
+    await tester.pumpAndSettle();
+    const wipShlokas = '2-14.6-35_to_6-36.10-11';
+    navigateApplink(Uri.parse('/gitapower/feed/$wipShlokas'));
+    await tester.pumpAndSettle();
+    Get.delete<FeedContent>();
   });
   testWidgets('sets app-wide preferences', (tester) async {
     await tester.pumpWidget(makeMyHome());

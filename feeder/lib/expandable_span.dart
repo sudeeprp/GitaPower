@@ -21,14 +21,23 @@ class ExpansionController extends GetxController {
   }
 }
 
+// The ExpansionController is discarded whenever the screen exits.
+// Hence, we need a fallback while re-rendering
+ExpansionController findController(String mdFilename) {
+  if (Get.isRegistered<ExpansionController>(tag: mdFilename)) {
+    return Get.find<ExpansionController>(tag: mdFilename);
+  }
+  return Get.put(ExpansionController(), tag: mdFilename);
+}
+
 class ExpandableMeaning extends StatelessWidget {
-  const ExpandableMeaning(this.meaningRichText, {this.identifier, super.key});
+  const ExpandableMeaning(this.meaningRichText, {required this.identifier, super.key});
   final Widget meaningRichText;
-  final String? identifier;
+  final String identifier;
 
   @override
   Widget build(BuildContext context) {
-    final ExpansionController expander = Get.find(tag: identifier);
+    final ExpansionController expander = findController(identifier);
     return Obx(
       () => expander.showMeaning.value ? meaningRichText : meaningTapper(expander, context),
     );
@@ -50,13 +59,13 @@ class ExpandableMeaning extends StatelessWidget {
 }
 
 class ExpandableShloka extends StatelessWidget {
-  const ExpandableShloka(this.shlokaText, {this.identifier, super.key});
+  const ExpandableShloka(this.shlokaText, {required this.identifier, super.key});
   final Widget shlokaText;
-  final String? identifier;
+  final String identifier;
 
   @override
   Widget build(BuildContext context) {
-    final ExpansionController expander = Get.find(tag: identifier);
+    final ExpansionController expander = findController(identifier);
     return Obx(
       () => expander.showShloka.value ? shlokaText : shlokaTapper(expander, context),
     );

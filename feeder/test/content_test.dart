@@ -489,4 +489,10 @@ A person diverts from the path of realizing the Self due to some desires.
     await tester.pumpAndSettle();
     expect(find.textContaining('तेषाम् एव अनुकम्पार्थम्', findRichText: true), findsOneWidget);
   });
+  test('finds expansion controller, even when it has not been registered', () {
+    Get.put(Choices());
+    final controller = findController('any-shloka.md');
+    expect(controller, isNotNull);
+    Get.delete<Choices>();
+  });
 }

@@ -57,6 +57,7 @@ class ToursListWidget extends StatelessWidget {
       return [
         Center(
             child: IconButton(
+                key: const Key('tours/refresh'),
                 icon: const Icon(Icons.refresh, size: 32, color: Colors.blueGrey),
                 tooltip: 'Refresh tours',
                 onPressed: () {
