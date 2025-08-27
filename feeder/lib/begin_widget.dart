@@ -65,7 +65,7 @@ class BeginWidget extends StatelessWidget {
             Expanded(
                 flex: 3,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   child: ToursListWidget(),
                 )),
           ],
