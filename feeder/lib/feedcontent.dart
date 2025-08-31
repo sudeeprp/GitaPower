@@ -170,7 +170,8 @@ class FeedContent extends GetxController {
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
       await audioPlayer.setAudioSources(
-        [AudioSource.asset('audio/background.m4a')] + uriList.map((uri) => AudioSource.uri(uri)).toList(),
+        [AudioSource.asset('audio/bell_background.m4a')] +
+            uriList.map((uri) => AudioSource.uri(uri)).toList(),
         preload: true,
         initialIndex: 0,
         initialPosition: Duration.zero,
