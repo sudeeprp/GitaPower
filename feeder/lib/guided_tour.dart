@@ -63,8 +63,8 @@ Widget guidedTourScreen(String tourFolder) {
     if (playable != nullPlayable) {
       return screenify(GuidedTourWidget(playable),
           appBar: AppBar(
-            title: const Text(
-              'Bring the best in you',
+            title: Text(
+              playable.title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
