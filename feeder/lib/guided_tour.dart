@@ -149,7 +149,7 @@ Widget tourCover() {
     final List<List<String>> showsForThreeShlokas = [[], [], []];
     int currentShloka = -1;
     for (var tourStop in feedContent.tour.tourStops) {
-      if (RegExp(r'^Chapter \d+, Shloka \d+$').hasMatch(tourStop.line)) {
+      if (RegExp(r'^Chapter \d+, Shloka \d').hasMatch(tourStop.line)) {
         currentShloka++;
       }
       if (currentShloka >= 0 && tourStop.show != null) {
