@@ -36,4 +36,4 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-echo Check Complete 🙂
+echo "Check Complete 🙂 at $(date '+%Y-%m-%d %H:%M:%S')"

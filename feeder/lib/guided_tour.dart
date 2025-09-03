@@ -63,8 +63,8 @@ Widget guidedTourScreen(String tourFolder) {
     if (playable != nullPlayable) {
       return screenify(GuidedTourWidget(playable),
           appBar: AppBar(
-            title: const Text(
-              'Bring the best in you',
+            title: Text(
+              playable.title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -149,7 +149,7 @@ Widget tourCover() {
     final List<List<String>> showsForThreeShlokas = [[], [], []];
     int currentShloka = -1;
     for (var tourStop in feedContent.tour.tourStops) {
-      if (RegExp(r'^Chapter \d+, Shloka \d+$').hasMatch(tourStop.line)) {
+      if (RegExp(r'^Chapter \d+, Shloka \d').hasMatch(tourStop.line)) {
         currentShloka++;
       }
       if (currentShloka >= 0 && tourStop.show != null) {

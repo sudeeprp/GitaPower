@@ -170,7 +170,8 @@ class FeedContent extends GetxController {
       audioPlayer.currentIndexStream.listen(tour.moveTo);
       audioPlayer.playerStateStream.listen(tour.playState);
       await audioPlayer.setAudioSources(
-        [AudioSource.asset('audio/background.m4a')] + uriList.map((uri) => AudioSource.uri(uri)).toList(),
+        [AudioSource.asset('audio/bell_background.m4a')] +
+            uriList.map((uri) => AudioSource.uri(uri)).toList(),
         preload: true,
         initialIndex: 0,
         initialPosition: Duration.zero,
@@ -221,11 +222,15 @@ class PlayablesTOC extends GetxController {
   final playables = <Playable>[].obs;
   @override
   void onInit() async {
+    await extractPlayables();
+    super.onInit();
+  }
+
+  Future<void> extractPlayables() async {
     final GitHubFetcher contentSource = Get.find();
     final playablesTocMD = await contentSource.playablesTocMD();
     if (playablesTocMD != null) {
       playables.value = extractPlayablesFromTOC(playablesTocMD.split('\n'));
     }
-    super.onInit();
   }
 }
