@@ -46,7 +46,7 @@ class ToursListWidget extends StatelessWidget {
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
         onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       ),
     );
   }
