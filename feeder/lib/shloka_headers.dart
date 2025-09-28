@@ -136,7 +136,7 @@ const headers = {
 गुरूनहत्वा हि महानुभावान्
 श्रेयश्चर्तुम् भैक्ष्यमपीह लोके ।
 हत्वार्थकामाम्स्तु गुरूनिहैव
-भुन्जीय भोगान् रुधिरप्रदिग्धन् ॥ ५ ॥''',
+भुन्जीय भोगान् रुधिरप्रदिग्धान् ॥ ५ ॥''',
     'meaning':
         '''Arjuna says: O slayer of enemies, Krishna, how can I challenge and fight Bhishma and Drona with my arrows in war, while they actually deserve devotion? In this world, it is better to refrain from killing great teachers even if it means we've to beg for a living. Having killed my teachers right here, even when they like to enjoy wealth, how can I enjoy those pleasures, which are bathed in their blood?'''
   },
@@ -144,11 +144,11 @@ const headers = {
     'shloka': '''न चैतद्विद्मः कतरन्नो गरीयो
 यद्वा जयेम यदि वा नो जयेयुः ।
 यानेव हत्वा न जिजीविशामः
-तेऽवस्थिताः प्रमुखे धार्तराष्त्राः ॥ ७ ॥
-कार्पन्यदोषोपहतस्वभावः
+तेऽवस्थिताः प्रमुखे धार्तराष्त्राः ॥ ६ ॥
+कार्पण्यदोषोपहतस्वभावः
 पृच्छामि त्वा धर्मसम्मूढचेताः ।
 यच्छ्रेयः स्यान्निश्चितम् ब्रूहि तन्मे
-शिष्यस्तेऽहम् शाधि माम् त्वम् प्रपन्नम् ॥ ८ ॥''',
+शिष्यस्तेऽहम् शाधि माम् त्वम् प्रपन्नम् ॥ ७ ॥''',
     'meaning':
         '''Whether victory is ours or we are conquered- We don’t know what is better for us. Those very people, after killing whom we don’t wish to live further, those people of Dhritarashtra are standing in front of their army. I am overcome with the weakness of pity, and am confused about my code of conduct. I ask you- which is decidedly better for me? Tell me that. Order me, I have taken refuge in you, I am your student.'''
   },
@@ -159,7 +159,7 @@ const headers = {
 राज्यम् सुराणामपि चाधिपत्यम् ॥ ८ ॥
 सन्जय उवाच -
 एवमुक्त्वा हृषीकेशम् गुडाकेशः परन्तपः ।
-न योत्स्यामीति गोविन्दम् उक्त्वा तूष्णीम् बभूव ह ॥ ९ ॥''',
+न योत्स्य इति गोविन्दम् उक्त्वा तूष्णीम् बभूव ह ॥ ९ ॥''',
     'meaning':
         '''I really don’t see anything that can get rid of my sorrow, which is draining my sense organs, even after I obtain control over this prosperous kingdom with its good people, having no enemies on this earth. Sanjaya said- Arjuna, the destroyer of enemies having spoken this way to Krishna, became quiet, having said the words ‘I shall not fight’, to Krishna.'''
   },
@@ -314,7 +314,7 @@ const headers = {
         '''Moreover, everyone will talk about your ever-lasting ill repute. For a respectable person, infamy is more undesirable than death.'''
   },
   '2-35.md': {
-    'shloka': '''भयात् रणात् उपरतम् मन्यन्ते त्वाम् महारथाः ।
+    'shloka': '''भयात् रणात् उपरतम् मन्स्यन्ते त्वाम् महारथाः ।
 येषाम् च त्वम् बहुमतो भूत्वा यास्यसि लाघवम् ॥ ३५ ॥''',
     'meaning':
         '''Great leaders would be of the opinion that you turned back from war due to fear. You will earn disrepute among those whom you hold in high esteem.'''
@@ -532,7 +532,7 @@ const headers = {
   'Chapter_3.md': {'shloka': '''''', 'meaning': ''''''},
   '3-1_to_3-2.md': {
     'shloka': '''अर्जुन उवाच -
-ज्यायसे चेत् कर्मणस्ते मता बुद्धिः जनार्दन ।
+ज्यायसी चेत् कर्मणस्ते मता बुद्धिः जनार्दन ।
 तत्किम् कर्मणि घोरे माम् नियोजयसि केशव ॥ १ ॥
 व्यामिश्रेणैव वाक्येन बुद्धिम् मोहयसीव मे ।
 तदेकम् वद निश्चित्य येन श्रेयः अहम् आप्नुयाम् ॥ २ ॥''',
@@ -609,7 +609,7 @@ const headers = {
   '3-14_to_3-16.md': {
     'shloka': '''अन्नात् भवन्ति भूतानि पर्जन्यात् अन्न सम्भवः ।
 यज्ञात् भवति पर्जन्यो यज्ञः कर्म समुद्भवः ॥ १४ ॥
-कर्म भह्मोद्भवम् विद्धि ब्रह्माक्षर समुद्भवम् ।
+कर्म ब्रह्मोद्भवम् विद्धि ब्रह्माक्षर समुद्भवम् ।
 तस्मात् सर्वगतम् ब्रह्म नित्यम् यज्ञे प्रतिष्ठितम् ॥ १५ ॥
 एवम् प्रवर्तितम् चक्रम् नानुवर्तयतीह यः ।
 अघायुरिन्द्रियारामो मोघम् पार्थ स जीवति ॥ १६ ॥''',
@@ -627,7 +627,7 @@ const headers = {
         '''The person who is always inclined towards the Self, satisfied in the Self alone, and who enjoys being in the Self alone - he is not bound to perform any actions. Activity does not fulfil his wish. there is no consequence over here, if he does not perform something. To him, benefit-driven relationships do not exist. Hence, always perform your activity, without being driven by attachments or addictions. Only by performing actions without being driven by attachments, a person will attain the realization of the Self.'''
   },
   '3-20.md': {
-    'shloka': '''कर्मण्यैव सम्सिद्धिम् आस्थिता जनकादयः ।''',
+    'shloka': '''कर्मणैव सम्सिद्धिम् आस्थिता जनकादयः ।''',
     'meaning':
         '''Janaka and others have obtained the realization of the Self by performing actions without attachments towards outcomes.'''
   },
@@ -653,7 +653,7 @@ const headers = {
         '''Arjuna, if I am not attentive in my actions at any time, all people will definitely follow my behavior in every way. If I do not perform actions, these worlds will be destroyed. I will be the cause of the resulting mess and the destruction of these people.'''
   },
   '3-25_to_3-26.md': {
-    'shloka': '''सक्ताः कर्मनि अविद्वाम्सो यथा कुर्वन्ति भारत ।
+    'shloka': '''सक्ताः कर्मणि अविद्वाम्सो यथा कुर्वन्ति भारत ।
 कुर्यात् विद्वान् तथा असक्तः चिकीर्षुर् लोक सङ्ग्रहम् ॥ २५ ॥
 न बुद्धि भेदम् जनयेत् अज्ञानाम् कर्मसङ्गिनाम् ।
 जोषयेत् सर्व कर्माणि विद्वान् युक्तः समाचरन् ॥ २६ ॥''',
@@ -670,7 +670,7 @@ const headers = {
   },
   '3-29.md': {
     'shloka': '''प्रकृतेः गुणसम्मूढाः सज्जन्ते गुणकर्मसु ।
-तान् अकृत्स्न विदो मन्दण् कृत्स्नवित् न विचालयेत् ॥ २९ ॥''',
+तान् अकृत्स्न विदो मन्दान् कृत्स्नवित् न विचालयेत् ॥ २९ ॥''',
     'meaning':
         '''People without complete knowledge of the Self are deluded under the influence of the three qualities . They are attached to actions, which are an effect of the association with those qualities. A person who knows must not mislead them.'''
   },
@@ -687,7 +687,7 @@ const headers = {
         '''People who constantly practice this principle of mine , those who believe in it, and those who do not find fault in this principle - all of them will be free from the influence of their actions.'''
   },
   '3-32.md': {
-    'shloka': '''ये तु एतत् अभ्यसूयन्ते नानुतिष्ठन्ति मे मतम् ।
+    'shloka': '''ये तु एतत् अभ्यसूयन्तो नानुतिष्ठन्ति मे मतम् ।
 सर्वज्ञान विमूढान् तान् विद्धि नष्टान् अचेतसः ॥ ३२ ॥''',
     'meaning':
         '''On the other hand, those who resent this view, who do not follow My principle - know them to be ignorant of all knowledge. They are lackluster characters, who are eventually wasted away.'''
@@ -770,7 +770,7 @@ const headers = {
 स एवायम् मया तेऽद्य योगः प्रोक्तः पुरातनः ।
 भकोऽसि मे सखा चेति रहस्यम् ह्येतद् उत्तमम् ॥ ३ ॥''',
     'meaning':
-        '''Lord Krishna said I preached this eternal method to the brilliant one, the Sun. The Sun, as the originator of the human race, conveyed this to Manu. Manu conveyed it to Ikshvaku. Arjuna, in this way, kings who were also sages knew this, having obtained the knowledge from previous generations. Over a long period of time, this method was lost in this world. The very same ancient method has been told by me to you since you are my devotee and my friend. This is indeed hidden knowledge of excellent nature.'''
+        '''Lord Krishna said I preached this eternal method to the brilliant one, the Sun. The Sun, as the originator of the human race, conveyed this to Manu. Manu conveyed it to Ikshvaku. Arjuna, in this way, kings who were sages knew this, having obtained the knowledge from previous generations. Over a long period of time, this method was lost in this world. The very same ancient method has been told by me to you since you are my devotee and my friend. This is indeed hidden knowledge of excellent nature.'''
   },
   '4-4.md': {
     'shloka': '''अर्जुन उवाच -
@@ -961,7 +961,7 @@ const headers = {
         '''Know this by surrendering, by cross questioning, by rendering service and by listening to a teacher. Those who know and show the way will preach this knowledge to you.'''
   },
   '4-35.md': {
-    'shloka': '''यत् ज्ञात्वा न पुनर्मोहम् एवम् यास्यसि पान्दव ।
+    'shloka': '''यत् ज्ञात्वा न पुनर्मोहम् एवम् यास्यसि पाण्डव ।
 येन भूतान्यशेषेण द्रक्ष्यसि आत्मन्यथो मयि ॥ ३५ ॥''',
     'meaning':
         '''Arjuna, after knowing this, you will never be confused in this way again. With this knowledge, you will see all beings, without exception within your Self, and then in Me.'''
@@ -997,14 +997,14 @@ const headers = {
         '''A person without this knowledge, who has suspicion in his mind and is not dedicated will perish. He is not eligible for anything in this world nor in any other world.'''
   },
   '4-41.md': {
-    'shloka': '''योग संन्यस्त कर्माणम् ज्ञान सन्छिन्न सम्शयम् ।
+    'shloka': '''योग संन्यस्त कर्माणम् ज्ञान सन्छिन्न संशयम् ।
 आत्मवन्तम् न कर्माणि निबध्नन्ति धनन्जय ॥ ४१ ॥''',
     'meaning':
         '''Arjuna, activities do not limit a person who is free from possessiveness towards his work. With the knowledge of the Self, such a person is rid of doubts and stays focused on the Self.'''
   },
   '4-42.md': {
     'shloka': '''तस्मात् अज्ञान सम्भूतम् हृत्स्थम् ज्ञानासिनात्मनः ।
-छित्वैनम् सम्शयम् योगमाथिष्ठ उत्तिष्ठ भारत ॥ ४२ ॥''',
+छित्वैनम् संशयम् योगमातिष्ठ उत्तिष्ठ भारत ॥ ४२ ॥''',
     'meaning':
         '''Arjuna, that’s why you must cut off this suspicion, which has taken its place in your heart due to ignorance. Cut it off using the knowledge of the Self as a sword. Having done this, follow the path of working without being driven by attachments and get up.'''
   },
@@ -1018,7 +1018,7 @@ const headers = {
   },
   '5-2.md': {
     'shloka': '''श्री भगवान् उवाच -
-संन्यासः कर्मयोगश्च निश्श्रेय सकरौ उभौ ।
+संन्यासः कर्मयोगश्च निःश्रेयसकरौ उभौ ।
 तयोस्तु कर्म संन्यासात् कर्मयोगो विशिष्यते ॥ २ ॥''',
     'meaning':
         '''Lord Krishna said- Both techniques- giving up actions and working without being driven by attachments - lead to moksha . Among them, work that’s not driven by desire stands out in preference to giving up work itself.'''
@@ -1030,7 +1030,7 @@ const headers = {
         '''Arjuna, The person who is not addicted to desires and is not carried away by hatred – he has overcome dualities. it is to be known, that he stays beyond desire. He alone is easily freed from the limitations of this world.'''
   },
   '5-4.md': {
-    'shloka': '''साङ्ख्य योगौ पृथक् बालाः प्रवदन्ति न पन्दिताः ।
+    'shloka': '''साङ्ख्य योगौ पृथक् बालाः प्रवदन्ति न पण्डिताः ।
 एकम् अप्यास्थितः सम्यक् उभयोर् विन्दते फलम् ॥ ४ ॥''',
     'meaning':
         '''Naïve people say that the two techniques – Knowing by contemplation and the technique of working independent of desire - are different in terms of the results they yield. Learned people do not say that. A person who properly practices any one among the two will obtain the result.'''
@@ -1111,7 +1111,7 @@ const headers = {
   },
   '5-18.md': {
     'shloka': '''विद्या विनय सम्पन्ने भाह्मणे गवि हस्तिनि ।
-शुनि चैव श्वपाके च पन्दिताः सम दर्शिनः ॥ १८ ॥''',
+शुनि चैव श्वपाके च पण्डिताः सम दर्शिनः ॥ १८ ॥''',
     'meaning':
         '''People who know the true nature of the Self see equality in a person who is endowed with knowledge and humility, in someone who is just a Brahmin, in a cow, in an elephant, even in a dog and even in a person who eats the meat of a dog.'''
   },
@@ -1122,7 +1122,7 @@ const headers = {
         '''This material creation has been conquered here itself, by those whose minds are situated in this equality. When devoid of faults, the Self is indeed whole and complete. Thus, they are all situated in the Lord.'''
   },
   '5-20.md': {
-    'shloka': '''न प्रहृष्येत् प्रियम् प्राप्य न उद्विजेत् प्राप्य चाप्रिअम् ।
+    'shloka': '''न प्रहृष्येत् प्रियम् प्राप्य न उद्विजेत् प्राप्य चाप्रियम् ।
 स्थिर बुद्धिर् असम्मूढो ब्रह्मविद् ब्रह्मणि स्थितः ॥२० ॥''',
     'meaning':
         '''He doesn’t​ get excited on obtaining something he likes and doesn’t​ get agitated on getting something he does not like. His intellect is firm and he does not get confused. He knows the nature of the Self and the Lord. He is situated in the quest for the Self.'''
@@ -1167,12 +1167,12 @@ const headers = {
     'shloka': '''स्पर्शान् कृत्वा बहिर्बाह्यान् चक्षुश्चैव अन्तरे भ्रुवोः ।
 प्राणापानौ समौ कृत्वा नासाभ्यन्तर चारिणौ ॥ २७ ॥
 यतेन्द्रिय मनो बुद्धिः मुनिर्मोक्ष परायणः ।
-विगतीच्छा भय क्रोधो यस्सदा मुक्त एव सः ॥ २८ ॥''',
+विगतेच्छा भय क्रोधो यस्सदा मुक्त एव सः ॥ २८ ॥''',
     'meaning':
         '''A person having the intention to realize the Self, who has moksha as his only goal, keeps external stimuli outside and the eyes focused in-between the eye-brows. Balancing inhalation and exhalation through the nose, he takes charge of his organs, mind and his intellect. He is beyond desire, fear and anger. Such a person stays liberated from this material world.'''
   },
   '5-29.md': {
-    'shloka': '''भोक्तारम् यग्न तपसाम् सर्व लोक महेश्वरम् ।
+    'shloka': '''भोक्तारम् यज्ञ तपसाम् सर्व लोक महेश्वरम् ।
 सुहृदम् सर्व भूतानाम् ज्ञात्वा माम् शान्तिमृच्छति ॥ २९ ॥''',
     'meaning':
         '''He will attain peace by knowing me, the enjoyer of worship and prayer, the Lord of all the worlds, a friend and ally of all beings.'''
@@ -1216,7 +1216,7 @@ const headers = {
   },
   '6-7.md': {
     'shloka': '''जितात्मनः प्रशान्तस्य परमात्मा समाहितः ।
-शीतोश्ण सुख दुःखेषु तथा मान अपमानयोः ॥ ७ ॥''',
+शीतोष्ण सुख दुःखेषु तथा मान अपमानयोः ॥ ७ ॥''',
     'meaning':
         '''Having conquered his mind, a person who is at peace is completely focused on the Self, which has the Lord as the basis for its existence in situations of cold, heat, comfort, difficulties, during fame and insult too.'''
   },
@@ -1241,7 +1241,7 @@ const headers = {
   '6-11_to_6-12.md': {
     'shloka': '''शुचौ देशे प्रतिष्ठाप्य स्थिरम् आसनम् आत्मनः ।
 नात्युच्छ्रितम् नाति नीचम् चेलाजिन कुशोत्तरम् ॥ ११ ॥
-तत्रैकाग्र्यम् मनः कृत्वा यत चित्तेन्द्रिअ क्रियः ।
+तत्रैकाग्रम् मनः कृत्वा यत चित्तेन्द्रिय क्रियः ।
 उपविश्यासने युन्ज्यात् योगम् आत्म विशुद्धये ॥ १२ ॥''',
     'meaning':
         '''Setting up a stable seat for himself in a place that is clean, not too high, not too low, keeping cloth, fur and straw on it, sitting there, keeping his mind focused controlling the works of the organs and the intellect, he employs his body to work without being driven by desire to purify his Self.'''
@@ -1313,7 +1313,7 @@ const headers = {
         '''Ultimate joy will definitely come to this person, who is in the quest for the Self , whose mind is at peace, whose passions have subsided , who is situated in the true nature of the Self, who is rid of all his faults.'''
   },
   '6-28.md': {
-    'shloka': '''एवम् युन्जन् सदात्मानम् योगी विगत कल्मषः ।
+    'shloka': '''युञ्जन्नेवम् सदात्मानम् योगी विगत कल्मषः ।
 सुखेन ब्रह्म सम्स्पर्शम् अत्यन्तम् सुखम् अश्नुते ॥ २८ ॥''',
     'meaning':
         '''In this way, a person who works without being driven stays in the quest for the Self. He easily experiences the ultimate joy of being in touch with the Self always, flawlessly.'''
@@ -1331,13 +1331,13 @@ const headers = {
         '''For the one who sees me everywhere and sees everything in me, I will not go unseen. He does not go unseen to me either.'''
   },
   '6-31.md': {
-    'shloka': '''सर्वभूतस्थम् यो माम् भजति एकत्वमास्थितः ।
+    'shloka': '''सर्वभूतस्थितम् यो माम् भजति एकत्वमास्थितः ।
 सर्वथा वर्तमानोऽपि स योगी मयि वर्तते ॥ ३१ ॥''',
     'meaning':
         '''The person who worships Me, the one who is situated in all beings, believes in My uniqueness and exists in one-ness with Me. This person, who is in the quest for the Self resides in Me, even though he exists in all kinds of situations.'''
   },
   '6-32.md': {
-    'shloka': '''आत्मौपम्येन सर्वव्त्र समम् पश्यति योऽअर्जुन ।
+    'shloka': '''आत्मौपम्येन सर्वत्र समम् पश्यति योऽअर्जुन ।
 सुखम् वा यदि वा दुःखम् स योगी परमो मतः ॥ ३२ ॥''',
     'meaning':
         '''Arjuna, the person who sees equality everywhere, whether in happiness or in difficulties due to the equivalence of the Self in everyone, this person, who is in the quest for realizing the Self is the ultimate – that is my opinion.'''
@@ -1346,14 +1346,14 @@ const headers = {
     'shloka': '''अर्जुन उवाच -
 योऽयम् योगस्त्वया प्रोक्तः साम्येन मधुसूधन ।
 एतस्याहम् न पश्यामि चन्चलत्वात् स्थितिम् स्थिराम् ॥ ३३ ॥
-चन्चलम् हि मनः कृश्ण प्रमाथि बलवत् धृढम् ।
+चन्चलम् हि मनः कृष्ण प्रमाथि बलवत् दृढम् ।
 तस्याहम् निग्रहम् मन्ये वायोरिव सुदुष्करम् ॥ ३४ ॥''',
     'meaning':
         '''Arjuna said Krishna, due to the mind being volatile, I do not see this yoga, which was told by you as equanimity, as a state with any stability. Krishna, the mind is indeed unstable. As if by force, it causes diversions that are very strong. I am of the opinion that it is extremely difficult to gain control over it, just as it is difficult to gain control over the wind.'''
   },
   '6-35_to_6-36.md': {
     'shloka': '''श्री भगवान् उवाच -
-असम्शयम् महाबाहो मनो दुर्निग्रहम् चलम् ।
+असंशयम् महाबाहो मनो दुर्निग्रहम् चलम् ।
 अभ्यासेन तु कौन्तेय वैराग्येण च गृह्यते ॥ ३५ ॥
 असम्यतात्मना योगो दुष्ट्राप इति मे मतिः ।
 वश्यात्मना तु यतता शक्योऽवाप्तुम् उपायतः ॥ ३६ ॥''',
@@ -1364,9 +1364,9 @@ const headers = {
     'shloka': '''अर्जुन उवाच -
 अयतिः श्रद्धयोपेतो योगात् चलित मानसः ।
 अप्राप्य योग सम्सिद्धिम् काम् गतिम् कृष्ण गच्छति ॥ ३७ ॥
-कच्चित् उभय विभ्रष्टः छिन्नाभ्रमिव नश्यति ।
+कच्चित् न उभय विभ्रष्टः छिन्नाभ्रमिव नश्यति ।
 अप्रतिष्ठो महाबाहो विमूढो ब्रह्मणः पथि ॥ ३८ ॥
-एतम् मे सम्शयम् कृष्ण! छेत्तुम् अर्हसि अशेषतः ।
+एतम् मे संशयम् कृष्ण! छेत्तुम् अर्हसि अशेषतः ।
 त्वदन्यः सम्षयस्यास्य छेत्ता नह्युपपद्यते ॥ ३९ ॥''',
     'meaning':
         '''Arjuna said: Krishna, a person with the best intentions and sufficient dedication without perseverance and proper efforts will have his mind wander from the path of realizing the Self. Without attaining the goal of realizing the Self, what will be his state? Will he not go wasted, being ineffective on both sides, like a small piece of cloud that gets separated from a big thunder-cloud? He would have nothing to rest on, having deviated from the path of realizing the Self and the Lord. O Krishna, this is my doubt! You have the ability to get rid of it completely. Other than You, there is indeed nobody who can get rid of this doubt.'''
@@ -1410,7 +1410,7 @@ const headers = {
   },
   '6-46.md': {
     'shloka': '''तपस्विभ्योऽधिको योगी ज्ञानिभ्योऽपि मतोऽधिकः ।
-कर्मिब्यः चाधिको योगी तस्मात् योगी भवार्जुन ॥ ४६ ॥''',
+कर्मिभ्यः चाधिको योगी तस्मात् योगी भवार्जुन ॥ ४६ ॥''',
     'meaning':
         '''A person who practices yoga is higher than people who perform penance. He is considered to be higher than learned people as well. The person who practices yoga is also higher than people who work hard to get results. Hence, Arjuna, practice yoga .'''
   },
@@ -1424,7 +1424,7 @@ const headers = {
   '7-1.md': {
     'shloka': '''श्री भगवानुवाच -
 मय्यासक्त मनाः पार्थ योगम् युन्जन् मदाश्रयः ।
-असम्शयम् समग्रम् माम् यथा ज्ञास्यसि तत् शृणु ॥ १ ॥''',
+असंशयम् समग्रम् माम् यथा ज्ञास्यसि तत् शृणु ॥ १ ॥''',
     'meaning':
         '''The Lord said: Arjuna, listen to the way in which you will know me entirely without any doubt, with a mind filled with eagerness towards Me, embarking on the journey to join Me, having taken refuge in Me'''
   },
@@ -1447,8 +1447,8 @@ const headers = {
         '''This universe of mine is divided into eight categories: Solids, liquids, gasses, energy, space, mind, the gross collections and the notion of individuality.'''
   },
   '7-5.md': {
-    'shloka': '''अपरेयम् इतस्त्वन्यम् प्रकृतिम् विद्धि मे पराम् ।
-जीवबूतम् महाबाहो यया इदम् धार्यते जगत् ॥ ५ ॥''',
+    'shloka': '''अपरेयम् इतस्त्वन्याम् प्रकृतिम् विद्धि मे पराम् ।
+जीवभूताम् महाबाहो यया इदम् धार्यते जगत् ॥ ५ ॥''',
     'meaning':
         '''Arjuna, the universe that I just described is not the ultimate one. Know My ultimate nature, which is something distinct from this one, in the form of a conscious being by whom this world is sustained.'''
   },
@@ -1470,11 +1470,11 @@ const headers = {
 पुण्यो गन्धः पृथिव्याम् च तेजश्च अस्मि विभावसौ ।
 जीवनम् सर्व भूतेषु तपश्चास्मि तपस्विषु ॥ ९ ॥
 बीजम् माम् सर्व भूतानाम् विद्धि पार्थ सनातनम् ।
-बुद्धि बुद्धिमताम् अस्मि तेजः तेजस्विनाम् अहम् ॥ १० ॥
+बुद्धिः बुद्धिमताम् अस्मि तेजः तेजस्विनाम् अहम् ॥ १० ॥
 बलम् बलवताम् चाहम् काम राग विवर्जितम् ।
 धर्म अविरुद्धो भूतेषु कामोस्मि भरतर्षभ ॥ ११ ॥''',
     'meaning':
-        '''Arjuna, I am the taste in all liquids, the radiance in the moon and the sun, I am the sacred syllable (Om) in all the Vedas, the waves in space, capability in humans. I am the pleasant fragrance of this Earth and the energy in a fire. I am the life in all living beings and thoughts in the people who focus their intellect. Arjuna, know Me as the primary cause of all beings, existing since beginning-less time. I am the intellect of intelligent beings, the brilliance in brilliant people. Arjuna, I am the power in powerful people, separate from desire and indulgence and I am love that does not oppose My principles in the beings of this world.'''
+        '''Arjuna, I am the taste in all liquids, the radiance in the moon and the sun, I am the sacred syllable (Om) in all the Vedas, the waves in space, capability in humans. I am the pleasant fragrance of this Earth and the energy in a fire. I am the life in all living beings and thoughts in the people who focus their intellect. Arjuna, know Me as the primary cause of all beings, existing since beginning-less time. I am the intellect of intelligent beings, the brilliance in brilliant people. Arjuna, I am the power in powerful people, free of desire and indulgence. I am the love, which does not oppose My principles, in the beings of this world.'''
   },
   '7-12.md': {
     'shloka': '''ये चैव सात्विका भावा राजसाः तामसाश्च ये ।
@@ -1687,7 +1687,7 @@ const headers = {
     'shloka': '''सहस्र युग पर्यन्तम् अहर्यत् ब्रह्मणो विदुः ।
 रात्रिम् युग सहस्रान्ताम् ते अहोरात्र विदो जनाः ॥ १७ ॥
 अव्यक्तात् व्यक्तयः सर्वाः प्रभवन्ति अहरागमे ।
-रात्र्यागमे प्रलीयन्ते तत्रैव अव्यक्तसन्ज्ञके ॥ १८ ॥
+रात्र्यागमे प्रलीयन्ते तत्रैव अव्यक्तसञ्ज्ञके ॥ १८ ॥
 भूतग्रामः स एवायम् भूत्वा भूत्वा प्रलीयते ।
 रात्र्यागमे अवशः पार्थ प्रभवति अहरागमे ॥ १९ ॥''',
     'meaning':
@@ -1793,12 +1793,12 @@ const headers = {
   },
   '9-10.md': {
     'shloka': '''मया अध्यक्षेण प्रकृतिः सूयते सचराचरम् ।
-हेतुना अनेन कौन्तेय जगद्धि परिवर्तते ॥ १० ॥''',
+हेतुना अनेन कौन्तेय जगद्विपरिवर्तते ॥ १० ॥''',
     'meaning':
         '''Arjuna, the material environment guides this world by My will, including everything that’s stationary and moving, with My supervision. This world goes through its cycles with this purpose itself.'''
   },
   '9-11.md': {
-    'shloka': '''अवजानन्ति माम् मूढाः मानुषीम् तनुम् आश्रिताम् ।
+    'shloka': '''अवजानन्ति माम् मूढाः मानुषीम् तनुम् आश्रितम् ।
 परम् भावम् अजानन्तो मम भूत महेश्वरम् ॥ ११ ॥''',
     'meaning':
         '''People who are deluded disregard Me. They do not know My superior state as the Lord of all beings, the Lord who has taken a human form.'''
@@ -1909,7 +1909,7 @@ const headers = {
   },
   '9-29.md': {
     'shloka': '''समोऽहम् सर्व भूतेषु
-न मे द्वेषोऽस्ति न प्रियः ।
+न मे द्वेष्योऽस्ति न प्रियः ।
 ये भजन्ति तु माम् भक्त्या
 मयि ते तेषु चाप्यहम् ॥ २९ ॥''',
     'meaning':
@@ -1923,7 +1923,7 @@ const headers = {
   },
   '9-31.md': {
     'shloka': '''क्षिप्रम् भवति धर्मात्मा शश्वत् शान्तिम् निगच्छति ।
-कौन्तेय प्रतिजानीही न मे भक्तः पणश्यति ॥ ३१ ॥''',
+कौन्तेय प्रतिजानीहि न मे भक्तः पणश्यति ॥ ३१ ॥''',
     'meaning':
         '''Very soon, this person becomes an excellent devotee, who worships Me without flaw. He attains peaceful existence forever. Arjuna, resolve firmly within yourself that My devotee shall not waste away.'''
   },
@@ -1951,7 +1951,7 @@ const headers = {
   },
   '10-2.md': {
     'shloka': '''न मे विदुः सुरगणाः प्रभवम् न महर्षयः ।
-अहम् आदिर्हि देवानाम् महर्षीणाम् च सर्वषः ॥ २ ॥''',
+अहम् आदिर्हि देवानाम् महर्षीणाम् च सर्वशः ॥ २ ॥''',
     'meaning':
         '''Neither the gods nor the great sages know My source. I am indeed the origin of all the gods and the great sages.'''
   },
@@ -2085,7 +2085,7 @@ const headers = {
     'shloka': '''महर्षीणाम् भृगुरहम् गिराम् अस्मि एकम् अक्षरम् ।
 यज्ञानाम् जप यज्ञोऽस्मि स्थावराणाम् हिमालयः ॥ २५ ॥''',
     'meaning':
-        '''Among the great sages, I am Bhrgu. Among all speech, I am the first sound. Among the various forms of worship, I am the worship that takes the form of a prayer. Among the immovable mountains, I am the Himalaya.'''
+        '''Among the great sages, I am Bhrgu. Among all speech, I am the first sound. Among the various forms of worship, I am the worship that takes the form of a prayer. Among the immovables, I am the Himalaya.'''
   },
   '10-26_to_10-29.md': {
     'shloka': '''अश्वत्थः सर्व वृक्षाणाम् देवर्षीणाम् च नारदः ।
@@ -2167,7 +2167,7 @@ const headers = {
   },
   '10-41.md': {
     'shloka': '''यद्यद् विभूतिमत् सत्त्वम् श्रीमत् ऊर्जितम् एव वा ।
-तत्तद् एवागच्छ त्वम् मम तेजोऽम्श सम्भवम् ॥ ४१ ॥''',
+तत्तद् एवावगच्छ त्वम् मम तेजोऽम्श सम्भवम् ॥ ४१ ॥''',
     'meaning':
         '''What ever is endowed with brilliance or endowed with excellence - realize that every such entity is under My control. It has taken birth from a piece of My brilliance.'''
   },
@@ -2180,10 +2180,10 @@ const headers = {
   'Chapter_11.md': {'shloka': '''''', 'meaning': ''''''},
   '11-1.md': {
     'shloka': '''अर्जुन उवाच -
-मदनुग्रहाय परमम् गुह्यम् अध्यात्म सन्ज्ञितम् ।
+मदनुग्रहाय परमम् गुह्यम् अध्यात्म सञ्ज्ञितम् ।
 यत् त्वयोक्तम् वचस्तेन मोहोऽयम् विगतो मम ॥ १ ॥''',
     'meaning':
-        '''Arjuna said - The teaching, which You have imparted for my benefit, out of Love, which is supremely concealed, is the knowledge of the Self. By that teaching, this confusion of mine is gone.'''
+        '''Arjuna said - The teaching, which You have imparted for my benefit, out of Love, which is supremely concealed, is called the knowledge of the Self. By that teaching, this confusion of mine is gone.'''
   },
   '11-2.md': {
     'shloka': '''भवाप्ययौ हि भूतानाम् श्रुतौ विस्तरशो मया ।
@@ -2281,7 +2281,7 @@ const headers = {
   '11-17.md': {
     'shloka': '''किरीटिनम् गदिनम् चक्रिणम् च
 तेजोराशिम् सर्वतो दीप्तिमन्तम् ।
-पश्यामि त्वाम् दुर्निरीक्षम् समन्तात्
+पश्यामि त्वाम् दुर्निरीक्ष्यम् समन्तात्
 दीप्तानलार्क द्युतिम् अप्रमेयम् ॥ १७ ॥''',
     'meaning':
         '''I see you crowned, bearing a mace and a disc. You are impossible to see completely. You are abundant energy. You are brilliant in every direction. You have the light of a blazing sun. You are beyond quantification.'''
@@ -2322,7 +2322,7 @@ const headers = {
     'shloka': '''रुद्रादित्या वसवो ये च साध्याः
 विश्वेऽश्विनौ मरुतश्च ऊष्मपाश्च ।
 गन्धर्व यक्ष असुर सिद्ध सङ्घाः 
-वीक्षन्ते त्वाम् विस्मताः चैव सर्वे ॥ २२ ॥''',
+वीक्षन्ते त्वाम् विस्मिताः चैव सर्वे ॥ २२ ॥''',
     'meaning':
         '''The manifestations of Shiva, the powers of nature, the forces of the universe, the gods and physicians, the winds, our ancestors, beautiful people, benign beings, thugs, achievers - all these communities look at You, bewildered.'''
   },
@@ -2375,7 +2375,7 @@ const headers = {
         '''Just as the many flows of the river run down into the oceans, so also these heroes of the earth enter Your blistering mouth. Just as flies attracted to a flame enter the brilliant fire with great speed to be destroyed, these people enter Your many mouths with great speed in the same way too, to be destroyed.'''
   },
   '11-30.md': {
-    'shloka': '''लेलिह्यसे ग्रासमानः समन्तात्
+    'shloka': '''लेलिह्यसे ग्रसमानः समन्तात्
 लोकान् समग्रान् वदनैः ज्वलद्भिः ।
 तेजोभिः आपूर्य जगत् समग्रम्
 भासः तवोग्राः प्रतपन्ति विष्णो ॥ ३० ॥''',
@@ -2417,7 +2417,7 @@ const headers = {
   },
   '11-35.md': {
     'shloka': '''सन्जय उवाच -
-एतच्छृत्वा वचनम् केशवस्य
+एतत् श्रुत्वा वचनम् केशवस्य
 कृतान्जलिः वेपमानः किरीटी ।
 नमस्कृत्वा भूय एवाह कृष्णम्
 सगद्गदम् भीत भीतः प्रणम्य ॥ ३५ ॥''',
@@ -2460,7 +2460,7 @@ const headers = {
         '''You are the wind, restraint, fire, the atmosphere, the ocean, the moon, the leader of people, and their great-grandfather - their origin.'''
   },
   '11-39_part_2_-_40_part_1.md': {
-    'shloka': '''नमो नमत्सेऽस्तु सहस्रकृत्वः
+    'shloka': '''नमो नमस्तेऽस्तु सहस्रकृत्वः
 पुनः च भूयोऽपि नमो नमस्ते ॥ ३९ ॥
 नमः पुरस्तात् अथ पृष्ठतः च
 नमोऽस्तु ते सर्वत एव सर्व ।''',
@@ -2489,7 +2489,7 @@ const headers = {
     'shloka': '''पितासि लोकस्य चराचरस्य
 त्वम् अस्य पूज्यः च गुरुः गरीयान् ।
 न त्वत्समोऽस्ति अभ्यधिकः कुतोऽन्यो
-लोकत्रयोऽप्यि अप्रतिम प्रभाव ॥ ४३ ॥''',
+लोकत्रये अपि अप्रतिम प्रभाव ॥ ४३ ॥''',
     'meaning':
         '''You are the father of this world with all its moving and stationary beings, You are superior to all. As a teacher, You are revered by all. You have unmatched power, There is no other person who is equal to You in all the three worlds (the entire universe). How can it even be conceived that anyone is greater than You?'''
   },
@@ -2568,7 +2568,7 @@ const headers = {
   '11-53_to_11-54.md': {
     'shloka': '''नाहम् वेदैः न तपसा न दानेन न चेज्यया ।
 शक्य एवम् विधो द्रष्टुम् दृष्टवान् असि माम् यथा ॥ ५३ ॥
-भक्त्या तु अनन्यया शक्यः अहम् एवम् विधार्जुन ।
+भक्त्या तु अनन्यया शक्यः अहम् एवम् विधोर्जुन ।
 ज्ञातुम् द्रष्टुम् च तत्त्वेन प्रवेष्टुम् च परन्तप ॥ ५४ ॥''',
     'meaning':
         '''It is not possible to see Me in this way - the way in which you have seen Me - not by the scriptures, not by penance, not by charity and not by sacrifice. Only by single-minded devotion, Arjuna, I can be known as I am, to be seen and to be entered in this way. Destroy your rivals.'''
@@ -2737,7 +2737,7 @@ const headers = {
         '''Not bound by attachments, being without possessiveness towards a son, wife or a home, having the same attitude at all times, even on encountering the favorable and the unfavorable.'''
   },
   '13-10.md': {
-    'shloka': '''मयि च अनन्य योगेन भक्तिः अव्यभिचारिणे ।
+    'shloka': '''मयि च अनन्य योगेन भक्तिः अव्यभिचारिणी ।
 विविक्त देश सेवित्वम् अरतिः जनसम्सदि ॥ १० ॥''',
     'meaning':
         '''With devotion in Me, not bound to any other purpose; Without deviating to other goals and other sources of power; Honoring a place of solitude; Being free of attachment in the company of many.'''
@@ -3004,7 +3004,7 @@ const headers = {
         '''People who are situated in sattva ascend to eminence. Those with a high rajas quotient stay mediocre. Those in tamas stay and behave in undesirable ways. They attain lower life-forms.'''
   },
   '14-19.md': {
-    'shloka': '''नान्यम् गुणेभ्यः कर्तारम् यदा दृष्टाऽनुपष्यति ।
+    'shloka': '''नान्यम् गुणेभ्यः कर्तारम् यदा द्रष्टानुपश्यति ।
 गुणेभ्यः च परम् वेत्ति मद्भावम् सोऽधिगच्छति ॥ १९ ॥''',
     'meaning':
         '''An intelligent person doesn’t see any cause of outcomes, Other than the three qualities . And when he knows beyond these qualities , he gains My state of being.'''
@@ -3025,7 +3025,7 @@ const headers = {
   '14-22.md': {
     'shloka': '''श्री भगवान् उवाच -
 प्रकाशम् च प्रवृत्तिम् च मोहम् एव च पान्डव ।
-न द्वेष्टी सम्प्रवृत्तानि न निवृत्तानि कांक्षति ॥ २२ ॥''',
+न द्वेष्टि सम्प्रवृत्तानि न निवृत्तानि कांक्षति ॥ २२ ॥''',
     'meaning':
         '''The Lord said – Arjuna, this person doesn’t loathe the presence of realization, activity, and misunderstanding. In their absence, he doesn't yearn for them either.'''
   },
@@ -3038,14 +3038,14 @@ const headers = {
   '14-24_to_14-25.md': {
     'shloka': '''सम दुःख सुखः स्वस्थः सम लोष्टाश्म कान्चनः ।
 तुल्य प्रियाप्रियो धीरः तुल्य निन्दात्म सम्स्तुतिः ॥ २४ ॥
-मानापमानयोः तुल्यः तुल्य मित्रारि पक्षयोः ।
+मानापमानयोः तुल्यः तुल्यो मित्रारि पक्षयोः ।
 सर्वारम्भ परित्यागी गुणातीतः स उच्यते ॥ २५ ॥''',
     'meaning':
         '''Being himself - same in comfort and sorrow, having the same outlook towards a lump of clay, a stone and gold, weighing the favorable and the unfavorable equally, same with insults and praises - he knows the Self from the body. Weighing honor and shame equally, considering friendly and unfriendly people equally, this person leaves attachment to material pursuits and is said to have crossed over the qualities .'''
   },
   '14-26.md': {
     'shloka': '''माम् च योऽव्यभिचारेण भक्तियोगेन सेवते ।
-स गुणान् समतीत्येतान् ब्रह्मभूयाय कल्पते ॥ २६ ॥''',
+स गुणान् समतीत्यैतान् ब्रह्मभूयाय कल्पते ॥ २६ ॥''',
     'meaning':
         '''And the person who serves and experiences Me with constant devotion will completely overcome these qualities . He is cut out to experience the Self in its true form.'''
   },
@@ -3065,7 +3065,7 @@ const headers = {
   },
   '15-2.md': {
     'shloka': '''अधः च ऊर्ध्वम् प्रसृताः तस्य शाखाः
-गुण प्रवृद्धा विशय प्रवालाः ।
+गुण प्रवृद्धा विषय प्रवालाः ।
 अधः च मूलनि अनुसन्ततानि
 कर्मानुबन्धीनि मनुष्य लोके ॥ २ ॥''',
     'meaning':
@@ -3078,17 +3078,18 @@ const headers = {
         '''Over here, the form of this tree is not apparent in the manner described before. We cannot see its end, its beginning, or the basis for its continued existence.'''
   },
   '15-3_second_part_and_15-4_first_part.md': {
-    'shloka': '''अश्वत्थम् एनम् सविरूढमूलम्
+    'shloka': '''अश्वत्थम् एनम् सुविरूढमूलम्
 असङ्ग शस्त्रेण दृढेन छित्वा ॥ ३ ॥
 ततः पदम् तत् परिमार्गितव्यम्
 यस्मिन् गता न निवर्तन्ति भूयः ।''',
     'meaning':
-        '''Having cut off this pepal tree with its overgrown roots using the weapon of decoupling and strength, that goal is to be sought - the state from which people do not return anymore.'''
+        '''Having cut off this pepal tree with its overgrown roots using the weapon of decoupling and strength, that goal must be sought - the state from which people do not return anymore.'''
   },
   '15-4_second_part.md': {
-    'shloka': '''तम् एव चाद्यम् पुरुषम् प्रपद्येत्
+    'shloka': '''तम् एव चाद्यम् पुरुषम् प्रपद्ये
 यतः प्रवृत्तिः प्रसृता पुराणी ॥ ४ ॥''',
-    'meaning': '''You must surrender to that very Person from whom all existence came forth long ago.'''
+    'meaning':
+        '''Seek the goal diligently- "I surrender to that very Ancient Person from whom all existence came forth long ago."'''
   },
   '15-5.md': {
     'shloka': '''निर्मानमोहा जित संगदोषाः
@@ -3161,7 +3162,7 @@ const headers = {
         '''I am at the heart of everything. Awareness, memory and the ability to reason come from Me. I alone am to be known from all the Vedas. I make the end of the Vedas and I am the One who knows the Vedas.'''
   },
   '15-16.md': {
-    'shloka': '''द्वाविमौ पुरुषौ लोके क्षरः अक्षर एव च ।
+    'shloka': '''द्वाविमौ पुरुषौ लोके क्षरश्चाक्षर एव च ।
 क्षरः सर्वाणि भूतानि कूटस्थः अक्षर उच्यते ॥ १६ ॥''',
     'meaning':
         '''The people in My Universe are of two types - perishable and imperishable. All beings you see here are perishable. The ones who stay without deforming are said to be the imperishable.'''
@@ -3231,7 +3232,7 @@ const headers = {
   },
   '16-8.md': {
     'shloka': '''असत्यम् अप्रतिष्ठम् ते जगदाहुः अनीश्वरम् ।
-अपरस्पर सम्भूतम् किमन्यत् काम हेतुकम् ॥ ८ ॥''',
+अपरस्पर सम्भूतम् किमन्यत् कामहैतुकम् ॥ ८ ॥''',
     'meaning':
         '''They say that this world does not have any truth, that it's not a manifestation of the Lord; that the world is not situated in the Supreme Lord; that it is not controlled by the Lord. They claim that the creation of offspring by the association between a male and a female is the only form of creation. There is no creation apart from this - What else? Everything in this world is driven by desire.'''
   },
@@ -3300,7 +3301,7 @@ const headers = {
   },
   '16-19.md': {
     'shloka': '''तानहम् द्विषतः क्रूरान् संसारेषु नराधमान् ।
-क्षिपामि अजस्रम् अशुभान् आसुरेष्वेव योनिषु ॥ १९ ॥''',
+क्षिपामि अजस्रम् अशुभान् आसुरीष्वेव योनिषु ॥ १९ ॥''',
     'meaning':
         '''Those who hate, who are harsh, who are unpleasant - they are the lowest among all material beings. I cast them repeatedly into the wombs of people who disregard My instruction.'''
   },
@@ -3660,7 +3661,7 @@ const headers = {
         '''A person who is free of attachment, who doesn't claim to make things happen is endowed with resolve and enthusiasm. Unmoved among achievements and failures, such a doer is said to be in the quality of sattva .'''
   },
   '18-27.md': {
-    'shloka': '''रागी कर्मफल प्रेप्सुः लुब्धो हिंसात्मकः अशुचि ।
+    'shloka': '''रागी कर्मफल प्रेप्सुः लुब्धो हिंसात्मकः अशुचिः ।
 हर्ष शोकान्वितः कर्ता राजसः परिकीर्तितः ॥ २७ ॥''',
     'meaning':
         '''A passionate person is anxious to secure the outcome of activity. He is stingy and troubles others with his foul nature. He is a doer defined by happiness and sorrow. Such a person is said to be in the quality of rajas .'''
@@ -3672,7 +3673,7 @@ const headers = {
         '''A person who doesn't apply himself is ordinary, stiff and pretentious. He is offensive, vile, lazy, dejected and spins a long yarn. Such a doer is said to be in the quality of tamas .'''
   },
   '18-29.md': {
-    'shloka': '''बुद्धेः भेदम् धृथेः चैव गुणतः त्रिविधम् शृणु ।
+    'shloka': '''बुद्धेः भेदम् धृतेः चैव गुणतः त्रिविधम् शृणु ।
 प्रोच्यमानम् अशेषेण पृथक्त्वेन धनन्जय ॥ २९ ॥''',
     'meaning':
         '''Arjuna, listen to the three types of intellect and the three types of resolve. They are distinguished by the three qualities . Each of them will now be described in completeness.'''
@@ -3884,7 +3885,7 @@ const headers = {
   },
   '18-64.md': {
     'shloka': '''सर्व गुह्यतमम् भूयः शृणु मे परमम् वचः ।
-इष्टोऽसि मे धृढम् इति ततो वक्ष्यामि ते हितम् ॥ ६४ ॥''',
+इष्टोऽसि मे दृढम् इति ततो वक्ष्यामि ते हितम् ॥ ६४ ॥''',
     'meaning':
         '''Listen once more to this supreme directive of mine, the most subtle of all. I state this for your benefit, since you are very dear to Me.'''
   },
@@ -3925,7 +3926,7 @@ const headers = {
         '''I consider Myself to be cherished by the pursuit of knowledge, performed by the person who studies this uplifting conversation of ours.'''
   },
   '18-71.md': {
-    'shloka': '''श्रद्धावान् अनसूयुः च शृणुयात् अपि यो नरः ।
+    'shloka': '''श्रद्धावान् अनसूयः च शृणुयात् अपि यो नरः ।
 सोऽपि मुक्तः शुभान् लोकान् प्राप्नुयात् पुण्यकर्मणाम् ॥ ७१ ॥''',
     'meaning':
         '''Even a person who listens with conviction and without mistrust, which comes from jealousy - even that person will get rid of flaws that come in the way of devotion and shall attain the auspicious places of the virtuous.'''
@@ -3946,13 +3947,13 @@ const headers = {
   '18-74.md': {
     'shloka': '''सन्जय उवाच -
 इत्यहम् वासुदेवस्य पार्थस्य च महात्मनः ।
-संवादम् इमम् अश्रूषम् अद्भुतम् रोमहर्षणम् ॥ ७४ ॥''',
+संवादम् इमम् अश्रौषम् अद्भुतम् रोमहर्षणम् ॥ ७४ ॥''',
     'meaning':
         '''Sanjaya said - Thus, I listened to this conversation between Krishna and the great man Arjuna. It is marvelous and fabulously stimulating.'''
   },
   '18-75.md': {
     'shloka': '''व्यास प्रसादात् श्रुतवान् एतत् गुह्यम् अहम् परम् ।
-योगम् योगेश्वरात् कृश्णात् साक्षात् कथयतः स्वयम् ॥ ७५ ॥''',
+योगम् योगेश्वरात् कृष्णात् साक्षात् कथयतः स्वयम् ॥ ७५ ॥''',
     'meaning':
         '''By the grace of Vyasa, I've listened to this subtle, superior practice of the Lord described by Krishna, the Lord of the practice Himself, as though I was present there myself.'''
   },
