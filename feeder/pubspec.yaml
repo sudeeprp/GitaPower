@@ -45,7 +45,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   http_mock_adapter: ^0.6.1
   mockito: ^5.4.6
-  build_runner: ^2.6.0
+  build_runner: ^2.7.1
   integration_test:
     sdk: flutter
 
