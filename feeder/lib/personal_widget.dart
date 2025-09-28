@@ -22,18 +22,20 @@ class PersonalWidget extends StatelessWidget {
           displayText: (theme) => theme == ReadingTheme.dark ? 'Dark Theme' : 'Light Theme',
         ),
         SizedBox(height: 16),
-        buildEnumSelector<ScriptPreference>(
-          title: 'How do you read Sanskrit text?',
-          values: ScriptPreference.values,
-          groupValue: choices.script,
-          displayText: (script) => script == ScriptPreference.devanagari ? 'Devanagari (धर्म, कर्म)' : 'Harvard-Kyoto (dharma, karma)',
-        ),
-        SizedBox(height: 16),
         buildEnumSelector<HeadPreference>(
           title: 'How do you read Shlokas?',
           values: HeadPreference.values,
           groupValue: choices.headPreference,
           displayText: (headPref) => headPref == HeadPreference.shloka ? 'Original source' : 'Translation',
+        ),
+        SizedBox(height: 16),
+        buildEnumSelector<ScriptPreference>(
+          title: 'How do you read Sanskrit text?',
+          values: ScriptPreference.values,
+          groupValue: choices.script,
+          displayText: (script) => script == ScriptPreference.devanagari
+              ? 'Devanagari (धर्म, कर्म)'
+              : 'Harvard-Kyoto (dharma, karma)',
         ),
       ],
     ));
