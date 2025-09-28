@@ -27,7 +27,7 @@ dependencies:
   google_fonts: ^6.3.1
   cupertino_icons: ^1.0.8
   firebase_crashlytics: ^5.0.1
-  firebase_core: ^4.0.0
+  firebase_core: ^4.1.1
   shared_preferences: 2.5.3
   enum_to_string: 2.2.1
   float_column: 4.0.3
