@@ -3089,7 +3089,7 @@ const headers = {
     'shloka': '''तम् एव चाद्यम् पुरुषम् प्रपद्ये
 यतः प्रवृत्तिः प्रसृता पुराणी ॥ ४ ॥''',
     'meaning':
-        '''Seek the goal diligently- "I surrender to that very Ancient Person from whom all existence came forth long ago."'''
+        '''Seek the goal diligently- "I surrender to that very Ancient Person, from whom all existence came forth long ago."'''
   },
   '15-5.md': {
     'shloka': '''निर्मानमोहा जित संगदोषाः
