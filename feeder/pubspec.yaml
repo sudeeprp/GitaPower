@@ -38,7 +38,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  analyzer: 7.7.1
+  analyzer: 8.2.0
   check_coverage:
   test_cov_console: ^0.2.2
   flutter_launcher_icons: ^0.14.4
