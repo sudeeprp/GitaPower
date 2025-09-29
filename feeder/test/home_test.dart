@@ -160,7 +160,7 @@ void main() {
     await tester.pumpAndSettle();
     final Choices choices = Get.find();
     expect(choices.theme.value, equals(ReadingTheme.dark));
-    await tester.tap(find.text('Harward-Kyoto'));
+    await tester.tap(find.text('Harvard-Kyoto (dharma, karma)'));
     await tester.pumpAndSettle();
     expect(choices.script.value, equals(ScriptPreference.sahk));
   });

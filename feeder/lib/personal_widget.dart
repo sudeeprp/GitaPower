@@ -16,24 +16,26 @@ class PersonalWidget extends StatelessWidget {
         BuildIdentWidget(),
         Divider(height: 16, indent: 16),
         buildEnumSelector<ReadingTheme>(
-          title: 'Select Theme:',
+          title: 'What\'s your reading mode?',
           values: ReadingTheme.values,
           groupValue: choices.theme,
           displayText: (theme) => theme == ReadingTheme.dark ? 'Dark Theme' : 'Light Theme',
         ),
         SizedBox(height: 16),
-        buildEnumSelector<ScriptPreference>(
-          title: 'Select Script Preference:',
-          values: ScriptPreference.values,
-          groupValue: choices.script,
-          displayText: (script) => script == ScriptPreference.devanagari ? 'Devanagari' : 'Harward-Kyoto',
-        ),
-        SizedBox(height: 16),
         buildEnumSelector<HeadPreference>(
-          title: 'Select Content Head:',
+          title: 'How do you read Shlokas?',
           values: HeadPreference.values,
           groupValue: choices.headPreference,
-          displayText: (headPref) => headPref == HeadPreference.shloka ? 'Shloka' : 'Meaning',
+          displayText: (headPref) => headPref == HeadPreference.shloka ? 'Original source' : 'Translation',
+        ),
+        SizedBox(height: 16),
+        buildEnumSelector<ScriptPreference>(
+          title: 'How do you read Sanskrit text?',
+          values: ScriptPreference.values,
+          groupValue: choices.script,
+          displayText: (script) => script == ScriptPreference.devanagari
+              ? 'Devanagari (धर्म, कर्म)'
+              : 'Harvard-Kyoto (dharma, karma)',
         ),
       ],
     ));
