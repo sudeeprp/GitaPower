@@ -513,20 +513,29 @@ class ContentWidget extends StatelessWidget {
       contentWidgets.insert(0, Obx(() {
         if (contentNotes.notesLoaded.value) {
           final preNote = contentNotes.noteForMD(mdFilename);
-          return _buildNote(
+          return Row(children: [
+            Expanded(flex: 1, child: GestureDetector(
+              onTap: () => Get.back(),
+              child: Icon(
+              Icons.arrow_back,
+              color: Colors.purple.withValues(alpha: 0.7),
+              size: 48,
+              ),
+            )),
+            Expanded(flex: 9, child: _buildNote(
               context,
               IntrinsicHeight(
                   child: Row(children: [
                 Expanded(
                     flex: 17,
-                    child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')), style: styleFor('note'))),
+                    child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')), style: styleFor('note')?.copyWith(fontSize: 10))),
                 const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
                 Expanded(
                   flex: 3,
                   child: Text(Chapter.filenameToShortTitle(mdFilename),
                       style: Theme.of(context).textTheme.bodySmall),
                 )
-              ])));
+              ]))))]);
         } else {
           return const SizedBox.shrink();
         }
