@@ -517,7 +517,7 @@ class ContentWidget extends StatelessWidget {
             Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () => Get.back(),
+                  onTap: Get.back,
                   child: Icon(
                     Icons.arrow_back,
                     color: Colors.purple.withValues(alpha: 0.7),
