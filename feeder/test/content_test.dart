@@ -283,13 +283,6 @@ Self realization is key.
     await tester.pumpAndSettle(const Duration(seconds: 1));
     expect(contentActions.actionsVisible.value, equals(false));
   });
-  testWidgets('shows preceding note in each feed', (tester) async {
-    putContentControllers();
-    final contentWidget = buildContentFeed('10-13-prenote.md');
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: contentWidget)));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('What did Arjuna ask?'), findsOneWidget);
-  });
   test('Text with inline code remains inline in one widget', () {
     final inlineCode = recordParseActions('inline `source`');
     expect(inlineCode.textsMade[0].content, equals('inline '));

@@ -64,13 +64,11 @@ Widget makeMyHome() {
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
-            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
-                choicesRow: choicesRow([], choicesForContent()))),
+            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRow([], choicesForContent()))),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
-            page: () => screenify(
-                buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
-                choicesRow: choicesRow([], choicesForContent()))),
+            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRow([], choicesForContent()),
+                initialAnchor: Get.parameters['noteId'])),
         GetPage(name: '/search', page: searchScreen),
         GetPage(
             name: '/personalize',
@@ -84,7 +82,14 @@ Widget feedScreen() {
 }
 
 Widget browsingScreen() {
-  return screenify(BrowseToc(), choicesRow: notesChaptersChoices());
+  return screenify(BrowseToc(),
+      appBar: AppBar(
+          title: Row(children: [
+        Image.asset('images/begin-chapters.png', height: 32, width: 32),
+        SizedBox(width: 10),
+        Text("Chapters and Notes")
+      ])),
+      choicesRow: notesChaptersChoices());
 }
 
 class Home extends StatelessWidget {

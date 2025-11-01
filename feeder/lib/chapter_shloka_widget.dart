@@ -20,7 +20,12 @@ Widget chapterShlokaScreen(String chapterMdName) {
       } else {
         return screenify(
           ChapterShlokaWidget(chapter),
-          appBar: AppBar(leading: Image.asset('images/bothfeet.png'), title: Text(chapter.title)),
+          appBar: AppBar(
+              title: Row(children: [
+            Image.asset('images/bothfeet.png'),
+            const SizedBox(width: 10),
+            Text(chapter.title)
+          ])),
           choicesRow: chapterShlokaChoices(),
         );
       }

@@ -2,6 +2,7 @@ import 'package:askys/content_themes.dart';
 import 'package:askys/expandable_span.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
+import 'package:askys/screenify.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -367,6 +368,51 @@ Widget _sectionContainer(BuildContext context, SectionType sectionType, Widget c
   return _contentSpacing(context, _horizontalScrollForOneLiners(sectionType, content));
 }
 
+TextStyle? styleFor(BuildContext context, String tag,
+    {String? elmclass, Presentation? presentation, bool isRelevantToSearch = false}) {
+  FontWeight? fontWeight;
+  if (presentation != null && presentation == Presentation.emphasis) {
+    fontWeight = FontWeight.bold;
+  }
+  Color? backgroundColor;
+  if (isRelevantToSearch) {
+    backgroundColor = Colors.yellow.withValues(alpha: 0.5);
+  }
+  if (elmclass == 'language-shloka-sa') {
+    return GoogleFonts.roboto(
+        color: contentColors(context)?.codeTextColor,
+        fontSize: 20,
+        fontWeight: fontWeight,
+        backgroundColor: backgroundColor);
+  } else if (tag == 'code') {
+    return GoogleFonts.roboto(
+        color: contentColors(context)?.codeTextColor,
+        fontSize: 18,
+        fontWeight: fontWeight,
+        backgroundColor: backgroundColor);
+  } else if (tag == 'h1') {
+    return Theme.of(context).textTheme.headlineMedium;
+  } else if (tag == 'h2') {
+    return Theme.of(context).textTheme.headlineSmall?.copyWith(height: 3, backgroundColor: backgroundColor);
+  } else if (tag == 'em') {
+    return GoogleFonts.roboto(
+        height: 1.5,
+        fontStyle: FontStyle.italic,
+        fontSize: 16,
+        fontWeight: fontWeight,
+        backgroundColor: backgroundColor);
+  } else if (tag == 'note') {
+    return TextStyle(fontSize: 14, fontWeight: fontWeight, backgroundColor: backgroundColor);
+  } else {
+    return TextStyle(
+        color: contentColors(context)?.commentaryTextColor,
+        height: 1.75,
+        fontSize: 18,
+        fontWeight: fontWeight,
+        backgroundColor: backgroundColor);
+  }
+}
+
 class SectionContent {
   List<TextSpan> spans;
   bool isRelevantToSearch;
@@ -436,54 +482,6 @@ class ContentWidget extends StatelessWidget {
       ];
     }
 
-    TextStyle? styleFor(String tag,
-        {String? elmclass, Presentation? presentation, bool isRelevantToSearch = false}) {
-      FontWeight? fontWeight;
-      if (presentation != null && presentation == Presentation.emphasis) {
-        fontWeight = FontWeight.bold;
-      }
-      Color? backgroundColor;
-      if (isRelevantToSearch) {
-        backgroundColor = Colors.yellow.withValues(alpha: 0.5);
-      }
-      if (elmclass == 'language-shloka-sa') {
-        return GoogleFonts.roboto(
-            color: contentColors(context)?.codeTextColor,
-            fontSize: 20,
-            fontWeight: fontWeight,
-            backgroundColor: backgroundColor);
-      } else if (tag == 'code') {
-        return GoogleFonts.roboto(
-            color: contentColors(context)?.codeTextColor,
-            fontSize: 18,
-            fontWeight: fontWeight,
-            backgroundColor: backgroundColor);
-      } else if (tag == 'h1') {
-        return Theme.of(context).textTheme.headlineMedium;
-      } else if (tag == 'h2') {
-        return Theme.of(context)
-            .textTheme
-            .headlineSmall
-            ?.copyWith(height: 3, backgroundColor: backgroundColor);
-      } else if (tag == 'em') {
-        return GoogleFonts.roboto(
-            height: 1.5,
-            fontStyle: FontStyle.italic,
-            fontSize: 16,
-            fontWeight: fontWeight,
-            backgroundColor: backgroundColor);
-      } else if (tag == 'note') {
-        return TextStyle(fontSize: 14, fontWeight: fontWeight, backgroundColor: backgroundColor);
-      } else {
-        return TextStyle(
-            color: contentColors(context)?.commentaryTextColor,
-            height: 1.75,
-            fontSize: 18,
-            fontWeight: fontWeight,
-            backgroundColor: backgroundColor);
-      }
-    }
-
     List<TextSpan> formatMaker(MatterForInline inlineMatter) {
       if (inlineMatter.tag == 'anchor') {
         return _anchorSpan(inlineMatter.text, anchorKeys);
@@ -492,7 +490,7 @@ class ContentWidget extends StatelessWidget {
         return [
           TextSpan(
             text: inlineMatter.text,
-            style: styleFor('anchor')?.copyWith(color: Colors.blue),
+            style: styleFor(context, 'anchor')?.copyWith(color: Colors.blue),
             recognizer: TapGestureRecognizer()..onTap = () => navigateToLink(inlineMatter.link),
           )
         ];
@@ -500,52 +498,12 @@ class ContentWidget extends StatelessWidget {
       return [
         TextSpan(
           text: inlineMatter.text,
-          style: styleFor(inlineMatter.tag,
+          style: styleFor(context, inlineMatter.tag,
               elmclass: inlineMatter.elmclass,
               presentation: inlineMatter.presentation,
               isRelevantToSearch: inlineMatter.isRelevantToSearch),
         )
       ];
-    }
-
-    void insertContentNote(List<Widget> contentWidgets) {
-      final ContentNotes contentNotes = Get.find();
-      contentWidgets.insert(0, Obx(() {
-        if (contentNotes.notesLoaded.value) {
-          final preNote = contentNotes.noteForMD(mdFilename);
-          return Row(children: [
-            Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: Get.back,
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.purple.withValues(alpha: 0.7),
-                    size: 48,
-                  ),
-                )),
-            Expanded(
-                flex: 9,
-                child: _buildNote(
-                    context,
-                    IntrinsicHeight(
-                        child: Row(children: [
-                      Expanded(
-                          flex: 17,
-                          child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')),
-                              style: styleFor('note')?.copyWith(fontSize: 10))),
-                      const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
-                      Expanded(
-                        flex: 3,
-                        child: Text(Chapter.filenameToShortTitle(mdFilename),
-                            style: Theme.of(context).textTheme.bodySmall),
-                      )
-                    ]))))
-          ]);
-        } else {
-          return const SizedBox.shrink();
-        }
-      }));
     }
 
     MDContent md = Get.find(tag: mdFilename);
@@ -557,7 +515,6 @@ class ContentWidget extends StatelessWidget {
           final widgetMaker = WidgetMaker(textRichMaker, formatMaker,
               showPatterns: playableShows(), searchPhrase: searchPhrase);
           final widgetsMade = widgetMaker.parse(md.mdContent.value);
-          insertContentNote(widgetsMade);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             BuildContext? anchorContext;
             if (anchorKeys.containsKey(initialAnchor)) {
@@ -618,6 +575,32 @@ class ShlokaContentReader extends StatelessWidget {
   }
 }
 
+Widget preContentNote(BuildContext context, String mdFilename) {
+  final ContentNotes contentNotes = Get.find();
+  return Obx(() {
+    if (contentNotes.notesLoaded.value) {
+      final preNote = contentNotes.noteForMD(mdFilename);
+      return _buildNote(
+          context,
+          IntrinsicHeight(
+              child: Row(children: [
+            Expanded(
+                flex: 17,
+                child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')),
+                    style: styleFor(context, 'note')?.copyWith(fontSize: 10))),
+            const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
+            Expanded(
+              flex: 3,
+              child: Text(Chapter.filenameToShortTitle(mdFilename),
+                  style: Theme.of(context).textTheme.bodySmall),
+            )
+          ])));
+    } else {
+      return const SizedBox.shrink();
+    }
+  });
+}
+
 ContentWidget buildContent(String mdFilename,
     {String? initialAnchor,
     String? prevmd,
@@ -638,4 +621,18 @@ ContentWidget buildContentFeed(String mdFilename, {Key? key, String? searchPhras
   return buildContent(mdFilename, onTap: () {
     Get.toNamed('/shloka/$mdFilename');
   }, searchPhrase: searchPhrase, key: key);
+}
+
+class ContentScreen extends StatelessWidget {
+  const ContentScreen(this.mdFilename, this.choicesRow, {this.initialAnchor, super.key});
+
+  final String mdFilename;
+  final Widget choicesRow;
+  final String? initialAnchor;
+
+  @override
+  Widget build(BuildContext context) {
+    return screenify(buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: initialAnchor),
+        appBar: AppBar(title: preContentNote(context, mdFilename)), choicesRow: choicesRow);
+  }
 }
