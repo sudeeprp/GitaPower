@@ -38,7 +38,10 @@ Widget chapterShlokaScreen(String chapterMdName) {
 }
 
 Widget chapterShlokaChoices() {
-  return choicesRow([], const [
+  return choicesRow([
+    SizedBox(width: choiceSpacing),
+    widgetToHome()
+  ], const [
     HeaderPreferenceIcon(),
     SizedBox(width: choiceSpacing),
     PersonalizeIcon(),

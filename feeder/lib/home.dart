@@ -64,10 +64,10 @@ Widget makeMyHome() {
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
-            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRow([], choicesForContent()))),
+            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRowForContent())),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
-            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRow([], choicesForContent()),
+            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRowForContent(),
                 initialAnchor: Get.parameters['noteId'])),
         GetPage(name: '/search', page: searchScreen),
         GetPage(
@@ -78,7 +78,8 @@ Widget makeMyHome() {
 }
 
 Widget feedScreen() {
-  return screenify(buildFeed(), choicesRow: choicesRow([], choicesForFeed()));
+  return screenify(buildFeed(),
+      choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForFeed()));
 }
 
 Widget browsingScreen() {
@@ -115,12 +116,19 @@ List<Widget> choicesForContent() {
   ];
 }
 
+Widget choicesRowForContent() {
+  return choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForContent());
+}
+
 List<Widget> choicesForFeed() {
   return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
 }
 
 Widget notesChaptersChoices() {
-  return choicesRow([], [
+  return choicesRow([
+    SizedBox(width: choiceSpacing),
+    widgetToHome()
+  ], [
     GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
     SizedBox(width: choiceSpacing),
     PersonalizeIcon(),
