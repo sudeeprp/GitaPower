@@ -1,6 +1,7 @@
 import 'package:askys/chaptercontent.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/notecontent.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -121,9 +122,10 @@ class BrowseController extends GetxController {
     List<Map<String, String>> notesCompiled,
   ) {
     String textOfNote(String noteId) {
-      return notesCompiled.firstWhere((note) => note['note_id'] == noteId,
-              orElse: () => {'text': ''})['text'] ??
-          '';
+      final noteText =
+          notesCompiled.firstWhere((note) => note['note_id'] == noteId, orElse: () => {'text': ''})['text'] ??
+              '';
+      return toPlainText(noteText);
     }
 
     List<BrowseItem> itemSequence = [];

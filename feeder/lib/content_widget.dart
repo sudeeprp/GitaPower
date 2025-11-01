@@ -580,24 +580,17 @@ Widget preContentNote(BuildContext context, String mdFilename) {
   return Obx(() {
     if (contentNotes.notesLoaded.value) {
       final preNote = contentNotes.noteForMD(mdFilename);
-      return _buildNote(
-          context,
-          IntrinsicHeight(
-              child: Row(children: [
-            Expanded(
-                flex: 17,
-                child: Text.rich(TextSpan(text: toPlainText(preNote ?? '')),
-                    style: styleFor(context, 'note')?.copyWith(fontSize: 10))),
-            const VerticalDivider(thickness: 1, indent: 5, endIndent: 5, color: Colors.grey),
-            Expanded(
-              flex: 3,
-              child: Text(Chapter.filenameToShortTitle(mdFilename),
-                  style: Theme.of(context).textTheme.bodySmall),
-            )
-          ])));
-    } else {
-      return const SizedBox.shrink();
+      if (preNote != null) {
+        return Row(children: [
+          Image.asset('images/one-step.png', width: 32, height: 32),
+          SizedBox(width: 8),
+          Expanded(
+              child: Text(toPlainText(preNote),
+                  style: styleFor(context, 'note')?.copyWith(fontSize: 10), softWrap: true, maxLines: 3)),
+        ]);
+      }
     }
+    return const SizedBox.shrink();
   });
 }
 
@@ -633,6 +626,10 @@ class ContentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenify(buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: initialAnchor),
-        appBar: AppBar(title: preContentNote(context, mdFilename)), choicesRow: choicesRow);
+        appBar: AppBar(title: preContentNote(context, mdFilename), actions: [
+          Text(Chapter.filenameToShortTitle(mdFilename), style: Theme.of(context).textTheme.bodySmall),
+          SizedBox(width: 12)
+        ]),
+        choicesRow: choicesRow);
   }
 }
