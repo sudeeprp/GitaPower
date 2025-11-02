@@ -68,7 +68,8 @@ Widget guidedTourScreen(String tourFolder) {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
+          choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],
+              const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
     } else {
       return screenify(const Text('Loading tour...'));
     }

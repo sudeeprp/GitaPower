@@ -64,13 +64,11 @@ Widget makeMyHome() {
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
         GetPage(
             name: '/shloka/:mdFilename',
-            page: () => screenify(buildContentWithNote(Get.parameters['mdFilename']!),
-                choicesRow: choicesRow([], choicesForContent()))),
+            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRowForContent())),
         GetPage(
             name: '/shloka/:mdFilename/:noteId',
-            page: () => screenify(
-                buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: Get.parameters['noteId']),
-                choicesRow: choicesRow([], choicesForContent()))),
+            page: () => ContentScreen(Get.parameters['mdFilename']!, choicesRowForContent(),
+                initialAnchor: Get.parameters['noteId'])),
         GetPage(name: '/search', page: searchScreen),
         GetPage(
             name: '/personalize',
@@ -80,11 +78,19 @@ Widget makeMyHome() {
 }
 
 Widget feedScreen() {
-  return screenify(buildFeed(), choicesRow: choicesRow([], choicesForFeed()));
+  return screenify(buildFeed(),
+      choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForFeed()));
 }
 
 Widget browsingScreen() {
-  return screenify(BrowseToc(), choicesRow: notesChaptersChoices());
+  return screenify(BrowseToc(),
+      appBar: AppBar(
+          title: Row(children: [
+        Image.asset('images/begin-chapters.png', height: 32, width: 32),
+        const SizedBox(width: choiceSpacing),
+        const Text("Chapters and Notes")
+      ])),
+      choicesRow: notesChaptersChoices());
 }
 
 class Home extends StatelessWidget {
@@ -110,12 +116,19 @@ List<Widget> choicesForContent() {
   ];
 }
 
+Widget choicesRowForContent() {
+  return choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForContent());
+}
+
 List<Widget> choicesForFeed() {
   return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
 }
 
 Widget notesChaptersChoices() {
-  return choicesRow([], [
+  return choicesRow([
+    SizedBox(width: choiceSpacing),
+    widgetToHome()
+  ], [
     GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
     SizedBox(width: choiceSpacing),
     PersonalizeIcon(),

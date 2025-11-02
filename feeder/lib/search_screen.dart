@@ -152,7 +152,10 @@ class SearchWidget extends StatelessWidget {
 Widget searchScreen() {
   final PhraseSearcher phraseSearcher = Get.find();
   phraseSearcher.reset();
-  return screenify(SearchWidget(),
-      appBar: AppBar(title: const Text('Search (beta)')),
-      choicesRow: choicesRow([], const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
+  return screenify(
+    SearchWidget(),
+    appBar: AppBar(title: const Text('Search (beta)')),
+    choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],
+        const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]),
+  );
 }

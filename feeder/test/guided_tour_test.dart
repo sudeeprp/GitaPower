@@ -1,5 +1,6 @@
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/content_widget.dart';
 import 'package:askys/feedcontent.dart';
 import 'package:askys/feedplay_icon.dart';
 import 'package:askys/guided_tour.dart';
@@ -103,7 +104,7 @@ void main() {
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
     feedContent.tour.moveTo(2);
     await tester.pumpAndSettle();
-    expect(find.text('2-34'), findsOneWidget);
+    expect(find.text('l2'), findsOneWidget);
     feedContent.tour.moveTo(3);
     await tester.pumpAndSettle();
     expect(find.text('Chapter 7'), findsOneWidget);
@@ -166,7 +167,7 @@ void main() {
     feedContent.tour.playState(PlayerState(true, ProcessingState.ready));
     feedContent.tour.moveTo(2);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('2-34'));
+    await tester.tap(find.byType(ContentWidget));
     await tester.pumpAndSettle();
     expect(Get.currentRoute, equals('/shloka/2-34.md'));
   });

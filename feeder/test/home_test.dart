@@ -179,4 +179,18 @@ void main() {
 
     expect(uriPointsToFeed(Uri.parse('/gitapower')), isFalse);
   });
+  testWidgets('Navigates back to home from browse screen using home widget', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.pumpAndSettle();
+
+    // Navigate to browse screen
+    await tester.tap(find.byKey(const Key('begin/browse')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/browse');
+
+    // Tap home icon to navigate back
+    await tester.tap(find.byKey(const Key('choice/home')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/');
+  });
 }
