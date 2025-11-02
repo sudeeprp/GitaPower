@@ -583,7 +583,7 @@ Widget preContentNote(BuildContext context, String mdFilename) {
       if (preNote != null) {
         return Row(children: [
           Image.asset('images/one-step.png', width: 32, height: 32),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
               child: Text(toPlainText(preNote),
                   style: styleFor(context, 'note')?.copyWith(fontSize: 10), softWrap: true, maxLines: 3)),
@@ -625,7 +625,7 @@ class ContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenify(buildContentWithNote(Get.parameters['mdFilename']!, initialAnchor: initialAnchor),
+    return screenify(buildContentWithNote(mdFilename, initialAnchor: initialAnchor),
         appBar: AppBar(title: preContentNote(context, mdFilename), actions: [
           Text(Chapter.filenameToShortTitle(mdFilename), style: Theme.of(context).textTheme.bodySmall),
           SizedBox(width: 12)

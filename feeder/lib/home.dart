@@ -87,8 +87,8 @@ Widget browsingScreen() {
       appBar: AppBar(
           title: Row(children: [
         Image.asset('images/begin-chapters.png', height: 32, width: 32),
-        SizedBox(width: 10),
-        Text("Chapters and Notes")
+        const SizedBox(width: choiceSpacing),
+        const Text("Chapters and Notes")
       ])),
       choicesRow: notesChaptersChoices());
 }

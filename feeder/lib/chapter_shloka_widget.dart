@@ -23,7 +23,7 @@ Widget chapterShlokaScreen(String chapterMdName) {
           appBar: AppBar(
               title: Row(children: [
             Image.asset('images/bothfeet.png'),
-            const SizedBox(width: 10),
+            const SizedBox(width: choiceSpacing),
             Text(chapter.title)
           ])),
           choicesRow: chapterShlokaChoices(),

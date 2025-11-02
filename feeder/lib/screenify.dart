@@ -13,5 +13,8 @@ Widget screenify(Widget body, {AppBar? appBar, Widget? choicesRow}) {
 
 Widget widgetToHome() {
   return GestureDetector(
-      key: Key('choice/home'), onTap: () => Get.offAllNamed('/'), child: Icon(Icons.home, size: 48));
+    key: Key('choice/home'),
+    onTap: () => Get.offAllNamed('/'),
+    child: Semantics(label: 'Home', button: true, child: Icon(Icons.home, size: 48)),
+  );
 }
