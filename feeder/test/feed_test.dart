@@ -132,7 +132,7 @@ void main() {
     expect(clipboardData, contains("You are a friendly Sri Vaishnava"));
   });
 
-  test('makePrompt returns template when shlokas not loaded', () {
+  test('makePrompt returns empty string when shlokas not loaded', () {
     // Create a temporary FeedContent with no shlokas
     Get.delete<FeedContent>(); // Remove existing
     final tempFeedContent = FeedContent.random();
@@ -140,26 +140,11 @@ void main() {
     Get.put(tempFeedContent);
 
     final prompt = makePrompt();
-    expect(prompt, equals(templatePrompt));
-    expect(prompt, contains('{{openerQ1}}'));
-    expect(prompt, contains('{{openerQ2}}'));
-    expect(prompt, contains('{{openerQ3}}'));
+    expect(prompt, equals(''));
 
     // Restore original FeedContent
     Get.delete<FeedContent>();
     Get.put(FeedContent.random());
-  });
-
-  test('makePrompt template has three shloka sections', () {
-    expect(templatePrompt, contains('{{openerQ1}}'));
-    expect(templatePrompt, contains('{{openerQ2}}'));
-    expect(templatePrompt, contains('{{openerQ3}}'));
-    expect(templatePrompt, contains('{{chapterShlokaNum1}}'));
-    expect(templatePrompt, contains('{{chapterShlokaNum2}}'));
-    expect(templatePrompt, contains('{{chapterShlokaNum3}}'));
-    expect(templatePrompt, contains('{{shlokaInSanskrit1}}'));
-    expect(templatePrompt, contains('{{meaning1}}'));
-    expect(templatePrompt, contains('{{gitabhashya1}}'));
   });
 
   test('toggles opener cover visibility', () {

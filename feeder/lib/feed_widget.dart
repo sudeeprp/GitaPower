@@ -231,38 +231,29 @@ ShlokaContent _extractShlokaContent(String mdContent) {
     }
   }
 
-  // Extract gitabhashya (everything after the meaning, excluding quotes that start with >)
+  // Extract gitabhashya (everything after the closing ``` of shloka-sa-hk block)
   String gitabhashya = '';
-  bool inGitabhashya = false;
-  bool foundMeaning = false;
+  bool afterSahkClosing = false;
+  bool inSahkBlock = false;
   for (int i = 0; i < lines.length; i++) {
     final line = lines[i];
 
-    // Skip until we're past the shloka-sa-hk block
+    // Track when we enter shloka-sa-hk block
     if (line.contains('```shloka-sa-hk')) {
-      foundMeaning = true;
+      inSahkBlock = true;
       continue;
     }
 
-    if (foundMeaning) {
-      // Start collecting after we see the first note or the paragraph after meaning
-      if (!inGitabhashya &&
-          (line.trim().startsWith('_') ||
-              line.trim().startsWith('<a name=') ||
-              (i > 0 && lines[i - 1].trim().isEmpty && line.trim().isNotEmpty))) {
-        inGitabhashya = true;
-      }
+    // Track when we exit shloka-sa-hk block
+    if (inSahkBlock && line.trim() == '```') {
+      afterSahkClosing = true;
+      inSahkBlock = false;
+      continue;
+    }
 
-      if (inGitabhashya) {
-        // Skip opener questions (lines starting with >)
-        if (line.trim().startsWith('>')) {
-          continue;
-        }
-        // Add the line
-        if (line.trim().isNotEmpty) {
-          gitabhashya += '$line\n';
-        }
-      }
+    // Collect everything after the shloka-sa-hk closing ```
+    if (afterSahkClosing && line.trim().isNotEmpty) {
+      gitabhashya += '$line\n';
     }
   }
 
@@ -278,7 +269,7 @@ String makePrompt() {
   final FeedContent feedContent = Get.find();
 
   if (feedContent.threeShlokas.length != 3) {
-    return templatePrompt; // Return template as-is if shlokas aren't loaded yet
+    return ''; // Return empty string if shlokas aren't loaded yet
   }
 
   String prompt = templatePrompt;
@@ -314,8 +305,8 @@ String makePrompt() {
       prompt = prompt.replaceAll('{{gitabhashya$index}}', shlokaContent.gitabhashya);
     }
   } catch (e) {
-    // If there's an error, return the template with placeholders
-    return templatePrompt;
+    // If there's an error, return empty string
+    return '';
   }
 
   return prompt;
