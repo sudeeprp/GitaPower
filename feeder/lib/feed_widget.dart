@@ -144,14 +144,33 @@ Here are the 3 shlokas in markdown format:
 
 {{gitabhashya3}}
 
-Write an article in markdown format, threading through the 3 shlokas above. Structure it as follows:
-- Start with a catchy title
-- Summarize your thread in a 30-second read
-- Narrate your thread of thought in a 3-5 minute read. Mention references along the way (e.g., concepts from other shlokas of the Gita, which link your thoughts together) 
-- Conclude with a call to action or a thought-provoking question
+---
 
-Use simple language, keep the tone devotional and practical. Make it engaging and inspiring.
+## Your Task
+
+Now, based on these three shlokas and their commentary:
+
+1. **Identify the central theme**: What common thread connects these three shlokas? What aspect of life or spiritual practice do they address?
+
+2. **Create a narrative**: Write an article in markdown format that weaves these shlokas together. Structure it as:
+   - **Title**: A catchy, relatable title that captures the essence
+   - **30-Second Summary**: A brief overview of your main insight
+   - **Deep Dive (3-5 minutes)**: 
+     - Explain how each shloka contributes to the theme
+     - Connect concepts across shlokas (reference by chapter-verse)
+     - Relate to everyday experiences and practical application
+     - Use the Gitabhashya insights to deepen understanding
+   - **Call to Action**: End with a specific, actionable suggestion or thought-provoking question that readers can apply in their lives
+
+3. **Style Guidelines**:
+   - Use simple, accessible language
+   - Maintain a devotional yet practical tone
+   - Make it engaging and relatable to modern life
+   - Include specific examples where helpful
+
+Remember: The goal is to help readers experience these teachings, not just understand them intellectually.
 ''';
+
 
 class ShlokaContent {
   final String chapterShlokaNum;
@@ -213,6 +232,11 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       continue;
     }
     if (inMeaning) {
+      // Empty line ends the meaning section
+      if (line.trim().isEmpty) {
+        inMeaning = false;
+        break;
+      }
       // Skip lines starting with underscore or > (these are notes/quotes)
       if (line.trim().startsWith('_') || line.trim().startsWith('>') || line.trim().startsWith('<a name=')) {
         break;
@@ -327,7 +351,19 @@ class PromptWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Clipboard.setData(ClipboardData(text: makePrompt())),
+      onTap: () {
+        final prompt = makePrompt();
+        Clipboard.setData(ClipboardData(text: prompt));
+        
+        // Show a transient message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Prompt copied to clipboard! Paste it in your favorite AI chat.'),
+            duration: Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      },
       child: const Icon(Icons.chat_bubble, size: 48, color: Colors.blue),
     );
   }
