@@ -231,11 +231,11 @@ ShlokaContent _extractShlokaContent(String mdContent) {
     }
   }
 
-  // Extract gitabhashya (everything after the closing ``` of shloka-sa-hk block, skipping the meaning line)
+  // Extract gitabhashya (everything after an empty line following shloka-sa-hk block)
   String gitabhashya = '';
   bool afterSahkClosing = false;
   bool inSahkBlock = false;
-  bool skippedMeaningLine = false;
+  bool foundEmptyLine = false;
   for (int i = 0; i < lines.length; i++) {
     final line = lines[i];
 
@@ -252,14 +252,16 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       continue;
     }
 
-    // Skip the first non-empty line after shloka-sa-hk closing (which is the meaning)
-    if (afterSahkClosing && !skippedMeaningLine && line.trim().isNotEmpty) {
-      skippedMeaningLine = true;
+    // After closing, skip all non-empty lines until we find an empty line
+    if (afterSahkClosing && !foundEmptyLine) {
+      if (line.trim().isEmpty) {
+        foundEmptyLine = true;
+      }
       continue;
     }
 
-    // Collect everything after skipping the meaning line
-    if (afterSahkClosing && skippedMeaningLine && line.trim().isNotEmpty) {
+    // Collect everything after the empty line
+    if (afterSahkClosing && foundEmptyLine && line.trim().isNotEmpty) {
       gitabhashya += '$line\n';
     }
   }
