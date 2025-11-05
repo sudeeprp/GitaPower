@@ -171,7 +171,6 @@ Now, based on these three shlokas and their commentary:
 Remember: The goal is to help readers experience these teachings, not just understand them intellectually.
 ''';
 
-
 class ShlokaContent {
   final String chapterShlokaNum;
   final String shlokaInSanskrit;
@@ -353,7 +352,7 @@ class PromptWidget extends StatelessWidget {
       onTap: () {
         final prompt = makePrompt();
         Clipboard.setData(ClipboardData(text: prompt));
-        
+
         // Show a transient message to the user
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
