@@ -167,6 +167,8 @@ class ShlokaContent {
   });
 }
 
+final _devanagariInBackticksPattern = RegExp(r'`[\u0900-\u097F\s]+`');
+
 ShlokaContent _extractShlokaContent(String mdContent) {
   final lines = mdContent.split('\n');
 
@@ -219,8 +221,7 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       if (line.trim().isNotEmpty) {
         // Filter out Devanagari text in backticks but keep English
         var filteredLine = line;
-        final devanagariPattern = RegExp(r'`[\u0900-\u097F\s]+`');
-        filteredLine = filteredLine.replaceAll(devanagariPattern, '');
+        filteredLine = filteredLine.replaceAll(_devanagariInBackticksPattern, '');
         // Clean up extra spaces
         filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
         if (filteredLine.isNotEmpty) {
