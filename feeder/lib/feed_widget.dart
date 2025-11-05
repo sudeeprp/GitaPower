@@ -167,7 +167,7 @@ class ShlokaContent {
   });
 }
 
-final _devanagariInBackticksPattern = RegExp(r'`[\u0900-\u097F\s]+`');
+final _allBackticksPattern = RegExp(r'`[^`]+`');
 
 ShlokaContent _extractShlokaContent(String mdContent) {
   final lines = mdContent.split('\n');
@@ -219,9 +219,9 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       }
       // Add non-empty lines to meaning
       if (line.trim().isNotEmpty) {
-        // Filter out Devanagari text in backticks but keep English
+        // Filter out all backtick content (Devanagari and English transliteration)
         var filteredLine = line;
-        filteredLine = filteredLine.replaceAll(_devanagariInBackticksPattern, '');
+        filteredLine = filteredLine.replaceAll(_allBackticksPattern, '');
         // Clean up extra spaces
         filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
         if (filteredLine.isNotEmpty) {
@@ -231,10 +231,11 @@ ShlokaContent _extractShlokaContent(String mdContent) {
     }
   }
 
-  // Extract gitabhashya (everything after the closing ``` of shloka-sa-hk block)
+  // Extract gitabhashya (everything after the closing ``` of shloka-sa-hk block, skipping the meaning line)
   String gitabhashya = '';
   bool afterSahkClosing = false;
   bool inSahkBlock = false;
+  bool skippedMeaningLine = false;
   for (int i = 0; i < lines.length; i++) {
     final line = lines[i];
 
@@ -251,8 +252,14 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       continue;
     }
 
-    // Collect everything after the shloka-sa-hk closing ```
-    if (afterSahkClosing && line.trim().isNotEmpty) {
+    // Skip the first non-empty line after shloka-sa-hk closing (which is the meaning)
+    if (afterSahkClosing && !skippedMeaningLine && line.trim().isNotEmpty) {
+      skippedMeaningLine = true;
+      continue;
+    }
+
+    // Collect everything after skipping the meaning line
+    if (afterSahkClosing && skippedMeaningLine && line.trim().isNotEmpty) {
       gitabhashya += '$line\n';
     }
   }
