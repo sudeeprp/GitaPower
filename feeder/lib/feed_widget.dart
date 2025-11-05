@@ -232,25 +232,24 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       continue;
     }
     if (inMeaning) {
+      final trimmedLine = line.trim();
       // Empty line ends the meaning section
-      if (line.trim().isEmpty) {
+      if (trimmedLine.isEmpty) {
         inMeaning = false;
         break;
       }
       // Skip lines starting with underscore or > (these are notes/quotes)
-      if (line.trim().startsWith('_') || line.trim().startsWith('>') || line.trim().startsWith('<a name=')) {
+      if (trimmedLine.startsWith('_') || trimmedLine.startsWith('>') || trimmedLine.startsWith('<a name=')) {
         break;
       }
-      // Add non-empty lines to meaning
-      if (line.trim().isNotEmpty) {
-        // Filter out all backtick content (Devanagari and English transliteration)
-        var filteredLine = line;
-        filteredLine = filteredLine.replaceAll(_allBackticksPattern, '');
-        // Clean up extra spaces
-        filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
-        if (filteredLine.isNotEmpty) {
-          meaning += '$filteredLine ';
-        }
+      // Add non-empty lines to meaning (we already know it's non-empty from above checks)
+      // Filter out all backtick content (Devanagari and English transliteration)
+      var filteredLine = line;
+      filteredLine = filteredLine.replaceAll(_allBackticksPattern, '');
+      // Clean up extra spaces
+      filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
+      if (filteredLine.isNotEmpty) {
+        meaning += '$filteredLine ';
       }
     }
   }
