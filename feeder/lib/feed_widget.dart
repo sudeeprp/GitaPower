@@ -1,4 +1,5 @@
 import 'package:askys/content_widget.dart';
+import 'package:askys/mdcontent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -97,19 +98,51 @@ Use concepts present in the Gitabhashya in your response:
 
 Here are the 3 shlokas in markdown format:
 
->Starting shloka, opening question: {openerQ}
+>Starting shloka, opening question: {{openerQ1}}
 
-## {chaptershlokanum}
+## {{chapterShlokaNum1}}
 
-{shlokainsanskrit}
+{{shlokaInSanskrit1}}
 
 ### Meaning
 
-{meaning}
+{{meaning1}}
 
 ### Gitabhashya
 
-{gitabhashya}
+{{gitabhashya1}}
+
+---
+
+>Second shloka, opening question: {{openerQ2}}
+
+## {{chapterShlokaNum2}}
+
+{{shlokaInSanskrit2}}
+
+### Meaning
+
+{{meaning2}}
+
+### Gitabhashya
+
+{{gitabhashya2}}
+
+---
+
+>Third shloka, opening question: {{openerQ3}}
+
+## {{chapterShlokaNum3}}
+
+{{shlokaInSanskrit3}}
+
+### Meaning
+
+{{meaning3}}
+
+### Gitabhashya
+
+{{gitabhashya3}}
 
 Write an article in markdown format, threading through the 3 shlokas above. Structure it as follows:
 - Start with a catchy title
@@ -120,8 +153,171 @@ Write an article in markdown format, threading through the 3 shlokas above. Stru
 Use simple language, keep the tone devotional and practical. Make it engaging and inspiring.
 ''';
 
+class ShlokaContent {
+  final String chapterShlokaNum;
+  final String shlokaInSanskrit;
+  final String meaning;
+  final String gitabhashya;
+
+  ShlokaContent({
+    required this.chapterShlokaNum,
+    required this.shlokaInSanskrit,
+    required this.meaning,
+    required this.gitabhashya,
+  });
+}
+
+ShlokaContent _extractShlokaContent(String mdContent) {
+  final lines = mdContent.split('\n');
+
+  // Extract chapter-shloka number (e.g., "## 2-47")
+  String chapterShlokaNum = '';
+  for (var line in lines) {
+    if (line.startsWith('## ')) {
+      chapterShlokaNum = line.substring(3).trim();
+      break;
+    }
+  }
+
+  // Extract Sanskrit shloka from shloka-sa code block
+  String shlokaInSanskrit = '';
+  bool inShlokaSa = false;
+  for (var line in lines) {
+    if (line.contains('```shloka-sa') && !line.contains('shloka-sa-hk')) {
+      inShlokaSa = true;
+      continue;
+    }
+    if (inShlokaSa && line.trim() == '```') {
+      break;
+    }
+    if (inShlokaSa && line.trim().isNotEmpty) {
+      shlokaInSanskrit += '$line\n';
+    }
+  }
+
+  // Extract meaning (paragraph after shloka-sa-hk block, filter out Sanskrit parts)
+  String meaning = '';
+  bool afterSahk = false;
+  bool inMeaning = false;
+  for (int i = 0; i < lines.length; i++) {
+    final line = lines[i];
+
+    if (line.contains('```shloka-sa-hk')) {
+      afterSahk = true;
+      continue;
+    }
+    if (afterSahk && line.trim() == '```') {
+      inMeaning = true;
+      continue;
+    }
+    if (inMeaning) {
+      // Skip lines starting with underscore or > (these are notes/quotes)
+      if (line.trim().startsWith('_') || line.trim().startsWith('>') || line.trim().startsWith('<a name=')) {
+        break;
+      }
+      // Add non-empty lines to meaning
+      if (line.trim().isNotEmpty) {
+        // Filter out Devanagari text in backticks but keep English
+        var filteredLine = line;
+        final devanagariPattern = RegExp(r'`[\u0900-\u097F\s]+`');
+        filteredLine = filteredLine.replaceAll(devanagariPattern, '');
+        // Clean up extra spaces
+        filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
+        if (filteredLine.isNotEmpty) {
+          meaning += '$filteredLine ';
+        }
+      }
+    }
+  }
+
+  // Extract gitabhashya (everything after the meaning, excluding quotes that start with >)
+  String gitabhashya = '';
+  bool inGitabhashya = false;
+  bool foundMeaning = false;
+  for (int i = 0; i < lines.length; i++) {
+    final line = lines[i];
+
+    // Skip until we're past the shloka-sa-hk block
+    if (line.contains('```shloka-sa-hk')) {
+      foundMeaning = true;
+      continue;
+    }
+
+    if (foundMeaning) {
+      // Start collecting after we see the first note or the paragraph after meaning
+      if (!inGitabhashya &&
+          (line.trim().startsWith('_') ||
+              line.trim().startsWith('<a name=') ||
+              (i > 0 && lines[i - 1].trim().isEmpty && line.trim().isNotEmpty))) {
+        inGitabhashya = true;
+      }
+
+      if (inGitabhashya) {
+        // Skip opener questions (lines starting with >)
+        if (line.trim().startsWith('>')) {
+          continue;
+        }
+        // Add the line
+        if (line.trim().isNotEmpty) {
+          gitabhashya += '$line\n';
+        }
+      }
+    }
+  }
+
+  return ShlokaContent(
+    chapterShlokaNum: chapterShlokaNum,
+    shlokaInSanskrit: shlokaInSanskrit.trim(),
+    meaning: meaning.trim(),
+    gitabhashya: gitabhashya.trim(),
+  );
+}
+
 String makePrompt() {
-  return templatePrompt;
+  final FeedContent feedContent = Get.find();
+
+  if (feedContent.threeShlokas.length != 3) {
+    return templatePrompt; // Return template as-is if shlokas aren't loaded yet
+  }
+
+  String prompt = templatePrompt;
+
+  try {
+    for (int i = 0; i < 3; i++) {
+      final mdFilename = feedContent.threeShlokas[i];
+      final openerQ = feedContent.openerQs[i].value;
+
+      // Try to get existing MDContent controller if it exists
+      MDContent? mdContent;
+      try {
+        mdContent = Get.find<MDContent>(tag: mdFilename);
+      } catch (e) {
+        // If not found, the content hasn't been loaded yet - skip this shloka
+        continue;
+      }
+
+      final content = mdContent.mdContent.value;
+
+      if (content.isEmpty) {
+        continue; // Skip if content is not available
+      }
+
+      final shlokaContent = _extractShlokaContent(content);
+
+      // Replace placeholders for this shloka
+      final index = i + 1;
+      prompt = prompt.replaceAll('{{openerQ$index}}', openerQ);
+      prompt = prompt.replaceAll('{{chapterShlokaNum$index}}', shlokaContent.chapterShlokaNum);
+      prompt = prompt.replaceAll('{{shlokaInSanskrit$index}}', shlokaContent.shlokaInSanskrit);
+      prompt = prompt.replaceAll('{{meaning$index}}', shlokaContent.meaning);
+      prompt = prompt.replaceAll('{{gitabhashya$index}}', shlokaContent.gitabhashya);
+    }
+  } catch (e) {
+    // If there's an error, return the template with placeholders
+    return templatePrompt;
+  }
+
+  return prompt;
 }
 
 class PromptWidget extends StatelessWidget {

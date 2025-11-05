@@ -132,6 +132,18 @@ void main() {
     expect(clipboardData, contains("You are a friendly Sri Vaishnava"));
   });
 
+  test('makePrompt returns template when shlokas not loaded', () {
+    final FeedContent feedContent = FeedContent.random();
+    feedContent.threeShlokas.value = []; // Empty list
+    Get.put(feedContent, tag: 'test_empty');
+
+    final prompt = makePrompt();
+    expect(prompt, equals(templatePrompt));
+    expect(prompt, contains('{{openerQ1}}'));
+    expect(prompt, contains('{{openerQ2}}'));
+    expect(prompt, contains('{{openerQ3}}'));
+  });
+
   test('toggles opener cover visibility', () {
     final FeedContent feedContent = Get.find();
     feedContent.openerCovers[0].value = false;
