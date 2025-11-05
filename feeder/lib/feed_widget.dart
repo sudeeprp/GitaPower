@@ -1,4 +1,5 @@
 import 'package:askys/content_widget.dart';
+import 'package:askys/mdcontent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -97,31 +98,249 @@ Use concepts present in the Gitabhashya in your response:
 
 Here are the 3 shlokas in markdown format:
 
->Starting shloka, opening question: {openerQ}
+>Starting shloka, opening question: {{openerQ1}}
 
-## {chaptershlokanum}
+## {{chapterShlokaNum1}}
 
-{shlokainsanskrit}
+{{shlokaInSanskrit1}}
 
 ### Meaning
 
-{meaning}
+{{meaning1}}
 
 ### Gitabhashya
 
-{gitabhashya}
+{{gitabhashya1}}
 
-Write an article in markdown format, threading through the 3 shlokas above. Structure it as follows:
-- Start with a catchy title
-- Summarize your thread in a 30-second read
-- Narrate your thread of thought in a 3-5 minute read. Mention references along the way (e.g., concepts from other shlokas of the Gita, which link your thoughts together) 
-- Conclude with a call to action or a thought-provoking question
+---
 
-Use simple language, keep the tone devotional and practical. Make it engaging and inspiring.
+>Second shloka, opening question: {{openerQ2}}
+
+## {{chapterShlokaNum2}}
+
+{{shlokaInSanskrit2}}
+
+### Meaning
+
+{{meaning2}}
+
+### Gitabhashya
+
+{{gitabhashya2}}
+
+---
+
+>Third shloka, opening question: {{openerQ3}}
+
+## {{chapterShlokaNum3}}
+
+{{shlokaInSanskrit3}}
+
+### Meaning
+
+{{meaning3}}
+
+### Gitabhashya
+
+{{gitabhashya3}}
+
+---
+
+## Your Task
+
+Now, based on these three shlokas and their commentary:
+
+1. **Identify the central theme**: What common thread connects these three shlokas? What aspect of life or spiritual practice do they address?
+
+2. **Create a narrative**: Write an article in markdown format that weaves these shlokas together. Structure it as:
+   - **Title**: A catchy, relatable title that captures the essence
+   - **30-Second Summary**: A brief overview of your main insight
+   - **Deep Dive (3-5 minutes)**: 
+     - Explain how each shloka contributes to the theme
+     - Connect concepts across shlokas (reference by chapter-verse)
+     - Relate to everyday experiences and practical application
+     - Use the Gitabhashya insights to deepen understanding
+   - **Call to Action**: End with a specific, actionable suggestion or thought-provoking question that readers can apply in their lives
+
+3. **Style Guidelines**:
+   - Use simple, accessible language
+   - Maintain a devotional yet practical tone
+   - Make it engaging and relatable to modern life
+   - Include specific examples where helpful
+
+Remember: The goal is to help readers experience these teachings, not just understand them intellectually.
 ''';
 
+class ShlokaContent {
+  final String chapterShlokaNum;
+  final String shlokaInSanskrit;
+  final String meaning;
+  final String gitabhashya;
+
+  ShlokaContent({
+    required this.chapterShlokaNum,
+    required this.shlokaInSanskrit,
+    required this.meaning,
+    required this.gitabhashya,
+  });
+}
+
+final _allBackticksPattern = RegExp(r'`[^`]+`');
+
+ShlokaContent _extractShlokaContent(String mdContent) {
+  final lines = mdContent.split('\n');
+
+  // Extract chapter-shloka number (e.g., "## 2-47")
+  String chapterShlokaNum = '';
+  for (var line in lines) {
+    if (line.startsWith('## ')) {
+      chapterShlokaNum = line.substring(3).trim();
+      break;
+    }
+  }
+
+  // Extract Sanskrit shloka from shloka-sa code block
+  String shlokaInSanskrit = '';
+  bool inShlokaSa = false;
+  for (var line in lines) {
+    if (line.contains('```shloka-sa') && !line.contains('shloka-sa-hk')) {
+      inShlokaSa = true;
+      continue;
+    }
+    if (inShlokaSa && line.trim() == '```') {
+      break;
+    }
+    if (inShlokaSa && line.trim().isNotEmpty) {
+      shlokaInSanskrit += '$line\n';
+    }
+  }
+
+  // Extract meaning (paragraph after shloka-sa-hk block, filter out Sanskrit parts)
+  String meaning = '';
+  bool afterSahk = false;
+  bool inMeaning = false;
+  for (int i = 0; i < lines.length; i++) {
+    final line = lines[i];
+
+    if (line.contains('```shloka-sa-hk')) {
+      afterSahk = true;
+      continue;
+    }
+    if (afterSahk && line.trim() == '```') {
+      inMeaning = true;
+      continue;
+    }
+    if (inMeaning) {
+      final trimmedLine = line.trim();
+      // Empty line ends the meaning section
+      if (trimmedLine.isEmpty) {
+        inMeaning = false;
+        break;
+      }
+      // Skip lines starting with underscore or > (these are notes/quotes)
+      if (trimmedLine.startsWith('_') || trimmedLine.startsWith('>') || trimmedLine.startsWith('<a name=')) {
+        break;
+      }
+      // Add non-empty lines to meaning (we already know it's non-empty from above checks)
+      // Filter out all backtick content (Devanagari and English transliteration)
+      var filteredLine = line;
+      filteredLine = filteredLine.replaceAll(_allBackticksPattern, '');
+      // Clean up extra spaces
+      filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
+      if (filteredLine.isNotEmpty) {
+        meaning += '$filteredLine ';
+      }
+    }
+  }
+
+  // Extract gitabhashya (everything after an empty line following shloka-sa-hk block)
+  String gitabhashya = '';
+  bool afterSahkClosing = false;
+  bool inSahkBlock = false;
+  bool foundEmptyLine = false;
+  for (int i = 0; i < lines.length; i++) {
+    final line = lines[i];
+
+    // Track when we enter shloka-sa-hk block
+    if (line.contains('```shloka-sa-hk')) {
+      inSahkBlock = true;
+      continue;
+    }
+
+    // Track when we exit shloka-sa-hk block
+    if (inSahkBlock && line.trim() == '```') {
+      afterSahkClosing = true;
+      inSahkBlock = false;
+      continue;
+    }
+
+    // After closing, skip all non-empty lines until we find an empty line
+    if (afterSahkClosing && !foundEmptyLine) {
+      if (line.trim().isEmpty) {
+        foundEmptyLine = true;
+      }
+      continue;
+    }
+
+    // Collect everything after the empty line
+    if (afterSahkClosing && foundEmptyLine && line.trim().isNotEmpty) {
+      gitabhashya += '$line\n';
+    }
+  }
+
+  return ShlokaContent(
+    chapterShlokaNum: chapterShlokaNum,
+    shlokaInSanskrit: shlokaInSanskrit.trim(),
+    meaning: meaning.trim(),
+    gitabhashya: gitabhashya.trim(),
+  );
+}
+
 String makePrompt() {
-  return templatePrompt;
+  final FeedContent feedContent = Get.find();
+
+  if (feedContent.threeShlokas.length != 3) {
+    return ''; // Return empty string if shlokas aren't loaded yet
+  }
+
+  String prompt = templatePrompt;
+
+  try {
+    for (int i = 0; i < 3; i++) {
+      final mdFilename = feedContent.threeShlokas[i];
+      final openerQ = feedContent.openerQs[i].value;
+
+      // Try to get existing MDContent controller if it exists
+      MDContent? mdContent;
+      try {
+        mdContent = Get.find<MDContent>(tag: mdFilename);
+      } catch (e) {
+        // If not found, the content hasn't been loaded yet - skip this shloka
+        continue;
+      }
+
+      final content = mdContent.mdContent.value;
+
+      if (content.isEmpty) {
+        continue; // Skip if content is not available
+      }
+
+      final shlokaContent = _extractShlokaContent(content);
+
+      // Replace placeholders for this shloka
+      final index = i + 1;
+      prompt = prompt.replaceAll('{{openerQ$index}}', openerQ);
+      prompt = prompt.replaceAll('{{chapterShlokaNum$index}}', shlokaContent.chapterShlokaNum);
+      prompt = prompt.replaceAll('{{shlokaInSanskrit$index}}', shlokaContent.shlokaInSanskrit);
+      prompt = prompt.replaceAll('{{meaning$index}}', shlokaContent.meaning);
+      prompt = prompt.replaceAll('{{gitabhashya$index}}', shlokaContent.gitabhashya);
+    }
+  } catch (e) {
+    // If there's an error, return empty string
+    return '';
+  }
+
+  return prompt;
 }
 
 class PromptWidget extends StatelessWidget {
@@ -130,7 +349,19 @@ class PromptWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Clipboard.setData(ClipboardData(text: makePrompt())),
+      onTap: () {
+        final prompt = makePrompt();
+        Clipboard.setData(ClipboardData(text: prompt));
+
+        // Show a transient message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Prompt copied to clipboard! Paste it in your favorite AI chat.'),
+            duration: Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      },
       child: const Icon(Icons.chat_bubble, size: 48, color: Colors.blue),
     );
   }

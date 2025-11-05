@@ -132,6 +132,21 @@ void main() {
     expect(clipboardData, contains("You are a friendly Sri Vaishnava"));
   });
 
+  test('makePrompt returns empty string when shlokas not loaded', () {
+    // Create a temporary FeedContent with no shlokas
+    Get.delete<FeedContent>(); // Remove existing
+    final tempFeedContent = FeedContent.random();
+    tempFeedContent.threeShlokas.value = []; // Empty list
+    Get.put(tempFeedContent);
+
+    final prompt = makePrompt();
+    expect(prompt, equals(''));
+
+    // Restore original FeedContent
+    Get.delete<FeedContent>();
+    Get.put(FeedContent.random());
+  });
+
   test('toggles opener cover visibility', () {
     final FeedContent feedContent = Get.find();
     feedContent.openerCovers[0].value = false;
