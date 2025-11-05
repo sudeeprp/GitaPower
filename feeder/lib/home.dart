@@ -78,7 +78,7 @@ Widget makeMyHome() {
 }
 
 Widget feedScreen() {
-  return screenify(buildFeed(),
+  return screenify(FeedWidget(),
       choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForFeed()));
 }
 
@@ -121,7 +121,13 @@ Widget choicesRowForContent() {
 }
 
 List<Widget> choicesForFeed() {
-  return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
+  return const [
+        PromptWidget(),
+        SizedBox(width: choiceSpacing),
+        OpenerPreferenceIcon(),
+        SizedBox(width: choiceSpacing)
+      ] +
+      choicesForContent();
 }
 
 Widget notesChaptersChoices() {

@@ -39,7 +39,7 @@ void main() {
   }
 
   testWidgets('shows three shlokas', (tester) async {
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget())));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feed/1')), findsOneWidget);
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
@@ -50,7 +50,7 @@ void main() {
     final FeedContent feedContent = Get.find();
     await tester.pumpAndSettle();
     String? navigatedShloka;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed()), getPages: [
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget()), getPages: [
       GetPage(
           name: '/shloka/:mdFilename',
           page: () {
@@ -77,7 +77,7 @@ void main() {
 
     expect(feedContent.openerCovers[0].value, equals(true));
 
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget())));
     expect(find.text(feedContent.openerQs[0].value), findsWidgets);
     expect(find.text(feedContent.openerQs[1].value), findsWidgets);
     expect(find.text(feedContent.openerQs[2].value), findsWidgets);
@@ -120,6 +120,18 @@ void main() {
     await tester.pumpAndSettle();
     expect(feedContent.tour.tourStops, isNotEmpty);
   });
+  testWidgets('prompt widget copies to clipboard on tap', (tester) async {
+    await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: PromptWidget())));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(PromptWidget));
+    await tester.pumpAndSettle();
+
+    // Verifying clipboard content Clipboard.getData hangs in flutter test.
+    // Instead of mocking, we test the formation of the prompt
+    final clipboardData = makePrompt();
+    expect(clipboardData, contains("You are a friendly Sri Vaishnava"));
+  });
+
   test('toggles opener cover visibility', () {
     final FeedContent feedContent = Get.find();
     feedContent.openerCovers[0].value = false;

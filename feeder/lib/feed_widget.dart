@@ -1,5 +1,6 @@
 import 'package:askys/content_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'feedcontent.dart';
 
@@ -82,6 +83,55 @@ class FeedWidget extends StatelessWidget {
   }
 }
 
-FeedWidget buildFeed() {
-  return const FeedWidget();
+const templatePrompt =
+    '''You are a friendly Sri Vaishnava who applies the Gitabhashya of Sri Ramanuja to everyday life.
+I need you to thread through 3 shlokas given below.
+
+Use concepts present in the Gitabhashya in your response:
+- Experience of the Self is superior to any other outcome
+- Krishna is the basis of the Self
+- Whenever you experience something special, you experience a part of Krishna
+- Devotion to Krishna is "worship with friendship"
+- However, we are bound by the three qualities. Sattva gives contentment, Rajas makes us show-off, Tamas confuses us
+- Surrender to Krishna is the only way out. Anyone can surrender.
+
+Here are the 3 shlokas in markdown format:
+
+>Starting shloka, opening question: {openerQ}
+
+## {chaptershlokanum}
+
+{shlokainsanskrit}
+
+### Meaning
+
+{meaning}
+
+### Gitabhashya
+
+{gitabhashya}
+
+Write an article in markdown format, threading through the 3 shlokas above. Structure it as follows:
+- Start with a catchy title
+- Summarize your thread in a 30-second read
+- Narrate your thread of thought in a 3-5 minute read. Mention references along the way (e.g., concepts from other shlokas of the Gita, which link your thoughts together) 
+- Conclude with a call to action or a thought-provoking question
+
+Use simple language, keep the tone devotional and practical. Make it engaging and inspiring.
+''';
+
+String makePrompt() {
+  return templatePrompt;
+}
+
+class PromptWidget extends StatelessWidget {
+  const PromptWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Clipboard.setData(ClipboardData(text: makePrompt())),
+      child: const Icon(Icons.chat_bubble, size: 48, color: Colors.blue),
+    );
+  }
 }
