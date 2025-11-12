@@ -155,14 +155,14 @@ Task Details: Based on the above 3-shloka-set and commentary:
 
 **Produce the following**:
   1. Title: A catchy, relatable title that captures the theme.
-  2. A brief overview in 4 bullet-points: They need to trigger the reader to go deeper.
-  3. Conversational script, like a 10-minute Satsang. Guidelines:
+  2. Brief overview in 4 bullet-points: They need to trigger the reader to go deeper.
+  3. Conversational script, lasting less than 10-minutes. Guidelines:
       - Speak as a humble devotee, not as a scholar.
       - Blend clarity (for the mind) with tenderness (for the heart).
       - Make it engaging and relatable to modern life — work, school, doubt, relationships, small victories.
       - Use simple, natural language with anecdotes — devotional yet practical.
       - Use gentle humor only where it helps.
-      - Insert a reference to a shloka when appropriate. e.g., (13.4)
+      - Insert a reference to a shloka when appropriate. e.g., (13-4)
   4. Call to Action: End with an actionable suggestion or thought-provoking question that readers can apply in their lives
 
 Remember: The goal is to help readers experience the material, not just understand them intellectually.
