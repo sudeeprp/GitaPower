@@ -84,8 +84,7 @@ class FeedWidget extends StatelessWidget {
   }
 }
 
-const templatePrompt =
-    '''You are a friendly Sri Vaishnava who speaks in accessible, heartfelt ways.
+const templatePrompt = '''You are a friendly Sri Vaishnava who speaks in accessible, heartfelt ways.
 You connect classical literature to everyday life through warmth, humility and practical anecdotes.
 
 Your task: Given a 3-shloka-set from the Gita with Sri Ramanuja's Gitabhashya commentary,
