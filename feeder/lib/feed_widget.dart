@@ -1,9 +1,16 @@
 import 'package:askys/content_widget.dart';
+import 'package:askys/matter_forinline.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'feedcontent.dart';
+
+bool isSectionInFeed(SectionType sectionType) {
+  return sectionType == SectionType.shlokaSA ||
+      sectionType == SectionType.shlokaSAHK ||
+      sectionType == SectionType.meaning;
+}
 
 Widget contentWithOpenerPane(String filename, int count) {
   final FeedContent feedContent = Get.find();
@@ -12,10 +19,12 @@ Widget contentWithOpenerPane(String filename, int count) {
   }
 
   return Obx(() {
+    final contentFeed =
+        buildContentFeed(filename, isSectionVisible: isSectionInFeed, key: Key('feed/$count'));
     if (feedContent.openerCovers[count - 1].value) {
       return Stack(
         children: [
-          buildContentFeed(filename, key: Key('feed/$count')),
+          contentFeed,
           Dismissible(
               key: Key('opener/$count'),
               onDismissed: (direction) => hideOpener(),
@@ -44,7 +53,7 @@ Widget contentWithOpenerPane(String filename, int count) {
         ],
       );
     } else {
-      return buildContentFeed(filename, key: Key('feed/$count'));
+      return contentFeed;
     }
   });
 }

@@ -96,6 +96,7 @@ class Tour {
 class FeedContent extends GetxController {
   final threeShlokas = <String>[].obs;
   final openerQs = [''.obs, ''.obs, ''.obs];
+  // TODO: Remove this if we aren't covering anymore
   final openerCovers = [false.obs, false.obs, false.obs];
   String? tourFolder;
   final tour = Tour();

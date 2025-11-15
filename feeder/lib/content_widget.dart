@@ -253,18 +253,6 @@ Widget _anchorWidget(String noteId) {
   return SizedBox(width: 1, height: 1, key: Key(noteId));
 }
 
-bool _isVisible(SectionType sectionType) {
-  Choices choice = Get.find();
-  // Assignment to a local variable is needed. Otherwise GetX throws an error when "return true" doesn't access any observable.
-  final scriptChoice = choice.script.value;
-  if (sectionType == SectionType.shlokaSA) {
-    return scriptChoice == ScriptPreference.devanagari;
-  } else if (sectionType == SectionType.shlokaSAHK) {
-    return scriptChoice == ScriptPreference.sahk;
-  }
-  return true;
-}
-
 Widget _horizontalScrollForOneLiners(SectionType sectionType, Widget w) {
   const horizontalMargins = EdgeInsets.symmetric(horizontal: 8);
   if (sectionType == SectionType.shlokaSAHK || sectionType == SectionType.shlokaSA) {
@@ -421,7 +409,8 @@ class SectionContent {
 
 class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
-      {this.onTap, this.searchPhrase, super.key}) {
+      {this.onTap, this.searchPhrase, bool Function(SectionType)? isSectionVisible, super.key})
+      : isSectionVisible = isSectionVisible ?? ((_) => true) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
 
@@ -431,6 +420,7 @@ class ContentWidget extends StatelessWidget {
   final String? prevmd;
   final void Function()? onTap;
   final String? searchPhrase;
+  final bool Function(SectionType) isSectionVisible;
 
   List<String>? playableShows() {
     final ShowWords showWords = Get.find();
@@ -438,6 +428,18 @@ class ContentWidget extends StatelessWidget {
       return showWords.words;
     }
     return null;
+  }
+
+  bool _isVisible(SectionType sectionType) {
+    Choices choice = Get.find();
+    // Assignment to a local variable is needed. Otherwise GetX throws an error when "return true" doesn't access any observable.
+    final scriptChoice = choice.script.value;
+    if (sectionType == SectionType.shlokaSA) {
+      return scriptChoice == ScriptPreference.devanagari;
+    } else if (sectionType == SectionType.shlokaSAHK) {
+      return scriptChoice == ScriptPreference.sahk;
+    }
+    return isSectionVisible(sectionType);
   }
 
   @override
@@ -600,20 +602,26 @@ ContentWidget buildContent(String mdFilename,
     String? nextmd,
     void Function()? onTap,
     String? searchPhrase,
+    bool Function(SectionType)? isSectionVisible,
     Key? key}) {
   Get.put(ExpansionController(), tag: mdFilename);
   return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd,
-      onTap: onTap, searchPhrase: searchPhrase, key: key);
+      onTap: onTap, searchPhrase: searchPhrase, isSectionVisible: isSectionVisible, key: key);
 }
 
 Widget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
   return ShlokaContentReader(mdFilename, initialAnchor: initialAnchor);
 }
 
-ContentWidget buildContentFeed(String mdFilename, {Key? key, String? searchPhrase}) {
+ContentWidget buildContentFeed(
+  String mdFilename, {
+  Key? key,
+  String? searchPhrase,
+  bool Function(SectionType)? isSectionVisible,
+}) {
   return buildContent(mdFilename, onTap: () {
     Get.toNamed('/shloka/$mdFilename');
-  }, searchPhrase: searchPhrase, key: key);
+  }, searchPhrase: searchPhrase, isSectionVisible: isSectionVisible, key: key);
 }
 
 class ContentScreen extends StatelessWidget {
