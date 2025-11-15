@@ -96,8 +96,6 @@ class Tour {
 class FeedContent extends GetxController {
   final threeShlokas = <String>[].obs;
   final openerQs = [''.obs, ''.obs, ''.obs];
-  // TODO: Remove this if we aren't covering anymore
-  final openerCovers = [false.obs, false.obs, false.obs];
   String? tourFolder;
   final tour = Tour();
   final AudioPlayer audioPlayer;
@@ -115,17 +113,6 @@ class FeedContent extends GetxController {
     final mdToOpeners = await fetcher.openerQuestions();
     for (int i = 0; i < threeShlokas.length; i++) {
       openerQs[i].value = mdToOpeners[threeShlokas[i]] ?? '';
-      openerCovers[i].value = true;
-    }
-  }
-
-  void toggleOpenerCovers() {
-    var toState = false;
-    if (openerCovers.any((coverVisible) => coverVisible.value == false)) {
-      toState = true;
-    }
-    for (int i = 0; i < openerCovers.length; i++) {
-      openerCovers[i].value = toState;
     }
   }
 

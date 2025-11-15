@@ -122,12 +122,11 @@ Widget choicesRowForContent() {
 
 List<Widget> choicesForFeed() {
   return const [
-        PromptWidget(),
-        SizedBox(width: choiceSpacing),
-        OpenerPreferenceIcon(),
-        SizedBox(width: choiceSpacing)
-      ] +
-      choicesForContent();
+    PromptWidget(),
+    SizedBox(width: choiceSpacing),
+    PersonalizeIcon(),
+    SizedBox(width: choiceSpacing),
+  ];
 }
 
 Widget notesChaptersChoices() {

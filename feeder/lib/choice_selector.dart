@@ -1,5 +1,4 @@
 import 'package:askys/content_themes.dart';
-import 'package:askys/feedcontent.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -104,19 +103,6 @@ class HeaderPreferenceIcon extends StatelessWidget {
           ? HeadPreference.meaning
           : HeadPreference.shloka,
       child: Image.asset('images/shloka_visible${contentAssetSuffix(context)}.png', width: 48, height: 48),
-    );
-  }
-}
-
-class OpenerPreferenceIcon extends StatelessWidget {
-  const OpenerPreferenceIcon({super.key}); // coverage:ignore-line
-
-  @override
-  Widget build(BuildContext context) {
-    final FeedContent feedContent = Get.find();
-    return GestureDetector(
-      onTap: feedContent.toggleOpenerCovers,
-      child: Image.asset('images/opener_cover.png', width: 48, height: 48),
     );
   }
 }

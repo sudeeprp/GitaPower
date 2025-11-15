@@ -1,3 +1,4 @@
+import 'package:askys/chaptercontent.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/matter_forinline.dart';
 import 'package:askys/mdcontent.dart';
@@ -12,50 +13,48 @@ bool isSectionInFeed(SectionType sectionType) {
       sectionType == SectionType.meaning;
 }
 
-Widget contentWithOpenerPane(String filename, int count) {
+class ShlokaInsideFeed extends StatelessWidget {
+  ShlokaInsideFeed({required this.filename, required this.count, super.key});
   final FeedContent feedContent = Get.find();
-  void hideOpener() {
-    feedContent.openerCovers[count - 1].value = false;
-  }
+  final String filename;
+  final int count;
 
-  return Obx(() {
-    final contentFeed =
-        buildContentFeed(filename, isSectionVisible: isSectionInFeed, key: Key('feed/$count'));
-    if (feedContent.openerCovers[count - 1].value) {
-      return Stack(
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final chapterNumber = Chapter.filenameToChapterNumber(filename);
+      return SingleChildScrollView(
+          child: Column(
         children: [
-          contentFeed,
-          Dismissible(
-              key: Key('opener/$count'),
-              onDismissed: (direction) => hideOpener(),
-              child: GestureDetector(
-                  onTap: hideOpener,
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(15, 5, 0, 8),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.grey.shade700.withValues(alpha: 0.8),
-                            Colors.grey.shade500.withValues(alpha: 0.95)
-                          ],
-                          begin: AlignmentDirectional.topStart,
-                          end: AlignmentDirectional.bottomEnd,
-                        ),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                    constraints: const BoxConstraints.expand(),
-                    child: Center(
-                        child: Obx(() => Text(feedContent.openerQs[count - 1].value,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold)))),
-                  ))),
+          Row(
+            children: [
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4),
+                  child: Image.asset('images/chapter_$chapterNumber.png', width: 28, height: 28)),
+              Expanded(
+                flex: 4,
+                child: Text(feedContent.openerQs[count - 1].value,
+                    style: styleFor(context, 'note')?.copyWith(fontStyle: FontStyle.italic),
+                    softWrap: true,
+                    maxLines: 2),
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                    padding: EdgeInsets.only(right: 4),
+                    child: Text(
+                      Chapter.filenameToShortTitle(filename),
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textAlign: TextAlign.right,
+                    )),
+              )
+            ],
+          ),
+          buildContentFeed(filename, isSectionVisible: isSectionInFeed, key: Key('feed/$count')),
         ],
-      );
-    } else {
-      return contentFeed;
-    }
-  });
+      ));
+    });
+  }
 }
 
 class FeedWidget extends StatelessWidget {
@@ -80,7 +79,7 @@ class FeedWidget extends StatelessWidget {
                                 offset: const Offset(0, -5))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: contentWithOpenerPane(filename, count++),
+                      child: ShlokaInsideFeed(filename: filename, count: count++),
                     )) as Widget)
                 .toList());
       } else {
@@ -174,9 +173,7 @@ Task Details: Based on the above 3-shloka-set and commentary:
       - Insert a reference to a shloka when appropriate. e.g., (13-4)
   4. Call to Action: End with an actionable suggestion or thought-provoking question that readers can apply in their lives
 
-Remember: The goal is to help readers experience the material, not just understand them intellectually.
-
-Structure your output in markdown format.
+Remember: The goal is to help readers experience the material, not just understand it intellectually.
 ''';
 
 class ShlokaContent {

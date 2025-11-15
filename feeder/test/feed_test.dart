@@ -31,13 +31,6 @@ void main() {
     Get.put(ContentActions());
     Get.put(ShowWords());
   });
-  void switchOpeners(bool openersAreVisible) {
-    final FeedContent feedContent = Get.find();
-    for (int i = 0; i < feedContent.openerCovers.length; i++) {
-      feedContent.openerCovers[i].value = openersAreVisible;
-    }
-  }
-
   testWidgets('shows three shlokas', (tester) async {
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget())));
     await tester.pumpAndSettle();
@@ -46,7 +39,6 @@ void main() {
     expect(find.byKey(const Key('feed/3')), findsOneWidget);
   });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
-    switchOpeners(false);
     final FeedContent feedContent = Get.find();
     await tester.pumpAndSettle();
     String? navigatedShloka;
@@ -67,25 +59,17 @@ void main() {
     expect(Get.currentRoute, startsWith('/shloka/'));
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
-  testWidgets('shows the opener questions, hides on swipe', (tester) async {
-    switchOpeners(true);
+  testWidgets('shows the opener questions', (tester) async {
     await tester.pumpAndSettle();
     final FeedContent feedContent = Get.find();
     expect(feedContent.openerQs[0].value, isNotEmpty);
     expect(feedContent.openerQs[1].value, isNotEmpty);
     expect(feedContent.openerQs[2].value, isNotEmpty);
 
-    expect(feedContent.openerCovers[0].value, equals(true));
-
     await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget())));
     expect(find.text(feedContent.openerQs[0].value), findsWidgets);
     expect(find.text(feedContent.openerQs[1].value), findsWidgets);
     expect(find.text(feedContent.openerQs[2].value), findsWidgets);
-    const openerPos = 1;
-    final firstOpener = find.byKey(const Key('opener/$openerPos'));
-    await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));
-    await tester.pumpAndSettle();
-    expect(feedContent.openerCovers[openerPos - 1].value, equals(false));
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();
@@ -145,15 +129,5 @@ void main() {
     // Restore original FeedContent
     Get.delete<FeedContent>();
     Get.put(FeedContent.random());
-  });
-
-  test('toggles opener cover visibility', () {
-    final FeedContent feedContent = Get.find();
-    feedContent.openerCovers[0].value = false;
-    feedContent.toggleOpenerCovers();
-    expect(feedContent.openerCovers[0].value, equals(true));
-    feedContent.toggleOpenerCovers();
-    expect(feedContent.openerCovers[0].value, equals(false));
-    expect(feedContent.openerCovers[2].value, equals(false));
   });
 }
