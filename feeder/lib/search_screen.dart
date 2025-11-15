@@ -123,7 +123,7 @@ class SearchWidget extends StatelessWidget {
               const SizedBox(width: 16),
               ElevatedButton(
                 onPressed: () => unfocusAndSubmit(phraseSearcher.phraseInput.text),
-                child: const Icon(Icons.search, size: 48),
+                child: const Icon(Icons.search, size: 32),
               ),
             ],
           ),

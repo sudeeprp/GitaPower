@@ -367,7 +367,7 @@ class PromptWidget extends StatelessWidget {
           ),
         );
       },
-      child: const Icon(Icons.chat_bubble, size: 48, color: Colors.blue),
+      child: const Icon(Icons.chat_bubble, size: 32, color: Colors.blue),
     );
   }
 }
