@@ -31,12 +31,12 @@ class ShlokaInsideFeed extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4),
                   child: Image.asset(
-                    'images/chapter_$chapterNumber.png', 
+                    'images/chapter_$chapterNumber.png',
                     width: 28,
                     height: 28,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset('images/one-step.png', width: 28, height: 28);
-                    },
+                    // errorBuilder: (context, error, stackTrace) {
+                    //   return const Text('🤔', style: TextStyle(fontSize: 28));
+                    // },
                   )),
               Expanded(
                 flex: 4,

@@ -7,6 +7,7 @@ import 'package:just_audio/just_audio.dart';
 void main() {
   testWidgets('does not crash on player related errors', (tester) async {
     await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: Text('home'))));
+    await tester.pumpAndSettle();
     void testError(dynamic exceptionInstance) async {
       await callAndTellIfError(() async {
         throw exceptionInstance;
