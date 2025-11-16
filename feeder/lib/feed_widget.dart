@@ -34,9 +34,6 @@ class ShlokaInsideFeed extends StatelessWidget {
                     'images/Chapter_$chapterNumber.png',
                     width: 28,
                     height: 28,
-                    // errorBuilder: (context, error, stackTrace) {
-                    //   return const Text('🤔', style: TextStyle(fontSize: 28));
-                    // },
                   )),
               Expanded(
                 flex: 4,
