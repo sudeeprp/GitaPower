@@ -51,7 +51,7 @@ void main() {
           })
     ]));
     await tester.pumpAndSettle();
-    final shlokaFinder = find.byType(GestureDetector);
+    final shlokaFinder = find.byKey(const Key('feed/1'));
     var tapOffset = tester.getTopLeft(find.byWidget(shlokaFinder.evaluate().first.widget));
     tapOffset += const Offset(15, 15);
     await tester.tapAt(tapOffset);
