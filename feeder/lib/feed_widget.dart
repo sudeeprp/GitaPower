@@ -69,7 +69,8 @@ class ShlokaInsideFeed extends StatelessWidget {
                 decoration:
                     BoxDecoration(color: const Color(0xFFEE9A4D), borderRadius: BorderRadius.circular(6))),
             const SizedBox(width: 12),
-            Expanded(child: Column(
+            Expanded(
+                child: Column(
               children: [
                 openerLine(context,
                     chapterNumber: Chapter.filenameToChapterNumber(filename),
@@ -93,19 +94,20 @@ class FeedWidget extends StatelessWidget {
     return Obx(() {
       if (feedContent.threeShlokas.length == 3) {
         int count = 1;
-        return SingleChildScrollView(child: Column(
-            children: feedContent.threeShlokas
-                .map((filename) => Container(
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withValues(alpha: 0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, -5))
-                      ], color: Theme.of(context).cardColor),
-                      child: ShlokaInsideFeed(filename: filename, count: count++),
-                    ) as Widget)
-                .toList()));
+        return SingleChildScrollView(
+            child: Column(
+                children: feedContent.threeShlokas
+                    .map((filename) => Container(
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withValues(alpha: 0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, -5))
+                          ], color: Theme.of(context).cardColor),
+                          child: ShlokaInsideFeed(filename: filename, count: count++),
+                        ) as Widget)
+                    .toList()));
       } else {
         return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
