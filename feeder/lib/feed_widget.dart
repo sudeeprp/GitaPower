@@ -30,7 +30,14 @@ class ShlokaInsideFeed extends StatelessWidget {
             children: [
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4),
-                  child: Image.asset('images/chapter_$chapterNumber.png', width: 28, height: 28)),
+                  child: Image.asset(
+                    'images/chapter_$chapterNumber.png', 
+                    width: 28,
+                    height: 28,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('images/one-step.png', width: 28, height: 28);
+                    },
+                  )),
               Expanded(
                 flex: 4,
                 child: Text(feedContent.openerQs[count - 1].value,

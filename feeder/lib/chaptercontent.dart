@@ -37,7 +37,7 @@ class Chapter {
   }
 
   static String filenameToChapterNumber(String filename) {
-    return filename.split('-')[0];
+    return filename.split('-')[0].trim();
   }
 
   String title;
