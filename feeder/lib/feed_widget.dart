@@ -20,24 +20,26 @@ Widget contentWithOpenerPane(String filename, int count) {
               child: GestureDetector(
                   onTap: hideOpener,
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(15, 5, 0, 8),
+                    padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Colors.grey.shade700.withValues(alpha: 0.8),
-                            Colors.grey.shade500.withValues(alpha: 0.95)
+                            Colors.blue.shade50.withValues(alpha: 0.95),
+                            Colors.purple.shade50.withValues(alpha: 0.95)
                           ],
                           begin: AlignmentDirectional.topStart,
                           end: AlignmentDirectional.bottomEnd,
                         ),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                        borderRadius: BorderRadius.circular(16)),
                     constraints: const BoxConstraints.expand(),
                     child: Center(
                         child: Obx(() => Text(feedContent.openerQs[count - 1].value,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold)))),
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.indigo.shade900,
+                                fontWeight: FontWeight.w500,
+                                height: 1.4)))),
                   ))),
         ],
       );
@@ -55,22 +57,26 @@ class FeedWidget extends StatelessWidget {
     return Obx(() {
       if (feedContent.threeShlokas.length == 3) {
         int count = 1;
-        return Column(
+        return ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             children: feedContent.threeShlokas
-                .map((filename) => Expanded(
-                        child: Container(
+                .map((filename) => Container(
+                      margin: const EdgeInsets.only(bottom: 20),
                       decoration: BoxDecoration(
-                          border: const Border(bottom: BorderSide(color: Colors.black)),
+                          borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.grey.withValues(alpha: 0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(0, -5))
+                                color: Colors.black.withValues(alpha: 0.08),
+                                spreadRadius: 0,
+                                blurRadius: 12,
+                                offset: const Offset(0, 4))
                           ],
                           color: Theme.of(context).cardColor),
-                      child: contentWithOpenerPane(filename, count++),
-                    )) as Widget)
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: contentWithOpenerPane(filename, count++),
+                      ),
+                    ))
                 .toList());
       } else {
         return const Column(
