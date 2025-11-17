@@ -60,7 +60,7 @@ class ShlokaInsideFeed extends StatelessWidget {
       return InkWell(
           child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        elevation: 2,
+        elevation: 8,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(children: [
@@ -99,16 +99,7 @@ class FeedWidget extends StatelessWidget {
         return SingleChildScrollView(
             child: Column(
                 children: feedContent.threeShlokas
-                    .map((filename) => Container(
-                          decoration: BoxDecoration(boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withValues(alpha: 0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(0, -5))
-                          ], color: Colors.transparent),
-                          child: ShlokaInsideFeed(filename: filename, count: count++),
-                        ) as Widget)
+                    .map((filename) => ShlokaInsideFeed(filename: filename, count: count++) as Widget)
                     .toList()));
       } else {
         return const Column(
@@ -122,12 +113,7 @@ class FeedWidget extends StatelessWidget {
 
 Widget feedScreen() {
   return screenify(FeedWidget(),
-      appBar: AppBar(
-          title: Row(children: [
-        Image.asset('images/sunidhi-krishna.png', height: 32, width: 32),
-        const SizedBox(width: choiceSpacing),
-        const Text("Reflections")
-      ])),
+      appBar: AppBar(title: Text("Explore"), actions: [const PromptWidget()]),
       choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],
           [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
 }
@@ -393,21 +379,34 @@ class PromptWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        final prompt = makePrompt();
-        Clipboard.setData(ClipboardData(text: prompt));
-
-        // Show a transient message to the user
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Prompt copied to clipboard! Paste it in your favorite AI chat.'),
-            duration: Duration(seconds: 3),
-            behavior: SnackBarBehavior.floating,
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 4),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 4,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            backgroundColor: const Color(0xFFEE9A4D),
+            foregroundColor: const Color(0xFF2D1810),
           ),
-        );
-      },
-      child: const Icon(Icons.chat_bubble, size: 32, color: Colors.blue),
-    );
+          onPressed: () {
+            final prompt = makePrompt();
+            Clipboard.setData(ClipboardData(text: prompt));
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Prompt copied to clipboard! Paste it in your favorite AI chat.'),
+                duration: Duration(seconds: 3),
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          },
+          child: Row(children: [
+            Image.asset('images/shloka_visible_light.png', height: 24, width: 24),
+            const SizedBox(width: 8),
+            Text('Copy a prompt to reflect',
+                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+          ]),
+        ));
   }
 }

@@ -135,7 +135,6 @@ class BrowsingPreferenceIcon extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
-            // color: isSelected ? Colors.blue : Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [boxShadow],
           ),
