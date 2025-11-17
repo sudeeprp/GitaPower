@@ -1,7 +1,10 @@
 import 'package:askys/chaptercontent.dart';
+import 'package:askys/choice_selector.dart';
+import 'package:askys/choices_row.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/matter_forinline.dart';
 import 'package:askys/mdcontent.dart';
+import 'package:askys/screenify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -56,19 +59,18 @@ class ShlokaInsideFeed extends StatelessWidget {
     return Obx(() {
       return InkWell(
           child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         elevation: 2,
-        margin: const EdgeInsets.symmetric(vertical: 10),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(children: [
             // Decorative saffron vertical bar
             Container(
-                width: 6,
+                width: 12,
                 height: 48,
                 decoration:
                     BoxDecoration(color: const Color(0xFFEE9A4D), borderRadius: BorderRadius.circular(6))),
-            const SizedBox(width: 12),
+            const SizedBox(width: 4),
             Expanded(
                 child: Column(
               children: [
@@ -104,7 +106,7 @@ class FeedWidget extends StatelessWidget {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, -5))
-                          ], color: Theme.of(context).cardColor),
+                          ], color: Colors.transparent),
                           child: ShlokaInsideFeed(filename: filename, count: count++),
                         ) as Widget)
                     .toList()));
@@ -116,6 +118,18 @@ class FeedWidget extends StatelessWidget {
       }
     });
   }
+}
+
+Widget feedScreen() {
+  return screenify(FeedWidget(),
+      appBar: AppBar(
+          title: Row(children: [
+        Image.asset('images/sunidhi-krishna.png', height: 32, width: 32),
+        const SizedBox(width: choiceSpacing),
+        const Text("Reflections")
+      ])),
+      choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],
+          [PersonalizeIcon(), SizedBox(width: choiceSpacing)]));
 }
 
 const templatePrompt = '''You are a friendly Sri Vaishnava who speaks in accessible, heartfelt ways.

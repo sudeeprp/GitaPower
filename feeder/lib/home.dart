@@ -77,11 +77,6 @@ Widget makeMyHome() {
       ]);
 }
 
-Widget feedScreen() {
-  return screenify(FeedWidget(),
-      choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForFeed()));
-}
-
 Widget browsingScreen() {
   return screenify(BrowseToc(),
       appBar: AppBar(
@@ -118,15 +113,6 @@ List<Widget> choicesForContent() {
 
 Widget choicesRowForContent() {
   return choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForContent());
-}
-
-List<Widget> choicesForFeed() {
-  return const [
-    PromptWidget(),
-    SizedBox(width: choiceSpacing),
-    PersonalizeIcon(),
-    SizedBox(width: choiceSpacing),
-  ];
 }
 
 Widget notesChaptersChoices() {
