@@ -1,5 +1,4 @@
 import 'package:askys/content_themes.dart';
-import 'package:askys/feedcontent.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,7 +87,7 @@ class MeaningExpansionIcon extends StatelessWidget {
     return GestureDetector(
       onTap: () => choice.meaningMode.value =
           choice.meaningMode.value == MeaningMode.short ? MeaningMode.expanded : MeaningMode.short,
-      child: Image.asset('images/expand_meaning${contentAssetSuffix(context)}.png', width: 48, height: 48),
+      child: Image.asset('images/expand_meaning${contentAssetSuffix(context)}.png', width: 32, height: 32),
     );
   }
 }
@@ -103,20 +102,7 @@ class HeaderPreferenceIcon extends StatelessWidget {
       onTap: () => choice.headPreference.value = choice.headPreference.value == HeadPreference.shloka
           ? HeadPreference.meaning
           : HeadPreference.shloka,
-      child: Image.asset('images/shloka_visible${contentAssetSuffix(context)}.png', width: 48, height: 48),
-    );
-  }
-}
-
-class OpenerPreferenceIcon extends StatelessWidget {
-  const OpenerPreferenceIcon({super.key}); // coverage:ignore-line
-
-  @override
-  Widget build(BuildContext context) {
-    final FeedContent feedContent = Get.find();
-    return GestureDetector(
-      onTap: feedContent.toggleOpenerCovers,
-      child: Image.asset('images/opener_cover.png', width: 48, height: 48),
+      child: Image.asset('images/shloka_visible${contentAssetSuffix(context)}.png', width: 32, height: 32),
     );
   }
 }
@@ -149,11 +135,10 @@ class BrowsingPreferenceIcon extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
-            // color: isSelected ? Colors.blue : Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [boxShadow],
           ),
-          child: Image.asset(iconFile, width: 48, height: 48),
+          child: Image.asset(iconFile, width: 32, height: 32),
         );
       }),
     );
@@ -167,7 +152,7 @@ class PersonalizeIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed('/personalize'),
-      child: const Icon(Icons.settings, size: 48),
+      child: const Icon(Icons.settings, size: 32),
     );
   }
 }

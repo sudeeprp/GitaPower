@@ -31,26 +31,18 @@ void main() {
     Get.put(ContentActions());
     Get.put(ShowWords());
   });
-  void switchOpeners(bool openersAreVisible) {
-    final FeedContent feedContent = Get.find();
-    for (int i = 0; i < feedContent.openerCovers.length; i++) {
-      feedContent.openerCovers[i].value = openersAreVisible;
-    }
-  }
-
   testWidgets('shows three shlokas', (tester) async {
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget())));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('feed/1')), findsOneWidget);
     expect(find.byKey(const Key('feed/2')), findsOneWidget);
     expect(find.byKey(const Key('feed/3')), findsOneWidget);
   });
   testWidgets('tapping on a feed navigates to the shloka', (tester) async {
-    switchOpeners(false);
     final FeedContent feedContent = Get.find();
     await tester.pumpAndSettle();
     String? navigatedShloka;
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed()), getPages: [
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget()), getPages: [
       GetPage(
           name: '/shloka/:mdFilename',
           page: () {
@@ -59,7 +51,7 @@ void main() {
           })
     ]));
     await tester.pumpAndSettle();
-    final shlokaFinder = find.byType(GestureDetector);
+    final shlokaFinder = find.byKey(const Key('feed/1'));
     var tapOffset = tester.getTopLeft(find.byWidget(shlokaFinder.evaluate().first.widget));
     tapOffset += const Offset(15, 15);
     await tester.tapAt(tapOffset);
@@ -67,25 +59,17 @@ void main() {
     expect(Get.currentRoute, startsWith('/shloka/'));
     expect(feedContent.threeShlokas.contains(navigatedShloka), true);
   });
-  testWidgets('shows the opener questions, hides on swipe', (tester) async {
-    switchOpeners(true);
+  testWidgets('shows the opener questions', (tester) async {
     await tester.pumpAndSettle();
     final FeedContent feedContent = Get.find();
     expect(feedContent.openerQs[0].value, isNotEmpty);
     expect(feedContent.openerQs[1].value, isNotEmpty);
     expect(feedContent.openerQs[2].value, isNotEmpty);
 
-    expect(feedContent.openerCovers[0].value, equals(true));
-
-    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: buildFeed())));
+    await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: FeedWidget())));
     expect(find.text(feedContent.openerQs[0].value), findsWidgets);
     expect(find.text(feedContent.openerQs[1].value), findsWidgets);
     expect(find.text(feedContent.openerQs[2].value), findsWidgets);
-    const openerPos = 1;
-    final firstOpener = find.byKey(const Key('opener/$openerPos'));
-    await tester.dragFrom(tester.getTopLeft(firstOpener), const Offset(1000, 0));
-    await tester.pumpAndSettle();
-    expect(feedContent.openerCovers[openerPos - 1].value, equals(false));
   });
   test('picks only filenames with shlokas', () async {
     final shlokaMDs = allShlokaMDs();
@@ -120,13 +104,30 @@ void main() {
     await tester.pumpAndSettle();
     expect(feedContent.tour.tourStops, isNotEmpty);
   });
-  test('toggles opener cover visibility', () {
-    final FeedContent feedContent = Get.find();
-    feedContent.openerCovers[0].value = false;
-    feedContent.toggleOpenerCovers();
-    expect(feedContent.openerCovers[0].value, equals(true));
-    feedContent.toggleOpenerCovers();
-    expect(feedContent.openerCovers[0].value, equals(false));
-    expect(feedContent.openerCovers[2].value, equals(false));
+  testWidgets('prompt widget copies to clipboard on tap', (tester) async {
+    await tester.pumpWidget(const GetMaterialApp(home: Scaffold(body: PromptWidget())));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(PromptWidget));
+    await tester.pumpAndSettle();
+
+    // Verifying clipboard content Clipboard.getData hangs in flutter test.
+    // Instead of mocking, we test the formation of the prompt
+    final clipboardData = makePrompt();
+    expect(clipboardData, contains("You are a friendly Sri Vaishnava"));
+  });
+
+  test('makePrompt returns empty string when shlokas not loaded', () {
+    // Create a temporary FeedContent with no shlokas
+    Get.delete<FeedContent>(); // Remove existing
+    final tempFeedContent = FeedContent.random();
+    tempFeedContent.threeShlokas.value = []; // Empty list
+    Get.put(tempFeedContent);
+
+    final prompt = makePrompt();
+    expect(prompt, equals(''));
+
+    // Restore original FeedContent
+    Get.delete<FeedContent>();
+    Get.put(FeedContent.random());
   });
 }

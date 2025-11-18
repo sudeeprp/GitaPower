@@ -1,15 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:get/get.dart';
 
 Future<void> callAndTellIfError(Future<void> Function() func,
     {Duration durationToShow = const Duration(seconds: 3)}) async {
+  void showError(String message) {
+    ScaffoldMessenger.of(Get.context!)
+        .showSnackBar(SnackBar(content: Text(message), duration: durationToShow));
+  }
+
   try {
     return await func();
   } on PlayerException catch (e) {
-    Get.snackbar('Oops', e.message ?? 'Error in playing', duration: durationToShow);
+    showError(e.message ?? 'Error in playing');
   } on PlayerInterruptedException catch (e) {
-    Get.snackbar('Oops', e.message ?? 'Interruption', duration: durationToShow);
+    showError(e.message ?? 'Interruption');
   } catch (e) {
-    Get.snackbar('Oops', 'Something went wrong', duration: durationToShow);
+    showError('Something went wrong');
   }
 }

@@ -36,6 +36,10 @@ class Chapter {
     return '${title.replaceAll(' ', '_')}.md';
   }
 
+  static String filenameToChapterNumber(String filename) {
+    return filename.split('-')[0].trim();
+  }
+
   String title;
   List<String> shokas;
 }

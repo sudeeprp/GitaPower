@@ -20,6 +20,7 @@
         "genhtml",
         "Getx",
         "gita",
+        "Gitabhashya",
         "gitahtml",
         "gitapower",
         "Inlines",
@@ -34,12 +35,16 @@
         "Ramanuja",
         "roboto",
         "sahk",
+        "Satsang",
+        "Sattva",
         "screenify",
         "shloka",
         "shlokaheaders",
         "Shlokas",
+        "shlokatoc",
         "shokas",
         "sudeep",
-        "sunidhi"
+        "sunidhi",
+        "Tamas"
     ]
 }

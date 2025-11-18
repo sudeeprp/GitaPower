@@ -77,11 +77,6 @@ Widget makeMyHome() {
       ]);
 }
 
-Widget feedScreen() {
-  return screenify(buildFeed(),
-      choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForFeed()));
-}
-
 Widget browsingScreen() {
   return screenify(BrowseToc(),
       appBar: AppBar(
@@ -120,16 +115,12 @@ Widget choicesRowForContent() {
   return choicesRow([SizedBox(width: choiceSpacing), widgetToHome()], choicesForContent());
 }
 
-List<Widget> choicesForFeed() {
-  return const [OpenerPreferenceIcon(), SizedBox(width: choiceSpacing)] + choicesForContent();
-}
-
 Widget notesChaptersChoices() {
   return choicesRow([
     SizedBox(width: choiceSpacing),
     widgetToHome()
   ], [
-    GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 48)),
+    GestureDetector(onTap: () => Get.toNamed('/search'), child: const Icon(Icons.search, size: 32)),
     SizedBox(width: choiceSpacing),
     PersonalizeIcon(),
     SizedBox(width: choiceSpacing)
