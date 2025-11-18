@@ -216,9 +216,8 @@ class ShlokaContent {
   });
 }
 
-final _allBackticksPattern = RegExp(r'`[^`]+`');
-
 ShlokaContent _extractShlokaContent(String mdContent) {
+  final allBackticksPattern = RegExp(r'`[^`]+`');
   final lines = mdContent.split('\n');
 
   // Extract chapter-shloka number (e.g., "## 2-47")
@@ -275,7 +274,7 @@ ShlokaContent _extractShlokaContent(String mdContent) {
       // Add non-empty lines to meaning (we already know it's non-empty from above checks)
       // Filter out all backtick content (Devanagari and English transliteration)
       var filteredLine = line;
-      filteredLine = filteredLine.replaceAll(_allBackticksPattern, '');
+      filteredLine = filteredLine.replaceAll(allBackticksPattern, '');
       // Clean up extra spaces
       filteredLine = filteredLine.replaceAll(RegExp(r'\s+'), ' ').trim();
       if (filteredLine.isNotEmpty) {
@@ -329,48 +328,28 @@ ShlokaContent _extractShlokaContent(String mdContent) {
 
 String makePrompt() {
   final FeedContent feedContent = Get.find();
-
   if (feedContent.threeShlokas.length != 3) {
     return ''; // Return empty string if shlokas aren't loaded yet
   }
 
   String prompt = templatePrompt;
 
-  try {
-    for (int i = 0; i < 3; i++) {
-      final mdFilename = feedContent.threeShlokas[i];
-      final openerQ = feedContent.openerQs[i].value;
+  for (int i = 0; i < 3; i++) {
+    final mdFilename = feedContent.threeShlokas[i];
+    final openerQ = feedContent.openerQs[i].value;
 
-      // Try to get existing MDContent controller if it exists
-      MDContent? mdContent;
-      try {
-        mdContent = Get.find<MDContent>(tag: mdFilename);
-      } catch (e) {
-        // If not found, the content hasn't been loaded yet - skip this shloka
-        continue;
-      }
+    final mdContent = Get.find<MDContent>(tag: mdFilename);
+    final content = mdContent.mdContent.value;
 
-      final content = mdContent.mdContent.value;
+    final shlokaContent = _extractShlokaContent(content);
 
-      if (content.isEmpty) {
-        continue; // Skip if content is not available
-      }
-
-      final shlokaContent = _extractShlokaContent(content);
-
-      // Replace placeholders for this shloka
-      final index = i + 1;
-      prompt = prompt.replaceAll('{{openerQ$index}}', openerQ);
-      prompt = prompt.replaceAll('{{chapterShlokaNum$index}}', shlokaContent.chapterShlokaNum);
-      prompt = prompt.replaceAll('{{shlokaInSanskrit$index}}', shlokaContent.shlokaInSanskrit);
-      prompt = prompt.replaceAll('{{meaning$index}}', shlokaContent.meaning);
-      prompt = prompt.replaceAll('{{gitabhashya$index}}', shlokaContent.gitabhashya);
-    }
-  } catch (e) {
-    // If there's an error, return empty string
-    return '';
+    final index = i + 1;
+    prompt = prompt.replaceAll('{{openerQ$index}}', openerQ);
+    prompt = prompt.replaceAll('{{chapterShlokaNum$index}}', shlokaContent.chapterShlokaNum);
+    prompt = prompt.replaceAll('{{shlokaInSanskrit$index}}', shlokaContent.shlokaInSanskrit);
+    prompt = prompt.replaceAll('{{meaning$index}}', shlokaContent.meaning);
+    prompt = prompt.replaceAll('{{gitabhashya$index}}', shlokaContent.gitabhashya);
   }
-
   return prompt;
 }
 
