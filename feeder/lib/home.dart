@@ -19,7 +19,23 @@ import 'package:askys/choices_row.dart';
 final _appLinks = AppLinks();
 
 void initialApplinkup() async {
-  navigateApplink(await _appLinks.getInitialLink());
+  final uri = await _appLinks.getInitialLink();
+  if (uri != null) {
+    // Wait for dependencies to be ready before navigating
+    await _waitForDependencies();
+  }
+  navigateApplink(uri);
+}
+
+Future<void> _waitForDependencies() async {
+  // Wait until FeedContent is registered, with a timeout
+  const maxRetries = 50; // 5 seconds total with 100ms intervals
+  for (int i = 0; i < maxRetries; i++) {
+    if (Get.isRegistered<FeedContent>()) {
+      return;
+    }
+    await Future.delayed(const Duration(milliseconds: 100));
+  }
 }
 
 void navigateApplink(Uri? uri) {
