@@ -46,14 +46,17 @@ void navigateApplink(Uri? uri) {
       if (curation.length >= 3) {
         final filesWithoutExtn = curation.sublist(0, 3);
         final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
-        final FeedContent feedContent = Get.find();
-        if (curation.length == 4) {
-          tourFolder = curation[3];
-          feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
-          Get.toNamed('/guided/$tourFolder');
-        } else {
-          feedContent.setCuratedShlokaMDs(mdsInFeed);
-          Get.toNamed('/feed');
+        // Defensive check: only navigate if FeedContent is available
+        if (Get.isRegistered<FeedContent>()) {
+          final FeedContent feedContent = Get.find();
+          if (curation.length == 4) {
+            tourFolder = curation[3];
+            feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
+            Get.toNamed('/guided/$tourFolder');
+          } else {
+            feedContent.setCuratedShlokaMDs(mdsInFeed);
+            Get.toNamed('/feed');
+          }
         }
       }
     }
