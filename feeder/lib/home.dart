@@ -19,45 +19,9 @@ import 'package:askys/choices_row.dart';
 final _appLinks = AppLinks();
 
 void initialApplinkup() async {
-  final uri = await _appLinks.getInitialLink();
-  if (uri != null) {
-    // Wait for dependencies to be ready before navigating
-    await _waitForDependencies();
-  }
-  navigateApplink(uri);
-}
-
-Future<void> _waitForDependencies() async {
-  await Future.delayed(const Duration(milliseconds: 500));
 }
 
 void navigateApplink(Uri? uri) {
-  if (uri != null && uriPointsToFeed(uri)) {
-    if (uri.pathSegments.length == 3) {
-      String? tourFolder;
-      final curation = uri.pathSegments[2].split('.');
-      if (curation.length >= 3) {
-        final filesWithoutExtn = curation.sublist(0, 3);
-        final mdsInFeed = filesWithoutExtn.map((shlokaFile) => '$shlokaFile.md').toList();
-        // Defensive check: only navigate if FeedContent is available
-        if (Get.isRegistered<FeedContent>()) {
-          final FeedContent feedContent = Get.find();
-          if (curation.length == 4) {
-            tourFolder = curation[3];
-            feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
-            Get.toNamed('/guided/$tourFolder');
-          } else {
-            feedContent.setCuratedShlokaMDs(mdsInFeed);
-            Get.toNamed('/feed');
-          }
-        }
-      }
-    }
-  }
-}
-
-bool uriPointsToFeed(Uri uri) {
-  return uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'gitapower' && uri.pathSegments[1] == 'feed';
 }
 
 Widget makeMyHome() {
