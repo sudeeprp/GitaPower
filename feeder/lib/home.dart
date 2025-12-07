@@ -16,8 +16,6 @@ import 'package:askys/feed_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:askys/choices_row.dart';
 
-final _appLinks = AppLinks();
-
 void initialApplinkup() async {
 }
 
@@ -25,12 +23,13 @@ void navigateApplink(Uri? uri) {
 }
 
 Widget makeMyHome() {
-  _appLinks.uriLinkStream.listen(navigateApplink);
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    Future.delayed(Duration(milliseconds: 10), () {
-      initialApplinkup();
-    });
-  });
+  // final _appLinks = AppLinks();
+  // _appLinks.uriLinkStream.listen(navigateApplink);
+  // WidgetsBinding.instance.addPostFrameCallback((_) {
+  //   Future.delayed(Duration(milliseconds: 10), () {
+  //     initialApplinkup();
+  //   });
+  // });
   return GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
@@ -55,7 +54,13 @@ Widget makeMyHome() {
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
         GetPage(name: '/guided/:tourFolder', page: () => guidedTourScreen(Get.parameters['tourFolder']!)),
-      ]);
+      ],
+      unknownRoute: GetPage(
+        name: '/notfound',
+        page: () => Scaffold(
+          body: Center(child: Text('Unknown route')),
+        ),
+      ),);
 }
 
 Widget browsingScreen() {
