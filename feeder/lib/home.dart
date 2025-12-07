@@ -34,10 +34,10 @@ void navigateApplink(Uri? uri) {
         if (curation.length == 4) {
           tourFolder = curation[3];
           feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
-          Get.toNamed('/guided/$tourFolder');
+          Get.offAllNamed('/guided/$tourFolder');
         } else {
           feedContent.setCuratedShlokaMDs(mdsInFeed);
-          Get.toNamed('/feed');
+          Get.offAllNamed('/feed');
         }
       }
     }
@@ -80,7 +80,7 @@ Widget makeMyHome() {
 
 Widget _routeUnknown() {
   // Get.currentRoute will always be /notfound here. So just go home.
-  final routingScreen = screenify(Center(child: Text("Page not found, returning home...")),
+  final routingScreen = screenify(const Center(child: Text("Page not found, returning home...")),
       appBar: AppBar(
           title: Row(children: [
         Image.asset('images/sunidhi-krishna.png', height: 32, width: 32),

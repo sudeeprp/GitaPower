@@ -193,13 +193,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/');
   });
-  testWidgets('handles unknown route with circular routing protection', (tester) async {
+  testWidgets('redirects to home when navigating to unknown route page', (tester) async {
     await tester.pumpWidget(makeMyHome());
     Get.toNamed('/notfound');
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/');
   });
-  testWidgets('goes home on unknown route', (tester) async {
+  testWidgets('redirects to home on unregistered route', (tester) async {
     await tester.pumpWidget(makeMyHome());
     Get.toNamed('/some-unknown-route');
     await tester.pumpAndSettle();
