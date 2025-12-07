@@ -74,7 +74,29 @@ Widget makeMyHome() {
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
         GetPage(name: '/guided/:tourFolder', page: () => guidedTourScreen(Get.parameters['tourFolder']!)),
-      ]);
+      ],
+      unknownRoute: GetPage(name: '/notfound', page: () => _routeUnknown()));
+}
+
+Widget _routeUnknown() {
+  final unknownRoute = Get.currentRoute;
+  final routingScreen = screenify(Center(child: Text("Page: $unknownRoute")),
+      appBar: AppBar(
+          title: Row(children: [
+        Image.asset('images/begin-chapters.png', height: 32, width: 32),
+        const SizedBox(width: choiceSpacing),
+        const Text("Opening Page")
+      ])));
+  if (unknownRoute == '/notfound') return routingScreen;
+  Uri? uri;
+  try {
+    uri = Uri.parse(unknownRoute.startsWith('/') ? unknownRoute.substring(1) : unknownRoute);
+    WidgetsBinding.instance.addPostFrameCallback((_) => navigateApplink(uri));
+  } catch (_) {
+    // If it's really garbage, just go home
+    // Get.offAllNamed('/home');
+  }
+  return routingScreen;
 }
 
 Widget browsingScreen() {
