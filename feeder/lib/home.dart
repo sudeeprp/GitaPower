@@ -34,10 +34,10 @@ void navigateApplink(Uri? uri) {
         if (curation.length == 4) {
           tourFolder = curation[3];
           feedContent.setCuratedShlokaMDs(mdsInFeed, playableFolder: tourFolder);
-          Get.toNamed('/guided/$tourFolder');
+          Get.offAllNamed('/guided/$tourFolder');
         } else {
           feedContent.setCuratedShlokaMDs(mdsInFeed);
-          Get.toNamed('/feed');
+          Get.offAllNamed('/feed');
         }
       }
     }
@@ -74,7 +74,21 @@ Widget makeMyHome() {
             name: '/personalize',
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
         GetPage(name: '/guided/:tourFolder', page: () => guidedTourScreen(Get.parameters['tourFolder']!)),
-      ]);
+      ],
+      unknownRoute: GetPage(name: '/notfound', page: () => _routeUnknown()));
+}
+
+Widget _routeUnknown() {
+  // Get.currentRoute will always be /notfound here. So just go home.
+  final routingScreen = screenify(const Center(child: Text("Page not found, returning home...")),
+      appBar: AppBar(
+          title: Row(children: [
+        Image.asset('images/sunidhi-krishna.png', height: 32, width: 32),
+        const SizedBox(width: choiceSpacing),
+        const Text("The Opening")
+      ])));
+  WidgetsBinding.instance.addPostFrameCallback((_) => Get.offAllNamed('/'));
+  return routingScreen;
 }
 
 Widget browsingScreen() {
