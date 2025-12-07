@@ -62,15 +62,20 @@ bool uriPointsToFeed(Uri uri) {
 
 Widget makeMyHome() {
   _appLinks.uriLinkStream.listen(navigateApplink);
-  WidgetsBinding.instance.addPostFrameCallback((_) => initialApplinkup());
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.delayed(Duration(milliseconds: 10), () {
+      initialApplinkup();
+    });
+  });
   return GetMaterialApp(
       title: 'The Gita',
       initialBinding: ChoiceBinding(),
       theme: lightTheme(),
       darkTheme: darkTheme(),
-      home: const Home(),
+      initialRoute: '/home',
       debugShowCheckedModeBanner: false,
       getPages: [
+        GetPage(name: '/home', page: () => const Home()),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
