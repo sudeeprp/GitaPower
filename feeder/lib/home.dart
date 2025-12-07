@@ -79,23 +79,15 @@ Widget makeMyHome() {
 }
 
 Widget _routeUnknown() {
-  final unknownRoute = Get.currentRoute;
-  final routingScreen = screenify(Center(child: Text("Page: $unknownRoute")),
+  // Get.currentRoute will always be /notfound here. So just go home.
+  final routingScreen = screenify(Center(child: Text("Page not found, returning home...")),
       appBar: AppBar(
           title: Row(children: [
-        Image.asset('images/begin-chapters.png', height: 32, width: 32),
+        Image.asset('images/sunidhi-krishna.png', height: 32, width: 32),
         const SizedBox(width: choiceSpacing),
-        const Text("Opening Page")
+        const Text("The Opening")
       ])));
-  if (unknownRoute == '/notfound') return routingScreen;
-  Uri? uri;
-  try {
-    uri = Uri.parse(unknownRoute.startsWith('/') ? unknownRoute.substring(1) : unknownRoute);
-    WidgetsBinding.instance.addPostFrameCallback((_) => navigateApplink(uri));
-  } catch (_) {
-    // If it's really garbage, just go home
-    // Get.offAllNamed('/home');
-  }
+  WidgetsBinding.instance.addPostFrameCallback((_) => Get.offAllNamed('/'));
   return routingScreen;
 }
 
