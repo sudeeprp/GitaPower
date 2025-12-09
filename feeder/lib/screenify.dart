@@ -7,8 +7,22 @@ Widget screenify(Widget body, {AppBar? appBar, Widget? choicesRow}) {
     key: scaffoldKey,
     appBar: appBar,
     body: SafeArea(child: ConstrainedBox(constraints: BoxConstraints(maxWidth: 700), child: body)),
-    bottomNavigationBar: choicesRow,
+    bottomNavigationBar: choicesRow != null ? _BottomBarWithPadding(child: choicesRow) : null,
   );
+}
+
+class _BottomBarWithPadding extends StatelessWidget {
+  const _BottomBarWithPadding({required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.viewPaddingOf(context).bottom;
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      child: child,
+    );
+  }
 }
 
 Widget widgetToHome() {
