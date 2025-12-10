@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 
 void main() {
-  testWidgets('bottom navigation bar has padding for system UI', (tester) async {
+  testWidgets('bottom navigation bar present on screen', (tester) async {
     final testWidget = screenify(
       const Text('Test Body'),
       appBar: AppBar(title: const Text('Test App')),
@@ -15,11 +15,8 @@ void main() {
     await tester.pumpWidget(GetMaterialApp(home: testWidget));
     await tester.pumpAndSettle();
 
-    // Find the Scaffold widget
     final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
     expect(scaffold.bottomNavigationBar, isNotNull);
-
-    // Verify that the bottom navigation bar is wrapped with padding
     expect(scaffold.bottomNavigationBar, isA<Widget>());
   });
 
