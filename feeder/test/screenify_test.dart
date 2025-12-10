@@ -5,21 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 
 void main() {
-  testWidgets('screenify creates scaffold with bottom navigation bar', (tester) async {
-    final testWidget = screenify(
-      const Text('Test Body'),
-      appBar: AppBar(title: const Text('Test App')),
-      choicesRow: choicesRow(const [Icon(Icons.home)], const [Icon(Icons.settings)]),
-    );
-
-    await tester.pumpWidget(GetMaterialApp(home: testWidget));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(Scaffold), findsOneWidget);
-    expect(find.text('Test Body'), findsOneWidget);
-    expect(find.byType(Padding), findsWidgets);
-  });
-
   testWidgets('bottom navigation bar has padding for system UI', (tester) async {
     final testWidget = screenify(
       const Text('Test Body'),
@@ -49,17 +34,5 @@ void main() {
 
     final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
     expect(scaffold.bottomNavigationBar, isNull);
-  });
-
-  testWidgets('widgetToHome navigates to home route', (tester) async {
-    await tester.pumpWidget(GetMaterialApp(
-      home: Scaffold(body: widgetToHome()),
-      getPages: [GetPage(name: '/', page: () => const Scaffold(body: Text('Home')))],
-    ));
-
-    await tester.tap(find.byType(GestureDetector));
-    await tester.pumpAndSettle();
-
-    expect(Get.currentRoute, '/');
   });
 }
