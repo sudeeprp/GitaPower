@@ -44,7 +44,7 @@ jobs:
         ls -al build/app/outputs/bundle/release/
 
     - name: upload appbundle
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: release-aab
         path: feeder/build/app/outputs/bundle/release/app-release.aab
@@ -67,7 +67,7 @@ jobs:
 
     - name: Upload screenshots
       if: ${{ inputs.generate_screenshots }}
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: screenshots-${{ github.run_number }}
         path: feeder/screenshots

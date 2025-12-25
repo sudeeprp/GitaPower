@@ -28,7 +28,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_crashlytics: ^5.0.5
   firebase_core: ^4.2.1
-  shared_preferences: 2.5.3
+  shared_preferences: 2.5.4
   enum_to_string: 2.2.1
   float_column: 4.0.3
   app_links: ^7.0.0
