@@ -45,7 +45,6 @@ void main() {
   }
 
   void setupAskysDiscoverMock(String phrase, {Duration? delay}) {
-    dioAdapter.onGet(tokenUrl, (server) => server.reply(200, {'token': 'token-for-search'}));
     dioAdapter.onGet(
       searchBaseUrl,
       (server) => server.reply(200, mockResults, delay: delay, headers: {
@@ -94,7 +93,7 @@ void main() {
     });
 
     testWidgets('should handle error status response from API', (tester) async {
-      dioAdapter.onGet(tokenUrl, (server) => server.reply(401, {'error': 'invalid token'}));
+      dioAdapter.onGet(searchBaseUrl, (server) => server.reply(401, {'error': 'invalid token'}));
       const searchString = 'test query';
       await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);

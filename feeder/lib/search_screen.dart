@@ -7,7 +7,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
 const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
 
 class SearchedPara {
@@ -51,21 +50,11 @@ class PhraseSearcher extends GetxController {
     return '$first$second${buffer.toString()}';
   }
 
-  Future<String> _tokenForSearch() async {
-    const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
-    final entryToken = _entry();
-    final tokenResponse = await dio.get(
-      tokenUrl,
-      options: Options(headers: {'Authorization': 'Bearer $entryToken'}),
-    );
-    return tokenResponse.data['token'] as String;
-  }
-
   Future<void> search(String phrase) async {
     isLoading.value = true;
     try {
       progressMsg.value = 'Accessing';
-      final tokenForSearch = await _tokenForSearch();
+      final tokenForSearch = _entry();
       final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
       progressMsg.value = 'Searching';
       final searchResponse = await dio.get(
