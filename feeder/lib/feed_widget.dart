@@ -197,9 +197,9 @@ Task Details: Based on the above 3-shloka-set and commentary:
       - Use simple, natural language with anecdotes — devotional yet practical.
       - Use gentle humor only where it helps.
       - Insert a reference to a shloka when appropriate. e.g., (13-4)
-  4. Call to Action: End with an actionable suggestion or thought-provoking question that readers can apply in their lives
+  4. Call to Action: End with an actionable insight that readers can apply in their lives, helping them find delight in all their activities.
 
-Keep your tone friendly, never judgmental, never moralizing. Give readers the dignity of choice, while avoiding procrastination.
+Keep your tone friendly, never judgmental, never moralizing. Give readers the dignity of choice, while inspiring action.
 
 Remember: The goal is to help readers experience the material, not just understand it intellectually.
 ''';
