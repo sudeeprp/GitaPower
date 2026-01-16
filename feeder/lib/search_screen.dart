@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choices_row.dart';
-import 'package:askys/content_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class SearchedPara {
 }
 
 class PhraseSearcher extends GetxController {
-  var topResult = SearchedPara().obs;
+  final results = <SearchedPara>[].obs;
   final isLoading = false.obs;
   final progressMsg = ''.obs;
   final Dio dio;
@@ -30,7 +29,7 @@ class PhraseSearcher extends GetxController {
   }
 
   void reset() {
-    topResult.value = SearchedPara();
+    results.value = [];
     isLoading.value = false;
     progressMsg.value = '';
   }
@@ -53,10 +52,9 @@ class PhraseSearcher extends GetxController {
   Future<void> search(String phrase) async {
     isLoading.value = true;
     try {
-      progressMsg.value = 'Accessing';
+      progressMsg.value = 'Searching';
       final tokenForSearch = _entry();
       final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
-      progressMsg.value = 'Searching';
       final searchResponse = await dio.get(
         searchBaseUrl,
         queryParameters: {'q': phrase},
@@ -65,10 +63,12 @@ class PhraseSearcher extends GetxController {
       progressMsg.value = '';
       final responseJson = searchResponse.data as Map<String, dynamic>;
       final matches = responseJson['matches'] as List<dynamic>;
-      topResult.value = SearchedPara(
-        mdFileNoExt: matches[0]['filename_no_mdext'] as String,
-        content: matches[0]['match_text'] as String,
-      );
+      results.value = matches
+          .map((match) => SearchedPara(
+                mdFileNoExt: match['filename_no_mdext'] as String,
+                content: match['match_text'] as String,
+              ))
+          .toList();
     } on DioException catch (e) {
       if (e.response != null) {
         final errData = e.response?.data as Map<String, dynamic>;
@@ -88,6 +88,7 @@ class SearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     PhraseSearcher phraseSearcher = Get.find();
     void unfocusAndSubmit(String phrase) {
+      phraseSearcher.results.value = [];
       FocusScope.of(context).unfocus();
       phraseSearcher.research(phrase);
     }
@@ -119,9 +120,8 @@ class SearchWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
-              final topResult = phraseSearcher.topResult.value;
-              if (topResult.mdFileNoExt.isNotEmpty) {
-                return buildContentFeed('${topResult.mdFileNoExt}.md', searchPhrase: topResult.content);
+              if (phraseSearcher.results.isNotEmpty) {
+                return SearchResultsWidget(phraseSearcher.phraseInput.text, phraseSearcher.results);
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -134,6 +134,29 @@ class SearchWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SearchResultsWidget extends StatelessWidget {
+  final RxList<SearchedPara> results;
+  final String searchString;
+  const SearchResultsWidget(this.searchString, this.results, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final result = results[index];
+        return Card(
+          child: ListTile(
+            title: Text(result.mdFileNoExt),
+            subtitle: Text(result.content),
+            onTap: () => Get.toNamed('/shloka/${result.mdFileNoExt}.md'),
+          ),
+        );
+      },
     );
   }
 }

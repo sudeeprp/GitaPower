@@ -66,7 +66,7 @@ void main() {
       Get.delete<PhraseSearcher>();
       Get.delete<GitHubFetcher>();
     });
-    testWidgets('should initiate search and display the top result', (tester) async {
+    testWidgets('should initiate search and display the top results', (tester) async {
       resetPhraseSearcher();
       Get.put(ChaptersTOC());
       Get.put(ContentActions());
@@ -75,12 +75,24 @@ void main() {
       Get.put(ContentNotes());
       const searchString = 'flame which does not shake';
       setupAskysDiscoverMock(searchString);
-      await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SearchWidget()),
+        getPages: [
+          GetPage(name: '/shloka/6-19.md', page: () => const Text('opened')),
+        ],
+      ));
       await tester.enterText(find.byType(TextField), searchString);
       await tester.pump();
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-      // TODO: Design the search result and `expect` it here
+      final mockedTopMatches = ['6-19', '2-20', '14-23'];
+      for (var filename in mockedTopMatches) {
+        expect(find.textContaining(filename), findsOneWidget);
+      }
+      // Tap on first result to navigate
+      await tester.tap(find.textContaining('6-19'));
+      await tester.pumpAndSettle();
+      expect(Get.currentRoute, '/shloka/6-19.md');
     });
 
     testWidgets('should handle API unreachable', (tester) async {
