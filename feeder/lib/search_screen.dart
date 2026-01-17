@@ -88,7 +88,6 @@ class SearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     PhraseSearcher phraseSearcher = Get.find();
     void unfocusAndSubmit(String phrase) {
-      phraseSearcher.results.value = [];
       FocusScope.of(context).unfocus();
       phraseSearcher.research(phrase);
     }
