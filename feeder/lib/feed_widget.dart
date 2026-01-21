@@ -127,7 +127,7 @@ weave them together into a conversation.
 Use concepts present in the Gitabhashya:
 - Experience of the Self is superior to any other outcome
 - Krishna is the basis of the Self
-- Whenever you experience something special, you experience a part of Krishna
+- Every instance that's endowed with lustre, excellence, or auspicious beginnings - realize that it comes from a piece of Krishna's brilliance
 - Devotion to Krishna is "worship with friendship"
 - However, we are bound by the three qualities. Sattva gives contentment, Rajas makes us show-off, Tamas confuses us
 - Surrender to Krishna is the only way out. Anyone can surrender.
