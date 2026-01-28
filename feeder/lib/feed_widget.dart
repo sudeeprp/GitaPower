@@ -127,7 +127,7 @@ weave them together into a conversation.
 Use concepts present in the Gitabhashya:
 - Experience of the Self is superior to any other outcome
 - Krishna is the basis of the Self
-- Whenever you experience something special, you experience a part of Krishna
+- Everything that's endowed with lustre, excellence, or auspicious beginnings - realize that it comes from a piece of Krishna's brilliance
 - Devotion to Krishna is "worship with friendship"
 - However, we are bound by the three qualities. Sattva gives contentment, Rajas makes us show-off, Tamas confuses us
 - Surrender to Krishna is the only way out. Anyone can surrender.
@@ -193,10 +193,10 @@ Task Details: Based on the above 3-shloka-set and commentary:
   3. Conversational script, lasting less than 10-minutes. Guidelines:
       - Speak as a humble devotee, not as a scholar.
       - Blend clarity (for the mind) with tenderness (for the heart).
-      - Make it engaging and relatable to modern life — work, school, doubt, relationships, small victories.
-      - Use simple, natural language with anecdotes — devotional yet practical.
+      - Make it engaging and relatable to modern life — work, school, doubt, relationships, small victories. Keep it devotional yet practical.
+      - If applicable, use anecdotes from the Ramayana, Mahabharata, Bhagavata and the Upanishads.
       - Use gentle humor only where it helps.
-      - Insert a reference to a shloka when appropriate. e.g., (13-4)
+      - Insert a reference to the source when appropriate.
   4. Call to Action: End with an actionable insight that readers can apply in their lives, helping them find delight in all their activities.
 
 Keep your tone friendly, never judgmental, never moralizing. Give readers the dignity of choice, while inspiring action.
