@@ -2,8 +2,10 @@ import 'package:askys/chaptercontent.dart';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/content_source.dart';
+import 'package:askys/feedcontent.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/notecontent.dart';
+import 'package:askys/prompt_widget.dart';
 import 'package:askys/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -73,6 +75,7 @@ void main() {
       Get.put(Choices());
       Get.put(ShowWords());
       Get.put(ContentNotes());
+      Get.put(FeedContent.random());
       const searchString = 'flame which does not shake';
       setupAskysDiscoverMock(searchString);
       await tester.pumpWidget(GetMaterialApp(
@@ -115,6 +118,7 @@ void main() {
     });
     testWidgets('should show loading indicator during API call', (tester) async {
       const searchString = 'test query';
+      Get.put(FeedContent.random());
       setupAskysDiscoverMock(searchString);
       await tester.pumpWidget(GetMaterialApp(home: Scaffold(body: SearchWidget())));
       await tester.enterText(find.byType(TextField), searchString);
@@ -123,6 +127,36 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pumpAndSettle();
       expect(find.byType(CircularProgressIndicator), findsNothing);
+    });
+  });
+
+  group('SearchPrompter', () {
+    setUp(() {
+      Get.put(PhraseSearcher(dio));
+    });
+    tearDown(() {
+      Get.delete<PhraseSearcher>();
+    });
+
+    testWidgets('should return empty SizedBox when no search results', (tester) async {
+      resetPhraseSearcher();
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SearchPrompter()),
+      ));
+      expect(find.byType(PromptWidget), findsNothing);
+    });
+
+    testWidgets('should return PromptWidget when search results are present', (tester) async {
+      resetPhraseSearcher();
+      final PhraseSearcher phraseSearcher = Get.find();
+      phraseSearcher.results.addAll([
+        SearchedPara(mdFileNoExt: '1-1', content: 'test content 1'),
+        SearchedPara(mdFileNoExt: '2-2', content: 'test content 2'),
+      ]);
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SearchPrompter()),
+      ));
+      expect(find.byType(PromptWidget), findsOneWidget);
     });
   });
 }

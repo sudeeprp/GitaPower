@@ -3,10 +3,12 @@ import 'package:askys/choice_selector.dart';
 import 'package:askys/choices_row.dart';
 import 'package:askys/content_widget.dart';
 import 'package:askys/matter_forinline.dart';
+import 'package:askys/prompt_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:askys/feedcontent.dart';
 
 const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
 
@@ -71,6 +73,8 @@ class PhraseSearcher extends GetxController {
                 content: match['match_text'] as String,
               ))
           .toList();
+      final FeedContent feedContent = Get.find();
+      feedContent.setCuratedShlokaMDs(results.map((e) => '${e.mdFileNoExt}.md').toList());
     } on DioException catch (e) {
       if (e.response != null) {
         final errData = e.response?.data as Map<String, dynamic>;
@@ -170,12 +174,31 @@ class SearchResultsWidget extends StatelessWidget {
   }
 }
 
+class SearchPrompter extends StatelessWidget {
+  const SearchPrompter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final PhraseSearcher phraseSearcher = Get.find();
+      if (phraseSearcher.results.isNotEmpty) {
+        return PromptWidget();
+      } else {
+        return SizedBox(width: 0, height: 0);
+      }
+    });
+  }
+}
+
 Widget searchScreen() {
   final PhraseSearcher phraseSearcher = Get.find();
   phraseSearcher.reset();
   return screenify(
     SearchWidget(),
-    appBar: AppBar(title: const Text('Search (beta)')),
+    appBar: AppBar(
+      title: const Text('Search (beta)'),
+      actions: [SearchPrompter()],
+    ),
     choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],
         const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]),
   );
