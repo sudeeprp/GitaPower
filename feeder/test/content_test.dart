@@ -129,7 +129,7 @@ Self realization is key.
     putContentControllers(); // Ensures all necessary controllers are available
     const searchPhrase = 'Yoga is about realization'; // 3 words
     await tester.pumpWidget(GetMaterialApp(
-      home: Scaffold(body: buildContent('test_highlight.md', searchPhrase: searchPhrase)),
+      home: Scaffold(body: buildContent('test_highlight.md', foundText: searchPhrase)),
     ));
     await tester.pumpAndSettle();
     expect(find.textContaining('Yoga is about realization', findRichText: true), findsOneWidget);

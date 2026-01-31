@@ -28,13 +28,13 @@ class WidgetMaker implements md.NodeVisitor {
   final List<TextSpan> Function(MatterForInline matterForInline) _inlineMaker;
   final List<Widget> Function(SectionContent, SectionType) _widgetMaker;
   final List<String>? showPatterns;
-  final String? searchPhrase;
+  final String? foundText;
   SectionType? _previousSectionType;
   List<CurrentTextElement> elementForCurrentText = [];
   List<String> noteIdsInPage = [];
   List<Widget> collectedWidgets = [];
   List<MatterForInline> collectedInlines = [];
-  WidgetMaker(this._widgetMaker, this._inlineMaker, {this.showPatterns, this.searchPhrase});
+  WidgetMaker(this._widgetMaker, this._inlineMaker, {this.showPatterns, this.foundText});
 
   List<Widget> parse(String markdownContent) {
     List<String> lines = markdownContent.split('\n');
@@ -151,7 +151,7 @@ class WidgetMaker implements md.NodeVisitor {
     final processedText = _textForElement(markdownText.textContent, element.mdElement);
     if (processedText.isNotEmpty) {
       final inlineMatters = makeMatterForInlines(processedText, element.sectionType, tag,
-          elmclass: elmclass, link: link, showPatterns: showPatterns, searchPhrase: searchPhrase);
+          elmclass: elmclass, link: link, showPatterns: showPatterns, foundText: foundText);
       collectedInlines.addAll(inlineMatters);
     }
   }
@@ -409,7 +409,7 @@ class SectionContent {
 
 class ContentWidget extends StatelessWidget {
   ContentWidget(this.mdFilename, this.initialAnchor, this.prevmd, this.nextmd,
-      {this.onTap, this.searchPhrase, bool Function(SectionType)? isSectionVisible, super.key})
+      {this.onTap, this.foundText, bool Function(SectionType)? isSectionVisible, super.key})
       : isSectionVisible = isSectionVisible ?? ((_) => true) {
     Get.lazyPut(() => MDContent(mdFilename), tag: mdFilename);
   }
@@ -419,7 +419,7 @@ class ContentWidget extends StatelessWidget {
   final String? nextmd;
   final String? prevmd;
   final void Function()? onTap;
-  final String? searchPhrase;
+  final String? foundText;
   final bool Function(SectionType) isSectionVisible;
 
   List<String>? playableShows() {
@@ -514,8 +514,8 @@ class ContentWidget extends StatelessWidget {
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
         child: Obx(() {
-          final widgetMaker = WidgetMaker(textRichMaker, formatMaker,
-              showPatterns: playableShows(), searchPhrase: searchPhrase);
+          final widgetMaker =
+              WidgetMaker(textRichMaker, formatMaker, showPatterns: playableShows(), foundText: foundText);
           final widgetsMade = widgetMaker.parse(md.mdContent.value);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             BuildContext? anchorContext;
@@ -601,12 +601,12 @@ ContentWidget buildContent(String mdFilename,
     String? prevmd,
     String? nextmd,
     void Function()? onTap,
-    String? searchPhrase,
+    String? foundText,
     bool Function(SectionType)? isSectionVisible,
     Key? key}) {
   Get.put(ExpansionController(), tag: mdFilename);
   return ContentWidget(mdFilename, initialAnchor, prevmd, nextmd,
-      onTap: onTap, searchPhrase: searchPhrase, isSectionVisible: isSectionVisible, key: key);
+      onTap: onTap, foundText: foundText, isSectionVisible: isSectionVisible, key: key);
 }
 
 Widget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}) {
@@ -616,12 +616,12 @@ Widget buildContentWithNote(String mdFilename, {String? initialAnchor, Key? key}
 ContentWidget buildContentFeed(
   String mdFilename, {
   Key? key,
-  String? searchPhrase,
+  String? foundText,
   bool Function(SectionType)? isSectionVisible,
 }) {
   return buildContent(mdFilename, onTap: () {
     Get.toNamed('/shloka/$mdFilename');
-  }, searchPhrase: searchPhrase, isSectionVisible: isSectionVisible, key: key);
+  }, foundText: foundText, isSectionVisible: isSectionVisible, key: key);
 }
 
 class ContentScreen extends StatelessWidget {

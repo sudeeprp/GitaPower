@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choices_row.dart';
+import 'package:askys/content_widget.dart';
+import 'package:askys/matter_forinline.dart';
 import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -148,15 +150,23 @@ class SearchResultsWidget extends StatelessWidget {
       itemCount: results.length,
       itemBuilder: (context, index) {
         final result = results[index];
+        final foundFilename = '${result.mdFileNoExt}.md';
         return Card(
           child: ListTile(
             title: Text(result.mdFileNoExt),
-            subtitle: Text(result.content),
-            onTap: () => Get.toNamed('/shloka/${result.mdFileNoExt}.md'),
+            subtitle: buildContentFeed(foundFilename,
+                foundText: result.content, isSectionVisible: isFoundInSearch), // Text(result.content),
+            onTap: () => Get.toNamed('/shloka/$foundFilename'),
           ),
         );
       },
     );
+  }
+
+  bool isFoundInSearch(SectionType sectionType) {
+    return sectionType == SectionType.shlokaSA ||
+        sectionType == SectionType.shlokaSAHK ||
+        sectionType == SectionType.meaning;
   }
 }
 

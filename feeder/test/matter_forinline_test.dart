@@ -63,20 +63,25 @@ void main() {
     expect(engInTranslitInlines[0].presentation, equals(Presentation.normal));
   });
   group('search relevance computer', () {
-    bool searchRelevanceMarked(String text, String searchPhrase) {
-      return makeMatterForInlines(text, SectionType.commentary, 'atag', searchPhrase: searchPhrase)
+    bool searchRelevanceMarked(String text, String foundText) {
+      return makeMatterForInlines(text, SectionType.commentary, 'atag', foundText: foundText)
           .first
           .isRelevantToSearch;
     }
 
-    test('marks the text relevant when more than half the words of the search phrase are found', () {
-      expect(searchRelevanceMarked('The quick brown fox', 'quick brown fox'), isTrue);
-      expect(searchRelevanceMarked('The quick brown fox', 'quick brown'), isTrue);
-      expect(searchRelevanceMarked('The quick brown fox', 'quick'), isTrue);
+    test('marks the text relevant when the content is same as the text found', () {
+      expect(searchRelevanceMarked('The quick brown fox jumps', 'the quick brown fox jumps'), isTrue);
     });
-    test('marks the text irrelevant when less than half the words of the search phrase are found', () {
+    test('marks the text relevant when the content is a subset of the text found', () {
+      expect(
+          searchRelevanceMarked('quick fox over dog', 'The quick brown fox jumps over the lazy dog'), isTrue);
+    });
+    test('does not report relevance when less than half the words of the search phrase are found', () {
       expect(searchRelevanceMarked('The quick brown fox', 'slow'), isFalse);
       expect(searchRelevanceMarked('The quick brown fox', 'be quick not slow'), isFalse);
+    });
+    test('does not report relevance when the match is insignificant', () {
+      expect(searchRelevanceMarked('and the', 'the cat and the hat'), isFalse);
     });
   });
 }
