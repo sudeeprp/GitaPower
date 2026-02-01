@@ -40,14 +40,16 @@ class BeginWidget extends StatelessWidget {
         decoration: beginCardDecoration(context),
         child: GestureDetector(
             onTap: () => Get.toNamed('/browse'),
-            child: Row(children: [
-              Expanded(key: key, child: titleTextContainer('browse', 'Chapters and Notes')),
-              Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      child: Image.asset('images/begin-chapters.png'))),
-            ])));
-  }
+            child: Container(
+              color: Colors.transparent,
+              child: Row(children: [
+          Expanded(key: key, child: titleTextContainer('browse', 'Chapters and Notes')),
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Image.asset('images/begin-chapters.png'))),
+              ]))));
+        }
 
   Widget beginGuides(BuildContext context, {Key? key}) {
     return Container(

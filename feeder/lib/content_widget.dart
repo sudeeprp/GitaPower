@@ -3,6 +3,7 @@ import 'package:askys/expandable_span.dart';
 import 'package:askys/mdcontent.dart';
 import 'package:askys/content_actions.dart';
 import 'package:askys/screenify.dart';
+import 'package:askys/search_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -464,17 +465,7 @@ class ContentWidget extends StatelessWidget {
       return [
         Obx(() {
           GlobalKey? searchKey;
-          bool visibility = _isVisible(sectionType);
-          if (sectionContent.isRelevantToSearch) {
-            searchKey = GlobalKey();
-            visibility = true;
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (searchKey!.currentContext != null) {
-                Scrollable.ensureVisible(searchKey.currentContext!,
-                    duration: const Duration(milliseconds: 300));
-              }
-            });
-          }
+          bool visibility = _isVisible(sectionType) || sectionContent.isRelevantToSearch;
           return Visibility(
             key: searchKey,
             visible: visibility,
@@ -565,12 +556,14 @@ class ShlokaContentReader extends StatelessWidget {
     final ChaptersTOC chapterstoc = Get.find();
     final prevmd = chapterstoc.prevmd(mdFilename);
     final nextmd = chapterstoc.nextmd(mdFilename);
-    var contentWidget = buildContent(mdFilename,
+    final PhraseSearcher phraseSearcher = Get.find();
+    var contentWidget = Obx(() => buildContent(mdFilename,
         initialAnchor: initialAnchor,
         prevmd: prevmd,
         nextmd: nextmd,
+        foundText: phraseSearcher.textSearchedInFile(mdFilename),
         onTap: Get.find<ContentActions>().showForAWhile,
-        key: key);
+        key: key));
     var contentActions = Get.find<ContentActions>();
     contentActions.initialShowForAWhile();
     return Stack(children: [contentWidget, ...navigationButtons(context, mdFilename, nextmd, prevmd)]);

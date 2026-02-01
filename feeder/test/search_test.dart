@@ -128,8 +128,32 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(CircularProgressIndicator), findsNothing);
     });
-  });
+    test('should return matching content when file exists in results', () {
+      final PhraseSearcher phraseSearcher = Get.find();
+      phraseSearcher.results.addAll([
+        SearchedPara(mdFileNoExt: '6-19', content: 'commentary1'),
+        SearchedPara(mdFileNoExt: '2-20', content: 'commentary2'),
+        SearchedPara(mdFileNoExt: '14-23', content: 'commentary3'),
+      ]);
+      final foundText = phraseSearcher.textSearchedInFile('6-19.md');
+      expect(foundText, 'commentary1');
+    });
 
+    test('should return null when file does not exist in results', () {
+      final PhraseSearcher phraseSearcher = Get.find();
+      phraseSearcher.results.addAll([
+        SearchedPara(mdFileNoExt: '6-19', content: 'commentary1'),
+        SearchedPara(mdFileNoExt: '2-20', content: 'commentary2'),
+      ]);
+      final foundText = phraseSearcher.textSearchedInFile('3-15.md');
+      expect(foundText, isNull);
+    });
+    test('should return null when results list is empty', () {
+      final PhraseSearcher phraseSearcher = Get.find();
+      final foundText = phraseSearcher.textSearchedInFile('6-19.md');
+      expect(foundText, isNull);
+    });
+  });
   group('SearchPrompter', () {
     setUp(() {
       Get.put(PhraseSearcher(dio));

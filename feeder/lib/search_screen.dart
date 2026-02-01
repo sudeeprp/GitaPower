@@ -85,6 +85,11 @@ class PhraseSearcher extends GetxController {
     }
     isLoading.value = false;
   }
+
+  String? textSearchedInFile(String mdFilename) {
+    final matchingResult = results.firstWhereOrNull((result) => '${result.mdFileNoExt}.md' == mdFilename);
+    return matchingResult?.content;
+  }
 }
 
 class SearchWidget extends StatelessWidget {
@@ -99,7 +104,7 @@ class SearchWidget extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
           Row(
