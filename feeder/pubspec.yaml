@@ -22,7 +22,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.7.3
-  dio: ^5.9.0
+  dio: ^5.9.1
   markdown: ^7.3.0
   google_fonts: ^8.0.0
   cupertino_icons: ^1.0.8
