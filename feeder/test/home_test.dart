@@ -71,6 +71,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(Get.currentRoute, '/feed');
   });
+  testWidgets('Navigates to search from the home screen', (tester) async {
+    await tester.pumpWidget(makeMyHome());
+    await tester.tap(find.byKey(const Key('tour/search')));
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/search');
+  });
   testWidgets('Navigates to a shloka number within three taps', (tester) async {
     await tester.pumpWidget(makeMyHome());
     await tester.tap(find.byKey(const Key('begin/browse'))); // tap #1

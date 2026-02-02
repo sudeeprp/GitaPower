@@ -27,24 +27,24 @@ class MatterForInline {
 
 final devanagari = RegExp('^[\u0900-\u097F]+');
 bool isDevanOrTranslit(String word) {
-  return word.startsWith('[') | devanagari.hasMatch(word);
+  return word.startsWith('[') || devanagari.hasMatch(word);
 }
 
 List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType, String tag,
-    {String? elmclass, String? link, List<String>? showPatterns, String? searchPhrase}) {
+    {String? elmclass, String? link, List<String>? showPatterns, String? foundText}) {
   bool checkSearchRelevance(String currentText) {
-    if (searchPhrase != null && searchPhrase.isNotEmpty && currentText.isNotEmpty) {
+    if (foundText != null && foundText.isNotEmpty && currentText.isNotEmpty) {
       final delimiters = RegExp(r'[^\w\s]|\s+|_|\[|\]["`' r"']");
-      final searchWords = searchPhrase.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
+      final foundWords = foundText.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
       final textWords = currentText.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
-      if (searchWords.isEmpty) return false;
+      if (foundWords.isEmpty) return false;
       int matchCount = 0;
-      for (String word in searchWords) {
+      for (String word in foundWords) {
         if (textWords.contains(word)) {
           matchCount++;
         }
       }
-      return matchCount * 3 > searchWords.length; // More than a third of the words match
+      return matchCount > 3 && matchCount * 3 > foundWords.length; // More than a third of the words match
     }
     return false;
   }

@@ -2,12 +2,14 @@ import 'dart:math';
 import 'package:askys/choice_selector.dart';
 import 'package:askys/choices_row.dart';
 import 'package:askys/content_widget.dart';
+import 'package:askys/matter_forinline.dart';
+import 'package:askys/prompt_widget.dart';
 import 'package:askys/screenify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:askys/feedcontent.dart';
 
-const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
 const searchBaseUrl = 'https://askys-discover-572467571658.asia-south1.run.app/gita/';
 
 class SearchedPara {
@@ -17,7 +19,7 @@ class SearchedPara {
 }
 
 class PhraseSearcher extends GetxController {
-  var topResult = SearchedPara().obs;
+  final results = <SearchedPara>[].obs;
   final isLoading = false.obs;
   final progressMsg = ''.obs;
   final Dio dio;
@@ -31,7 +33,7 @@ class PhraseSearcher extends GetxController {
   }
 
   void reset() {
-    topResult.value = SearchedPara();
+    results.value = [];
     isLoading.value = false;
     progressMsg.value = '';
   }
@@ -51,23 +53,12 @@ class PhraseSearcher extends GetxController {
     return '$first$second${buffer.toString()}';
   }
 
-  Future<String> _tokenForSearch() async {
-    const tokenUrl = 'https://askys-token-572467571658.asia-south1.run.app/token/';
-    final entryToken = _entry();
-    final tokenResponse = await dio.get(
-      tokenUrl,
-      options: Options(headers: {'Authorization': 'Bearer $entryToken'}),
-    );
-    return tokenResponse.data['token'] as String;
-  }
-
   Future<void> search(String phrase) async {
     isLoading.value = true;
     try {
-      progressMsg.value = 'Accessing';
-      final tokenForSearch = await _tokenForSearch();
-      final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
       progressMsg.value = 'Searching';
+      final tokenForSearch = _entry();
+      final header = <String, dynamic>{'Authorization': 'Bearer $tokenForSearch'};
       final searchResponse = await dio.get(
         searchBaseUrl,
         queryParameters: {'q': phrase},
@@ -76,10 +67,14 @@ class PhraseSearcher extends GetxController {
       progressMsg.value = '';
       final responseJson = searchResponse.data as Map<String, dynamic>;
       final matches = responseJson['matches'] as List<dynamic>;
-      topResult.value = SearchedPara(
-        mdFileNoExt: matches[0]['filename_no_mdext'] as String,
-        content: matches[0]['match_text'] as String,
-      );
+      results.value = matches
+          .map((match) => SearchedPara(
+                mdFileNoExt: match['filename_no_mdext'] as String,
+                content: match['match_text'] as String,
+              ))
+          .toList();
+      final FeedContent feedContent = Get.find();
+      feedContent.setCuratedShlokaMDs(results.map((e) => '${e.mdFileNoExt}.md').toList());
     } on DioException catch (e) {
       if (e.response != null) {
         final errData = e.response?.data as Map<String, dynamic>;
@@ -89,6 +84,11 @@ class PhraseSearcher extends GetxController {
       }
     }
     isLoading.value = false;
+  }
+
+  String? textSearchedInFile(String mdFilename) {
+    final matchingResult = results.firstWhereOrNull((result) => '${result.mdFileNoExt}.md' == mdFilename);
+    return matchingResult?.content;
   }
 }
 
@@ -104,7 +104,7 @@ class SearchWidget extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
           Row(
@@ -130,9 +130,8 @@ class SearchWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
-              final topResult = phraseSearcher.topResult.value;
-              if (topResult.mdFileNoExt.isNotEmpty) {
-                return buildContentFeed('${topResult.mdFileNoExt}.md', searchPhrase: topResult.content);
+              if (phraseSearcher.results.isNotEmpty) {
+                return SearchResultsWidget(phraseSearcher.phraseInput.text, phraseSearcher.results);
               } else if (phraseSearcher.isLoading.value) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -149,12 +148,66 @@ class SearchWidget extends StatelessWidget {
   }
 }
 
+class SearchResultsWidget extends StatelessWidget {
+  final RxList<SearchedPara> results;
+  final String searchString;
+  const SearchResultsWidget(this.searchString, this.results, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final result = results[index];
+        final foundFilename = '${result.mdFileNoExt}.md';
+        return Card(
+          child: ListTile(
+            title: Text(result.mdFileNoExt),
+            subtitle: buildContentFeed(foundFilename,
+                foundText: result.content, isSectionVisible: isFoundInSearch), // Text(result.content),
+            onTap: () => Get.toNamed('/shloka/$foundFilename'),
+          ),
+        );
+      },
+    );
+  }
+
+  bool isFoundInSearch(SectionType sectionType) {
+    return sectionType == SectionType.shlokaSA ||
+        sectionType == SectionType.shlokaSAHK ||
+        sectionType == SectionType.meaning;
+  }
+}
+
+class SearchPrompter extends StatelessWidget {
+  const SearchPrompter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final PhraseSearcher phraseSearcher = Get.find();
+      if (phraseSearcher.results.length >= 3) {
+        return PromptWidget();
+      } else if (phraseSearcher.results.isNotEmpty) {
+        return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text('${phraseSearcher.results.length} found'));
+      } else {
+        return SizedBox(width: 0, height: 0);
+      }
+    });
+  }
+}
+
 Widget searchScreen() {
   final PhraseSearcher phraseSearcher = Get.find();
   phraseSearcher.reset();
   return screenify(
     SearchWidget(),
-    appBar: AppBar(title: const Text('Search (beta)')),
+    appBar: AppBar(
+      title: const Text('Search'),
+      actions: [SearchPrompter()],
+    ),
     choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],
         const [PersonalizeIcon(), SizedBox(width: choiceSpacing)]),
   );
