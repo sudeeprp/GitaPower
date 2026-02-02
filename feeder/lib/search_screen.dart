@@ -190,8 +190,8 @@ class SearchPrompter extends StatelessWidget {
         return PromptWidget();
       } else if (phraseSearcher.results.isNotEmpty) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text('${phraseSearcher.results.length} found'));
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text('${phraseSearcher.results.length} found'));
       } else {
         return SizedBox(width: 0, height: 0);
       }
