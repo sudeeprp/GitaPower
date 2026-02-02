@@ -138,7 +138,6 @@ void main() {
       final foundText = phraseSearcher.textSearchedInFile('6-19.md');
       expect(foundText, 'commentary1');
     });
-
     test('should return null when file does not exist in results', () {
       final PhraseSearcher phraseSearcher = Get.find();
       phraseSearcher.results.addAll([
@@ -162,15 +161,27 @@ void main() {
       Get.delete<PhraseSearcher>();
     });
 
-    testWidgets('should return empty SizedBox when no search results', (tester) async {
+    testWidgets('should not show prompt button when no search results', (tester) async {
       resetPhraseSearcher();
       await tester.pumpWidget(GetMaterialApp(
         home: Scaffold(body: SearchPrompter()),
       ));
       expect(find.byType(PromptWidget), findsNothing);
     });
-
-    testWidgets('should return PromptWidget when search results are present', (tester) async {
+    testWidgets('should show prompt button when 3 search results are present', (tester) async {
+      resetPhraseSearcher();
+      final PhraseSearcher phraseSearcher = Get.find();
+      phraseSearcher.results.addAll([
+        SearchedPara(mdFileNoExt: '1-1', content: 'test content 1'),
+        SearchedPara(mdFileNoExt: '2-2', content: 'test content 2'),
+        SearchedPara(mdFileNoExt: '3-3', content: 'test content 3'),
+      ]);
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SearchPrompter()),
+      ));
+      expect(find.byType(PromptWidget), findsOneWidget);
+    });
+    testWidgets('should show search count when less than 3 results are present', (tester) async {
       resetPhraseSearcher();
       final PhraseSearcher phraseSearcher = Get.find();
       phraseSearcher.results.addAll([
@@ -180,7 +191,7 @@ void main() {
       await tester.pumpWidget(GetMaterialApp(
         home: Scaffold(body: SearchPrompter()),
       ));
-      expect(find.byType(PromptWidget), findsOneWidget);
+      expect(find.text('2 found'), findsOneWidget);
     });
   });
 }

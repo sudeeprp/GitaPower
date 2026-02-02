@@ -186,8 +186,10 @@ class SearchPrompter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final PhraseSearcher phraseSearcher = Get.find();
-      if (phraseSearcher.results.isNotEmpty) {
+      if (phraseSearcher.results.length >= 3) {
         return PromptWidget();
+      } else if (phraseSearcher.results.isNotEmpty) {
+        return Text('${phraseSearcher.results.length} found');
       } else {
         return SizedBox(width: 0, height: 0);
       }
@@ -201,7 +203,7 @@ Widget searchScreen() {
   return screenify(
     SearchWidget(),
     appBar: AppBar(
-      title: const Text('Search (beta)'),
+      title: const Text('Search'),
       actions: [SearchPrompter()],
     ),
     choicesRow: choicesRow([SizedBox(width: choiceSpacing), widgetToHome()],

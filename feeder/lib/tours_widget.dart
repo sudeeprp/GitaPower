@@ -93,6 +93,14 @@ class ToursListWidget extends StatelessWidget {
                   Get.toNamed('/feed');
                 },
               ),
+              _buildTourCard(
+                key: const Key('tour/search'),
+                context: context,
+                icon: Icons.search_rounded,
+                title: 'Search',
+                iconColor: Colors.orange,
+                onTap: () => Get.toNamed('/search'),
+              ),
             ] +
             _onlinePlayables(context)));
   }
