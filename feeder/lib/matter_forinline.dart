@@ -35,7 +35,7 @@ List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType,
   final delimiters = RegExp(r'[^\w\s]|\s+|_|\[|\]["`' r"']");
   final foundWords = foundText?.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
   bool checkSearchRelevance(String currentText) {
-    if (foundWords != null && foundWords.isNotEmpty && currentText.isNotEmpty) {
+    if (foundWords != null && foundWords.isNotEmpty && currentText.trim().isNotEmpty) {
       final textWords = currentText.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
       if (textWords.every(foundWords.contains)) return true;
       int matchCount = 0;
