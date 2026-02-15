@@ -32,20 +32,11 @@ bool isDevanOrTranslit(String word) {
 
 List<MatterForInline> makeMatterForInlines(String text, SectionType sectionType, String tag,
     {String? elmclass, String? link, List<String>? showPatterns, String? foundText}) {
-  final delimiters = RegExp(r'[^\w\s]|\s+|_|\[|\]["`' r"']");
-  final foundWords = foundText?.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
   bool checkSearchRelevance(String currentText) {
-    if (foundWords != null && foundWords.isNotEmpty && currentText.trim().isNotEmpty) {
-      final textWords = currentText.toLowerCase().split(delimiters).where((w) => w.isNotEmpty).toSet();
-      if (textWords.every(foundWords.contains)) return true;
-      int matchCount = 0;
-      for (String word in textWords) {
-        if (foundWords.contains(word)) {
-          matchCount++;
-        }
-      }
-      return matchCount > 3 && matchCount * 3 > foundWords.length; // More than a third of the words match
-    }
+    if (foundText == null || foundText.isEmpty) return false;
+    currentText = currentText.trim();
+    if (currentText.isEmpty) return false;
+    if (foundText.contains(currentText)) return true;
     return false;
   }
 

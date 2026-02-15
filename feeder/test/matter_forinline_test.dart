@@ -70,11 +70,7 @@ void main() {
     }
 
     test('marks the text relevant when the content is same as the text found', () {
-      expect(searchRelevanceMarked('The quick brown fox jumps', 'the quick brown fox jumps'), isTrue);
-    });
-    test('marks the text relevant when the content is a subset of the text found', () {
-      expect(
-          searchRelevanceMarked('quick fox over dog', 'The quick brown fox jumps over the lazy dog'), isTrue);
+      expect(searchRelevanceMarked('The quick brown fox jumps', 'The quick brown fox jumps'), isTrue);
     });
     test('marks text with links as relevant', () {
       final foundText =

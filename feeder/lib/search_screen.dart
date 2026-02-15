@@ -111,6 +111,7 @@ class SearchWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
+                  autofocus: true,
                   textInputAction: TextInputAction.search,
                   decoration: const InputDecoration(
                     hintText: 'Search',
