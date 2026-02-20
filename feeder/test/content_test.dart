@@ -127,6 +127,7 @@ Arjuna says to Krishna - how do we think of You?
         (server) => server.reply(200, '[{"10-10.md": ["applnote_pre_10-12"]}, {"10-13-prenote.md": []}]'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/test_highlight.md', (server) => server.reply(200, '''
 Yoga is about realization - it's a journey.
+
 This is another line without the search phrase.
 Self realization is key.
 '''));
@@ -134,9 +135,9 @@ Self realization is key.
   });
   testWidgets('Highlights text segments based on search phrase match criteria', (tester) async {
     putContentControllers(); // Ensures all necessary controllers are available
-    const searchPhrase = 'Yoga is about realization'; // 3 words
+    const foundPhrase = "Yoga is about realization - it's a journey.";
     await tester.pumpWidget(GetMaterialApp(
-      home: Scaffold(body: buildContent('test_highlight.md', foundText: searchPhrase)),
+      home: Scaffold(body: buildContent('test_highlight.md', foundText: foundPhrase)),
     ));
     await tester.pumpAndSettle();
     expect(find.textContaining('Yoga is about realization', findRichText: true), findsOneWidget);
