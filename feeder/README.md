@@ -1,6 +1,6 @@
 # Krishna's Gita
 
-A new beginning. 
+A new beginning.
 
 ## Getting Started
 

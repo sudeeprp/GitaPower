@@ -92,9 +92,9 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  SectionContent _collectedElements(SectionType sectionType) {
+  SectionContent collectedElements(SectionType sectionType) {
     List<TextSpan> collectedElements = [];
-    _refineSearchRelevance(collectedInlines);
+    refineSearchRelevance(collectedInlines);
     final visibleInlines = selectVisibleInlines(collectedInlines, sectionType);
     final inlinesForDisplay = removeConsecutiveSpaces(visibleInlines);
     for (final inlineMatter in inlinesForDisplay) {
@@ -107,8 +107,8 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets.addAll(_widgetMaker(_collectedElements(elementForCurrentText.last.sectionType),
-          elementForCurrentText.last.sectionType));
+      collectedWidgets.addAll(_widgetMaker(
+          collectedElements(elementForCurrentText.last.sectionType), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -158,7 +158,7 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  void _refineSearchRelevance(List<MatterForInline> inlineMatters) {
+  void refineSearchRelevance(List<MatterForInline> inlineMatters) {
     bool prevIsRelevantToSearch(int index) {
       return (index > 0 && inlineMatters[index - 1].isRelevantToSearch) ||
           (index > 1 && inlineMatters[index - 2].isRelevantToSearch);
