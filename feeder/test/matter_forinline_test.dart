@@ -70,18 +70,17 @@ void main() {
     }
 
     test('marks the text relevant when the content is same as the text found', () {
-      expect(searchRelevanceMarked('The quick brown fox jumps', 'the quick brown fox jumps'), isTrue);
+      expect(searchRelevanceMarked('The quick brown fox jumps', 'The quick brown fox jumps'), isTrue);
     });
-    test('marks the text relevant when the content is a subset of the text found', () {
-      expect(
-          searchRelevanceMarked('quick fox over dog', 'The quick brown fox jumps over the lazy dog'), isTrue);
+    test('marks text with links as relevant', () {
+      final foundText =
+          "To get rid of ignorance, we must \n[surrender](7-19.md#Sharanagati)\n to that very Person who is the origin of everything - 'that very Person' is the Lord - He described Himself in [9-10](9-10.md): \u2018The material environment guides this world according to My will, I being the supreme controller\u2019, in [10-8](10-8.md): \u2018I am the origin of everything; Each and every entity gets stimulated with the initiative given by Me\u2019 and in [7-7](7-7.md): \u2018There is absolutely nothing else that is superior to Me\u2019.";
+      expect(searchRelevanceMarked('To get rid of ignorance, we must ', foundText), isTrue);
+      expect(searchRelevanceMarked('surrender', foundText), isTrue);
     });
     test('does not report relevance when less than half the words of the search phrase are found', () {
       expect(searchRelevanceMarked('The quick brown fox', 'slow'), isFalse);
       expect(searchRelevanceMarked('The quick brown fox', 'be quick not slow'), isFalse);
-    });
-    test('does not report relevance when the match is insignificant', () {
-      expect(searchRelevanceMarked('and the', 'the cat and the hat'), isFalse);
     });
   });
 }

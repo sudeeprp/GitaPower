@@ -28,12 +28,13 @@ List<Widget> simpleTextRichMaker(SectionContent sectionContent, SectionType sect
 }
 
 class TextMade {
-  TextMade(this.content, this.sectionType, this.tag, this.elmclass, this.link);
+  TextMade(this.content, this.sectionType, this.tag, this.elmclass, this.link, this.isRelevantToSearch);
   String? content;
   SectionType sectionType;
   String? tag;
   String? elmclass;
   String? link;
+  bool isRelevantToSearch;
 }
 
 class WidgetMade {
@@ -47,11 +48,11 @@ class ParseRecords {
   List<WidgetMade> widgetsMade = [];
 }
 
-ParseRecords recordParseActions(String mdContent, {List<String>? showPatterns}) {
+ParseRecords recordParseActions(String mdContent, {List<String>? showPatterns, String? foundText}) {
   var parseRecords = ParseRecords();
   List<TextSpan> inlineMaker(MatterForInline inlineMatter) {
     parseRecords.textsMade.add(TextMade(inlineMatter.text, inlineMatter.sectionType, inlineMatter.tag,
-        inlineMatter.elmclass, inlineMatter.link));
+        inlineMatter.elmclass, inlineMatter.link, inlineMatter.isRelevantToSearch));
     return [];
   }
 
@@ -60,7 +61,7 @@ ParseRecords recordParseActions(String mdContent, {List<String>? showPatterns}) 
     return [];
   }
 
-  WidgetMaker(widgetMaker, inlineMaker, showPatterns: showPatterns).parse(mdContent);
+  WidgetMaker(widgetMaker, inlineMaker, showPatterns: showPatterns, foundText: foundText).parse(mdContent);
   return parseRecords;
 }
 
@@ -126,6 +127,7 @@ Arjuna says to Krishna - how do we think of You?
         (server) => server.reply(200, '[{"10-10.md": ["applnote_pre_10-12"]}, {"10-13-prenote.md": []}]'));
     dioAdapter.onGet('${GitHubFetcher.mdPath}/test_highlight.md', (server) => server.reply(200, '''
 Yoga is about realization - it's a journey.
+
 This is another line without the search phrase.
 Self realization is key.
 '''));
@@ -133,9 +135,9 @@ Self realization is key.
   });
   testWidgets('Highlights text segments based on search phrase match criteria', (tester) async {
     putContentControllers(); // Ensures all necessary controllers are available
-    const searchPhrase = 'Yoga is about realization'; // 3 words
+    const foundPhrase = "Yoga is about realization - it's a journey.";
     await tester.pumpWidget(GetMaterialApp(
-      home: Scaffold(body: buildContent('test_highlight.md', foundText: searchPhrase)),
+      home: Scaffold(body: buildContent('test_highlight.md', foundText: foundPhrase)),
     ));
     await tester.pumpAndSettle();
     expect(find.textContaining('Yoga is about realization', findRichText: true), findsOneWidget);
@@ -493,5 +495,48 @@ A person diverts from the path of realizing the Self due to some desires.
     final controller = findController('any-shloka.md');
     expect(controller, isNotNull);
     Get.delete<Choices>();
+  });
+  test('refineSearchRelevance removes isolated single-word match from real chapter line', () {
+    final widgetMaker = WidgetMaker((_, __) => [], (_) => []);
+    final inlineMatters = [
+      MatterForInline('[ca]', SectionType.commentary, 'code', isRelevantToSearch: true),
+      MatterForInline(' Bhima sounded the conch.', SectionType.commentary, 'p', isRelevantToSearch: false),
+    ];
+    widgetMaker.refineSearchRelevance(inlineMatters);
+    expect(inlineMatters[0].isRelevantToSearch, isFalse);
+  });
+  test('refineSearchRelevance keeps a single-word match when adjacent token also matches', () {
+    final widgetMaker = WidgetMaker((_, __) => [], (_) => []);
+    final inlineMatters = [
+      MatterForInline('[ca]', SectionType.commentary, 'code', isRelevantToSearch: true),
+      MatterForInline(' and ', SectionType.commentary, 'p', isRelevantToSearch: true),
+      MatterForInline('[bhImaH]', SectionType.commentary, 'code', isRelevantToSearch: false),
+    ];
+    widgetMaker.refineSearchRelevance(inlineMatters);
+    expect(inlineMatters[0].isRelevantToSearch, isTrue);
+  });
+  test('refineSearchRelevance keeps a single-word match when next relevant is two positions away', () {
+    final widgetMaker = WidgetMaker((_, __) => [], (_) => []);
+    final inlineMatters = [
+      MatterForInline('[ca]', SectionType.commentary, 'code', isRelevantToSearch: true),
+      MatterForInline(' and ', SectionType.commentary, 'p', isRelevantToSearch: false),
+      MatterForInline('[bhImaH]', SectionType.commentary, 'code', isRelevantToSearch: true),
+    ];
+    widgetMaker.refineSearchRelevance(inlineMatters);
+    expect(inlineMatters[0].isRelevantToSearch, isTrue);
+    expect(inlineMatters[2].isRelevantToSearch, isTrue);
+  });
+  test('refineSearchRelevance does not remove isolated multi-word match', () {
+    final widgetMaker = WidgetMaker((_, __) => [], (_) => []);
+    final inlineMatters = [
+      MatterForInline(
+        'the eldest among the Kurus',
+        SectionType.commentary,
+        'p',
+        isRelevantToSearch: true,
+      ),
+    ];
+    widgetMaker.refineSearchRelevance(inlineMatters);
+    expect(inlineMatters[0].isRelevantToSearch, isTrue);
   });
 }

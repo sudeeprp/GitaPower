@@ -92,8 +92,9 @@ class WidgetMaker implements md.NodeVisitor {
     }
   }
 
-  SectionContent _collectedElements(SectionType sectionType) {
+  SectionContent collectedElements(SectionType sectionType) {
     List<TextSpan> collectedElements = [];
+    refineSearchRelevance(collectedInlines);
     final visibleInlines = selectVisibleInlines(collectedInlines, sectionType);
     final inlinesForDisplay = removeConsecutiveSpaces(visibleInlines);
     for (final inlineMatter in inlinesForDisplay) {
@@ -106,8 +107,8 @@ class WidgetMaker implements md.NodeVisitor {
   @override
   void visitElementAfter(md.Element element) {
     if (elementForCurrentText.last.isSectionTop) {
-      collectedWidgets.addAll(_widgetMaker(_collectedElements(elementForCurrentText.last.sectionType),
-          elementForCurrentText.last.sectionType));
+      collectedWidgets.addAll(_widgetMaker(
+          collectedElements(elementForCurrentText.last.sectionType), elementForCurrentText.last.sectionType));
       _previousSectionType = elementForCurrentText.last.sectionType;
       _moveToNextSection();
     }
@@ -154,6 +155,27 @@ class WidgetMaker implements md.NodeVisitor {
       final inlineMatters = makeMatterForInlines(processedText, element.sectionType, tag,
           elmclass: elmclass, link: link, showPatterns: showPatterns, foundText: foundText);
       collectedInlines.addAll(inlineMatters);
+    }
+  }
+
+  void refineSearchRelevance(List<MatterForInline> inlineMatters) {
+    bool prevIsRelevantToSearch(int index) {
+      return (index > 0 && inlineMatters[index - 1].isRelevantToSearch) ||
+          (index > 1 && inlineMatters[index - 2].isRelevantToSearch);
+    }
+
+    bool nextIsRelevantToSearch(int index) {
+      return (index < inlineMatters.length - 1 && inlineMatters[index + 1].isRelevantToSearch) ||
+          (index < inlineMatters.length - 2 && inlineMatters[index + 2].isRelevantToSearch);
+    }
+
+    for (int i = 0; i < inlineMatters.length; i++) {
+      final matter = inlineMatters[i];
+      if (matter.isRelevantToSearch && matter.text.trim().split(RegExp(r'\s+')).length == 1) {
+        if (!prevIsRelevantToSearch(i) && !nextIsRelevantToSearch(i)) {
+          matter.isRelevantToSearch = false;
+        }
+      }
     }
   }
 
