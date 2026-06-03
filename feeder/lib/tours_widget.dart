@@ -43,8 +43,7 @@ class ToursListWidget extends StatelessWidget {
             fontSize: 16,
           ),
         ),
-        trailing:
-            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       ),
@@ -58,8 +57,7 @@ class ToursListWidget extends StatelessWidget {
         Center(
             child: IconButton(
                 key: const Key('tours/refresh'),
-                icon:
-                    const Icon(Icons.refresh, size: 32, color: Colors.blueGrey),
+                icon: const Icon(Icons.refresh, size: 32, color: Colors.blueGrey),
                 tooltip: 'Refresh tours',
                 onPressed: () {
                   playablesTOC.extractPlayables();
