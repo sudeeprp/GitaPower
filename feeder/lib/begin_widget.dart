@@ -21,13 +21,12 @@ class BeginWidget extends StatelessWidget {
 
   Decoration beginCardDecoration(BuildContext context) {
     return BoxDecoration(
-      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withValues(alpha: 0.2),
           spreadRadius: 2,
-          blurRadius: 8,
+          blurRadius: 1,
           offset: const Offset(0, 2),
         ),
       ],
@@ -43,10 +42,14 @@ class BeginWidget extends StatelessWidget {
             child: Container(
                 color: Colors.transparent,
                 child: Row(children: [
-                  Expanded(key: key, child: titleTextContainer('browse', 'Chapters and Notes')),
+                  Expanded(
+                      key: key,
+                      child:
+                          titleTextContainer('browse', 'Chapters and Notes')),
                   Expanded(
                       child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
                           child: Image.asset('images/begin-chapters.png'))),
                 ]))));
   }
@@ -61,13 +64,15 @@ class BeginWidget extends StatelessWidget {
             Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   child: Image.asset('images/look-listen.png'),
                 )),
             Expanded(
                 flex: 3,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   child: ToursListWidget(),
                 )),
           ],
