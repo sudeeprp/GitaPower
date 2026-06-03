@@ -21,13 +21,12 @@ class BeginWidget extends StatelessWidget {
 
   Decoration beginCardDecoration(BuildContext context) {
     return BoxDecoration(
-      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withValues(alpha: 0.2),
           spreadRadius: 2,
-          blurRadius: 8,
+          blurRadius: 1,
           offset: const Offset(0, 2),
         ),
       ],
