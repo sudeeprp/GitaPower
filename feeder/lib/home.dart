@@ -58,7 +58,9 @@ Widget makeMyHome() {
       darkTheme: darkTheme(),
       home: const Home(),
       debugShowCheckedModeBanner: false,
+      routingCallback: _normalizeUnknownRoute,
       getPages: [
+        GetPage(name: '/', page: () => const Home()),
         GetPage(name: '/browse', page: browsingScreen),
         GetPage(name: '/feed', page: () => feedScreen()),
         GetPage(name: '/shlokaheaders/:chapter', page: () => chapterShlokaScreen(Get.parameters['chapter']!)),
@@ -75,20 +77,26 @@ Widget makeMyHome() {
             page: () => screenify(PersonalWidget(), appBar: AppBar(title: const Text("Personalize")))),
         GetPage(name: '/guided/:tourFolder', page: () => guidedTourScreen(Get.parameters['tourFolder']!)),
       ],
-      unknownRoute: GetPage(name: '/notfound', page: () => _routeUnknown()));
+      unknownRoute: GetPage(name: '/', page: () => const Home()));
 }
 
-Widget _routeUnknown() {
-  // Get.currentRoute will always be /notfound here. So just go home.
-  final routingScreen = screenify(const Center(child: Text("Page not found, returning home...")),
-      appBar: AppBar(
-          title: Row(children: [
-        Image.asset('images/sunidhi-krishna.png', height: 32, width: 32),
-        const SizedBox(width: choiceSpacing),
-        const Text("The Opening")
-      ])));
-  WidgetsBinding.instance.addPostFrameCallback((_) => Get.offAllNamed('/'));
-  return routingScreen;
+void _normalizeUnknownRoute(Routing? routing) {
+  final currentRoute = routing?.current;
+  if (currentRoute != null && !_isKnownRoute(currentRoute)) {
+    routing?.current = '/';
+    Get.routing.current = '/';
+  }
+}
+
+bool _isKnownRoute(String route) {
+  return route == '/' ||
+      route == '/browse' ||
+      route == '/feed' ||
+      route == '/search' ||
+      route == '/personalize' ||
+      route.startsWith('/shlokaheaders/') ||
+      route.startsWith('/shloka/') ||
+      route.startsWith('/guided/');
 }
 
 Widget browsingScreen() {

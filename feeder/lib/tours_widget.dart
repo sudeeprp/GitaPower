@@ -17,7 +17,6 @@ class ToursListWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -27,26 +26,31 @@ class ToursListWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: ListTile(
-        key: key,
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: (iconColor ?? Colors.blue).withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+      child: Material(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          key: key,
+          leading: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: (iconColor ?? Colors.blue).withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, size: 24, color: iconColor ?? Colors.blue),
           ),
-          child: Icon(icon, size: 24, color: iconColor ?? Colors.blue),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
           ),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+          onTap: onTap,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-        onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       ),
     );
   }
@@ -78,30 +82,33 @@ class ToursListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => ListView(
-        padding: EdgeInsets.zero,
-        children: [
-              _buildTourCard(
-                key: const Key('tour/random'),
-                context: context,
-                icon: Icons.star_rounded,
-                title: 'Explore Yourself',
-                iconColor: Colors.orange,
-                onTap: () {
-                  final FeedContent feedContent = Get.find();
-                  feedContent.resetToRandom();
-                  Get.toNamed('/feed');
-                },
-              ),
-              _buildTourCard(
-                key: const Key('tour/search'),
-                context: context,
-                icon: Icons.search_rounded,
-                title: 'Search',
-                iconColor: Colors.orange,
-                onTap: () => Get.toNamed('/search'),
-              ),
-            ] +
-            _onlinePlayables(context)));
+    return Theme(
+      data: Theme.of(context).copyWith(splashFactory: InkRipple.splashFactory),
+      child: Obx(() => ListView(
+          padding: EdgeInsets.zero,
+          children: [
+                _buildTourCard(
+                  key: const Key('tour/random'),
+                  context: context,
+                  icon: Icons.star_rounded,
+                  title: 'Explore Yourself',
+                  iconColor: Colors.orange,
+                  onTap: () {
+                    final FeedContent feedContent = Get.find();
+                    feedContent.resetToRandom();
+                    Get.toNamed('/feed');
+                  },
+                ),
+                _buildTourCard(
+                  key: const Key('tour/search'),
+                  context: context,
+                  icon: Icons.search_rounded,
+                  title: 'Search',
+                  iconColor: Colors.orange,
+                  onTap: () => Get.toNamed('/search'),
+                ),
+              ] +
+              _onlinePlayables(context))),
+    );
   }
 }
