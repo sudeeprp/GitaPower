@@ -87,7 +87,7 @@ class ToursListWidget extends StatelessWidget {
                 context: context,
                 icon: Icons.star_rounded,
                 title: 'Explore Yourself',
-                iconColor: Colors.orange,
+                iconColor: Colors.deepOrange,
                 onTap: () {
                   final FeedContent feedContent = Get.find();
                   feedContent.resetToRandom();
@@ -99,7 +99,7 @@ class ToursListWidget extends StatelessWidget {
                 context: context,
                 icon: Icons.search_rounded,
                 title: 'Search',
-                iconColor: Colors.orange,
+                iconColor: Colors.deepOrange,
                 onTap: () => Get.toNamed('/search'),
               ),
             ] +
