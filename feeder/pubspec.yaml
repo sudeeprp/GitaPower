@@ -33,7 +33,7 @@ dependencies:
   float_column: 4.0.3
   app_links: ^7.0.0
   just_audio: ^0.10.5
-  keep_screen_on: 5.0.0
+  keep_screen_on: 6.0.0
 
 dev_dependencies:
   flutter_test:
