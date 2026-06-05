@@ -26,19 +26,19 @@ dependencies:
   markdown: ^7.3.1
   google_fonts: ^8.1.0
   cupertino_icons: ^1.0.9
-  firebase_crashlytics: ^5.2.2
-  firebase_core: ^4.7.0
+  firebase_crashlytics: ^5.2.3
+  firebase_core: ^4.10.0
   shared_preferences: 2.5.5
   enum_to_string: 2.2.1
   float_column: 4.0.3
-  app_links: ^7.0.0
+  app_links: ^7.1.1
   just_audio: ^0.10.5
-  keep_screen_on: 5.0.0
+  keep_screen_on: 6.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  analyzer: 10.0.1
+  analyzer: 13.0.0
   check_coverage:
   test_cov_console: ^0.2.2
   flutter_launcher_icons: ^0.14.4

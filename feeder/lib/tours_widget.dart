@@ -17,12 +17,11 @@ class ToursListWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.blueGrey.withValues(alpha: 0.5),
-            blurRadius: 6,
+            blurRadius: 1,
             offset: const Offset(0, 2),
           ),
         ],
@@ -86,7 +85,7 @@ class ToursListWidget extends StatelessWidget {
                 context: context,
                 icon: Icons.star_rounded,
                 title: 'Explore Yourself',
-                iconColor: Colors.orange,
+                iconColor: Colors.deepOrange,
                 onTap: () {
                   final FeedContent feedContent = Get.find();
                   feedContent.resetToRandom();
@@ -98,7 +97,7 @@ class ToursListWidget extends StatelessWidget {
                 context: context,
                 icon: Icons.search_rounded,
                 title: 'Search',
-                iconColor: Colors.orange,
+                iconColor: Colors.deepOrange,
                 onTap: () => Get.toNamed('/search'),
               ),
             ] +
