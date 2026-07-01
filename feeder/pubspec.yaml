@@ -31,7 +31,7 @@ dependencies:
   shared_preferences: 2.5.5
   enum_to_string: 2.2.1
   float_column: 4.0.3
-  app_links: ^7.1.2
+  app_links: ^7.2.0
   just_audio: ^0.10.5
   keep_screen_on: 6.0.0
 
