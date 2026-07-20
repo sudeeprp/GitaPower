@@ -24,7 +24,7 @@ dependencies:
   get: ^4.7.3
   dio: ^5.10.0
   markdown: ^7.3.1
-  google_fonts: ^8.1.0
+  google_fonts: ^8.2.0
   cupertino_icons: ^1.0.9
   firebase_crashlytics: ^5.2.4
   firebase_core: ^4.10.0
