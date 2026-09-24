@@ -507,10 +507,10 @@ packages:
     dependency: "direct main"
     description:
       name: keep_screen_on
-      sha256: "665e36463f03215bbc4f677823900ab8760a9ebfbadb6e2acf11305307d67603"
+      sha256: "15114520f76d28ff3e1379fe0768bd6267db559f606aa43673cbceeaa9a017ef"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "7.0.0"
   keep_screen_on_platform_interface:
     dependency: transitive
     description:
