@@ -27,7 +27,7 @@ dependencies:
   google_fonts: ^9.0.0
   cupertino_icons: ^1.0.9
   firebase_crashlytics: ^5.4.0
-  firebase_core: ^4.10.0
+  firebase_core: ^4.15.0
   shared_preferences: 2.5.5
   enum_to_string: 2.2.1
   float_column: 4.1.3
@@ -38,7 +38,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  analyzer: 14.3.0
+  analyzer: 14.4.0
   check_coverage:
   test_cov_console: ^0.2.2
   flutter_launcher_icons: ^0.14.4
